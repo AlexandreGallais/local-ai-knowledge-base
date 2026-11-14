@@ -1,30 +1,5 @@
 // The decisions of the base-guard plugin, kept apart from the OpenCode API so that they can be
 // tested with Node alone.
-export interface SubagentCall {
-  background?: boolean;
-}
-
-// The parent sessions that have a subagent running: one at a time (decision 0018).
-export class SubagentGate {
-  private readonly busy = new Set<string>();
-
-  // Returns the message that refuses the call, or undefined to let it go.
-  start(sessionID: string, input: SubagentCall): string | undefined {
-    if (input.background === true) {
-      return 'Background subagents are off. Call subagent again without background.';
-    }
-    if (this.busy.has(sessionID)) {
-      return 'A subagent is already running. Wait for its report, then start the next one.';
-    }
-    this.busy.add(sessionID);
-    return undefined;
-  }
-
-  finish(sessionID: string): void {
-    this.busy.delete(sessionID);
-  }
-}
-
 const CODE_FILE = /\.(?:ts|mts|html|css|scss|json)$/;
 const WRITE_TOOLS = new Set([
   'edit',

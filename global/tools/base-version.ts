@@ -69,7 +69,7 @@ export function checkBaseVersion(baseFolder: string, projectFolder: string): Ver
   if (expected === undefined) {
     return {
       ok: true,
-      message: `Global base ${installed}. This project has no profile yet: load the skill welcome first.`,
+      message: `Global base ${installed}. This project uses no strict lint profile: that is fine.`,
     };
   }
   if (compareVersions(installed, expected) < 0) {

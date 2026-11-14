@@ -15,14 +15,14 @@ description: Use when you write or change an exported function of a TypeScript l
 
 ## Steps
 
-1. Read `.agents/profile.json`: the profile and the copyright header.
+1. Read the copyright header of the other files of the project, if they have one.
 2. Copy `/opt/local-ai-base/templates/typescript/pure-function/` and rename the file and the function.
 3. Write the JSDoc: what it gives, `@param` with the unit of each number, `@returns`, `@throws`, and one
    `@example` with real values.
 4. Write the body. A value out of range: throw a `RangeError` with a short message.
 5. Write the test next to it: the normal case, each limit, each error. Floating values with
    `toBeCloseTo`.
-6. Run the check commands of `.agents/profile.json`. The format pass adds the copyright header.
+6. Run the build, the lint and the tests of the project. The format pass adds the copyright header.
 
 ## Example
 

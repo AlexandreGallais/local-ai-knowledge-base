@@ -49,6 +49,6 @@ describe('the passes of a project', () => {
     });
     const lines = await runPass(folder, 'lint', 'all');
 
-    assert.deepEqual(lines, ['eslint is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then ask the user to run the install command it gives.']);
+    assert.deepEqual(lines, ['eslint is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then run the install command it gives (the user approves it).']);
   });
 });

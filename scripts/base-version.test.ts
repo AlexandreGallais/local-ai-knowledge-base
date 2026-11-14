@@ -75,10 +75,10 @@ describe('checkBaseVersion', () => {
     assert.equal(checkBaseVersion(base('0.2.0'), project('0.2.0')).ok, true);
     assert.equal(checkBaseVersion(base('0.3.1'), project('0.2.0')).ok, true);
   });
-  it('sends a project without a profile to the welcome skill', () => {
+  it('accepts a project without a strict lint profile', () => {
     const result = checkBaseVersion(base('0.2.0'), project());
 
     assert.equal(result.ok, true);
-    assert.match(result.message, /load the skill welcome first/);
+    assert.match(result.message, /uses no strict lint profile: that is fine/);
   });
 });

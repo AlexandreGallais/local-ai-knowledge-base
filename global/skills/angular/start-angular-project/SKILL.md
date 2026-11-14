@@ -7,46 +7,41 @@ description: Use when the user asks for a new Angular application or a new Angul
 
 ## Rules
 
-- The user runs every command that installs or downloads: give the command, wait for their answer.
+- Only when the user asks for Angular. For plain TypeScript, load `start-typescript-library`.
 - No Material, no CDK, no other UI library. NgRx Signals only for state. Vitest for tests.
+- Run the commands yourself. OpenCode asks the user to approve an install: wait for the answer.
 
 ## Steps
 
-1. Read `.agents/profile.json`: the welcome wrote the profile (`angular-app` or `angular-lib`), the
-   subject and the copyright. If it is missing, load the skill `welcome` first.
-2. Ask with the question tool: the name (kebab-case) and the component prefix (`app`, or a short team
+1. Ask with the question tool: the name (kebab-case) and the component prefix (`app`, or a short team
    prefix).
-3. Give the user the commands to run in the project folder, in this order, and wait:
+2. Run, in the project folder, in this order:
    - when `package.json` only holds `@opencode/cli`: `rm package.json package-lock.json` (Angular CLI
      refuses to write over them; `node_modules` stays, so OpenCode keeps running);
    - application: `npx @angular/cli@22 new <name> --directory . --style=scss --ssr=false --skip-git --skip-install`
      (Vitest is the default test runner since Angular 21);
    - library: `npx @angular/cli@22 new <name> --directory . --no-create-application --skip-git --skip-install`,
      then `npx --no -- ng generate library <name>`;
-   - then `npm install --save-dev --save-exact @opencode/cli@2.2.7`: it installs the project and keeps
-     OpenCode in it.
-4. Ask the user to install `@ngrx/signals` at the version of Angular (`npm install @ngrx/signals@22`)
-   and the packages of the profile listed in `/opt/local-ai-base/packages.md`.
-5. Run `node /opt/local-ai-base/tools/apply-profile.ts --profile <profile> --subject "<subject>"
-   --prefix <prefix>`: it refreshes the lint configs and keeps the team's files.
-6. Run the check commands of `.agents/profile.json` on the generated project. Fix until 0 errors.
+   - `npm install --save-dev --save-exact @opencode/cli@2.2.7`: it installs the project and keeps
+     OpenCode in it;
+   - `npm install --save-exact @ngrx/signals@22` when the app needs state.
+3. Run `npx --no -- ng build` and `npx --no -- ng test --watch=false`. Fix until 0 errors.
 
 ## Example
 
 Wrong:
 
 ```text
-I ran npm install @angular/material and created the project.
+Run this command, then tell me when it is done: npx @angular/cli@22 new pump-panel
 ```
 
 Right:
 
 ```text
-Run this command, then tell me when it is done:
-npx @angular/cli@22 new pump-panel --style=scss --ssr=false --skip-git
+I run npx @angular/cli@22 new pump-panel --directory . --skip-install (OpenCode asks you to approve).
 ```
 
 ## Final check
 
-- Did the user run every install and download?
-- Did `apply-profile.ts` end with "Profile <profile> applied", and do the checks end at 0 errors?
+- Did the user ask for Angular, and is there no Material nor CDK?
+- Do the build and the tests end at 0 errors?

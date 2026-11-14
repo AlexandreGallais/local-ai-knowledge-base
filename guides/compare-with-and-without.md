@@ -109,9 +109,8 @@ ls /opt/local-ai-base    # with-base: VERSION, rules, tools...   without-base: N
 Run `npx opencode` (or `npm run opencode`) in each container, at the root of the project, and give
 both the same request.
 
-- With the base, the first conversation asks you the kind of project, its subject and its versions,
-  then applies the profile. Restart OpenCode when it asks.
-- Packages: when one session asks to install, accept or refuse the same way in the other.
+- Packages: each session runs its own installs and OpenCode asks you to approve them. Approve or refuse
+  the same way in both.
 - Give the same answer to the same question; never help one session more than the other.
 
 ## 8. Compare

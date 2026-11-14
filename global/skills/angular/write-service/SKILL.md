@@ -22,7 +22,7 @@ description: Use when you write or change an Angular service - a server API, a s
 4. Write the test with `provideHttpClient()` and `provideHttpClientTesting()`; check the request with
    `HttpTestingController.expectOne`, then `verify()`. Follow `valve-api.spec.ts` of the template.
 5. A store uses the service: inject it once, in the first feature of the store (`withProps`).
-6. Run the check commands of `.agents/profile.json` until 0 errors.
+6. Run the build, the lint and the tests of the project until 0 errors.
 
 ## Example
 

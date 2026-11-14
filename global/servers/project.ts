@@ -14,7 +14,6 @@ import {
   installAdvice,
   missingPackages,
 } from '../tools/missing-packages.ts';
-import { agentsOfProfile } from '../tools/work-files.ts';
 import {
   baseRoot,
   projectRoot,
@@ -68,7 +67,6 @@ export function projectInfo(): string {
       command,
     ]) => `- ${name}: \`${command}\``);
   const versions = declaredVersions(project);
-  const agents = agentsOfProfile(baseRoot(), profile.profile);
   const packages = profile.profile === undefined ? [] : [
     '',
     'Packages of the profile:',
@@ -76,7 +74,7 @@ export function projectInfo(): string {
   ];
 
   return [
-    profile.profile === undefined ? 'Profile: none yet. Load the skill welcome first.' : `Profile: ${profile.profile}`,
+    profile.profile === undefined ? 'Profile: none. Strict format and lint are optional: see AGENTS.md.' : `Profile: ${profile.profile}`,
     `Subject: ${profile.subject ?? 'not set'}`,
     checkBaseVersion(baseRoot(), project).message,
     '',
@@ -84,14 +82,10 @@ export function projectInfo(): string {
     ...versions.length === 0 ? ['- no package.json, or none of the known packages'] : versions.map((line) => `- ${line}`),
     '',
     'Check commands, in this order:',
-    ...checks.length === 0 ? ['- none in .agents/profile.json'] : checks,
+    ...checks.length === 0 ? ['- none: use the scripts of package.json (build, test, lint)'] : checks,
     ...packages,
     '',
     `Project skills: ${skills.length === 0 ? 'none' : skills.join(', ')}`,
-    `Agents for the tasks: ${agents === undefined ? 'none until the profile is set' : [
-      ...agents,
-      'checker (final check)',
-    ].join(', ')}`,
   ].join('\n');
 }
 

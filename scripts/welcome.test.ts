@@ -115,26 +115,16 @@ describe('the detection of a project', () => {
 
     assert.equal(detectProject(folder).kind, 'not-front');
     assert.match(result.stdout, /Kind: not-front \(Cargo\.toml: not a front-end project\)/);
-    assert.match(result.stdout, /serves Angular and TypeScript front-end projects only\. Stop the welcome here\./);
+    assert.match(result.stdout, /serves Angular and TypeScript front-end projects only\. Say so to the user\./);
   });
 });
 describe('the profile of a project', () => {
-  it('opens no Angular skill, document or agent to a TypeScript library', () => {
+  it('opens no Angular skill nor document to a TypeScript library', () => {
     const config = projectConfig('ts-lib', GLOBAL);
     const allowed = allowedForProfile(GLOBAL, 'ts-lib');
 
     assert.deepEqual(config['skills'], ['/opt/local-ai-base/skills/typescript']);
-    assert.deepEqual(
-      Object
-        .keys(config['agents'] as object)
-        .sort(),
-      [
-        'component',
-        'html-css',
-        'service',
-        'store',
-      ],
-    );
+    assert.equal(config['agents'], undefined);
     assert.equal(allowed('docs', 'angular'), false);
     assert.equal(allowed('docs', 'ngrx-signals'), false);
     assert.equal(allowed('docs', 'typescript'), true);

@@ -27,7 +27,7 @@ description: Use when you write or change a NgRx Signals store or one of its fea
    - `<domain>.store.ts`: `signalStore({ providedIn: 'root' }, ...features)` and the instance type.
 6. Rename every member with its sub-domain: `isLoadingValves`, `selectedValveId`.
 7. Write the tests from the template: one test per feature in a test store, one test of the store.
-8. Run the check commands of `.agents/profile.json`: format, lint, build, test. Fix until 0 errors.
+8. Run the build, the lint and the tests of the project. Fix until 0 errors.
    A type error: read `docs/ngrx-signals/feature-type-errors.md`.
 
 ## Example

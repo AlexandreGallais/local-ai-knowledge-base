@@ -84,7 +84,7 @@ export function installLint(project: string): string[] {
   const profilePath = join(project, '.agents', 'profile.json');
 
   if (!existsSync(profilePath)) {
-    throw new Error('.agents/profile.json is missing: run the welcome skill first.');
+    throw new Error('.agents/profile.json is missing: run apply-profile.ts with the profile the user wants first.');
   }
   const profile = JSON.parse(readFileSync(profilePath, 'utf8')) as LintProfile;
 

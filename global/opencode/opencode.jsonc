@@ -7,6 +7,9 @@
   // Common rules, loaded at every request with the project's AGENTS.md.
   "instructions": ["/opt/local-ai-base/rules/*.md"],
 
+  // The skills of the base, found by name and description, loaded whole only when a task needs one.
+  "skills": ["/opt/local-ai-base/skills/typescript", "/opt/local-ai-base/skills/angular"],
+
   // Token economy: summarise at about 60,000 tokens, keep the last 8,000 as they are.
   "compaction": { "auto": true, "keep": { "tokens": 8000 }, "buffer": "70%" },
   "tool_output": { "max_lines": 400, "max_bytes": 16384 },
@@ -46,11 +49,6 @@
         "command": ["node", "/opt/local-ai-base/servers/project.ts"],
         "codemode": false
       },
-      "work": {
-        "type": "local",
-        "command": ["node", "/opt/local-ai-base/servers/work.ts"],
-        "codemode": false
-      },
       "code": {
         "type": "local",
         "command": ["node", "/opt/local-ai-base/servers/code.ts"],
@@ -69,7 +67,7 @@
     }
   },
 
-  // Ordered rules: the last matching rule wins; an agent's own rules come after these. The base gives
+  // Ordered rules: the last matching rule wins. The base gives
   // tools and guidance, not bans (decision 0020): everything is allowed, what cannot be undone asks the
   // user, and only the web is refused, in "policies" below.
   "permissions": [
@@ -86,9 +84,6 @@
     // The built-in session and worktree tools ask first.
     { "action": "opencode_*", "resource": "*", "effect": "ask" },
 
-    // The "work" server only for the agents that open it.
-    { "action": "work_*", "resource": "*", "effect": "deny" },
-    { "action": "work_resume", "resource": "*", "effect": "allow" },
 
     // What cannot be undone asks the user: packages, a push, a branch, a deletion.
     { "action": "shell", "resource": "npm install *", "effect": "ask" },
@@ -124,11 +119,8 @@
     { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" }
   ],
 
-  // A new session starts with the orchestrator of the base (agents/orchestrator.md): it answers a
-  // question itself and hands every change to one fresh sub-agent at a time (decision 0018).
-  "default_agent": "orchestrator",
-
-  // Built-in agents that invite parallel work are switched off (decision 0018).
+  // One agent, the default agent of OpenCode, with no sub-agent: the built-in sub-agents are off
+  // (decision 0021).
   "agents": {
     "general": { "disabled": true },
     "explore": { "disabled": true }

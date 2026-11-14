@@ -5,6 +5,20 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Removed
+
+- The orchestrator, the brief, the planner, the checker and the specialised agents; the `work` server,
+  `tasks.md` and their skills; the welcome and the profile chosen at the first conversation (decision
+  0021 of the project). One agent works directly; `AGENTS.md` tells it where the tools are.
+- The sub-agent gate of the plugin; the trial guides of the welcome and of the orchestration.
+
+### Changed in the agent
+
+- The AI runs the installs itself; OpenCode asks the user to approve each one.
+- The skills of the base are open to every project; strict format and lint stay on demand
+  (`apply-profile.ts`).
+- The start skills use Angular only when asked; a plain TypeScript project uses Vite, Vitest and Node.
+
 ### Added
 
 - The license files of every documentation source, copied unchanged at the commit of the library, in

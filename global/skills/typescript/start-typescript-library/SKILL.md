@@ -1,44 +1,43 @@
 ---
 name: start-typescript-library
-description: Use when the user asks for a new TypeScript library without Angular - business code or pure functions - in an empty folder.
+description: Use when the user asks for a new TypeScript project without Angular - a library, a set of functions, a small web page or server - in an empty folder.
 ---
 
-# Start a TypeScript library
+# Start a TypeScript project
 
 ## Rules
 
-- The user runs every command that installs or downloads: give the command, wait for their answer.
-- TypeScript only, never plain JavaScript. Vitest for tests.
+- No Angular unless the user asks for it. TypeScript only, never plain JavaScript. Vite for a web page,
+  Vitest for tests, Node for a server.
+- Run the install commands yourself. OpenCode asks the user to approve each one: wait for the answer.
 
 ## Steps
 
-1. Read `.agents/profile.json`: the welcome wrote the profile (`ts-lib` or `ts-pure-lib`), the subject,
-   the copyright and the lint configs. If it is missing, load the skill `welcome` first.
-2. Ask with the question tool: the name of the package (kebab-case).
-3. Write `package.json` (`"type": "module"`, `"private": true`, scripts `build: tsc -p tsconfig.json` and
-   `test: vitest run`; `"sideEffects": false` for `ts-pure-lib`), `tsconfig.json` extending
-   `.agents/lint/tsconfig.strict.json`, and `src/`. When `package.json` exists, add to it: keep its
-   `devDependencies` and `scripts`, `@opencode/cli` above all.
-4. Ask the user to install the packages of the profile listed in `/opt/local-ai-base/packages.md`, at
-   their pinned versions.
-5. Write a first function with the skill `write-library-function`, and run the checks until 0 errors.
+1. Write `package.json`, or add to it when it exists and keep what it holds (`@opencode/cli` above
+   all): `"type": "module"`, `"private": true`, scripts `build: tsc -p tsconfig.json` and
+   `test: vitest run`.
+2. Write `tsconfig.json`: `strict`, `module: "preserve"`, `moduleResolution: "bundler"`, `noEmit`. For
+   the strict options of the base, extend `/opt/local-ai-base/lint/tsconfig.strict.json`.
+3. Install: `npm install --save-dev --save-exact typescript@6.0.3 vitest@5.1.0`, plus what the request
+   needs (`vite@8.3.8` for a page; the versions of `/opt/local-ai-base/packages.md` when it lists them).
+4. Write the code in `src/`, a test next to each file, and run `npm run build` and `npm test` until
+   0 errors.
 
 ## Example
 
 Wrong:
 
 ```text
-I created index.js and ran npm install lodash.
+Install these packages, then tell me when it is done: npm install --save-dev typescript vitest
 ```
 
 Right:
 
 ```text
-Install these packages, then tell me when it is done (list of /opt/local-ai-base/packages.md):
-npm install --save-dev typescript@6.0.3 vitest@5.1.0
+I run npm install --save-dev --save-exact typescript@6.0.3 vitest@5.1.0 (OpenCode asks you to approve).
 ```
 
 ## Final check
 
-- Is every file in TypeScript, and was `.agents/profile.json` left to the welcome?
-- Did the user run every install, and do the checks end at 0 errors?
+- Is every file in TypeScript, and is Angular absent unless asked?
+- Do `npm run build` and `npm test` end at 0 errors?

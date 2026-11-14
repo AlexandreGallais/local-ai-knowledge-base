@@ -27,7 +27,7 @@ description: Use when you write or change an Angular component or directive, an 
    `move-active-index.ts` in the template.
 6. Write the test: find elements by role, drive by the keyboard, check the ARIA attributes. Follow
    `select-box.spec.ts` of the template.
-7. Run the check commands of `.agents/profile.json`. A lint rule you do not know: call the rule tool
+7. Run the build, the lint and the tests of the project. A lint rule you do not know: call the rule tool
    of the practices server with its id.
 
 ## Example

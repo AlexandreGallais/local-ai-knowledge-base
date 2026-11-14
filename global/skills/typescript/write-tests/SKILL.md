@@ -17,7 +17,7 @@ description: Use when the user asks for tests, when a test fails, or after you c
 ## Steps
 
 1. Note the code to test and the behaviors the request asks for.
-2. Find the runner: the `test` command of `.agents/profile.json`; else the `test` target of
+2. Find the runner: the `test` target of
    `angular.json` (`@angular/build:unit-test`, Vitest) or `vitest` in `package.json`.
 3. Read one existing test next to the code; copy its style and helpers.
 4. Angular: read `docs/angular-testing/index.md`, then the document you need. A store:

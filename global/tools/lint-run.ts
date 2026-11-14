@@ -148,7 +148,7 @@ async function orMissing(name: string, pass: () => Promise<string[]>): Promise<s
     if ((error as { code?: string }).code !== 'MODULE_NOT_FOUND') {
       throw error;
     }
-    return [`${name} is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then ask the user to run the install command it gives.`];
+    return [`${name} is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then run the install command it gives (the user approves it).`];
   }
 }
 

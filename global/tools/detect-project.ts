@@ -1,4 +1,4 @@
-// Guesses what a project is before the welcome questions: its kind (one of the four profiles, an
+// Guesses what a project is, for apply-profile.ts: its kind (one of the four profiles, an
 // empty project, or not a front-end project), its versions, its package manager, its test runner,
 // the copyright header of its files and its file naming. It reads files only; it writes nothing.
 // No package; Node 22.18 or later.
@@ -273,7 +273,7 @@ function main(): void {
     `Copyright header: ${detection.copyright ?? 'none found'}`,
     `File naming: ${detection.fileNaming}`,
     `Source folder: ${detection.sourceFolder}`,
-    ...detection.kind === 'not-front' ? ['This base serves Angular and TypeScript front-end projects only. Stop the welcome here.'] : [],
+    ...detection.kind === 'not-front' ? ['This base serves Angular and TypeScript front-end projects only. Say so to the user.'] : [],
   ].join('\n'));
 }
 

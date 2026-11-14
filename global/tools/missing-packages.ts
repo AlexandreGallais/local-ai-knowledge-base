@@ -1,5 +1,5 @@
 // The npm packages of a profile that a project has not installed yet, and the one command that installs
-// them, from the table "Chosen" of packages.md. The AI never runs that command: it asks the user to.
+// them, from the table "Chosen" of packages.md. The AI runs it; OpenCode asks the user to approve.
 // No package; Node 22.18 or later.
 //   node /opt/local-ai-base/tools/missing-packages.ts [project-folder]
 import {
@@ -60,7 +60,7 @@ export function installAdvice(missing: readonly ProfilePackage[]): string {
   }
   return [
     `${missing.length} package(s) of the profile are not installed: format, lint, build and tests cannot run.`,
-    'Ask the user to run, from the project root, with network access:',
+    'Run, from the project root (OpenCode asks the user to approve it):',
     `npm install --save-dev ${missing.map((item) => `${item.name}@${item.version}`).join(' ')}`,
   ].join('\n');
 }

@@ -14,14 +14,14 @@ production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2
 Two bases, so that project repositories stay clean:
 
 - **The global base** is installed once per machine, read-only, and shared by every dev container:
-  documentation, MCP servers, common rules, skills, agents, lint and format configs, and the OpenCode
-  configuration.
+  documentation, MCP servers, common rules, skills, templates, optional lint and format configs, and
+  the OpenCode configuration.
 - **The project kit** is the only thing a project holds: `AGENTS.md`, owned by the team, and the folder
-  `.agents/` (profile, project skills, local work files).
+  `.agents/` (project skills).
 
-In a session, the agent `orchestrator` welcomes a new project, answers questions, and hands every change
-to one fresh sub-agent at a time: brief, plan, tasks, final check. Every file written is formatted at
-once, then linted; "done" comes only after format, lint, build and tests at zero errors.
+In a session, one agent works directly, with no sub-agent and no per-project setup: `AGENTS.md` tells it
+where the documentation, the MCP tools, the skills and the templates are. It installs the packages it
+needs itself, after the user approves the command. "Done" comes after build and tests at zero errors.
 
 ## From the export to the first conversation
 
@@ -39,13 +39,8 @@ once, then linted; "done" comes only after format, lint, build and tests at zero
 5. **Equip a project.** Paste every `project-NNN.txt` and `import-project.ts` into an empty folder,
    then run `node <that folder>/import-project.ts` from the root of the project. It writes `AGENTS.md`
    and `.agents/`, and keeps what the team already wrote.
-6. **First conversation.** Open OpenCode at the root of the project and say hello. The AI detects the
-   kind of project, asks you to confirm it, its subject, its versions and its copyright header, then
-   applies the profile. Restart OpenCode when it asks. See [guides/try-welcome.md](guides/try-welcome.md).
-7. **Work on a subject.** Describe a change. The AI writes a brief, asks its questions, plans the tasks,
-   has each one done by a sub-agent, and ends with the final check. See
-   [guides/try-orchestration.md](guides/try-orchestration.md).
-8. **Measure it.** Play the ten tasks of the evaluation without a base, with the 0.1 and with the 0.2:
+6. **Work.** Open OpenCode at the root of the project (`npx opencode`) and describe what you want.
+7. **Measure it.** Play the ten tasks of the evaluation without a base, with the 0.1 and with the 0.2:
    [guides/run-evaluation.md](guides/run-evaluation.md).
 
 Other trials: heavy files
@@ -57,15 +52,14 @@ Other trials: heavy files
 | Folder | Content |
 | --- | --- |
 | `global/` | The global base, copied as is to the machine. |
-| `global/opencode/` | Mounted as `/etc/opencode`: config, agents, common skills, plugin. |
+| `global/opencode/` | Mounted as `/etc/opencode`: config, common skills, plugin. |
 | `global/rules/` | Common rules loaded in every session. |
 | `global/docs/` | Documents written for the AI, by topic, with `topics.json` (topic → profiles). |
 | `global/library/` | Official documentation brought from the web, cleaned, one file of 16 KB at most. |
 | `global/skills/` | Skills of the profiles, by group (`angular`, `typescript`), with `groups.json`. |
-| `global/agents/` | Which specialised agent each profile opens (`profiles.json`). |
 | `global/servers/` | MCP servers, one TypeScript file each, run by `node` without packages. |
-| `global/tools/` | Scripts: format, lint, detect and apply a profile, read heavy files, check work files. |
-| `global/lint/` | Format and lint configs of the four profiles, copied into each project. |
+| `global/tools/` | Scripts: format, lint, apply a lint profile on demand, read heavy files. |
+| `global/lint/` | Format and lint configs of the four profiles, copied into a project on demand. |
 | `global/kit/` | Tested pure functions (maths, geometry) and the generated types of the symbols. |
 | `global/templates/` | Tested templates: stores, component, pure function. |
 | `global/evaluation/` | Ten evaluation tasks, their starting projects, the runner and the summary. |

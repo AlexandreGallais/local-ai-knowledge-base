@@ -1,4 +1,4 @@
-// Applies the profile the user confirmed at the welcome: .agents/profile.json, the format and lint
+// Applies the strict format and lint of a profile, when the user asks for them: .agents/profile.json, the format and lint
 // configs of the profile, and the OpenCode config of the project (.opencode/opencode.json, kept out of
 // Git by .git/info/exclude) that opens only the skills and agents of the profile. Running it again
 // keeps what the team wrote: AGENTS.md, .agents/skills/ and the check commands of profile.json.
@@ -44,7 +44,7 @@ interface ProfileFile {
 
 const BASE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BASE_MOUNT = '/opt/local-ai-base';
-const SUBJECT_PLACEHOLDER = '- Subject: not set yet. The skill `welcome` writes it.';
+const SUBJECT_PLACEHOLDER = '- Subject: not set yet. Write it here in one line once you know it.';
 const RULES_PLACEHOLDER = '- None yet. Add one line per rule that is true for this project only.';
 const EXCLUDED = '.opencode/';
 
@@ -71,7 +71,7 @@ export function defaultChecks(project: string, profile: string): Record<string, 
   };
 }
 
-// The profiles each name of a map opens to: groups of skills, or specialised agents.
+// The groups of skills a profile opens, from a map of group to profiles.
 function namesFor(path: string, profile: string): {
   open: string[];
   closed: string[];
@@ -87,19 +87,13 @@ function namesFor(path: string, profile: string): {
   };
 }
 
-// The OpenCode config of the project: the skills of the groups of the profile, and the specialised
-// agents of the other profiles switched off.
+// The OpenCode config of the project: the skills of the groups of the profile.
 export function projectConfig(profile: string, base: string = BASE): Record<string, unknown> {
   const groups = namesFor(join(base, 'skills', 'groups.json'), profile);
-  const agents = namesFor(join(base, 'agents', 'profiles.json'), profile);
 
   return {
     $schema: 'https://opencode.ai/config.json',
     skills: groups.open.map((group) => `${BASE_MOUNT}/skills/${group}`),
-    agents: Object.fromEntries(agents.closed.map((agent) => [
-      agent,
-      { disabled: true },
-    ])),
   };
 }
 
@@ -202,7 +196,7 @@ function main(): void {
       conventions: option(args, '--convention'),
     });
 
-    console.log(`Profile ${profile} applied: ${written.join(', ')}. Restart OpenCode so that it reads the skills and agents of the profile.`);
+    console.log(`Profile ${profile} applied: ${written.join(', ')}. Restart OpenCode so that it reads the skills of the profile.`);
   } catch (error) {
     console.error((error as Error).message);
     process.exitCode = 1;

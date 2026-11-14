@@ -119,7 +119,7 @@ function typescript(): TypeScript {
   try {
     compiler = (path === undefined ? fromProject('typescript') : createRequire(import.meta.url)(path)) as TypeScript;
   } catch {
-    throw new ToolError('TypeScript is not installed in this project. Ask the user to run the install of the project, then call again.');
+    throw new ToolError('TypeScript is not installed in this project. Run npm install --save-dev typescript (the user approves it), then call again.');
   }
   return compiler;
 }

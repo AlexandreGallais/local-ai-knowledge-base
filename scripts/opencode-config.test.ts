@@ -63,7 +63,6 @@ describe('the OpenCode configuration of the global base', () => {
       'practices',
       'skills',
       'project',
-      'work',
       'code',
       'parse',
       'geometry',
@@ -79,11 +78,41 @@ describe('the OpenCode configuration of the global base', () => {
       assert.ok(existsSync(join(ROOT, 'global', script)), `${name}: ${script} is missing`);
     }
   });
-  it('opens the read-only servers to every agent and keeps work for the agents that open it', () => {
+  it('opens the tools of the servers', () => {
     assert.equal(evaluate(config, 'docs_search_docs', '*'), 'allow');
     assert.equal(evaluate(config, 'code_outline', '*'), 'allow');
     assert.equal(evaluate(config, 'parse_outline', '*'), 'allow');
-    assert.equal(evaluate(config, 'work_next_task', '*'), 'deny');
+  });
+});
+describe('one flat agent', () => {
+  it('has no default agent of the base, no work server, no agent of its own and no built-in sub-agent', () => {
+    const raw = config as Config & { default_agent?: string };
+
+    assert.equal(raw.default_agent, undefined);
+    assert.equal(config.mcp?.servers?.['work'], undefined);
+    assert.equal(existsSync(join(ROOT, 'global', 'opencode', 'agents')), false);
+    assert.equal(config.agents?.general?.disabled, true);
+    assert.equal(config.agents?.explore?.disabled, true);
+  });
+  it('lets the AI run an install itself, after the user approves it', () => {
+    assert.equal(shell('npm install --save-dev --save-exact vitest@5.1.0'), 'ask');
+    const rules = readFileSync(join(ROOT, 'global', 'rules', 'common.md'), 'utf8');
+
+    assert.match(rules, /Install the packages the work needs yourself/);
+  });
+  it('sends no rule, skill nor AGENTS.md to a welcome, a profile to choose, a sub-agent or an install by the user', () => {
+    const texts = [
+      join(ROOT, 'global', 'rules', 'common.md'),
+      join(ROOT, 'project', 'AGENTS.md'),
+      ...[
+        join(ROOT, 'global', 'skills'),
+        join(ROOT, 'global', 'opencode', 'skills'),
+      ].flatMap((folder) => readdirSync(folder, { recursive: true }).map(String).filter((name) => name.endsWith('SKILL.md')).map((name) => join(folder, name))),
+    ];
+
+    for (const path of texts) {
+      assert.doesNotMatch(readFileSync(path, 'utf8'), /skill `welcome`|load the skill welcome|sub-agent|tasks\.md|The user runs every command|Ask the user to install|profile\.json gives/i, path);
+    }
   });
 });
 describe('the project kit', () => {
