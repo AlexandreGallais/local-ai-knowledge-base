@@ -1,6 +1,9 @@
-// The format pass for CSS and SCSS: Stylelint rules that fix themselves, nothing reported to the AI.
-// Stylelint 18 with @stylistic/stylelint-plugin 6 (its "scss/" rules for SCSS) and stylelint-order 8.
-// The layout, written once: "@stylistic/<name>" for CSS, "@stylistic/scss/<name>" for SCSS.
+// The format of the CSS and SCSS of this project: only rules that fix themselves. `npm run format`
+// runs it alone, and OpenCode runs it on each style file the AI writes; stylelint.config.mjs
+// extends it, so the lint checks the format too.
+// Stylelint 18 with @stylistic/stylelint-plugin 6 (its "scss/" rules) and stylelint-order 8.
+import { IGNORES } from './lint/settings.mjs';
+
 const LAYOUT = {
   'indentation': 2,
   'linebreaks': 'unix',
@@ -34,6 +37,7 @@ const layout = (prefix) => Object.fromEntries(Object
     value,
   ]));
 // Rules of Stylelint itself that fix themselves: notation and blank lines.
+const FIRST_NESTED = 'first-nested';
 const NOTATION = {
   'color-hex-length': 'short',
   'color-function-notation': 'modern',
@@ -49,7 +53,7 @@ const NOTATION = {
   'rule-empty-line-before': [
     'always-multi-line',
     {
-      except: ['first-nested'],
+      except: [FIRST_NESTED],
       ignore: ['after-comment'],
     },
   ],
@@ -58,7 +62,7 @@ const NOTATION = {
     {
       except: [
         'blockless-after-same-name-blockless',
-        'first-nested',
+        FIRST_NESTED,
       ],
       ignore: ['after-comment'],
     },
@@ -66,7 +70,7 @@ const NOTATION = {
   'comment-empty-line-before': [
     'always',
     {
-      except: ['first-nested'],
+      except: [FIRST_NESTED],
       ignore: ['stylelint-commands'],
     },
   ],
@@ -81,28 +85,17 @@ const NOTATION = {
   'order/properties-alphabetical-order': true,
 };
 
+// CSS is read as SCSS (plain CSS is valid SCSS), as stylelint-config-standard-scss reads it in the
+// lint: one syntax, one set of layout rules for both.
 export default {
+  ignoreFiles: IGNORES.map((folder) => folder.endsWith('/') ? `${folder}**` : folder),
+  customSyntax: 'postcss-scss',
   plugins: [
     '@stylistic/stylelint-plugin',
     'stylelint-order',
   ],
   rules: {
-    ...layout('@stylistic/'),
+    ...layout('@stylistic/scss/'),
     ...NOTATION,
   },
-  overrides: [
-    {
-      files: ['**/*.scss'],
-      customSyntax: 'postcss-scss',
-      rules: {
-        ...Object.fromEntries(Object
-          .keys(LAYOUT)
-          .map((name) => [
-            `@stylistic/${name}`,
-            null,
-          ])),
-        ...layout('@stylistic/scss/'),
-      },
-    },
-  ],
 };

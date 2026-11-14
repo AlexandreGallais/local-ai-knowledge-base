@@ -1,13 +1,21 @@
-// The format pass (decision 0017): only rules that fix themselves, no type information, nothing
-// reported to the AI. It runs on every file the AI writes. ESLint Stylistic and perfectionist for
-// TypeScript, the layout rules of angular-eslint for templates, eslint-plugin-jsonc for JSON.
-// The packages come from .agents/node_modules (npm install --prefix .agents), else from the project's.
+// The format of this project: only rules that fix themselves, so that no one has to think about the
+// layout of the code. `npm run format` runs it alone, and OpenCode runs it on each file the AI writes.
+// eslint.config.mjs imports it first, so the lint checks the format too.
+//
+// TypeScript: the layout of ESLint Stylistic (its shared config, then the settings below) and the
+// sorting of perfectionist (its recommended config). Angular templates: the layout rules of
+// angular-eslint. JSON: eslint-plugin-jsonc. The settings of the project are in lint/settings.mjs.
+import {
+  defineConfig,
+  globalIgnores,
+} from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import { local } from './local-plugin.mjs';
+import { local } from './lint/local-rules.mjs';
 import {
   optional,
   prune,
-} from './optional.mjs';
+} from './lint/optional.mjs';
+import { project } from './lint/project.mjs';
 
 // Optional plugins: when one is missing, its rules are left out (optional.mjs).
 const STYLISTIC = '@stylistic';
@@ -331,24 +339,9 @@ const jsonFormat = jsonc === undefined ? [] : [
   },
 ];
 
-/**
- * The format config of a project.
- * @param {{ angular: boolean, copyright?: { pattern: string, text: string } }} options
- */
-export async function formatConfig(options) {
-  return prune([
-    {
-      ignores: [
-        'dist/',
-        'coverage/',
-        '.angular/',
-        'node_modules/',
-        '.agents/',
-        '**/package-lock.json',
-      ],
-    },
-    typescriptFormat(options.copyright),
-    ...options.angular ? await angularFormat() : [],
-    ...jsonFormat,
-  ]);
-}
+export default defineConfig(prune([
+  globalIgnores(project.ignores),
+  typescriptFormat(project.copyright),
+  ...project.angular ? await angularFormat() : [],
+  ...jsonFormat,
+]));

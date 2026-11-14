@@ -1,12 +1,15 @@
 // The one import script of the base. It takes every part found in its folder (kit-001.txt,
 // js-official-docs-001.txt...), whatever their packs, checks them all, then rebuilds everything in
-// the project at once: the kit (AGENTS.md, opencode.json, .agents/) and each pasted brick of
-// .agents/mcp/, with its line in opencode.json. One file, no package, no build step: Node 22.18 or later.
+// the project at once: the kit (AGENTS.md, opencode.json, the format and lint configs, .agents/) and
+// each pasted brick of .agents/mcp/, with its line in opencode.json. It adds to package.json the
+// scripts format, lint and check and the lint packages it lacks. One file, no package, no build
+// step: Node 22.18 or later.
 //   node import.ts [--from <folder of the parts>] [--target <project root>]
 // Default: the parts next to this file, the current folder as the project.
 // A damaged or missing part is named, and nothing is written. What the team wrote is kept: AGENTS.md,
-// .agents/profile.json and the skills already in .agents/skills/ are written only when missing, and
-// the settings the team added to opencode.json stay.
+// the format and lint configs and the skills already there are written only when missing, the
+// scripts and packages of package.json are added only when missing, and the settings the team added
+// to opencode.json stay.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
@@ -19,6 +22,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import {
+  basename,
   dirname,
   join,
   resolve,
@@ -58,6 +62,7 @@ export interface ImportResult {
   written: number;
   kept: string[];
   servers: string[];
+  added: string[];
 }
 
 type Json = Record<string, unknown>;
@@ -67,25 +72,61 @@ const Z85 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=
 const STREAM_MAGIC = 'LAB2\n';
 const PART_NAME = /^(.+)-(\d{3})\.txt$/;
 const BRICKS = '.agents/mcp';
-const FORMATTER = 'agents-format';
+const PACKAGES = 'lint/packages.json';
 const INSTRUCTIONS = [
   '.agents/rules.md',
   '.agents/mcp/*/rules.md',
 ];
-// OpenCode formatters that would run before the format brick on the same files.
+// OpenCode formatters that would run before the format config of the project on the same files.
 const BUILT_IN_FORMATTERS = [
   'prettier',
   'biome',
   'oxfmt',
 ];
-const FORMATTED = [
-  '.ts',
-  '.mts',
-  '.html',
-  '.json',
-  '.css',
-  '.scss',
+// The formatters OpenCode runs after each write: the format configs of the project, by their file.
+const FORMATTERS = [
+  {
+    name: 'eslint-format',
+    config: 'eslint.format.config.mjs',
+    command: [
+      'npx',
+      '--no',
+      '--',
+      'eslint',
+      '--config',
+      'eslint.format.config.mjs',
+      '--fix',
+      '$FILE',
+    ],
+    extensions: [
+      '.ts',
+      '.mts',
+      '.html',
+      '.json',
+    ],
+  },
+  {
+    name: 'stylelint-format',
+    config: 'stylelint.format.config.mjs',
+    command: [
+      'npx',
+      '--no',
+      '--',
+      'stylelint',
+      '--config',
+      'stylelint.format.config.mjs',
+      '--fix',
+      '--allow-empty-input',
+      '$FILE',
+    ],
+    extensions: [
+      '.css',
+      '.scss',
+    ],
+  },
 ];
+// Formatters of earlier versions of the kit.
+const OLD_FORMATTERS = ['agents-format'];
 
 function sha256(data: Buffer | string): string {
   return createHash('sha256')
@@ -252,7 +293,7 @@ export function readPacks(from: string): Pack[] {
 
 // Files the team owns: written when missing, never replaced by an update of the kit.
 function ownedByTeam(path: string): boolean {
-  return path === 'AGENTS.md' || path === '.agents/profile.json' || path.startsWith('.agents/skills/');
+  return path !== 'opencode.json' && (!path.startsWith('.agents/') || path.startsWith('.agents/skills/'));
 }
 
 // The bricks a pack brings: .agents/mcp/<brick>/..., replaced whole so that no old file stays.
@@ -317,13 +358,14 @@ function syncServers(current: Json, bricks: string[]): Json {
   };
 }
 
-// The formatters of the config: the format brick, and the built-in ones off, when the brick is there.
-function syncFormatter(current: Json, bricks: string[]): Json {
+// The formatters of the config: one per format config the project holds, and the built-in ones off.
+function syncFormatter(current: Json, configs: string[]): Json {
+  const ours = FORMATTERS.filter((item) => configs.includes(item.config));
   const kept = Object.fromEntries(Object
     .entries(current)
-    .filter(([name]) => name !== FORMATTER));
+    .filter(([name]) => !OLD_FORMATTERS.includes(name) && !FORMATTERS.some((item) => item.name === name)));
 
-  if (!bricks.includes('format')) {
+  if (ours.length === 0) {
     return kept;
   }
   return {
@@ -332,22 +374,28 @@ function syncFormatter(current: Json, bricks: string[]): Json {
       name,
       { disabled: true },
     ])),
-    [FORMATTER]: {
-      command: [
-        'node',
-        `${BRICKS}/format/format-file.ts`,
-        '$FILE',
-      ],
-      extensions: FORMATTED,
-    },
+    ...Object.fromEntries(ours.map((item) => [
+      item.name,
+      {
+        command: item.command,
+        extensions: item.extensions,
+      },
+    ])),
   };
 }
 
-// opencode.json with the instructions of the base, the formatter of the format brick and one local
-// MCP server per brick present; the other settings of the file are kept as they are.
-export function syncConfig(config: Json, bricks: string[]): Json {
+// The format configs present in the project.
+export function presentFormatConfigs(target: string): string[] {
+  return FORMATTERS
+    .map((item) => item.config)
+    .filter((config) => existsSync(join(target, config)));
+}
+
+// opencode.json with the instructions of the base, a formatter per format config of the project and
+// one local MCP server per brick present; the other settings of the file are kept as they are.
+export function syncConfig(config: Json, bricks: string[], formatConfigs: string[] = []): Json {
   const instructions = Array.isArray(config['instructions']) ? config['instructions'].filter((item) => typeof item === 'string') : [];
-  const formatter = syncFormatter(record(config['formatter']), bricks);
+  const formatter = syncFormatter(record(config['formatter']), formatConfigs);
   const mcp = record(config['mcp']);
   const servers = syncServers(record(mcp['servers']), bricks);
 
@@ -363,6 +411,80 @@ export function syncConfig(config: Json, bricks: string[]): Json {
       servers,
     },
   };
+}
+
+function hasAngular(manifest: Json): boolean {
+  return [
+    'dependencies',
+    'devDependencies',
+    'peerDependencies',
+  ].some((section) => '@angular/core' in record(manifest[section]));
+}
+
+// package.json with the scripts and the lint packages of lint/packages.json it lacks: Angular
+// packages only for a project that lists @angular/core. What it already holds is never changed.
+export function mergePackageJson(manifest: Json, packages: Json): {
+  manifest: Json;
+  added: string[];
+} {
+  const scripts = record(manifest['scripts']);
+  const devDependencies = record(manifest['devDependencies']);
+  const declared = {
+    ...record(manifest['dependencies']),
+    ...devDependencies,
+    ...record(manifest['peerDependencies']),
+  };
+  const wanted = {
+    ...record(packages['always']),
+    ...hasAngular(manifest) ? record(packages['angular']) : {},
+  };
+  const newScripts = Object
+    .entries(record(packages['scripts']))
+    .filter(([name]) => !(name in scripts));
+  const newPackages = Object
+    .entries(wanted)
+    .filter(([name]) => !(name in declared));
+
+  return {
+    manifest: {
+      ...manifest,
+      scripts: {
+        ...scripts,
+        ...Object.fromEntries(newScripts),
+      },
+      devDependencies: {
+        ...devDependencies,
+        ...Object.fromEntries(newPackages),
+      },
+    },
+    added: [
+      ...newScripts.map(([name]) => `script ${name}`),
+      ...newPackages.map(([name]) => name),
+    ],
+  };
+}
+
+// Adds what lint/packages.json of the project asks to its package.json, or writes a new one.
+function syncPackageJson(target: string): string[] {
+  if (!existsSync(join(target, PACKAGES))) {
+    return [];
+  }
+  const path = join(target, 'package.json');
+  const current = existsSync(path) ? readJson(path) : {
+    name: basename(target)
+      .toLowerCase()
+      .replaceAll(/[^a-z0-9-]/g, '-'),
+    private: true,
+  };
+  const {
+    manifest,
+    added,
+  } = mergePackageJson(current, readJson(join(target, PACKAGES)));
+
+  if (added.length > 0) {
+    writeFileSync(path, `${JSON.stringify(manifest, null, 2)}\n`);
+  }
+  return added;
 }
 
 function write(target: string, file: UnpackedFile): void {
@@ -396,7 +518,7 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
   const fresh = Object.keys(config).length === 0;
   const original = fresh ? configFile?.data.toString('utf8') : readFileSync(join(target, 'opencode.json'), 'utf8');
   const servers = presentBricks(target);
-  const synced = syncConfig(fresh && original !== undefined ? JSON.parse(original) as Json : config, servers);
+  const synced = syncConfig(fresh && original !== undefined ? JSON.parse(original) as Json : config, servers, presentFormatConfigs(target));
 
   // The file keeps its own layout when its content does not change.
   writeFileSync(join(target, 'opencode.json'), original !== undefined && JSON.stringify(JSON.parse(original)) === JSON.stringify(synced) ? original : `${JSON.stringify(synced, null, 2)}\n`);
@@ -405,6 +527,7 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
     written: written + 1,
     kept,
     servers,
+    added: syncPackageJson(target),
   };
 }
 
@@ -448,6 +571,9 @@ function main(): void {
   process.stdout.write(`MCP servers in opencode.json: ${result.servers.join(', ') || 'none'}.\n`);
   for (const path of result.kept) {
     process.stdout.write(`kept: ${path}\n`);
+  }
+  if (result.added.length > 0) {
+    process.stdout.write(`Added to package.json: ${result.added.join(', ')}. Run npm install.\n`);
   }
   buildIndexes(target, bricksOf(packs.flatMap((pack) => pack.files)));
 }

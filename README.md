@@ -11,21 +11,28 @@ production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2
 
 ## How it works
 
-A project equipped with the base holds three entries, and nothing is installed elsewhere:
+A project equipped with the base holds these entries, and nothing is installed elsewhere:
 
 | Entry | Content |
 | --- | --- |
 | `AGENTS.md` | The rules of the project, owned by the team. |
-| `opencode.json` | What OpenCode loads: the rules, the formatter, one local MCP server per brick. |
-| `.agents/` | The common rules, the skills, the packages of the bricks, and the bricks in `.agents/mcp/`. |
+| `opencode.json` | What OpenCode loads: the rules, the format after each write, one local MCP server per brick. |
+| `eslint.config.mjs`, `eslint.format.config.mjs` | The lint and the format of TypeScript, templates and JSON; the lint imports the format. |
+| `stylelint.config.mjs`, `stylelint.format.config.mjs` | The same for CSS and SCSS. |
+| `lint/` | What these configs share: the settings of the project, the local rules, the short output. |
+| `.agents/` | The common rules, the skills, and the bricks in `.agents/mcp/`. |
+
+The format and the lint are those of the project, as in any project: the team and the AI run the same
+scripts, `npm run format`, `npm run lint` and `npm run check`, and the editor reads the same configs.
+Each config starts from the recommended config of its library. They belong to the team: an update of
+the kit never replaces them. [`project/lint/README.md`](project/lint/README.md) says where to change
+what.
 
 Each folder of `.agents/mcp/` is a brick: one MCP server with everything it needs. Removing the folder
-removes the server, its config, its documentation and its rules, without breaking the other bricks.
+removes the server, its documentation and its rules, without breaking the other bricks.
 
 | Brick | What the AI gets |
 | --- | --- |
-| `format` | Each file it writes is formatted at once; `format_file` formats any other. |
-| `lint` | `lint_file` and `lint_project`: the errors left, one line each with the id of its rule. |
 | `parse` | The outline, then one part, then the images of a heavy file: XD, Word, Excel, PowerPoint, PDF, SVG. |
 | `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. |
 
@@ -57,25 +64,26 @@ brick (`js-official-docs-001.txt`...) and the one import script, `import.ts`.
    the parts of each documentation brick the project needs.
 2. From the root of the project, run `node <that folder>/import.ts`.
 3. It takes every part of the folder, checks them all, then writes everything at once: `AGENTS.md`,
-   `opencode.json`, `.agents/`, each brick with its line in `opencode.json`, and the search index of
-   each documentation brick.
+   `opencode.json`, the format and lint configs, `.agents/`, each brick with its line in
+   `opencode.json`, and the search index of each documentation brick. It adds to `package.json` the
+   scripts `format`, `lint` and `check` and the lint packages it lacks (the Angular ones for an
+   Angular project).
 4. A damaged or missing part is named, and nothing is written: paste that part again, then run the
    command again.
 
 To update a project, or to add a brick later, do the same: what the team wrote is kept (`AGENTS.md`,
-`.agents/profile.json`, the skills already there, the settings added to `opencode.json`), and each
-brick pasted is replaced whole.
+the format and lint configs, `lint/`, the skills already there, the scripts and the versions of
+`package.json`, the settings added to `opencode.json`), and each brick pasted is replaced whole.
 
-### 3. Install the packages of the bricks
+### 3. Install the packages
 
-From the root of the project, once: `npm install --prefix .agents`. The format and lint bricks run
-without them, but do nothing; when a package is missing, the AI runs this command itself, after your
-approval.
+From the root of the project, once: `npm install`. Then `npm run check` formats and lints the whole
+project. When a package is missing, the AI runs `npm install` itself, after your approval.
 
 ### 4. Work
 
 Open OpenCode CLI 2.2.7 at the root of the project and describe what you want. Check that it sees the
-servers: `/mcps` lists `format`, `lint`, `parse` and `js-official-docs`.
+servers: `/mcps` lists `parse` and `js-official-docs`.
 
 ## Update the documentation of a tool
 
@@ -89,7 +97,7 @@ repository. The workstation never does it: it receives the new export.
    `node scripts/update-tool.ts angular v23.0.0`, `node scripts/fetch-library.ts --tool angular`,
    `node scripts/check-library.ts`.
 3. When a lint plugin follows the major version of the tool (angular-eslint follows Angular), update
-   its version in `project/.agents/package.json`.
+   its version in `project/lint/packages.json`.
 4. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in
    `CHANGELOG.md`, and deliver the new export.
 
@@ -97,7 +105,7 @@ repository. The workstation never does it: it receives the new export.
 
 | Folder | Content |
 | --- | --- |
-| `project/` | The project kit: `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
+| `project/` | The project kit: `AGENTS.md`, `opencode.json`, the format and lint configs, `lint/` and `.agents/`, bricks included. |
 | `import.ts` | The one import script, which travels with the export. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |

@@ -5,6 +5,27 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: the format and the lint of a plain project
+
+- The format and the lint live at the root of the project, as in any project: `eslint.format.config.mjs`
+  (the format, rules that fix themselves only) and `eslint.config.mjs` (the lint, the default config of
+  ESLint, which imports the format config first), `stylelint.format.config.mjs` and
+  `stylelint.config.mjs` the same way. The editor, the team and the AI use the same configs.
+- Each config starts from the recommended config of its library; the settings of a project
+  (copyright line, Angular selector prefix, folders left out) are in `lint/settings.mjs`, the local
+  rules in `lint/local-rules.mjs`.
+- `npm run format`, `npm run lint` (one line per error with its rule id) and `npm run check`. The
+  import adds these scripts and the lint packages to `package.json` when they are missing, and writes
+  the configs only when they are missing: they belong to the team.
+- OpenCode runs the format config on each file written (`eslint-format` and `stylelint-format` in
+  `opencode.json`).
+- CSS is read as SCSS by the format too, as the standard SCSS config reads it in the lint.
+
+### Removed with the format and lint of a plain project
+
+- The bricks `format` and `lint`, their MCP servers and `.agents/package.json`; `.agents/profile.json`
+  gives way to `lint/settings.mjs`.
+
 ### Changed: everything in the project, one brick per MCP server (decision 0023)
 
 - No global base anymore: a project holds `AGENTS.md`, `opencode.json` and `.agents/`, and nothing is

@@ -32,6 +32,8 @@
     "strictInputAccessModifiers": true,
     "strictStandalone": true,
     "typeCheckHostBindings": true,
-    "extendedDiagnostics": { "defaultCategory": "error" }
+    "extendedDiagnostics": {
+      "defaultCategory": "error"
+    }
   }
 }

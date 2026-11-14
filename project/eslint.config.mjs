@@ -1,17 +1,24 @@
-// The lint pass (decision 0017): no layout rule, only what the format pass cannot fix, one config per
-// kind of file. One config for every project: it lints more or less according to what the project
-// installs. Classes for objects that live, functions for utilities: no rule forbids either.
-// The packages come from .agents/node_modules (npm install --prefix .agents), else from the project's.
+// The lint of this project, the default config of ESLint: `npx eslint .`, the editor and
+// `npm run lint` read it. It starts with the format (eslint.format.config.mjs), then adds the
+// quality rules: bad practice, risk, complexity, one layer per kind of file.
+//
+// Each layer starts from the recommended config of its library (@eslint/js, typescript-eslint
+// strictTypeChecked, eslint-plugin-regexp, angular-eslint, @ngrx/eslint-plugin, eslint-plugin-rxjs-x,
+// @vitest/eslint-plugin, eslint-plugin-jsdoc), then sets its own rules below. A layer whose plugin
+// is not installed is left out (lint/optional.mjs). Classes for objects that live, functions for
+// utilities: no rule forbids either. The settings of the project are in lint/settings.mjs.
 import {
   defineConfig,
   globalIgnores,
 } from 'eslint/config';
 import tseslint from 'typescript-eslint';
-import { local } from './local-plugin.mjs';
+import format from './eslint.format.config.mjs';
+import { local } from './lint/local-rules.mjs';
 import {
   optional,
   prune,
-} from './optional.mjs';
+} from './lint/optional.mjs';
+import { project } from './lint/project.mjs';
 
 // Optional plugins: when one is missing, its rules are left out (optional.mjs).
 const js = await optional('@eslint/js', []);
@@ -538,7 +545,7 @@ async function jsdocLayer() {
   };
 }
 
-// ---- The copyright line, when .agents/profile.json gives one ----------------------------------------
+// ---- The copyright line, when lint/settings.mjs gives one -----------------------------------------
 function copyrightLayer(copyright) {
   return copyright === undefined ? [] : [
     {
@@ -555,26 +562,16 @@ function copyrightLayer(copyright) {
   ];
 }
 
-/**
- * The lint config of a project: what options.mjs reads from package.json and .agents/profile.json.
- * @param {{ angular?: boolean, jsdoc?: boolean, prefix?: string, copyright?: { pattern: string } }} options
- */
-export async function lintConfig(options = {}) {
-  return defineConfig(prune([
-    globalIgnores([
-      'dist/',
-      'coverage/',
-      '.angular/',
-      '.agents/',
-      'node_modules/',
-      'storybook-static/',
-    ]),
+export default defineConfig([
+  format,
+  ...prune([
+    globalIgnores(project.ignores),
     typescriptBase,
-    ...options.angular === true ? await angularLayers(options.prefix ?? 'app') : [],
-    ...options.jsdoc === true ? [await jsdocLayer()] : [],
-    ...copyrightLayer(options.copyright),
+    ...project.angular ? await angularLayers(project.prefix) : [],
+    ...project.jsdoc ? [await jsdocLayer()] : [],
+    ...copyrightLayer(project.copyright),
     tests,
     toolConfigs,
     storybook,
-  ]));
-}
+  ]),
+]);

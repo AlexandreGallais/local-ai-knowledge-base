@@ -1,6 +1,6 @@
 // The lint plugins a project may lack. eslint and typescript-eslint are needed; every other plugin is
 // optional: when it is not installed, its rules and the configs it brings are left out, and the rest of
-// the format and lint passes still run. Copied into a project with the other lint configs.
+// the format and the lint still run.
 /** The rule prefixes of the plugins that were not found, filled by optional(). */
 export const missingPrefixes = new Set();
 

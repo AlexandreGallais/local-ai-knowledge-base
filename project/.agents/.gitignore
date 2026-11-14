@@ -1,4 +1,3 @@
-# Local to this machine: work files, extracts of heavy files, caches, the packages of the bricks.
+# Local to this machine: work files, extracts of heavy files, caches.
 work/
 cache/
-node_modules/

@@ -1,7 +1,11 @@
-// The lint pass for CSS and SCSS: no layout rule, no rule that fixes itself in the format pass.
-// Stylelint 18, stylelint-config-standard-scss 18 and @double-great/stylelint-a11y.
+// The lint of the CSS and SCSS of this project, the default config of Stylelint: the editor and
+// `npm run lint` read it. It starts from the standard config of Stylelint for SCSS, adds the format
+// (stylelint.format.config.mjs), then the quality rules below: specificity, nesting, accessibility.
 export default {
-  extends: ['stylelint-config-standard-scss'],
+  extends: [
+    'stylelint-config-standard-scss',
+    './stylelint.format.config.mjs',
+  ],
   plugins: ['@double-great/stylelint-a11y'],
   ignoreDisables: true,
   rules: {

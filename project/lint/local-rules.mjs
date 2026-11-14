@@ -1,5 +1,5 @@
-// Local ESLint plugin of the base: the rules no npm plugin gives in the shape the base needs.
-// Plain ESM, ESLint 10 rule format, no dependency. The format and lint bricks hold one copy each.
+// The local rules of this project, as an ESLint plugin named "local": what no npm plugin gives in the
+// shape the project needs. Plain ESM, ESLint 10 rule format, no dependency. Both configs use it.
 import {
   existsSync,
   readFileSync,
@@ -11,7 +11,7 @@ import {
   resolve,
 } from 'node:path';
 
-const SHEET = 'local rule of the base: ';
+const SHEET = 'local rule, see lint/local-rules.mjs: ';
 const IDENTIFIER = 'Identifier';
 // Nothing before the first comment but a byte order mark, a shebang line and blanks.
 const BYTE_ORDER_MARK = String.fromCodePoint(0xFE_FF);
@@ -181,7 +181,7 @@ const copyrightHeader = rule(
         additionalProperties: false,
       },
     ],
-    messages: { missing: 'Start this file with the copyright comment of the project (see .agents/profile.json).' },
+    messages: { missing: 'Start this file with the copyright comment of the project (see lint/settings.mjs).' },
   },
   (context) => ({
     Program(node) {
