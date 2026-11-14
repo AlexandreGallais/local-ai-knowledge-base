@@ -18,8 +18,8 @@ description: Use when the user asks to create, update or review an agent - a rol
 
 1. Ask the user for: the role, what the agent may change, one test question, the expected answer.
 2. Write `.agents/skills/<agent-name>/SKILL.md` with the template below.
-3. Add the name to the list of skills in `AGENTS.md`, section "Skills of this project".
-4. Run `node /opt/local-ai-base/tools/check-skill.ts .agents/skills/<agent-name>`. Fix every finding.
+3. Leave `AGENTS.md` as it is: OpenCode lists the skills of `.agents/skills/` by itself.
+4. Run `node .agents/skills/write-skill/scripts/check-skill.ts .agents/skills/<agent-name>`. Fix every finding.
 5. Give the test question, the expected answer, and the sentence to start it: "Load the skill `<agent-name>`. Follow it exactly."
 
 ## Template

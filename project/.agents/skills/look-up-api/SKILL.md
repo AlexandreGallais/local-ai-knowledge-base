@@ -16,7 +16,8 @@ description: Use when you check an API signature or option, or when the user ask
 
 1. Note the tool, the name of the API or command, and the question.
 2. Read the installed version: `grep -m1 '"version"' node_modules/<package>/package.json`.
-3. Search the local documentation with the `docs` tools: `search_docs` with the exact name and two words of the question.
+3. Search the official documentation server of the language, when the project has one
+   (`js-official-docs` for JavaScript and TypeScript): `search_docs` with the exact name and two words of the question.
    Add `tool` to narrow it: `angular`, `mdn-api`, `typescript`, `ngrx-signals`, `vitest`.
 4. Read the best result with `read_doc`: one section only.
 5. When the version of the document differs from the installed one, or nothing matches, search the
@@ -53,7 +54,7 @@ It creates a writable signal. The options can hold an equality function.
 - Reading `lib.dom.d.ts` or an Angular `.d.ts` file from the top: thousands of lines. Search the name instead.
 - The declaration sits in a "chunk" file with an odd name: search the whole package folder, not one file.
 - Many matches: add the type name or the opening bracket to the pattern.
-- A document of the base with an older version than the project: say it, and check the package.
+- Documentation with an older version than the project: say it, and check the package.
 
 ## Final check
 

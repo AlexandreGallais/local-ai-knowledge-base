@@ -1,3 +1,4 @@
-# Local to this machine: work files, extracts of heavy files, caches. Never in Git.
+# Local to this machine: work files, extracts of heavy files, caches, the packages of the bricks.
 work/
 cache/
+node_modules/

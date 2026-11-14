@@ -1,68 +1,104 @@
 # Knowledge base for a local AI
 
-Rules, skills, agents, documentation and tools that help a small local language model write
+Rules, skills, MCP servers and official documentation that help a small local language model write
 production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2.2.7.
 
 ## Status
 
-- Version 0.2.0: front-end work only: Angular applications and libraries, TypeScript libraries.
+- Next version, not released yet: everything lives in the project, one brick per MCP server.
   Changes: [CHANGELOG.md](CHANGELOG.md).
 - Version 0.1 is archived in [`archive/v0.1/`](archive/v0.1/README.md), unchanged, with its history.
 
 ## How it works
 
-Two bases, so that project repositories stay clean:
+A project equipped with the base holds three entries, and nothing is installed elsewhere:
 
-- **The global base** is installed once per machine, read-only, and shared by every dev container: the
-  documentation, the MCP servers and the tools they run, and the common rules.
-- **The project kit** is the only thing a project holds: `AGENTS.md`, owned by the team, and the folder
-  `.agents/`: the skills (`.agents/skills/`) and the format and lint configs (`.agents/lint/`), for the
-  whole team. The project lints more or less according to the plugins it installs.
-- **The OpenCode keys of the base** (`opencode/opencode.jsonc`) go into your own OpenCode configuration:
-  common rules, MCP servers, formatter, web lock. The base imposes no rights.
+| Entry | Content |
+| --- | --- |
+| `AGENTS.md` | The rules of the project, owned by the team. |
+| `opencode.json` | What OpenCode loads: the rules, the formatter, one local MCP server per brick. |
+| `.agents/` | The common rules, the skills, the packages of the bricks, and the bricks in `.agents/mcp/`. |
 
-In a session, one agent works directly, with no sub-agent and no per-project setup: `AGENTS.md` tells it
-where the documentation, the MCP tools and the skills are. It installs the packages it needs itself.
-"Done" comes after lint, build and tests at zero errors.
+Each folder of `.agents/mcp/` is a brick: one MCP server with everything it needs. Removing the folder
+removes the server, its config, its documentation and its rules, without breaking the other bricks.
+
+| Brick | What the AI gets |
+| --- | --- |
+| `format` | Each file it writes is formatted at once; `format_file` formats any other. |
+| `lint` | `lint_file` and `lint_project`: the errors left, one line each with the id of its rule. |
+| `parse` | The outline, then one part, then the images of a heavy file: XD, Word, Excel, PowerPoint, PDF, SVG. |
+| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. |
+
+[`project/.agents/README.md`](project/.agents/README.md) explains each part, and the `README.md` of each
+brick says what it holds and how to remove it.
+
+In a session, one agent works directly, with no per-project setup. It installs the packages it needs
+itself, after your approval. "Done" comes after lint, build and tests at zero errors.
 
 ## From the export to the first conversation
 
-1. **Find the part size that pastes.** The export is in `export/`, in five part sizes (500 KB to 10 MB);
-   follow [guides/paste-export.md](guides/paste-export.md), part 1.
-2. **Install the global base.** Paste every `global-NNN.txt` of that size and `import-base.ts` into an
-   empty folder, then run `node <that folder>/import-base.ts` from where you want the base. It lands
-   in `./local-ai-base` there.
-3. **Mount it in the dev containers.** Follow [guides/install.md](guides/install.md): the base at
-   `/opt/local-ai-base`, read-only; the keys of `setup/opencode/opencode.jsonc` added to your OpenCode
-   configuration; OpenCode kept at 2.2.7 with updates off. To try it first on one machine, with a
-   project with the base and the same project without it, follow
-   [guides/compare-with-and-without.md](guides/compare-with-and-without.md).
-4. **Check the container.** In a recreated dev container, run the commands of `install.md`, part 4.
-5. **Equip a project.** Paste every `project-NNN.txt` and `import-project.ts` into an empty folder,
-   then run `node <that folder>/import-project.ts` from the root of the project. It writes `AGENTS.md`
-   and `.agents/`, and keeps what the team already wrote.
-6. **Work.** Open OpenCode at the root of the project (`npx opencode`) and describe what you want.
+The export is in `export/`, in five part sizes, one folder each: `500k`, `1m`, `2m`, `5m`, `10m`. They
+hold the same content. Each folder has one pack `kit` (`kit-001.txt`...), one pack per documentation
+brick (`js-official-docs-001.txt`...) and the one import script, `import.ts`.
 
-Other trials: heavy files
-([guides/try-heavy-files.md](guides/try-heavy-files.md)), update a tool of the documentation
-([guides/update-a-tool.md](guides/update-a-tool.md)).
+### 1. Find the largest size that pastes
+
+1. On the workstation, create an empty folder, for example `~/paste-test`.
+2. Create `kit-001.txt` there, open `export/10m/kit-001.txt` here, copy all of it, paste it into the
+   new file, save. Paste `import.ts` the same way.
+3. Run `node ~/paste-test/import.ts --target ~/paste-test-project` and read the first line:
+   - "Installed in": the paste worked; keep this size.
+   - "the content was damaged by the paste" or "the end of the part is missing": the paste cut or
+     changed the text; try the next size down: 5m, then 2m, 1m, 500k.
+
+### 2. Paste what the project needs
+
+1. In an empty folder, paste `import.ts` and every part of the size you keep: the parts of `kit`, and
+   the parts of each documentation brick the project needs.
+2. From the root of the project, run `node <that folder>/import.ts`.
+3. It takes every part of the folder, checks them all, then writes everything at once: `AGENTS.md`,
+   `opencode.json`, `.agents/`, each brick with its line in `opencode.json`, and the search index of
+   each documentation brick.
+4. A damaged or missing part is named, and nothing is written: paste that part again, then run the
+   command again.
+
+To update a project, or to add a brick later, do the same: what the team wrote is kept (`AGENTS.md`,
+`.agents/profile.json`, the skills already there, the settings added to `opencode.json`), and each
+brick pasted is replaced whole.
+
+### 3. Install the packages of the bricks
+
+From the root of the project, once: `npm install --prefix .agents`. The format and lint bricks run
+without them, but do nothing; when a package is missing, the AI runs this command itself, after your
+approval.
+
+### 4. Work
+
+Open OpenCode CLI 2.2.7 at the root of the project and describe what you want. Check that it sees the
+servers: `/mcps` lists `format`, `lint`, `parse` and `js-official-docs`.
+
+## Update the documentation of a tool
+
+For the maintainers, on a machine with network access, with the build tools kept beside this
+repository. The workstation never does it: it receives the new export.
+
+1. See what is behind: `node scripts/update-tool.ts` lists each source with a newer release tag. In a
+   project, `node .agents/mcp/js-official-docs/check-versions.ts` lists the tools whose documentation
+   is behind the versions of `package.json`.
+2. Move a source to its new tag, fetch it again, check it:
+   `node scripts/update-tool.ts angular v23.0.0`, `node scripts/fetch-library.ts --tool angular`,
+   `node scripts/check-library.ts`.
+3. When a lint plugin follows the major version of the tool (angular-eslint follows Angular), update
+   its version in `project/.agents/package.json`.
+4. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in
+   `CHANGELOG.md`, and deliver the new export.
 
 ## Layout
 
 | Folder | Content |
 | --- | --- |
-| `global/` | The global base, copied as is to the machine: documentation and shared code only. |
-| `global/rules.md` | The common rules, loaded in every session. |
-| `global/docs/` | Short documents written for the AI, by topic. |
-| `global/library/` | Official documentation brought from the web, cleaned, one file of 16 KB at most. |
-| `global/servers/` | MCP servers, one TypeScript file each, run by `node` without packages. |
-| `global/tools/` | The tools the servers and the formatter run: format, lint, read heavy files, search. |
-| `project/` | The project kit: `AGENTS.md` and `.agents/` (skills, format and lint configs). |
-| `opencode/` | What the base adds to an OpenCode configuration, to copy into yours. |
-| `devcontainer/` | The two test dev containers, with and without the base, and the shared user config. |
-| `import/` | The two import scripts that travel with the export. |
-| `guides/` | Guides for people: install, paste the export, trials. |
-| `notes/` | Notes for maintainers: what the base relies on in OpenCode, measures, review. |
+| `project/` | The project kit: `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
+| `import.ts` | The one import script, which travels with the export. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 
@@ -71,8 +107,7 @@ kept outside it.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). Third-party documentation in `global/library/` keeps its own license,
-listed in `global/THIRD_PARTY_NOTICES.md` with its copyright; the license files of each source are
-copied unchanged in `global/licenses/<tool>/`. MDN Web Docs
-content stays under CC BY-SA 2.5 in its own folders. The archive of version 0.1 has the same files in
-`archive/v0.1/`.
+MIT, see [LICENSE](LICENSE). The official documentation of a brick keeps its own license, listed in
+the `THIRD_PARTY_NOTICES.md` of the brick with its copyright; the license files of each source are
+copied unchanged in its `licenses/<tool>/`. MDN Web Docs content stays under CC BY-SA 2.5 in its own
+folders. pdf.js, in the parse brick, keeps its Apache-2.0 license in `vendor/pdfjs/`.

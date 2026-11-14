@@ -24,7 +24,7 @@ description: Use when you write or change an exported function of a library - it
 5. Write `@returns` with its unit, and one `@throws {RangeError}` per error, with its message.
 6. Compute the example: run the test of the function with that call, then write `@example` with the
    call and `// result`.
-7. Write `@see docs/<topic>/<document>.md` when a document of the base explains it.
+7. Write `@see <section id>` when a section of the official documentation explains it.
 8. Run the lint on the file; fix until 0 errors.
 
 ## Example

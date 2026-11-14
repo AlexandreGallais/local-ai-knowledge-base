@@ -7,25 +7,23 @@ description: Use when the user asks to create, update, shorten or review the AGE
 
 ## Rules
 
-- `AGENTS.md` belongs to the team. Keep its sections: what the base gives, skills, this project, project rules.
+- `AGENTS.md` belongs to the team. Keep its sections: what this project gives you, this project, project rules.
 - Keep the file under 60 lines. Every line is loaded at every request.
-- Write only what the model cannot find in the code, `package.json` or the common rules of the base.
+- Write only what the model cannot find in the code, `package.json`, `.agents/rules.md` or the rules of the MCP servers.
 - Write in English. One rule per line. Start each rule with a verb.
 - Say what to do. Use "never" only for a real danger.
 - Give the exact command of each check: format, lint, build, test.
 - Never write a project overview, a folder tree, a history, internal names or real data.
-- Never send the model to the internet or to a URL: the network is closed.
-- Never remove the lines that list the servers, the documentation and the skills: the team reads them.
+- Never send the model to a URL: write what it needs in the file or in a skill.
 
 ## Steps
 
 1. Ask the user what is missing: the subject in one line, rules that differ from common practice, mistakes seen so far.
 2. Read `AGENTS.md`. Keep the rules that are still true.
 3. Read the `scripts` of `package.json`. Copy the exact check commands from them.
-4. List the folders of `.agents/skills/`. Each one must be in the list "Skills of this project".
-5. Write the subject on the line "Subject:", and one line per rule under "Project rules".
-6. Count the lines. At 60 or more, move the rules of one task to a skill with the skill `write-skill`.
-7. Give three test tasks. Each one must fail if the model ignores one rule of the file.
+4. Write the subject on the line "Subject:", and one line per rule under "Project rules".
+5. Count the lines. At 60 or more, move the rules of one task to a skill with the skill `write-skill`.
+6. Give three test tasks. Each one must fail if the model ignores one rule of the file.
 
 ## Example
 
@@ -48,11 +46,10 @@ Right:
 
 - A rule that the lint already checks: delete it, keep the command.
 - A rule copied from the README: delete it.
-- A skill folder missing from the list: the team does not see it.
+- A rule for one task only: move it to a skill.
 
 ## Final check
 
 - Is the file under 60 lines?
 - Does every check have its exact command?
-- Is every folder of `.agents/skills/` in the list?
 - Is there no overview, no URL to open and no internal name?

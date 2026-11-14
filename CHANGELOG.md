@@ -5,6 +5,35 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: everything in the project, one brick per MCP server (decision 0023)
+
+- No global base anymore: a project holds `AGENTS.md`, `opencode.json` and `.agents/`, and nothing is
+  installed elsewhere.
+- Each MCP server is a brick in `.agents/mcp/<name>/`, with its code, its config, its documentation,
+  its `rules.md` and its `README.md`, and its own copy of the small MCP core. Removing the folder
+  removes the brick without breaking the others.
+- Four bricks: `format` (formats the file it is given, and runs after each write as the formatter of
+  OpenCode), `lint` (`lint_file` and `lint_project`, one line per error with its rule id), `parse`
+  (heavy files) and `js-official-docs` (the official documentation of the JavaScript and TypeScript
+  tools, its search index built on the machine).
+- `opencode.json` at the root of the project holds `instructions`, `formatter` and the local MCP
+  servers only: no right, no web lock, no agent turned off. The built-in formatters Prettier, Biome
+  and oxfmt are turned off, so that the format brick runs.
+- `.agents/package.json` lists the packages of the format and lint bricks, installed apart from the
+  project with `npm install --prefix .agents`.
+- The export holds one pack `kit` and one pack per documentation brick. One import script,
+  `import.ts`, takes every part of its folder, checks them all, and writes everything at once, with the
+  line of each brick in `opencode.json`.
+
+### Removed with the bricks
+
+- `global/`, with the documents written for the AI (`docs/`: Angular, NgRx Signals, components, tests,
+  TypeScript, lint): only the official documentation stays. The skill `write-base-document` goes with
+  them.
+- The servers `project` and `code`, the tools `missing-packages.ts` and `base-version.ts`.
+- `devcontainer/`, `guides/` (their content is in `README.md`), `notes/`, `opencode/`, `import/` and
+  its two scripts.
+
 ### Changed: a global base of documentation and servers, the kit in the project (decision 0022)
 
 - `global/` holds the documentation, the MCP servers (`docs`, `project`, `code`, `parse`), the tools

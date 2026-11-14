@@ -1,0 +1,62 @@
+{
+  "instructions": [
+    ".agents/rules.md",
+    ".agents/mcp/*/rules.md"
+  ],
+  "formatter": {
+    "prettier": { "disabled": true },
+    "biome": { "disabled": true },
+    "oxfmt": { "disabled": true },
+    "agents-format": {
+      "command": [
+        "node",
+        ".agents/mcp/format/format-file.ts",
+        "$FILE"
+      ],
+      "extensions": [
+        ".ts",
+        ".mts",
+        ".html",
+        ".json",
+        ".css",
+        ".scss"
+      ]
+    }
+  },
+  "mcp": {
+    "servers": {
+      "format": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/format/server.ts"
+        ],
+        "codemode": false
+      },
+      "lint": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/lint/server.ts"
+        ],
+        "codemode": false
+      },
+      "parse": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/parse/server.ts"
+        ],
+        "codemode": false
+      },
+      "js-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/js-official-docs/server.ts"
+        ],
+        "codemode": false
+      }
+    }
+  }
+}
