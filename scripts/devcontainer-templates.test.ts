@@ -20,6 +20,7 @@ interface DevContainer {
   mounts: string[];
   postCreateCommand: string;
   remoteEnv?: Record<string, string>;
+  runArgs?: string[];
 }
 
 const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'templates', 'devcontainer');
@@ -56,12 +57,18 @@ describe('the two test dev containers', () => {
     assert.match(withBase.postCreateCommand, /npm pkg set scripts\.opencode=opencode/);
     assert.doesNotMatch(withBase.postCreateCommand, /--global/);
   });
-  it('pass the same Claude key and the same web lock to both', () => {
-    assert.equal(withBase.remoteEnv?.['ANTHROPIC_API_KEY'], [
-      '$',
-      '{localEnv:ANTHROPIC_API_KEY}',
-    ].join(''));
+  it('read the model keys from the same ai.env beside the projects, and pass the same web lock', () => {
+    assert.deepEqual(withBase.runArgs, [
+      '--env-file',
+      [
+        '$',
+        '{localWorkspaceFolder}/../ai.env',
+      ].join(''),
+    ]);
+    assert.deepEqual(withoutBase.runArgs, withBase.runArgs);
+    assert.equal(withBase.remoteEnv?.['ANTHROPIC_API_KEY'], undefined);
     assert.deepEqual(withoutBase.remoteEnv, withBase.remoteEnv);
+    assert.match(readFileSync(join(TEMPLATES, 'ai.env'), 'utf8'), /^ANTHROPIC_API_KEY=$/m);
   });
   it('lock the web in each container: no search tool, no fetch, no download, no shared session', () => {
     const lock = JSON.parse(withBase.remoteEnv?.['OPENCODE_CONFIG_CONTENT'] ?? '{}') as RuleConfig & {

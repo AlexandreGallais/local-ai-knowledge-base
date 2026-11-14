@@ -54,8 +54,16 @@ cp local-ai-base/templates/devcontainer/opencode-user/opencode.jsonc opencode-us
 ```
 
 It gives both containers the same rights: every command allowed; an install, a push, a branch or a
-deletion asks you first. Add your model in it. A Claude key set on the machine as `ANTHROPIC_API_KEY`
-reaches both containers; start VS Code from a terminal that has it.
+deletion asks you first. Add your model in it.
+
+The key of the model goes in one file beside the two projects, read by both containers at their start:
+
+```sh
+cp local-ai-base/templates/devcontainer/ai.env .
+```
+
+Write your key after `ANTHROPIC_API_KEY=` in `~/ai-test/ai.env`. The file sits outside both projects,
+so no Git repository holds it. Rebuild a container after you change it.
 
 The web is locked a second time in each `devcontainer.json`, by `OPENCODE_CONFIG_CONTENT`, which OpenCode
 reads above your configuration: no web search tool (`websearch: false`), no `webfetch`, no `curl`,
