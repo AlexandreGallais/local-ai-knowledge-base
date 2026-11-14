@@ -15,7 +15,7 @@ import {
 import { fileURLToPath } from 'node:url';
 import { checkSkillText } from '../global/tools/check-skill.ts';
 
-const COMMON = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'opencode', 'skills');
+const COMMON = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'skills', 'common');
 const SKILL = `---
 name: number-alarms
 description: Use when you give a number to a new alarm of a synoptic.

@@ -23,7 +23,7 @@ interface DevContainer {
   runArgs?: string[];
 }
 
-const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'templates', 'devcontainer');
+const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'devcontainer');
 
 function read(name: string): DevContainer {
   return parseJsonc(readFileSync(join(TEMPLATES, name, 'devcontainer.json'), 'utf8')) as DevContainer;
@@ -92,7 +92,7 @@ describe('the two test dev containers', () => {
   });
   it('give both projects the same rights as the global base: the web refused, the rest allowed or asked', () => {
     const user = parseJsonc(readFileSync(join(TEMPLATES, 'opencode-user', 'opencode.jsonc'), 'utf8')) as RuleConfig;
-    const base = parseJsonc(readFileSync(join(TEMPLATES, '..', '..', 'opencode', 'opencode.jsonc'), 'utf8')) as RuleConfig;
+    const base = parseJsonc(readFileSync(join(TEMPLATES, '..', 'opencode', 'opencode.jsonc'), 'utf8')) as RuleConfig;
     const calls: [string, string][] = [
       ['webfetch', 'https://example.test'],
       ['websearch', 'angular signals'],

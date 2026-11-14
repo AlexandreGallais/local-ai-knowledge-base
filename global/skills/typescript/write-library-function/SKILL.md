@@ -16,7 +16,7 @@ description: Use when you write or change an exported function of a TypeScript l
 ## Steps
 
 1. Read the copyright header of the other files of the project, if they have one.
-2. Copy `/opt/local-ai-base/templates/typescript/pure-function/` and rename the file and the function.
+2. Copy `/opt/local-ai-base/skills/typescript/write-library-function/assets/pure-function/` and rename the file and the function.
 3. Write the JSDoc: what it gives, `@param` with the unit of each number, `@returns`, `@throws`, and one
    `@example` with real values.
 4. Write the body. A value out of range: throw a `RangeError` with a short message.

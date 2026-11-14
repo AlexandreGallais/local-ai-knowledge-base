@@ -123,7 +123,10 @@ describe('the profile of a project', () => {
     const config = projectConfig('ts-lib', GLOBAL);
     const allowed = allowedForProfile(GLOBAL, 'ts-lib');
 
-    assert.deepEqual(config['skills'], ['/opt/local-ai-base/skills/typescript']);
+    assert.deepEqual(config['skills'], [
+      '/opt/local-ai-base/skills/common',
+      '/opt/local-ai-base/skills/typescript',
+    ]);
     assert.equal(config['agents'], undefined);
     assert.equal(allowed('docs', 'angular'), false);
     assert.equal(allowed('docs', 'ngrx-signals'), false);

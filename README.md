@@ -14,13 +14,13 @@ production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2
 Two bases, so that project repositories stay clean:
 
 - **The global base** is installed once per machine, read-only, and shared by every dev container:
-  documentation, MCP servers, common rules, skills, templates, optional lint and format configs, and
+  documentation, MCP servers, common rules, skills with their templates, optional lint and format configs, and
   the OpenCode configuration.
 - **The project kit** is the only thing a project holds: `AGENTS.md`, owned by the team, and the folder
   `.agents/` (project skills).
 
 In a session, one agent works directly, with no sub-agent and no per-project setup: `AGENTS.md` tells it
-where the documentation, the MCP tools, the skills and the templates are. It installs the packages it
+where the documentation, the MCP tools and the skills are. It installs the packages it
 needs itself, after the user approves the command. "Done" comes after build and tests at zero errors.
 
 ## From the export to the first conversation
@@ -40,8 +40,6 @@ needs itself, after the user approves the command. "Done" comes after build and 
    then run `node <that folder>/import-project.ts` from the root of the project. It writes `AGENTS.md`
    and `.agents/`, and keeps what the team already wrote.
 6. **Work.** Open OpenCode at the root of the project (`npx opencode`) and describe what you want.
-7. **Measure it.** Play the ten tasks of the evaluation without a base, with the 0.1 and with the 0.2:
-   [guides/run-evaluation.md](guides/run-evaluation.md).
 
 Other trials: heavy files
 ([guides/try-heavy-files.md](guides/try-heavy-files.md)), update a tool of the documentation
@@ -52,20 +50,19 @@ Other trials: heavy files
 | Folder | Content |
 | --- | --- |
 | `global/` | The global base, copied as is to the machine. |
-| `global/opencode/` | Mounted as `/etc/opencode`: config, common skills, plugin. |
-| `global/rules/` | Common rules loaded in every session. |
+| `global/rules.md` | The common rules, loaded in every session. |
+| `global/opencode/` | Mounted as `/etc/opencode`: `opencode.jsonc` (MCP servers, rights, web lock, formatter) and `plugins/base-guard/`, which adds the lint errors left after a write when a project has the strict lint. |
 | `global/docs/` | Documents written for the AI, by topic, with `topics.json` (topic → profiles). |
 | `global/library/` | Official documentation brought from the web, cleaned, one file of 16 KB at most. |
-| `global/skills/` | Skills of the profiles, by group (`angular`, `typescript`), with `groups.json`. |
+| `global/skills/` | Skills by group (`common`, `typescript`, `angular`); a skill keeps its tested template in `assets/`. |
 | `global/servers/` | MCP servers, one TypeScript file each, run by `node` without packages. |
 | `global/tools/` | Scripts: format, lint, apply a lint profile on demand, read heavy files. |
 | `global/lint/` | Format and lint configs of the four profiles, copied into a project on demand. |
-| `global/kit/` | Tested pure functions (maths, geometry) and the generated types of the symbols. |
-| `global/templates/` | Tested templates: stores, component, pure function. |
-| `global/evaluation/` | Ten evaluation tasks, their starting projects, the runner and the summary. |
+| `global/kit/` | The tested functions the `geometry` server runs (maths, geometry), and the types of the symbols. |
+| `global/devcontainer/` | The two test dev containers, with and without the base, and the shared OpenCode config. |
 | `project/` | The project kit: `AGENTS.md` and `.agents/`. |
 | `scripts/` | Build tools of this repository: checks, export, imports, generators, tests. |
-| `guides/` | Guides for people: install, paste the export, trials, evaluation. |
+| `guides/` | Guides for people: install, paste the export, trials. |
 | `notes/` | Notes for maintainers: what the base relies on in OpenCode, measures, review. |
 | `samples/` | Example projects, one per profile, used by the tests. |
 | `export/` | The export of the last delivery, in five part sizes. |

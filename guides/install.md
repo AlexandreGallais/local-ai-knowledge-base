@@ -30,7 +30,7 @@ your base folder:
 ]
 ```
 
-`global/templates/devcontainer/with-base/devcontainer.json` of the base is a complete example.
+`global/devcontainer/with-base/devcontainer.json` of the base is a complete example.
 
 **B. For every container of the machine**, Podman only, without touching any project: run the import
 with `--machine`. It writes `~/.config/containers/containers.conf.d/50-local-ai-base.conf` with both
@@ -41,7 +41,7 @@ mounts. On a machine with SELinux, add `,z` after `ro` in that file.
 - Install it at the version of the base: `npm install --global @opencode/cli@2.2.7`.
 - Switch its updates off, and declare your model with its context window (`limit.context`) and tool
   calls (`capabilities.tools: true`), in `~/.config/opencode/opencode.jsonc` of the container.
-  `global/templates/devcontainer/opencode-user/opencode.jsonc` is the starting file.
+  `global/devcontainer/opencode-user/opencode.jsonc` is the starting file.
 
 ## 4. Check
 

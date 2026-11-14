@@ -1,4 +1,10 @@
 {
+  "common": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
+  ],
   "angular": [
     "angular-app",
     "angular-lib"

@@ -90,7 +90,6 @@ export function toValveView(inputs: ValveSymbolInputs): SymbolView {
 ```
 
 - Write one such function per symbol type. Test it without a browser: give inputs, compare the result.
-- Copy the template `templates/typescript-angular/synoptic-symbol.ts`; it passes the lint of the base.
 - Use a `Record` keyed by the state type. The compiler then refuses a missing state.
 
 ## 3. Markup (symbol component)

@@ -12,6 +12,20 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
   0021 of the project). One agent works directly; `AGENTS.md` tells it where the tools are.
 - The sub-agent gate of the plugin; the trial guides of the welcome and of the orchestration.
 
+### Cleaned
+
+- The code templates moved into the `assets/` folder of the skill that uses them; the test dev
+  containers into `global/devcontainer/`; the common rules into `global/rules.md`; the last skill of
+  `opencode/skills/` into `global/skills/common/`. The folders `global/templates/`, `global/rules/` and
+  `global/opencode/skills/` are gone.
+- The evaluation (`global/evaluation/`, its runner, tests and guide) is removed.
+- The OpenCode config drops the compaction and tool output settings (OpenCode's defaults apply), the
+  refusal of Code Mode, the switched-off built-in formatters and the rules that repeated the read-only
+  mount.
+- Every lint and format plugin is optional but eslint and typescript-eslint: a missing one leaves out its
+  rules (`global/lint/optional.mjs`), so a TypeScript project never needs Angular packages.
+- The rules say the AI runs every command itself and asks its choices with the question tool.
+
 ### Changed in the agent
 
 - The AI runs the installs itself; OpenCode asks the user to approve each one.

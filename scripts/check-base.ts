@@ -52,19 +52,6 @@ const DOCUMENT_FIELDS = [
   'sources',
   'license',
 ];
-const AGENT_MODES = new Set([
-  'primary',
-  'subagent',
-]);
-const EVALUATION_TASKS = 10;
-const EVALUATION_FIELDS = [
-  'id',
-  'title',
-  'project',
-  'size',
-  'proof',
-  'test',
-];
 const INDEX_LINE = /^- \[([^\]]+)\]\(([^)]+)\): (.+)$/;
 const MARKDOWN_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
 
@@ -106,11 +93,10 @@ function allMarkdown(path: string, skip: (folder: string) => boolean): string[] 
   });
 }
 
-// The folders that hold skills: common, per group of profiles (global/skills/<group>), and the
+// The folders that hold skills: per group (global/skills/<group>), and the
 // project kit.
 export function skillFolders(root: string): string[] {
   return [
-    join(root, 'global', 'opencode', 'skills'),
     ...folders(join(root, 'global', 'skills')).map((group) => join(root, 'global', 'skills', group)),
     join(root, 'project', '.agents', 'skills'),
   ].filter((path) => existsSync(path));
@@ -148,37 +134,6 @@ export function checkSkill(folderName: string, text: string, file: string): Find
   }
   if (lineCount > MAX_SKILL_LINES) {
     findings.push(finding(file, `${lineCount} lines; keep a skill at 150 lines or fewer`));
-  }
-  return findings;
-}
-
-// An agent names its mode, says what it does, and opens at least one skill that exists.
-export function checkAgent(text: string, file: string, skillNames: Set<string>): Finding[] {
-  const header = parseHeader(text);
-
-  if (header === undefined) {
-    return [finding(file, 'missing YAML header between --- lines')];
-  }
-  const mode = header.fields.get('mode') ?? '';
-  const skills = (header.lists.get('permissions') ?? [])
-    .filter((rule) => rule.get('action') === 'skill' && rule.get('effect') === 'allow')
-    .map((rule) => rule.get('resource') ?? '');
-  const findings = [
-    ...header.errors.map((error) => finding(file, error)),
-    ...checkInstructionText(text, file),
-  ];
-
-  if ((header.fields.get('description') ?? '') === '') {
-    findings.push(finding(file, 'missing description'));
-  }
-  if (!AGENT_MODES.has(mode)) {
-    findings.push(finding(file, `mode must be primary or subagent, not "${mode}"`));
-  }
-  if (skills.length === 0) {
-    findings.push(finding(file, 'the agent allows no skill: open the skill that holds its procedure'));
-  }
-  for (const skill of skills.filter((name) => name !== '*' && !skillNames.has(name))) {
-    findings.push(finding(file, `allows the skill "${skill}", which does not exist`));
   }
   return findings;
 }
@@ -353,15 +308,6 @@ function checkSkills(root: string): BaseResult & { names: Set<string> } {
   };
 }
 
-function checkAgents(root: string, skillNames: Set<string>): BaseResult {
-  const paths = markdownFiles(join(root, 'global', 'opencode', 'agents'));
-
-  return {
-    findings: paths.flatMap((path) => checkAgent(read(path), path, skillNames)),
-    files: paths.length,
-  };
-}
-
 // The cards of the symbol catalog, and the property names of every synoptics document.
 function checkCatalog(documents: readonly string[]): Finding[] {
   const naming = documents.find((path) => basename(path) === 'symbol-property-naming.md');
@@ -409,7 +355,7 @@ function checkDocs(root: string): BaseResult {
 }
 
 function checkRules(root: string): BaseResult {
-  const paths = markdownFiles(join(root, 'global', 'rules'));
+  const paths = [join(root, 'global', 'rules.md')].filter((path) => existsSync(path));
   const findings = paths.flatMap((path) => {
     const text = read(path);
     const lines = splitLines(text.trimEnd()).length;
@@ -516,53 +462,14 @@ function checkAllLinks(root: string): BaseResult {
   };
 }
 
-// One evaluation task: its header, its two sections and its proof file.
-export function checkEvaluationTask(text: string, file: string, hasProof: boolean): Finding[] {
-  const header = parseHeader(text);
-  const sections = new Set(analyseLines(text).map((line) => line.section));
-
-  return [
-    ...EVALUATION_FIELDS
-      .filter((name) => (header?.fields.get(name) ?? '') === '')
-      .map((name) => finding(file, `missing "${name}" in the header`)),
-    ...[
-      'Request',
-      'Proof of success',
-    ]
-      .filter((name) => !sections.has(name))
-      .map((name) => finding(file, `missing ## ${name} section`)),
-    ...hasProof ? [] : [finding(file, 'missing proof.spec.ts next to task.md')],
-  ];
-}
-
-function checkEvaluation(root: string): BaseResult {
-  const tasks = join(root, 'global', 'evaluation', 'tasks');
-  const names = folders(tasks);
-  const findings = names.flatMap((name) => {
-    const path = join(tasks, name, 'task.md');
-
-    return existsSync(path) ? checkEvaluationTask(read(path), path, existsSync(join(tasks, name, 'proof.spec.ts'))) : [finding(path, 'missing task.md')];
-  });
-
-  return {
-    findings: names.length === EVALUATION_TASKS || !existsSync(tasks) ? findings : [
-      ...findings,
-      finding(tasks, `${String(names.length)} tasks; the evaluation has ${String(EVALUATION_TASKS)}`),
-    ],
-    files: names.length,
-  };
-}
-
 export function checkBase(root: string): BaseResult {
   const skills = checkSkills(root);
   const results = [
     skills,
-    checkAgents(root, skills.names),
     checkDocs(root),
     checkRules(root),
     checkProjectKit(root),
     checkOpenCodeConfig(root),
-    checkEvaluation(root),
     checkAllLinks(root),
   ];
 

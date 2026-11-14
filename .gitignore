@@ -18,12 +18,6 @@ target/
 # delivery, built by scripts/export.ts --trial.
 state.local.json
 
-# Measures of an evaluation on the workstation, and its run folders
-**/evaluation/results.csv
-results*.jsonl
-zz-run-*/
-samples/zz-eval-*/
-
 # Search indexes: built on each machine by global/tools/build-index.ts, never in Git
 global/index/
 

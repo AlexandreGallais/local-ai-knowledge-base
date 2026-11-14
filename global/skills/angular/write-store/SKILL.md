@@ -18,9 +18,9 @@ description: Use when you write or change a NgRx Signals store or one of its fea
 1. Read the version of `@ngrx/signals` and `@angular/core` in `package.json`.
 2. Read `docs/ngrx-signals/composed-store.md` with the docs tools. Read `api.md` for a name you do not
    know, and `old-to-new.md` before you write from memory.
-3. Small store: copy `/opt/local-ai-base/templates/angular/small-store/` next to the code. Go to step 7.
+3. Small store: copy `/opt/local-ai-base/skills/angular/write-store/assets/small-store/` next to the code. Go to step 7.
 4. Composed store: list the sub-domains, sorted by what they read. Services come first.
-5. Copy `/opt/local-ai-base/templates/angular/composed-store/`. Keep one file per feature:
+5. Copy `/opt/local-ai-base/skills/angular/write-store/assets/composed-store/`. Keep one file per feature:
    - `<domain>-services.feature.ts`: `withProps(() => ({ _api: inject(Api) }))`;
    - `<sub-domain>.feature.ts`: `export function withX<_>()`, input `type<PreviousFeature>()`, then
      `withState`, `withComputed`, `withMethods`; export `XFeature = SignalStoreFeatureType<typeof withX>`;

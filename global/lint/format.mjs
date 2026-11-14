@@ -2,11 +2,18 @@
 // reported to the AI. It runs on every file the AI writes. ESLint Stylistic and perfectionist for
 // TypeScript, the layout rules of angular-eslint for templates, eslint-plugin-jsonc for JSON.
 // Copied into a project as .agents/lint/; the packages come from the project's node_modules.
-import stylistic from '@stylistic/eslint-plugin';
-import jsonc from 'eslint-plugin-jsonc';
-import perfectionist from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 import { local } from './local-plugin.mjs';
+import {
+  optional,
+  prune,
+} from './optional.mjs';
+
+// Optional plugins: when one is missing, its rules are left out (optional.mjs).
+const STYLISTIC = '@stylistic';
+const stylistic = await optional('@stylistic/eslint-plugin', [STYLISTIC]);
+const jsonc = await optional('eslint-plugin-jsonc', ['jsonc']);
+const perfectionist = await optional('eslint-plugin-perfectionist', ['perfectionist']);
 
 const ERROR = 'error';
 const OFF = 'off';
@@ -34,7 +41,7 @@ const ONE_PER_LINE = {
     },
   },
 };
-const SHARED_LAYOUT = stylistic.configs.customize({
+const SHARED_LAYOUT = stylistic?.configs.customize({
   indent: 2,
   quotes: 'single',
   semi: true,
@@ -42,7 +49,7 @@ const SHARED_LAYOUT = stylistic.configs.customize({
   braceStyle: '1tbs',
   arrowParens: true,
   commaDangle: 'always-multiline',
-}).rules;
+})?.rules;
 // One item per line once a list has two items. list-style splits a list written on one line; the
 // two local rules split parameters, and the lists already written on several lines.
 const LISTS = {
@@ -172,7 +179,7 @@ const BLANKS = {
 };
 // Sort everything. The blank lines between class members belong to Stylistic.
 const SORTING = {
-  ...perfectionist.configs['recommended-natural'].rules,
+  ...perfectionist?.configs['recommended-natural'].rules,
   // Fields set by inject() come first, as @angular-eslint/inject-at-top asks of the lint pass; the
   // other members keep the default order of the plugin.
   'perfectionist/sort-classes': [
@@ -234,7 +241,7 @@ function typescriptFormat(copyright) {
     languageOptions: { parser: tseslint.parser },
     linterOptions: { reportUnusedDisableDirectives: OFF },
     plugins: {
-      '@stylistic': stylistic,
+      [STYLISTIC]: stylistic,
       perfectionist,
       local,
     },
@@ -255,8 +262,14 @@ function typescriptFormat(copyright) {
 }
 
 async function angularFormat() {
-  const { default: angular } = await import('angular-eslint');
+  const angular = await optional('angular-eslint', [
+    '@angular-eslint',
+    '@angular-eslint/template',
+  ]);
 
+  if (angular === undefined) {
+    return [];
+  }
   return [
     {
       name: 'format/angular-typescript',
@@ -284,12 +297,13 @@ async function angularFormat() {
   ];
 }
 
-const jsonFormat = [
+// Without eslint-plugin-jsonc, JSON files are left as they are.
+const jsonFormat = jsonc === undefined ? [] : [
   ...jsonc.configs['flat/base'],
   {
     name: 'format/json',
     files: ['**/*.json'],
-    plugins: { '@stylistic': stylistic },
+    plugins: { [STYLISTIC]: stylistic },
     rules: {
       '@stylistic/no-trailing-spaces': ERROR,
       'jsonc/indent': [
@@ -323,7 +337,7 @@ const jsonFormat = [
  * @param {{ angular: boolean, copyright?: { pattern: string, text: string } }} options
  */
 export async function formatConfig(options) {
-  return [
+  return prune([
     {
       ignores: [
         'dist/',
@@ -337,5 +351,5 @@ export async function formatConfig(options) {
     typescriptFormat(options.copyright),
     ...options.angular ? await angularFormat() : [],
     ...jsonFormat,
-  ];
+  ]);
 }

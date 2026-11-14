@@ -5,20 +5,18 @@
   "$schema": "https://opencode.ai/config.json",
 
   // Common rules, loaded at every request with the project's AGENTS.md.
-  "instructions": ["/opt/local-ai-base/rules/*.md"],
+  "instructions": ["/opt/local-ai-base/rules.md"],
 
   // The skills of the base, found by name and description, loaded whole only when a task needs one.
-  "skills": ["/opt/local-ai-base/skills/typescript", "/opt/local-ai-base/skills/angular"],
+  "skills": [
+    "/opt/local-ai-base/skills/common",
+    "/opt/local-ai-base/skills/typescript",
+    "/opt/local-ai-base/skills/angular"
+  ],
 
-  // Token economy: summarise at about 60,000 tokens, keep the last 8,000 as they are.
-  "compaction": { "auto": true, "keep": { "tokens": 8000 }, "buffer": "70%" },
-  "tool_output": { "max_lines": 400, "max_bytes": 16384 },
-
-  // Built-in formatters are switched off one by one; the base's formatter runs instead.
+  // After each write, the formatter of the base. It does nothing in a project without the strict lint
+  // (no .agents/lint/); the plugin plugins/base-guard then adds the lint errors left to the result.
   "formatter": {
-    "prettier": { "disabled": true },
-    "biome": { "disabled": true },
-    "oxfmt": { "disabled": true },
     "base-format": {
       "command": ["node", "/opt/local-ai-base/tools/format-file.ts", "$FILE"],
       "extensions": [".ts", ".html", ".css", ".scss", ".json"]
@@ -67,23 +65,14 @@
     }
   },
 
-  // Ordered rules: the last matching rule wins. The base gives
-  // tools and guidance, not bans (decision 0020): everything is allowed, what cannot be undone asks the
-  // user, and only the web is refused, in "policies" below.
+  // Ordered rules, the last matching one wins (decision 0020): everything is allowed; what cannot be
+  // undone asks the user in OpenCode, who approves or refuses; only the web is refused, below.
   "permissions": [
     { "action": "*", "resource": "*", "effect": "allow" },
 
     // Outside the project: ask, except the read-only global base.
     { "action": "external_directory", "resource": "*", "effect": "ask" },
     { "action": "external_directory", "resource": "/opt/local-ai-base/*", "effect": "allow" },
-    { "action": "edit", "resource": "/opt/local-ai-base/*", "effect": "deny" },
-    { "action": "edit", "resource": "/etc/opencode/*", "effect": "deny" },
-
-    // Code Mode off: small models fail to write its JavaScript (decision 0012).
-    { "action": "execute", "resource": "*", "effect": "deny" },
-    // The built-in session and worktree tools ask first.
-    { "action": "opencode_*", "resource": "*", "effect": "ask" },
-
 
     // What cannot be undone asks the user: packages, a push, a branch, a deletion.
     { "action": "shell", "resource": "npm install *", "effect": "ask" },
@@ -104,8 +93,8 @@
     { "action": "shell", "resource": "rm -fr *", "effect": "ask" }
   ],
 
-  // The only hard denies: no search nor download on the web. The test container without the base
-  // has the same ones (templates/devcontainer/opencode-user/), so both work in the same conditions.
+  // The web is closed: no search tool (websearch), no page fetched, no download, no session shared
+  // online. The test container without the base has the same lock.
   "websearch": false,
   "share": "disabled",
   "policies": [

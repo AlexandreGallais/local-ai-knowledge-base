@@ -2,8 +2,7 @@
 
 Two empty projects side by side, each in its dev container: the same image, the same OpenCode, the same
 model and the same rights. The web is closed in both. One has the base, the other has nothing. Ask both
-the same thing and compare. Works on macOS and on Linux, in a folder of your choice. For figures over ten
-tasks, see [run-evaluation.md](run-evaluation.md).
+the same thing and compare. Works on macOS and on Linux, in a folder of your choice.
 
 ## What you need
 
@@ -50,7 +49,7 @@ The base lands in `./local-ai-base`. Run it again later to update the base.
 
 ```sh
 mkdir opencode-user
-cp local-ai-base/templates/devcontainer/opencode-user/opencode.jsonc opencode-user/
+cp local-ai-base/devcontainer/opencode-user/opencode.jsonc opencode-user/
 ```
 
 It gives both containers the same rights: every command allowed; an install, a push, a branch or a
@@ -59,7 +58,7 @@ deletion asks you first. Add your model in it.
 The key of the model goes in one file beside the two projects, read by both containers at their start:
 
 ```sh
-cp local-ai-base/templates/devcontainer/ai.env .
+cp local-ai-base/devcontainer/ai.env .
 ```
 
 Write your key after `ANTHROPIC_API_KEY=` in `~/ai-test/ai.env`. The file sits outside both projects,
@@ -73,8 +72,8 @@ reads above your configuration: no web search tool (`websearch: false`), no `web
 
 ```sh
 mkdir -p with-base/.devcontainer without-base/.devcontainer
-cp local-ai-base/templates/devcontainer/with-base/devcontainer.json with-base/.devcontainer/
-cp local-ai-base/templates/devcontainer/without-base/devcontainer.json without-base/.devcontainer/
+cp local-ai-base/devcontainer/with-base/devcontainer.json with-base/.devcontainer/
+cp local-ai-base/devcontainer/without-base/devcontainer.json without-base/.devcontainer/
 git -C with-base init -q -b main
 git -C without-base init -q -b main
 ```

@@ -1,7 +1,0 @@
-{
-  "extends": "./.agents/lint/tsconfig.strict.json",
-  "compilerOptions": {
-    "experimentalDecorators": false
-  },
-  "include": ["src"]
-}

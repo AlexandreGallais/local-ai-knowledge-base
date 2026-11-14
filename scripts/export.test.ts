@@ -45,7 +45,7 @@ let out = '';
 // Invented content: text, and 1.3 MB of random bytes that no compression shrinks.
 const FILES: Record<string, Buffer | string> = {
   'global/VERSION': '0.2.0\n',
-  'global/rules/common.md': '# Common rules\n\n1. Answer in the language of the question.\n',
+  'global/rules.md': '# Common rules\n\n1. Answer in the language of the question.\n',
   'global/docs/angular/signals.md': '# Signals\n\nCall the signal as a function.\n'.repeat(200),
   'global/data/noise.bin': randomBytes(1_300_000),
   'project/AGENTS.md': '# AGENTS.md\n\nKit version.\n',

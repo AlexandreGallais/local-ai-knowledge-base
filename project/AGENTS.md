@@ -16,8 +16,8 @@ The base is at `/opt/local-ai-base`, read-only. Use it before your memory.
   - `parse`: the outline then one part of a heavy file (`.xd`, `.pdf`, `.docx`, `.xlsx`, `.pptx`, `.svg`).
   - `geometry`: tested maths and SVG geometry, and the placement of elements by configuration.
 - Folders to read or copy:
-  - `/opt/local-ai-base/templates/`: tested templates (stores, component, pure function).
-  - `/opt/local-ai-base/kit/`: tested pure functions (maths, geometry) and the types of the synoptic symbols.
+  - `/opt/local-ai-base/skills/`: the skills, each with its tested template in `assets/` when it has one.
+  - `/opt/local-ai-base/kit/`: the tested functions that the `geometry` tools run, and the TypeScript types of the synoptic symbols.
   - `/opt/local-ai-base/docs/`: documents written for the AI, by topic (synoptics, maths, Angular, NgRx Signals...).
   - `/opt/local-ai-base/packages.md`: the packages of the base and their pinned versions.
 - Strict format and lint, only when the user asks for them:

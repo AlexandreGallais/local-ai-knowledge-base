@@ -14,8 +14,8 @@ license: MIT, written for this base; facts summarized from the NgRx documentatio
 
 Contents: 1. The two forms · 2. Files and names · 3. Steps · 4. Linking two features · 5. Checklist · Sources
 
-Templates, tested with Angular 22.2 and NgRx Signals 22.0: `templates/angular/composed-store/` and
-`templates/angular/small-store/` of the base. Copy them, then rename.
+Templates, tested with Angular 22.2 and NgRx Signals 22.0: `skills/angular/write-store/assets/composed-store/` and
+`skills/angular/write-store/assets/small-store/` of the base. Copy them, then rename.
 
 ## 1. The two forms (composed store or small store)
 
@@ -54,7 +54,7 @@ export type CircuitStore = InstanceType<typeof CircuitStore>;
 ## 3. Steps (write a composed store)
 
 1. Read the version of `@ngrx/signals` in `package.json`.
-2. One sub-domain only: write a small store from `templates/angular/small-store/`. Stop.
+2. One sub-domain only: write a small store from `skills/angular/write-store/assets/small-store/`. Stop.
 3. List the sub-domains and sort them by what they read: services first.
 4. Write `<domain>-services.feature.ts`: `withProps` and `inject`, members prefixed `_`. Export
    `export type XServicesFeature = SignalStoreFeatureType<typeof withXServices>;`.

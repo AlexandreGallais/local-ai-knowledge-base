@@ -14,7 +14,7 @@ license: MIT, written for this base; facts summarized from the NgRx documentatio
 
 Contents: 1. Rules · 2. A store · 3. A feature alone · 4. Effects and protected state · Sources
 
-Tested templates: `templates/angular/composed-store/*.spec.ts` and `templates/angular/small-store/`.
+Tested templates: `skills/angular/write-store/assets/composed-store/*.spec.ts` and `skills/angular/write-store/assets/small-store/`.
 
 ## 1. Rules (public API, TestBed, fakes)
 

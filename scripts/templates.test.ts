@@ -23,7 +23,8 @@ import {
   SKIP,
 } from './lib/samples.ts';
 
-const TEMPLATES = join(ROOT, 'global', 'templates');
+// The templates live in the assets/ folder of the skill that uses them.
+const TEMPLATES = join(ROOT, 'global', 'skills');
 const FOLDER = 'zz-templates';
 
 interface TemplateSet {
@@ -34,7 +35,7 @@ interface TemplateSet {
 
 const SETS: TemplateSet[] = [
   {
-    template: 'angular/composed-store',
+    template: 'angular/write-store/assets/composed-store',
     sample: 'angular-app',
     test: [
       '@angular/cli/bin/ng.js',
@@ -42,7 +43,7 @@ const SETS: TemplateSet[] = [
     ],
   },
   {
-    template: 'angular/small-store',
+    template: 'angular/write-store/assets/small-store',
     sample: 'angular-app',
     test: [
       '@angular/cli/bin/ng.js',
@@ -50,7 +51,7 @@ const SETS: TemplateSet[] = [
     ],
   },
   {
-    template: 'angular/component',
+    template: 'angular/write-component/assets/component',
     sample: 'angular-app',
     test: [
       '@angular/cli/bin/ng.js',
@@ -58,7 +59,7 @@ const SETS: TemplateSet[] = [
     ],
   },
   {
-    template: 'typescript/pure-function',
+    template: 'typescript/write-library-function/assets/pure-function',
     sample: 'ts-pure-lib',
     test: [
       'vitest/vitest.mjs',

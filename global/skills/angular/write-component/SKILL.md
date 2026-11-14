@@ -18,7 +18,7 @@ description: Use when you write or change an Angular component or directive, an 
 1. Read the version of `@angular/core` in `package.json`.
 2. Generate the files, then adapt them by hand:
    `npx --no -- ng generate component <path/name> --style=scss`.
-   No Angular CLI in the project: copy `/opt/local-ai-base/templates/angular/component/` instead.
+   No Angular CLI in the project: copy `/opt/local-ai-base/skills/angular/write-component/assets/component/` instead.
 3. An own control: read `docs/components/component-rules.md`, then its line in `patterns.md`, and
    `keyboard-focus.md`. An overlay: `overlays.md`.
 4. Write the template: the role and every state (`aria-expanded`, `aria-selected`, `aria-checked`,

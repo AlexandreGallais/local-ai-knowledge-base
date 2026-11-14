@@ -23,7 +23,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 interface Config extends RuleConfig {
   instructions?: string[];
-  formatter?: Record<string, { disabled?: boolean }>;
+  formatter?: Record<string, { command?: string[] }>;
   agents?: Record<string, { disabled?: boolean }>;
   mcp?: {
     servers?: Record<
@@ -45,13 +45,15 @@ function shell(command: string): string {
 
 describe('the OpenCode configuration of the global base', () => {
   it('loads the common rules from the global base', () => {
-    assert.deepEqual(config.instructions, ['/opt/local-ai-base/rules/*.md']);
-    assert.ok(readdirSync(join(ROOT, 'global', 'rules')).includes('common.md'));
+    assert.deepEqual(config.instructions, ['/opt/local-ai-base/rules.md']);
+    assert.ok(existsSync(join(ROOT, 'global', 'rules.md')));
   });
-  it('switches off the built-in formatters and the agents that invite parallel work', () => {
-    assert.equal(config.formatter?.prettier?.disabled, true);
-    assert.equal(config.formatter?.biome?.disabled, true);
-    assert.equal(config.formatter?.oxfmt?.disabled, true);
+  it('runs the formatter of the base after a write, and switches off the built-in sub-agents', () => {
+    assert.deepEqual(config.formatter?.['base-format']?.command, [
+      'node',
+      '/opt/local-ai-base/tools/format-file.ts',
+      '$FILE',
+    ]);
     assert.equal(config.agents?.general?.disabled, true);
     assert.equal(config.agents?.explore?.disabled, true);
   });
@@ -96,17 +98,17 @@ describe('one flat agent', () => {
   });
   it('lets the AI run an install itself, after the user approves it', () => {
     assert.equal(shell('npm install --save-dev --save-exact vitest@5.1.0'), 'ask');
-    const rules = readFileSync(join(ROOT, 'global', 'rules', 'common.md'), 'utf8');
+    const rules = readFileSync(join(ROOT, 'global', 'rules.md'), 'utf8');
 
-    assert.match(rules, /Install the packages the work needs yourself/);
+    assert.match(rules, /Run every command yourself, installs included/);
+    assert.match(rules, /Never ask the user to run a command/);
   });
   it('sends no rule, skill nor AGENTS.md to a welcome, a profile to choose, a sub-agent or an install by the user', () => {
     const texts = [
-      join(ROOT, 'global', 'rules', 'common.md'),
+      join(ROOT, 'global', 'rules.md'),
       join(ROOT, 'project', 'AGENTS.md'),
       ...[
         join(ROOT, 'global', 'skills'),
-        join(ROOT, 'global', 'opencode', 'skills'),
       ].flatMap((folder) => readdirSync(folder, { recursive: true }).map(String).filter((name) => name.endsWith('SKILL.md')).map((name) => join(folder, name))),
     ];
 
@@ -145,13 +147,13 @@ describe('the rights of the AI', () => {
     assert.equal(shell('rm -rf src'), 'ask');
     assert.equal(shell('git reset --hard HEAD'), 'ask');
   });
-  it('refuses only the web, and writing in the global base', () => {
+  it('refuses only the web', () => {
     assert.equal(shell('curl https://example.org'), 'deny');
     assert.equal(shell('wget https://example.org'), 'deny');
     assert.equal(shell('git clone https://example.org/a.git'), 'deny');
     assert.equal(evaluate(config, 'webfetch', 'https://example.org'), 'deny');
     assert.equal(evaluate(config, 'websearch', 'angular signals'), 'deny');
-    assert.equal(evaluate(config, 'edit', '/opt/local-ai-base/rules/common.md'), 'deny');
+    assert.equal(evaluate(config, 'read', '/opt/local-ai-base/rules.md'), 'allow');
     assert.equal(evaluate(config, 'read', 'design/screens.xd'), 'allow');
   });
 });

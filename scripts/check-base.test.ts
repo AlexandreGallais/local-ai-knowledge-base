@@ -40,17 +40,6 @@ A component with one input.
 
 - Did the lint end with zero errors?
 `;
-const AGENT = `---
-description: Writes one component for one task.
-mode: subagent
-permissions:
-  - action: skill
-    resource: write-component
-    effect: allow
----
-
-You write one component. Load the skill write-component first.
-`;
 const DOCUMENT = `---
 id: signals
 title: Signals
@@ -71,10 +60,9 @@ Call the signal as a function.
 - [S1] Angular, https://angular.dev
 `;
 const VALID: Record<string, string> = {
-  'global/rules/common.md': '# Common rules\n\n1. Answer in the language of the question.\n',
-  'global/opencode/opencode.jsonc': '{\n  // rules\n  "instructions": ["/opt/local-ai-base/rules/*.md"],\n}\n',
-  'global/opencode/skills/write-component/SKILL.md': SKILL,
-  'global/opencode/agents/component.md': AGENT,
+  'global/rules.md': '# Common rules\n\n1. Answer in the language of the question.\n',
+  'global/opencode/opencode.jsonc': '{\n  // rules\n  "instructions": ["/opt/local-ai-base/rules.md"],\n}\n',
+  'global/skills/angular/write-component/SKILL.md': SKILL,
   'global/docs/angular/index.md': '# Angular\n\n- [Signals](signals.md): Read and write signals.\n',
   'global/docs/angular/signals.md': DOCUMENT,
   'project/AGENTS.md': '# AGENTS.md\n\nRead the [signals](../global/docs/angular/signals.md#read-a-signal) document.\n',
@@ -126,7 +114,7 @@ describe('checkBase', () => {
       .replace('name: write-component', 'name: component')
       .replace('Use when you', 'When you');
 
-    assert.deepEqual(messages(makeBase({ 'global/opencode/skills/write-component/SKILL.md': skill })), [
+    assert.deepEqual(messages(makeBase({ 'global/skills/angular/write-component/SKILL.md': skill })), [
       'name "component" differs from the folder "write-component"',
       'description must start with "Use when"',
     ]);
@@ -136,20 +124,10 @@ describe('checkBase', () => {
       .replace('## Example', '## Sample')
       .replace('## Final check', '## End');
 
-    assert.deepEqual(messages(makeBase({ 'global/opencode/skills/write-component/SKILL.md': skill })), [
+    assert.deepEqual(messages(makeBase({ 'global/skills/angular/write-component/SKILL.md': skill })), [
       'missing ## Example section',
       'missing ## Final check section',
     ]);
-  });
-  it('refuses an agent whose skill does not exist', () => {
-    const agent = AGENT.replace('resource: write-component', 'resource: write-store');
-
-    assert.deepEqual(messages(makeBase({ 'global/opencode/agents/component.md': agent })), ['allows the skill "write-store", which does not exist']);
-  });
-  it('refuses an agent that opens no skill', () => {
-    const agent = AGENT.replace('action: skill', 'action: read');
-
-    assert.deepEqual(messages(makeBase({ 'global/opencode/agents/component.md': agent })), ['the agent allows no skill: open the skill that holds its procedure']);
   });
   it('refuses an index that forgets a document', () => {
     const other = DOCUMENT.replace('id: signals', 'id: resource');
@@ -167,12 +145,12 @@ describe('checkBase', () => {
   it('refuses an instruction written in French', () => {
     const rules = '# Règles\n\n1. Réponds dans la langue de la question et ne mélange pas les langues.\n2. Lis le fichier de la tâche avant de commencer, et pas les autres fichiers du dossier.\n';
 
-    assert.deepEqual(messages(makeBase({ 'global/rules/common.md': rules })), ['written in French; every file for the AI is in English']);
+    assert.deepEqual(messages(makeBase({ 'global/rules.md': rules })), ['written in French; every file for the AI is in English']);
   });
   it('refuses a rule that sends the AI to the web', () => {
     const rules = '# Common rules\n\n1. Search the web when the docs do not answer.\n';
 
-    assert.deepEqual(messages(makeBase({ 'global/rules/common.md': rules })), ['asks to use the web: 1. Search the web when the docs do not answer.']);
+    assert.deepEqual(messages(makeBase({ 'global/rules.md': rules })), ['asks to use the web: 1. Search the web when the docs do not answer.']);
   });
   it('refuses an old-to-new row without its version', () => {
     const table = '\n## Old to new\n\n| Old | New | Since |\n| --- | --- | --- |\n| `mutate` | `update` | 17 |\n| `idKey` | `selectId` |  |\n';

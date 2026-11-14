@@ -1,7 +1,0 @@
-{
-  "src/map-range-clamped.ts": "global/kit/math/map-range-clamped.ts",
-  "src/clamp.ts": "global/kit/math/clamp.ts",
-  "src/inverse-lerp.ts": "global/kit/math/inverse-lerp.ts",
-  "src/lerp.ts": "global/kit/math/lerp.ts",
-  "src/inputs.ts": "global/kit/math/inputs.ts"
-}

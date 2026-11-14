@@ -79,7 +79,6 @@ export function allSkills(): Skill[] {
   const byName = new Map<string, Skill>();
 
   for (const skill of [
-    ...skillsIn(join(base, 'opencode', 'skills'), 'base'),
     ...skillGroups(base, profile).flatMap((group) => skillsIn(join(base, 'skills', group), `group ${group}`)),
     ...skillsIn(join(project, '.agents', 'skills'), 'project'),
   ]) {

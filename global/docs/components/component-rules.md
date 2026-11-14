@@ -78,7 +78,7 @@ export class Switch {
 7. State in signals: `input()` for what comes in, `model()` for the value.
 8. Test: lint, keyboard test, ARIA attributes (`testing-a11y.md`).
 
-Tested template: `templates/angular/component/` (a select-only combobox).
+Tested template: `skills/angular/write-component/assets/component/` (a select-only combobox).
 
 ## 4. Checklist (before saying done)
 

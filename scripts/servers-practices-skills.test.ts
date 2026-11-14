@@ -30,10 +30,14 @@ const BASE: Record<string, string> = {
   'docs/practices/typescript-eslint--no-floating-promises.md': SHEET,
   'library/typescript-eslint/no-floating-promises.md': '# no-floating-promises\n\nOfficial page.\n',
   'library/unicorn/prefer-at.md': '# prefer-at\n\nPrefer .at() for index access from the end.\n',
-  'opencode/skills/write-store/SKILL.md': '---\nname: write-store\ndescription: Use when you write a NgRx Signals store.\n---\n\n# Write a store\n\n1. Base steps.\n',
+  'skills/common/write-store/SKILL.md': '---\nname: write-store\ndescription: Use when you write a NgRx Signals store.\n---\n\n# Write a store\n\n1. Base steps.\n',
   'skills/angular/write-component/SKILL.md': '---\nname: write-component\ndescription: Use when you write an Angular component.\n---\n\n# Write a component\n',
   'skills/typescript/write-function/SKILL.md': '---\nname: write-function\ndescription: Use when you write a function of a library.\n---\n\n# Write a function\n',
   'skills/groups.json': JSON.stringify({
+    common: [
+      'angular-app',
+      'ts-lib',
+    ],
     angular: ['angular-app'],
     typescript: [
       'angular-app',

@@ -1,17 +1,23 @@
 // The lint pass (decision 0017): no layout rule, only what the format pass cannot fix, one config
 // per project profile and per kind of file. From the research R4 of the base, run on its samples.
 // Copied into a project as .agents/lint/; the packages come from the project's node_modules.
-import js from '@eslint/js';
-import vitest from '@vitest/eslint-plugin';
 import {
   defineConfig,
   globalIgnores,
 } from 'eslint/config';
-import importLite from 'eslint-plugin-import-lite';
-import regexp from 'eslint-plugin-regexp';
-import unicorn from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 import { local } from './local-plugin.mjs';
+import {
+  optional,
+  prune,
+} from './optional.mjs';
+
+// Optional plugins: when one is missing, its rules are left out (optional.mjs).
+const js = await optional('@eslint/js', []);
+const vitest = await optional('@vitest/eslint-plugin', ['vitest']);
+const importLite = await optional('eslint-plugin-import-lite', ['import-lite']);
+const regexp = await optional('eslint-plugin-regexp', ['regexp']);
+const unicorn = await optional('eslint-plugin-unicorn', ['unicorn']);
 
 const ERROR = 'error';
 const OFF = 'off';
@@ -222,9 +228,9 @@ const typescriptBase = {
   name: 'lint/typescript',
   files: [ALL_TS],
   extends: [
-    js.configs.recommended,
+    js?.configs.recommended,
     tseslint.configs.strictTypeChecked,
-    regexp.configs['flat/recommended'],
+    regexp?.configs['flat/recommended'],
   ],
   plugins: {
     unicorn,
@@ -243,7 +249,7 @@ const typescriptBase = {
 const tests = {
   name: 'lint/tests',
   files: TEST_FILES,
-  extends: [vitest.configs.recommended],
+  extends: [vitest?.configs.recommended],
   rules: {
     'vitest/max-expects': [
       ERROR,
@@ -408,7 +414,7 @@ function angularTypescript(angular, rxjsX, prefix) {
     files: [ALL_TS],
     extends: [
       angular.configs.tsRecommended,
-      rxjsX.configs.strict,
+      rxjsX?.configs.strict,
     ],
     rules: {
       ...limitRules(LIMITS.angularClass),
@@ -442,7 +448,7 @@ function angularStores(ngrx) {
     {
       name: 'lint/angular-store',
       files: ['**/*.store.ts'],
-      extends: [ngrx.configs.signalsTypeChecked],
+      extends: [ngrx?.configs.signalsTypeChecked],
       rules: {
         'local/store-lists-features': ERROR,
         // A composed store is a short list; a small store in one file stops at 80 lines, then splits.
@@ -459,7 +465,7 @@ function angularStores(ngrx) {
     {
       name: 'lint/angular-store-feature',
       files: ['**/*.feature.ts'],
-      extends: [ngrx.configs.signalsTypeChecked],
+      extends: [ngrx?.configs.signalsTypeChecked],
       // The type of a store feature is built by NgRx: never written by hand.
       rules: {
         ...limitRules(LIMITS.storeFeature),
@@ -479,10 +485,17 @@ function angularStores(ngrx) {
 }
 
 async function angularLayers(prefix) {
-  const { default: angular } = await import('angular-eslint');
-  const { default: ngrx } = await import('@ngrx/eslint-plugin');
-  const { default: rxjsX } = await import('eslint-plugin-rxjs-x');
+  const angular = await optional('angular-eslint', [
+    '@angular-eslint',
+    '@angular-eslint/template',
+  ]);
+  const ngrx = await optional('@ngrx/eslint-plugin', ['@ngrx']);
+  const rxjsX = await optional('eslint-plugin-rxjs-x', ['rxjs-x']);
 
+  // Without angular-eslint, no Angular layer: its templates have no parser.
+  if (angular === undefined) {
+    return [];
+  }
   return [
     angularTypescript(angular, rxjsX, prefix),
     {
@@ -501,13 +514,13 @@ async function angularLayers(prefix) {
 
 // ---- Library profiles ---------------------------------------------------------------------------
 async function jsdocLayer() {
-  const { default: jsdoc } = await import('eslint-plugin-jsdoc');
+  const jsdoc = await optional('eslint-plugin-jsdoc', ['jsdoc']);
 
   return {
     name: 'lint/jsdoc',
     files: [SOURCES],
     ignores: TEST_FILES,
-    extends: [jsdoc.configs['flat/recommended-typescript-error']],
+    extends: [jsdoc?.configs['flat/recommended-typescript-error']],
     rules: {
       [REQUIRE_JSDOC]: [
         ERROR,
@@ -628,7 +641,7 @@ const PURE_RULES = {
 };
 
 async function pureFunctions() {
-  const { default: functional } = await import('eslint-plugin-functional');
+  const functional = await optional('eslint-plugin-functional', ['functional']);
 
   return {
     name: 'lint/pure-functions',
@@ -680,7 +693,7 @@ async function profileLayers(name, options) {
  * @param {{ prefix?: string, copyright?: { pattern: string } }} options
  */
 export async function lintConfig(name, options = {}) {
-  return defineConfig([
+  return defineConfig(prune([
     globalIgnores([
       'dist/',
       'coverage/',
@@ -694,5 +707,5 @@ export async function lintConfig(name, options = {}) {
     tests,
     toolConfigs,
     storybook,
-  ]);
+  ]));
 }
