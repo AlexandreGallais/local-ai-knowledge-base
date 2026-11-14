@@ -9,15 +9,15 @@ import { CircuitStore } from './circuit.store';
   styleUrl: './valve-status.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ValveStatus {
-  readonly #store = inject(CircuitStore);
+export class ValveStatusComponent {
+  private readonly store = inject(CircuitStore);
   /** The name of the valve. */
   readonly name = input.required<string>();
   /** Its state, read from the store. */
-  protected readonly state = computed(() => this.#store.valves()[this.name()] ?? 'closed');
+  protected readonly state = computed(() => this.store.valves()[this.name()] ?? 'closed');
 
   /** Opens the valve. */
   protected open(): void {
-    this.#store.setState(this.name(), 'open');
+    this.store.setState(this.name(), 'open');
   }
 }

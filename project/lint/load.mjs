@@ -76,6 +76,12 @@ export function mergeStylelint(parts) {
   return {
     extends: parts.flatMap((part) => part.extends ?? []),
     plugins: parts.flatMap((part) => part.plugins ?? []),
-    rules: Object.assign({}, ...parts.map((part) => part.rules ?? {})),
+    rules: parts.reduce(
+      (rules, part) => ({
+        ...rules,
+        ...part.rules,
+      }),
+      {},
+    ),
   };
 }

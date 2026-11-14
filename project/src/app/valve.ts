@@ -5,22 +5,22 @@ export type ValveState = 'closed' | 'moving' | 'open';
 
 /** A valve: an object with a state that changes over time. */
 export class Valve {
-  /** The state that follows from the opening. */
-  #opening = 0;
-
+  /** The opening, changed by moveToward only. */
+  private current = 0;
   constructor(readonly name: string) {}
 
   /** How open the valve is, from 0 (closed) to 1 (open). */
   get opening(): number {
-    return this.#opening;
+    return this.current;
   }
 
+  /** The state that follows from the opening. */
   get state(): ValveState {
-    if (this.#opening === 0) {
+    if (this.current === 0) {
       return 'closed';
     }
 
-    return this.#opening === 1 ? 'open' : 'moving';
+    return this.current === 1 ? 'open' : 'moving';
   }
 
   /**
@@ -31,6 +31,6 @@ export class Valve {
   moveToward(target: number, step: number): void {
     const wanted = clamp(target, 0, 1);
 
-    this.#opening = clamp(wanted, this.#opening - step, this.#opening + step);
+    this.current = clamp(wanted, this.current - step, this.current + step);
   }
 }

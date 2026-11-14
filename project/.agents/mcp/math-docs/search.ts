@@ -154,24 +154,36 @@ interface Cut {
 export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|ptx|xml|html?|json)(?:\.in)?$/;
 const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
 
+// What a format gives of a file: its title, when it names one, and where its sections start.
+interface Outline {
+  title?: string;
+  cuts: Cut[];
+}
+
 // The YAML header of a Markdown file (MDN, Vite...), and the title it may give.
 function frontMatter(text: string): {
   body: string;
-  title: string | undefined;
+  title?: string;
 } {
   if (!text.startsWith('---\n')) {
-    return {
-      body: text,
-      title: undefined,
-    };
+    return { body: text };
   }
   const end = text.indexOf('\n---', 4);
   const block = end < 0 ? '' : text.slice(4, end);
   const title = /^title:\s*["']?(.*?)["']?\s*$/m.exec(block)?.[1];
+  const body = end < 0 ? text : text.slice(end + 4);
 
-  return {
-    body: end < 0 ? text : text.slice(end + 4),
+  return title === undefined ? { body } : {
+    body,
     title,
+  };
+}
+
+// An outline from a title that may be missing.
+function outline(title: string | undefined, cuts: Cut[]): Outline {
+  return title === undefined ? { cuts } : {
+    title,
+    cuts,
   };
 }
 
@@ -183,10 +195,7 @@ const decodeXml = (text: string): string => text
   .replaceAll('&amp;', '&');
 
 // Markdown: "# " gives the title, each "##", "###" or "####" outside a code block a section.
-function markdownCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+function markdownCuts(lines: string[]): Outline {
   const cuts: Cut[] = [];
   let title: string | undefined;
   let fence = false;
@@ -211,50 +220,48 @@ function markdownCuts(lines: string[]): {
       });
     }
   });
+  return outline(title, cuts);
+}
+
+interface StyledHeading {
+  line: number;
+  text: string;
+  style: string;
+}
+
+// The heading a line starts, in reStructuredText or AsciiDoc: "== Title", or a line underlined (and
+// maybe overlined) with one repeated punctuation, the style naming its level.
+function headingAt(lines: string[], index: number): StyledHeading | undefined {
+  const line = lines[index] ?? '';
+  const next = lines[index + 1] ?? '';
+  const atx = /^(={1,6})\s+(\S.*)$/.exec(line);
+
+  if (atx !== null) {
+    return {
+      line: index,
+      text: atx[2] ?? '',
+      style: atx[1] ?? '',
+    };
+  }
+  const mark = /^([!-/:-@[-`{-~])\1{2,}\s*$/.exec(next);
+  const text = line.trim();
+
+  if (mark === null || text === '' || /^[!-/:-@[-`{-~]+$/.test(text) || next.trim().length < text.length) {
+    return undefined;
+  }
+  const over = (lines[index - 1] ?? '').trim() === next.trim();
+
   return {
-    title,
-    cuts,
+    line: over ? index - 1 : index,
+    text,
+    style: `${over ? 'over' : ''}${mark[1] ?? ''}`,
   };
 }
 
-// reStructuredText and AsciiDoc: a heading is a line underlined (and maybe overlined) with one
-// repeated punctuation; AsciiDoc also writes "= Title" and "== Section". The first style met is the
-// title, the second the sections.
-function underlinedCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
-  const headings: {
-    line: number;
-    text: string;
-    style: string;
-  }[] = [];
-
-  lines.forEach((line, index) => {
-    const next = lines[index + 1] ?? '';
-    const atx = /^(={1,6})\s+(\S.*)$/.exec(line);
-
-    if (atx !== null) {
-      headings.push({
-        line: index,
-        text: atx[2] ?? '',
-        style: atx[1] ?? '',
-      });
-      return;
-    }
-    const mark = /^([!-/:-@[-`{-~])\1{2,}\s*$/.exec(next);
-    const text = line.trim();
-
-    if (mark !== null && text !== '' && !/^[!-/:-@[-`{-~]+$/.test(text) && next.trim().length >= text.length) {
-      const over = (lines[index - 1] ?? '').trim() === next.trim();
-
-      headings.push({
-        line: over ? index - 1 : index,
-        text,
-        style: `${over ? 'over' : ''}${mark[1] ?? ''}`,
-      });
-    }
-  });
+// reStructuredText and AsciiDoc: the first style of heading met is the title, the second the
+// sections.
+function underlinedCuts(lines: string[]): Outline {
+  const headings = lines.flatMap((_, index) => headingAt(lines, index) ?? []);
   const styles = [...new Set(headings.map((heading) => heading.style))];
   const [
     first,
@@ -262,23 +269,20 @@ function underlinedCuts(lines: string[]): {
   ] = styles;
   const sectionStyle = second ?? first;
 
-  return {
-    title: headings.find((heading) => heading.style === first)?.text,
-    cuts: headings
+  return outline(
+    headings.find((heading) => heading.style === first)?.text,
+    headings
       .filter((heading, position) => heading.style === sectionStyle && (second !== undefined || position > 0))
       .map((heading) => ({
         line: heading.line,
         heading: heading.text,
       })),
-  };
+  );
 }
 
 // LaTeX: \chapter or the first \section gives the title; each \section, or each \subsection in a
 // file of one section, starts a section.
-function latexCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+function latexCuts(lines: string[]): Outline {
   const commands = lines.flatMap((line, index) => {
     const match = /^\s*\\(chapter|section|subsection)\*?(?:\[[^\]]*\])?\{(.+?)\}\s*(?:%.*)?$/.exec(line);
 
@@ -294,18 +298,41 @@ function latexCuts(lines: string[]): {
   const level = commands.filter((command) => command.level === 'section').length > 1 || chapter !== undefined ? 'section' : 'subsection';
   const cuts = commands.filter((command) => command.level === level);
 
-  return {
-    title: chapter?.heading ?? commands.find((command) => command.level === 'section')?.heading,
-    cuts: chapter === undefined && level === 'section' ? cuts.slice(1) : cuts,
-  };
+  return outline(chapter?.heading ?? commands.find((command) => command.level === 'section')?.heading, chapter === undefined && level === 'section' ? cuts.slice(1) : cuts);
 }
 
-// XML: PreTeXt (a <title> per chapter, section, subsection) or the documentation of a .NET API
-// (one <Member> per member of a type, or one <member name="..."> per member of an assembly).
-function xmlCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+// The member a line of the documentation of a .NET API starts: "M:System.String.Trim(System.Char[])"
+// is "String.Trim (method: ...)", the name a person looks for.
+function memberHeading(line: string): string | undefined {
+  const member = /<Member\s[^>]*MemberName="([^"]+)"|<member\s+name="([^"]+)"/.exec(line);
+
+  if (member === null) {
+    return undefined;
+  }
+  const name = decodeXml(member[1] ?? member[2] ?? '');
+  const kind = /^([TMPFEN]):(.+)$/.exec(name);
+
+  return kind === null ? name : intellisenseHeading(kind[1] ?? '', kind[2] ?? '');
+}
+
+// The <title> of a PreTeXt division that starts at a line, as text.
+function divisionHeading(lines: string[], index: number): string | undefined {
+  if (!/<(?:chapter|section|subsection|appendix)\b/.test(lines[index] ?? '')) {
+    return undefined;
+  }
+  return /<title>(.*?)<\/title>/
+    .exec(lines
+      .slice(index, index + 4)
+      .join(' '))?.[1]
+    ?.replaceAll(/<[^>]+>/g, '')
+    .replaceAll(/\s+/g, ' ')
+    .trim();
+}
+
+// XML: the documentation of a .NET API (one <Member> per member of a type, or one
+// <member name="..."> per member of an assembly), or PreTeXt (a <title> per division). The type, or
+// the first division of the file (a chapter, or a section kept in its own file), names it.
+function xmlCuts(lines: string[]): Outline {
   const typeName = /<Type\s[^>]*FullName="([^"]+)"/.exec(lines
     .slice(0, 20)
     .join('\n'))?.[1];
@@ -313,48 +340,21 @@ function xmlCuts(lines: string[]): {
   let title = typeName === undefined ? undefined : decodeXml(typeName);
 
   lines.forEach((line, index) => {
-    const member = /<Member\s[^>]*MemberName="([^"]+)"|<member\s+name="([^"]+)"/.exec(line);
-    const division = /<(chapter|section|subsection|appendix)\b/.exec(line);
-
-    if (member !== null) {
-      const name = decodeXml(member[1] ?? member[2] ?? '');
-      // "M:System.String.Trim(System.Char[])" is "String.Trim (method)": the name a person looks for.
-      const kind = /^([TMPFEN]):(.+)$/.exec(name);
-
-      cuts.push({
-        line: index,
-        heading: kind === null ? name : intellisenseHeading(kind[1] ?? '', kind[2] ?? ''),
-      });
-      return;
-    }
-    if (division === null) {
-      return;
-    }
-    const heading = /<title>(.*?)<\/title>/
-      .exec(lines
-        .slice(index, index + 4)
-        .join(' '))?.[1]
-      ?.replaceAll(/<[^>]+>/g, '')
-      .replaceAll(/\s+/g, ' ')
-      .trim();
+    const heading = memberHeading(line) ?? divisionHeading(lines, index);
 
     if (heading === undefined) {
       return;
     }
-    // The first division of the file names it: a chapter, or a section kept in its own file.
-    if (title === undefined && cuts.length === 0) {
+    if (title === undefined && cuts.length === 0 && !/<member/i.test(line)) {
       title = heading;
-    } else {
-      cuts.push({
-        line: index,
-        heading,
-      });
+      return;
     }
+    cuts.push({
+      line: index,
+      heading,
+    });
   });
-  return {
-    title,
-    cuts,
-  };
+  return outline(title, cuts);
 }
 
 const KINDS_OF_MEMBERS: Record<string, string> = {
@@ -378,10 +378,7 @@ function intellisenseHeading(kind: string, name: string): string {
 
 // Texinfo (GNU manuals): @settitle or the first @chapter gives the title; each @section, or each
 // @chapter in a manual without sections, starts a section.
-function texinfoCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+function texinfoCuts(lines: string[]): Outline {
   const commands = lines.flatMap((line, index) => {
     const match = /^@(settitle|chapter|unnumbered|appendix|section|unnumberedsec|appendixsec)\s+(.+)$/.exec(line);
 
@@ -393,19 +390,19 @@ function texinfoCuts(lines: string[]): {
       },
     ];
   });
-  const isSection = (level: string): boolean => /sec(?:tion)?$/.test(level);
-  const isChapter = (level: string): boolean => /^(?:chapter|unnumbered|appendix)$/.test(level);
-  const level = commands.filter((command) => isSection(command.level)).length > 1 ? isSection : isChapter;
+  const isSection = (name: string): boolean => /sec(?:tion)?$/.test(name);
+  const isChapter = (name: string): boolean => /^(?:chapter|unnumbered|appendix)$/.test(name);
+  const cutsAt = commands.filter((command) => isSection(command.level)).length > 1 ? isSection : isChapter;
 
-  return {
-    title: commands.find((command) => command.level === 'settitle')?.heading ?? commands.find((command) => isChapter(command.level))?.heading,
-    cuts: commands
-      .filter((command) => level(command.level))
+  return outline(
+    commands.find((command) => command.level === 'settitle')?.heading ?? commands.find((command) => isChapter(command.level))?.heading,
+    commands
+      .filter((command) => cutsAt(command.level))
       .map((command) => ({
         line: command.line,
         heading: command.heading,
       })),
-  };
+  );
 }
 
 const textOf = (html: string): string => decodeXml(html.replaceAll(/<[^>]+>/g, ''))
@@ -414,10 +411,7 @@ const textOf = (html: string): string => decodeXml(html.replaceAll(/<[^>]+>/g, '
 
 // HTML: <title> or the first <h1> gives the title; each <h2>, or each <h3> in a page without <h2>,
 // starts a section.
-function htmlCuts(lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+function htmlCuts(lines: string[]): Outline {
   const headings = (tag: string): Cut[] => lines.flatMap((line, index) => {
     const match = new RegExp(`<${tag}\\b[^>]*>(.*?)(?:</${tag}>|$)`, 'i').exec(line);
 
@@ -434,16 +428,10 @@ function htmlCuts(lines: string[]): {
   const title = /<title>([\s\S]*?)<\/title>/i.exec(page)?.[1] ?? /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(page)?.[1];
   const second = headings('h2');
 
-  return {
-    title: title === undefined ? undefined : textOf(title),
-    cuts: (second.length > 0 ? second : headings('h3')).filter((cut) => cut.heading !== ''),
-  };
+  return outline(title === undefined ? undefined : textOf(title), (second.length > 0 ? second : headings('h3')).filter((cut) => cut.heading !== ''));
 }
 
-function cutsOf(path: string, lines: string[]): {
-  title: string | undefined;
-  cuts: Cut[];
-} {
+function cutsOf(path: string, lines: string[]): Outline {
   if (/\.(?:rst|txt|adoc)$/.test(path)) {
     return underlinedCuts(lines);
   }
@@ -458,36 +446,39 @@ function cutsOf(path: string, lines: string[]): {
   }
   if (path.endsWith('.json')) {
     // A JSON schema (the options of an Angular schematic): one section, titled by its "title".
-    return {
-      title: /"title"\s*:\s*"([^"]+)"/.exec(lines
+    return outline(
+      /"title"\s*:\s*"([^"]+)"/.exec(lines
         .slice(0, 40)
         .join('\n'))?.[1],
-      cuts: [],
-    };
+      [],
+    );
   }
   return /\.(?:ptx|xml)$/.test(path) ? xmlCuts(lines) : markdownCuts(lines);
 }
 
+// The anchor of a heading in its file; one met twice gets "-2", "-3"...
+function uniqueAnchor(seen: Map<string, number>, heading: string): string {
+  const anchor = slug(heading) || 'section';
+  const count = (seen.get(anchor) ?? 0) + 1;
+
+  seen.set(anchor, count);
+  return count === 1 ? anchor : `${anchor}-${String(count)}`;
+}
+
 // The sections of a documentation file, by its format; the text before the first section belongs
-// to the title of the file. An anchor met twice gets "-2", "-3"...
+// to the title of the file.
 export function sections(path: string, text: string): Section[] {
-  const header = MARKDOWN_FILE.test(path) ? frontMatter(text) : {
-    body: text,
-    title: undefined,
-  };
+  const header = MARKDOWN_FILE.test(path) ? frontMatter(text) : { body: text };
   const lines = header.body.split('\n');
-  const {
-    title,
-    cuts,
-  } = cutsOf(path, lines);
-  const fileTitle = header.title ?? title ?? path.replace(/^.*\//, '');
+  const found = cutsOf(path, lines);
+  const fileTitle = header.title ?? found.title ?? path.replace(/^.*\//, '');
   const seen = new Map<string, number>();
   const starts = [
     {
       line: 0,
       heading: '',
     },
-    ...cuts,
+    ...found.cuts,
   ];
 
   return starts
@@ -496,19 +487,12 @@ export function sections(path: string, text: string): Section[] {
         .slice(cut.line, starts[position + 1]?.line ?? lines.length)
         .join('\n');
 
-      if (cut.heading === '') {
-        return {
-          id: path,
-          title: fileTitle,
-          text: body,
-        };
-      }
-      const anchor = slug(cut.heading) || 'section';
-      const count = (seen.get(anchor) ?? 0) + 1;
-
-      seen.set(anchor, count);
-      return {
-        id: `${path}#${count === 1 ? anchor : `${anchor}-${String(count)}`}`,
+      return cut.heading === '' ? {
+        id: path,
+        title: fileTitle,
+        text: body,
+      } : {
+        id: `${path}#${uniqueAnchor(seen, cut.heading)}`,
         title: `${fileTitle} > ${cut.heading}`,
         text: body,
       };

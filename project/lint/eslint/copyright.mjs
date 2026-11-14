@@ -35,7 +35,7 @@ function headerOptions(line) {
     content: line.replace(year, '(year)'),
     patterns: {
       year: {
-        pattern: String.raw`\d{4}`,
+        pattern: '[0-9]{4}',
         defaultValue: year,
       },
     },

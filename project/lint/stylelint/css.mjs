@@ -9,7 +9,7 @@ export const theme = 'css';
 export const packages = ['stylelint-config-standard-scss'];
 const RULES = {
   // Animations of everything: slow, and changes that were not meant to move.
-  'declaration-property-value-disallowed-list': { transition: [String.raw`/\ball\b/`] },
+  'declaration-property-value-disallowed-list': { transition: ['/(^|[\\s,])all([\\s,]|$)/'] },
   // !important breaks the cascade: the next rule needs another one.
   'declaration-no-important': true,
   // Nested SCSS beyond 3 levels makes long, fragile selectors.

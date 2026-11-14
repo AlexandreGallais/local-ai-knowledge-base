@@ -16,12 +16,24 @@ export const packages = ['stylelint', 'stylelint-config-standard-scss'];
  * @returns {Promise<Record<string, unknown>>} Its rules.
  */
 async function sharedRules(name) {
-  const config = (await import(name)).default;
+  const module = await import(name);
+  const config = module.default;
   const parents = await Promise.all(
     [config.extends ?? []].flat().map((parent) => sharedRules(parent)),
   );
+  const inherited = parents.reduce(
+    (rules, parent) => ({
+      ...rules,
+      ...parent,
+    }),
+    {},
+  );
 
-  return Object.assign({}, ...parents, config.rules);
+  // The rules of the config itself come last: they override those of the configs it extends.
+  return {
+    ...inherited,
+    ...config.rules,
+  };
 }
 
 /**

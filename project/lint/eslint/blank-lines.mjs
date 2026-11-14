@@ -8,6 +8,37 @@ import { FILES } from '../load.mjs';
 
 export const theme = 'blankLines';
 export const packages = ['@stylistic/eslint-plugin'];
+/** Where a blank line goes between two statements, in the words of padding-line-between-statements. */
+const PADDING = [
+  // Before return.
+  {
+    blankLine: 'always',
+    prev: '*',
+    next: 'return',
+  },
+  // After a block of declarations; declarations that follow each other stay together.
+  {
+    blankLine: 'always',
+    prev: ['const', 'let'],
+    next: '*',
+  },
+  {
+    blankLine: 'any',
+    prev: ['const', 'let'],
+    next: ['const', 'let'],
+  },
+  // Around functions, classes and block statements.
+  {
+    blankLine: 'always',
+    prev: '*',
+    next: ['function', 'class'],
+  },
+  {
+    blankLine: 'always',
+    prev: ['function', 'class', 'block-like'],
+    next: '*',
+  },
+];
 
 /**
  * @param {Record<string, any>} loaded The packages of the theme.
@@ -26,37 +57,7 @@ export function configs(loaded) {
           'always',
           { exceptAfterSingleLine: true },
         ],
-        '@stylistic/padding-line-between-statements': [
-          'error',
-          // Before return.
-          {
-            blankLine: 'always',
-            prev: '*',
-            next: 'return',
-          },
-          // After a block of declarations; declarations that follow each other stay together.
-          {
-            blankLine: 'always',
-            prev: ['const', 'let'],
-            next: '*',
-          },
-          {
-            blankLine: 'any',
-            prev: ['const', 'let'],
-            next: ['const', 'let'],
-          },
-          // Around functions, classes and block statements.
-          {
-            blankLine: 'always',
-            prev: '*',
-            next: ['function', 'class'],
-          },
-          {
-            blankLine: 'always',
-            prev: ['function', 'class', 'block-like'],
-            next: '*',
-          },
-        ],
+        '@stylistic/padding-line-between-statements': ['error', ...PADDING],
       },
     },
   ];

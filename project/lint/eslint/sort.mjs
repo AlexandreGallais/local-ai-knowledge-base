@@ -62,7 +62,7 @@ export function configs(loaded) {
               {
                 groupName: 'injected-property',
                 selector: 'property',
-                elementValuePattern: String.raw`^inject\(`,
+                elementValuePattern: '^inject[(]',
               },
             ],
             groups: CLASS_GROUPS,

@@ -1,15 +1,16 @@
 // The one import script of the base. It takes every part found in its folder (kit-001.txt,
-// js-official-docs-001.txt...), whatever their packs, checks them all, then rebuilds everything in
-// the project at once: the kit (AGENTS.md, opencode.json, the format and lint configs, .agents/) and
-// each pasted brick of .agents/mcp/, with its line in opencode.json. It adds to package.json the
-// scripts format, lint and check and the lint packages it lacks. One file, no package, no build
-// step: Node 22.18 or later.
+// js-official-docs-001.txt...), whatever their packs, checks them all, then writes everything in the
+// project at once: the kit (a project of its own: package.json, the format and lint configs,
+// AGENTS.md, opencode.json, .agents/ and example code) and each pasted brick of .agents/mcp/, with
+// its line in opencode.json. One file, no package, no build step: Node 22.18 or later.
 //   node import.ts [--from <folder of the parts>] [--target <project root>]
 // Default: the parts next to this file, the current folder as the project.
-// A damaged or missing part is named, and nothing is written. What the team wrote is kept: AGENTS.md,
-// the format and lint configs and the skills already there are written only when missing, the
-// scripts and packages of package.json are added only when missing, and the settings the team added
-// to opencode.json stay.
+// A damaged or missing part is named, and nothing is written. In an empty folder, the kit is written
+// whole: `npm install` then `npm run check` work at once. In a project that already exists, nothing
+// the team wrote is replaced: every file outside .agents/ (package.json, configs, AGENTS.md, skills)
+// is written only when missing, the example code of the kit (src/) is left aside, and the import
+// lists what it left, to be merged by hand. The bricks of .agents/mcp/ are replaced whole, and the
+// settings the team added to opencode.json stay.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
@@ -22,7 +23,6 @@ import {
   writeFileSync,
 } from 'node:fs';
 import {
-  basename,
   dirname,
   join,
   resolve,
@@ -62,7 +62,6 @@ export interface ImportResult {
   written: number;
   kept: string[];
   servers: string[];
-  added: string[];
 }
 
 type Json = Record<string, unknown>;
@@ -72,18 +71,32 @@ const Z85 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=
 const STREAM_MAGIC = 'LAB2\n';
 const PART_NAME = /^(.+)-(\d{3})\.txt$/;
 const BRICKS = '.agents/mcp';
-const PACKAGES = 'lint/packages.json';
+// The example code of the kit: written in an empty folder, left aside in a project that exists.
+const EXAMPLE = 'src/';
 const INSTRUCTIONS = [
   '.agents/rules.md',
   '.agents/mcp/*/rules.md',
 ];
-// OpenCode formatters that would run before the format config of the project on the same files.
+// OpenCode formatters that would run before the format configs of the project on the same files.
 const BUILT_IN_FORMATTERS = [
   'prettier',
   'biome',
   'oxfmt',
 ];
-// The formatters OpenCode runs after each write: the format configs of the project, by their file.
+const ALL_EXTENSIONS = [
+  '.ts',
+  '.mts',
+  '.js',
+  '.mjs',
+  '.html',
+  '.json',
+  '.css',
+  '.scss',
+];
+// The formatters OpenCode runs after each write, in this order: ESLint with the format config on
+// scripts and templates, Prettier on every file, then Stylelint with the format config on styles,
+// whose fixes keep the layout of Prettier. Each one is declared when the file it needs is in the
+// project.
 const FORMATTERS = [
   {
     name: 'eslint-format',
@@ -98,12 +111,24 @@ const FORMATTERS = [
       '--fix',
       '$FILE',
     ],
-    extensions: [
-      '.ts',
-      '.mts',
-      '.html',
+    extensions: ALL_EXTENSIONS.filter((extension) => ![
       '.json',
+      '.css',
+      '.scss',
+    ].includes(extension)),
+  },
+  {
+    name: 'prettier-format',
+    config: '.prettierrc.json',
+    command: [
+      'npx',
+      '--no',
+      '--',
+      'prettier',
+      '--write',
+      '$FILE',
     ],
+    extensions: ALL_EXTENSIONS,
   },
   {
     name: 'stylelint-format',
@@ -413,80 +438,6 @@ export function syncConfig(config: Json, bricks: string[], formatConfigs: string
   };
 }
 
-function hasAngular(manifest: Json): boolean {
-  return [
-    'dependencies',
-    'devDependencies',
-    'peerDependencies',
-  ].some((section) => '@angular/core' in record(manifest[section]));
-}
-
-// package.json with the scripts and the lint packages of lint/packages.json it lacks: Angular
-// packages only for a project that lists @angular/core. What it already holds is never changed.
-export function mergePackageJson(manifest: Json, packages: Json): {
-  manifest: Json;
-  added: string[];
-} {
-  const scripts = record(manifest['scripts']);
-  const devDependencies = record(manifest['devDependencies']);
-  const declared = {
-    ...record(manifest['dependencies']),
-    ...devDependencies,
-    ...record(manifest['peerDependencies']),
-  };
-  const wanted = {
-    ...record(packages['always']),
-    ...hasAngular(manifest) ? record(packages['angular']) : {},
-  };
-  const newScripts = Object
-    .entries(record(packages['scripts']))
-    .filter(([name]) => !(name in scripts));
-  const newPackages = Object
-    .entries(wanted)
-    .filter(([name]) => !(name in declared));
-
-  return {
-    manifest: {
-      ...manifest,
-      scripts: {
-        ...scripts,
-        ...Object.fromEntries(newScripts),
-      },
-      devDependencies: {
-        ...devDependencies,
-        ...Object.fromEntries(newPackages),
-      },
-    },
-    added: [
-      ...newScripts.map(([name]) => `script ${name}`),
-      ...newPackages.map(([name]) => name),
-    ],
-  };
-}
-
-// Adds what lint/packages.json of the project asks to its package.json, or writes a new one.
-function syncPackageJson(target: string): string[] {
-  if (!existsSync(join(target, PACKAGES))) {
-    return [];
-  }
-  const path = join(target, 'package.json');
-  const current = existsSync(path) ? readJson(path) : {
-    name: basename(target)
-      .toLowerCase()
-      .replaceAll(/[^a-z0-9-]/g, '-'),
-    private: true,
-  };
-  const {
-    manifest,
-    added,
-  } = mergePackageJson(current, readJson(join(target, PACKAGES)));
-
-  if (added.length > 0) {
-    writeFileSync(path, `${JSON.stringify(manifest, null, 2)}\n`);
-  }
-  return added;
-}
-
 function write(target: string, file: UnpackedFile): void {
   mkdirSync(dirname(join(target, file.path)), { recursive: true });
   writeFileSync(join(target, file.path), file.data);
@@ -496,6 +447,8 @@ function write(target: string, file: UnpackedFile): void {
 export function installPacks(packs: Pack[], target: string): ImportResult {
   const files = packs.flatMap((pack) => pack.files);
   const kept: string[] = [];
+  // A project that exists already has its own package.json: the example code of the kit stays out.
+  const existing = existsSync(join(target, 'package.json'));
   let written = 0;
 
   for (const brick of bricksOf(files)) {
@@ -508,7 +461,7 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
   const config = readJson(join(target, 'opencode.json'));
 
   for (const file of files.filter((item) => item.path !== 'opencode.json')) {
-    if (ownedByTeam(file.path) && existsSync(join(target, file.path))) {
+    if ((ownedByTeam(file.path) && existsSync(join(target, file.path))) || (existing && file.path.startsWith(EXAMPLE))) {
       kept.push(file.path);
       continue;
     }
@@ -527,7 +480,6 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
     written: written + 1,
     kept,
     servers,
-    added: syncPackageJson(target),
   };
 }
 
@@ -567,14 +519,15 @@ function main(): void {
   }
   const result = installPacks(packs, target);
 
-  process.stdout.write(`Installed in ${target}: ${result.packs.join(', ')}. ${result.written} file(s) written, ${result.kept.length} kept as the team wrote them.\n`);
+  process.stdout.write(`Installed in ${target}: ${result.packs.join(', ')}. ${result.written} file(s) written, ${result.kept.length} left aside.\n`);
   process.stdout.write(`MCP servers in opencode.json: ${result.servers.join(', ') || 'none'}.\n`);
+  if (result.kept.length > 0) {
+    process.stdout.write('Left aside, because the project already has them or its own code: merge them by hand from the kit if needed.\n');
+  }
   for (const path of result.kept) {
-    process.stdout.write(`kept: ${path}\n`);
+    process.stdout.write(`left aside: ${path}\n`);
   }
-  if (result.added.length > 0) {
-    process.stdout.write(`Added to package.json: ${result.added.join(', ')}. Run npm install.\n`);
-  }
+  process.stdout.write('Then: npm install, and npm run check.\n');
   buildIndexes(target, bricksOf(packs.flatMap((pack) => pack.files)));
 }
 
