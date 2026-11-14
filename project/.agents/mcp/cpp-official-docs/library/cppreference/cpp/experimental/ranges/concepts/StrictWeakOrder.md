@@ -1,0 +1,17 @@
+# std::experimental::ranges::StrictWeakOrder
+
+| Defined in header `<experimental/ranges/concepts>` |  |  |
+| --- | --- | --- |
+| `template< class R, class T, class U > concept bool StrictWeakOrder = Relation<R, T, U>;` | (1) | (ranges TS) |
+
+The concept `StrictWeakOrder<R, T, U>` specifies that the `Relation` `R` imposes a strict weak ordering on its arguments. A relation `r` is a strict weak ordering if
+
+- it is irreflexive: for all `x`, `r(x, x)` is false;
+- it is transitive: for all `a`, `b` and `c`, if `r(a, b)` and `r(b, c)` are both true then `r(a, c)` is true;
+- let `e(a, b)` be `!r(a, b) && !r(b, a)`, then `e` is transitive: `e(a, b) && e(b, c)` implies `e(a, c)`.
+
+Under these conditions, it can be shown that `e` is an equivalence relation, and `r` induces a strict total ordering on the equivalence classes determined by `e`.
+
+### Notes
+
+The distinction between `Relation` and `StrictWeakOrder` is purely semantic.

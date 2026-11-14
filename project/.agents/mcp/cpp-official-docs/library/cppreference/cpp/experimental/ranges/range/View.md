@@ -1,0 +1,17 @@
+# std::experimental::ranges::View
+
+| Defined in header `<experimental/ranges/range>` |  |
+| --- | --- |
+| `template< class T > concept bool View = Range<T> && Semiregular<T> && /* view-predicate<T> */;` | (ranges TS) |
+| `template< class T > struct enable_view {};` | (ranges TS) |
+| `struct view_base {};` | (ranges TS) |
+
+The concept `View<T>` specifies the semiregular range `T` has constant-time copy, move, and assignment operations.
+
+The `/* view-predicate<T> */` portion of the concept is determined as follows:
+
+- if the *qualified-id* `ranges::enable_view<T>::type` is valid and denotes a type, `ranges::enable_view<T>::type::value`;
+- otherwise, if `std::is_base_of_v<ranges::view_base, T>` is `true`, `true`;
+- otherwise, if `T` is a specialization of `std::initializer_list`, `std::set`, `std::multiset`, `std::unordered_set`, or `std::unordered_multiset`, `false`;
+- otherwise, if both `T` and `const T` satisfy `Range` and `ranges::reference_t <ranges::iterator_t<T>>` is not the same type as `ranges::reference_t<ranges::iterator_t<const T>>`, `false`;
+- otherwise, `true`.

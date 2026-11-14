@@ -1,7 +1,7 @@
 # linear-algebra-beezer
 
 A First Course in Linear Algebra, by Robert A. Beezer: the XML source of the book. Version 2026-11, from <https://github.com/rbeezer/fcla> at master, commit 347f27fe909b54b26970bcc0fcbf69c7e853c766.
-License: GFDL-1.3-or-later, by Robert A. Beezer; see THIRD_PARTY_NOTICES.md. Each file is the official file, unchanged.
+License: GFDL-1.2-or-later, by Robert A. Beezer; see THIRD_PARTY_NOTICES.md. Each file is the official file, unchanged.
 
 This index is long: search it for your words, never read it whole. Then read one section of one file.
 

@@ -39,7 +39,7 @@ node .agents/mcp/js-official-docs/build-index.ts
 
 ## Licenses
 
-MDN is under CC BY-SA 2.5, Angular and TypeScript under CC BY 4.0, the ARIA Authoring Practices Guide under the W3C Software and Document License, most tools under MIT, RxJS and Playwright under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+MDN is under CC BY-SA 2.5, TypeScript under CC BY 4.0, Angular under MIT, the ARIA Authoring Practices Guide under the W3C Software and Document License, most tools under MIT, RxJS and Playwright under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` files) is under the MIT License of
 the base.
 

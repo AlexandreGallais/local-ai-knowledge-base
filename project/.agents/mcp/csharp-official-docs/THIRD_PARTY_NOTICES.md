@@ -55,16 +55,6 @@ copyright notices, are in `licenses/<tool>/`.
 - License text: [licenses/efcore/LICENSE](licenses/efcore/LICENSE), [licenses/efcore/LICENSE-CODE](licenses/efcore/LICENSE-CODE)
 - Changes: none; the files are copied as they are in the source, at the commit above.
 
-## dotnet-api
-
-- Work: .NET API reference: the base class library and Microsoft.Extensions, for server and console applications
-- Authors: Microsoft and the .NET API docs contributors
-- Copyright: `Copyright (c) Microsoft Corporation`
-- Source: <https://github.com/dotnet/dotnet-api-docs>, main, commit a010100852b71f33d67d913d7a9ed69f83a639b1
-- License: CC-BY-4.0, <https://creativecommons.org/licenses/by/4.0/>
-- License text: [licenses/dotnet-api/LICENSE](licenses/dotnet-api/LICENSE), [licenses/dotnet-api/LICENSE-CODE](licenses/dotnet-api/LICENSE-CODE)
-- Changes: none; the files are copied as they are in the source, at the commit above.
-
 ## dotnet-fundamentals
 
 - Work: .NET fundamentals: dependency injection, configuration, logging, code analysis rules CA and IDE

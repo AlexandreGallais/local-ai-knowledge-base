@@ -1,0 +1,28 @@
+# std::experimental::filesystem::file_type
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `enum class file_type { none = 0, not_found = -1, regular = 1, directory = 2, symlink = 3, block = 4, character = 5, fifo = 6, socket = 7, unknown = 8 };` | (filesystem TS) |
+
+Indicates a type of a file or directory a path refers to.
+
+This section is incomplete
+
+### Constants
+
+| Constant | Meaning |
+| --- | --- |
+| `none` | indicates that the file status has not been evaluated yet, or an error occurred when evaluating it |
+| `not_found` | indicates that the file was not found (this is not considered an error) |
+| `regular` | a regular file |
+| `directory` | a directory |
+| `symlink` | a symbolic link |
+| `block` | a block special file |
+| `character` | a character special file |
+| `fifo` | a FIFO (also known as pipe) file |
+| `socket` | a socket file |
+| `unknown` | an unknown file |
+
+### See also
+
+This section is incomplete

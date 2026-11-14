@@ -1,0 +1,71 @@
+# std::experimental::optional<T>::operator=
+
+|  |  |  |
+| --- | --- | --- |
+| `optional& operator=( std::experimental::nullopt_t ) noexcept;` | (1) | (library fundamentals TS) |
+| `optional& operator=( const optional& other );` | (2) | (library fundamentals TS) |
+| `optional& operator=( optional&& other ) noexcept(/* see below */);` | (3) | (library fundamentals TS) |
+| `template< class U > optional& operator=( U&& value );` | (4) | (library fundamentals TS) |
+
+Replaces contents of `*this` with the contents of `other`.
+
+1) If `*this` contains a value before the call, the contained value is destroyed by calling its destructor as if by `val->T::~T()`. `*this` does not contain a value after this call.
+
+2,3) Assigns the state of `other`.
+
+- If both `*this` and `other` do not contain a value, the function has no effect.
+- If `*this` contains a value, but `other` does not, then the contained value is destroyed by calling its destructor. `*this` does not contain a value after the call.
+- If `other` contains a value, then depending on whether `*this` contains a value, the contained value is either direct-initialized or assigned from `*other` (2) or `std::move(*other)` (3). Note that a moved-from optional still *contains a value*.
+
+4) Decay-only perfect-forwarded assignment: depending on whether `*this` contains a value before the call, the contained value is either direct-initialized from `std::forward<U>(value)` or assigned from `std::forward<U>(value)`. The function does not participate in overload resolution unless `std::is_same<std::decay_t<U>, T>::value` is `true`.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| other | - | another `optional` object whose contained value to assign |
+| value | - | value to assign to the contained value |
+| Type requirements |  |  |
+| - `T` must meet the requirements of CopyAssignable and CopyConstructible in order to use overload (2). |  |  |
+| - `T` must meet the requirements of MoveAssignable and MoveConstructible in order to use overload (3). |  |  |
+
+### Return value
+
+`*this`
+
+### Exceptions
+
+2-4) Throws any exception thrown by the constructor or assignment operator of `T`. If an exception is thrown, the initialization state of `*this` (and of `other` in case of (2)) is unchanged, i.e. if the object contained a value, it still contains a value, and the other way round. The contents of `value` and the contained values of `*this` and `other` depend on the exception safety guarantees of the operation from which the exception originates (copy-constructor, move-assignment, etc.). (3) has the following `noexcept` declaration:
+
+`noexcept` specification:
+
+`noexcept(std::is_nothrow_move_assignable<T>::value && std::is_nothrow_move_constructible<T>::value)`
+
+### Notes
+
+An optional object `op` may be turned into an empty optional with both `op = {};` and `op = nullopt;`.
+
+### Example
+
+```cpp
+#include <experimental/optional>
+#include <iostream>
+
+int main()
+{
+    std::experimental::optional<const char*> s1 = "abc", s2; // constructor
+    s2 = s1; // assignment
+    s1 = "def"; // decaying assignment (U = char[4], T = const char*)
+    std::cout << *s2 << ' ' << *s1 << '\n';
+}
+```
+
+Output:
+
+```text
+abc def
+```
+
+### See also
+
+emplace constructs the contained value in-place (public member function)

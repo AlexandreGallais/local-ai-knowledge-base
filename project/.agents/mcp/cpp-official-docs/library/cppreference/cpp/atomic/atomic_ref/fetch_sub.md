@@ -1,0 +1,38 @@
+# std::atomic_ref<T>::fetch_sub
+
+|  |  |
+| --- | --- |
+| Provided only when `T` is an arithmetic type other than *cv* `bool` or a pointer-to-object type |  |
+| `value_type fetch_sub( difference_type arg, std::memory_order order = std::memory_order_seq_cst ) const noexcept;` | (constexpr since C++26) |
+
+Atomically replaces the current value of the referenced object with the result of arithmetic subtraction of the value and `arg`. This operation is a read-modify-write operation. Memory is affected according to the value of `order`.
+
+- For signed integral types, arithmetic is defined to use two’s complement representation. There are no undefined results.
+- For floating-point types, the floating-point environment in effect may be different from the calling thread's floating-point environment. The operation need not be conform to the corresponding `std::numeric_limits` traits but is encouraged to do so. If the result is not a representable value for its type, the result is unspecified but the operation otherwise has no undefined behavior.
+- For pointer types, the result may be an undefined address, but the operation otherwise has no undefined behavior.
+  - If `std::remove_pointer_t<T>` is not a complete object type, the program is ill-formed.
+
+This overload participates in overload resolution only if `std::is_const_v<T>` is `false`.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| arg | - | the other argument of arithmetic subtraction |
+| order | - | memory order constraints to enforce |
+
+### Return value
+
+The value referenced by `*ptr`, immediately preceding the effects of this function.
+
+### Example
+
+This section is incomplete Reason: no example
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 3508 (P3323R1) | C++20 | `fetch_sub` was meaningless for `const T` | constrained to accept only non-const `T` |

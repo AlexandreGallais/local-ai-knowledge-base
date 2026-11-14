@@ -1,0 +1,70 @@
+# std::experimental::filesystem::resize_file
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `void resize_file( const path& p, std::uintmax_t new_size ); void resize_file( const path& p, std::uintmax_t new_size, error_code& ec );` | (filesystem TS) |
+
+Changes the size of the regular file named by `p` as if by POSIX truncate: if the file size was previously larger than `new_size`, the remainder of the file is discarded. If the file was previously smaller than `new_size`, the file size is increased and the new area appears as if zero-filled.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| p | - | path to resize |
+| new_size | - | size that the file will now have |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+(none)
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `p` as the first argument and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+On systems that support sparse files, increasing the file size does not increase the space it occupies on the file system: space allocation takes place only when non-zero bytes are written to the file.
+
+### Example
+
+Demonstrates the effect of creating a sparse file on the free space.
+
+```cpp
+#include <experimental/filesystem>
+#include <fstream>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    fs::path p = fs::temp_directory_path() / "example.bin";
+    std::ofstream(p).put('a');
+    std::cout << "File size:  " << fs::file_size(p) << '\n'
+              << "Free space: " << fs::space(p).free << '\n';
+    fs::resize_file(p, 64*1024); // resize to 64 KB
+    std::cout << "File size:  " << fs::file_size(p) << '\n'
+              << "Free space: " << fs::space(p).free << '\n';
+    fs::remove(p);
+}
+```
+
+Possible output:
+
+```text
+File size:  1
+Free space: 31805444096
+File size:  65536
+Free space: 31805444096
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| file_size | returns the size of a file (function) |
+| space | determines available free space on the file system (function) |

@@ -1,0 +1,55 @@
+# std::experimental::ranges::for_each
+
+| Defined in header `<experimental/ranges/algorithm>` |  |  |
+| --- | --- | --- |
+| `template< InputIterator I, Sentinel<I> S, class Proj = ranges::identity, IndirectUnaryInvocable<projected<I, Proj>> Fun > ranges::tagged_pair<tag::in(I), tag::fun(Fun)> for_each( I first, S last, Fun f, Proj proj = Proj{} );` | (1) | (ranges TS) |
+| `template< InputRange R, class Proj = ranges::identity, IndirectUnaryInvocable<projected<ranges::iterator_t<R>, Proj>> Fun > ranges::tagged_pair<tag::in(ranges::safe_iterator_t<R>), tag::fun(Fun)> for_each( R&& r, Fun f, Proj proj = Proj{} );` | (2) | (ranges TS) |
+
+1) Invokes the given function object `f` to the result of invoking the projection `proj` on dereferencing every iterator in the range `[``first``,``last``)` (i.e.,`ranges::invoke(f, ranges::invoke(proj, *i))`), in order.
+
+2) Same as (1), but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+For both overloads, if the iterator type is mutable, `f` may modify the elements of the range through the dereferenced iterator. If `f` returns a result, the result is ignored.
+
+Unlike the rest of the algorithms, for_each is not allowed to make copies of the elements in the sequence even if they are trivially copyable.
+
+Unlike `std::for_each` (which requires only MoveConstructible), these functions require `Fun` to model `CopyConstructible`.
+
+Notwithstanding the declarations depicted above, the actual number and order of template parameters for algorithm declarations is unspecified. Thus, if explicit template arguments are used when calling an algorithm, the program is probably non-portable.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | the range to apply the function to |
+| r | - | the range to apply the function to |
+| f | - | callable object to be applied to each projected element in the range |
+| proj | - | projection to apply to the elements |
+
+### Return value
+
+A `tagged_pair` object containing the following two members:
+
+- The first member, with the tag `tag::in`, is the past-the-end iterator of the source range (that is, an iterator of type `I` that compares equal to the sentinel `last`).
+- The second member, with the tag `tag::fun`, is initialized from `std::move(f)` (after all applications of the function object).
+
+### Complexity
+
+Exactly `last` - `first` applications of `f` and `proj`.
+
+### Possible implementation
+
+`template<InputIterator I, Sentinel<I> S, class Proj = ranges::identity, IndirectUnaryInvocable<ranges::projected<I, Proj>> Fun> auto for_each(I first, S last, Fun f, Proj proj = Proj{}) -> ranges::tagged_pair<tag::in(I), tag::fun(Fun)> { for (; first != last; ++first) ranges::invoke(f, ranges::invoke(proj, *first)); return {std::move(first), std::move(f)}; }`
+
+### Example
+
+This section is incomplete Reason: no example
+
+### See also
+
+|  |  |
+| --- | --- |
+| transform | applies a function to a range of elements (function template) |
+| range-`for` loop(C++11) | executes loop over range |
+| for_each | applies a function to a range of elements (function template) |
+| for_each_n (C++17) | applies a function object to the first N elements of a sequence (function template) |

@@ -47,14 +47,15 @@ removes the server, its documentation and its rules, without breaking the other 
 | `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http` (OpenJDK 25, LTS), Gradle and Maven. |
 | `containers-official-docs` | Containers: the Dockerfile reference, the Docker manuals and CLI, Podman, the Compose Specification, the Dev Containers specification, the OCI specifications. |
 | `git-official-docs` | Git: the manual page of every command. |
-| `cpp-official-docs` | C and C++: cppreference.com, CMake, Clang, the GNU Make and GCC manuals. |
+| `cpp-official-docs` | C and C++: cppreference.com (converted to Markdown), CMake, Clang. |
 | `math-docs` | Mathematics: free textbooks of linear algebra, discrete mathematics and combinatorics, in LaTeX and PreTeXt. |
 
 Each documentation brick searches its own documentation only, then gives one section at a time. Only
 the official documentation is there, each file as its authors wrote it, in its own format (Markdown,
 reStructuredText, AsciiDoc, LaTeX, Texinfo, PreTeXt, XML, HTML); an API reference that lives in the
-comments of the code is taken from those comments. Each source keeps its own license, noted in the
-`THIRD_PARTY_NOTICES.md` of its brick; `library/README.md` lists the sources, their versions and
+comments of the code is taken from those comments; the HTML pages of cppreference.com are converted to
+Markdown. Every source is under a free license (OSI and FSF licenses, CC0, CC BY, CC BY-SA), noted in
+the `THIRD_PARTY_NOTICES.md` of its brick; `library/README.md` lists the sources, their versions and
 sizes, and the `README.md` of the brick what was set aside and why.
 
 [`project/.agents/README.md`](project/.agents/README.md) explains each part, and the `README.md` of each

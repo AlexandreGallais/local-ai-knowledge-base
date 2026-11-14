@@ -1,7 +1,7 @@
 # angular
 
 Angular documentation (angular.dev), without Material, CDK nor Angular Aria. Version 22.2, from <https://github.com/angular/angular> at v22.2.6, commit dda2d41d948380d63619d597c9815db0aa77fd1d.
-License: CC-BY-4.0, by Google LLC and the Angular contributors; see THIRD_PARTY_NOTICES.md. Each file is the official file, unchanged.
+License: MIT, by Google LLC and the Angular contributors; see THIRD_PARTY_NOTICES.md. Each file is the official file, unchanged.
 
 This index is long: search it for your words, never read it whole. Then read one section of one file.
 

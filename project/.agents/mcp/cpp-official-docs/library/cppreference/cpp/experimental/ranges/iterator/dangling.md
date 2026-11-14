@@ -1,0 +1,31 @@
+# std::experimental::ranges::dangling, std::experimental::ranges::safe_iterator_t
+
+| Defined in header `<experimental/ranges/iterator>` |  |
+| --- | --- |
+| `template< CopyConstructible T > class dangling { public: dangling() requires DefaultConstructible<T>(); dangling(T t); T get_unsafe() const; };` | (ranges TS) |
+| `template< Range R > using safe_iterator_t = std::conditional_t<std::is_lvalue_reference<R>::value, ranges::iterator_t<R>, ranges::dangling<ranges::iterator_t<R>>;` | (ranges TS) |
+
+The class template `dangling` is a simple wrapper around an object to indicate that the wrapped object may be *dangling*, that is, it refers to another object whose lifetime may have ended.
+
+The alias template `safe_iterator_t` returns the iterator type of `R`, wrapped in `dangling` if the range was an rvalue range (as indicated by `R` not being an lvalue reference type).
+
+They are used by range algorithms that accept rvalue ranges and return iterators into them.
+
+### Member functions
+
+## std::experimental::ranges::dangling::dangling
+
+|  |  |
+| --- | --- |
+| `dangling() requires DefaultConstructible<T>();` | (1) |
+| `dangling(T t);` | (2) |
+
+1) Default constructor. Value-initializes the wrapped object.
+
+2) Initializes the wrapped object with `t`. Note that this constructor defines an implicit conversion from `T` to `dangling<T>`.
+
+## std::experimental::ranges::dangling::get_unsafe
+
+`T get_unsafe() const;`
+
+Returns a copy of the wrapped object.

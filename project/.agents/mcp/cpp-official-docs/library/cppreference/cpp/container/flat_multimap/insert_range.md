@@ -1,0 +1,72 @@
+# std::flat_multimap<Key,T,Compare,KeyContainer,MappedContainer>::insert_range
+
+`template< container-compatible-range<value_type> R > void insert_range( R&& rg );` (since C++23)
+
+Inserts a copy of each element in the range `rg` into underlying containers `c` as if by:
+
+```cpp
+for (const auto& e : rg)
+{
+    c.keys.insert(c.keys.end(), e.first);
+    c.values.insert(c.values.end(), e.second);
+}
+```
+
+Then, sorts the range of newly inserted elements with respect to `value_comp()`. Merges the resulting sorted range and the sorted range of pre-existing elements into a single sorted range.
+
+Each iterator in the range `rg` is dereferenced exactly once. The behavior is undefined if `rg` overlaps with the container.
+
+Information on iterator invalidation is copied from here
+
+### Parameters
+
+rg - a container compatible range, that is, an `input_range` whose elements are convertible to `T`
+
+### Return value
+
+(none)
+
+### Complexity
+
+`N + M·log(M)`, where `N` is `size()` before the operation and `M` is `ranges::distance(rg)`.
+
+### Notes
+
+Since `insert_range` performs an in-place merge operation, that may allocate memory.
+
+### Example
+
+```cpp
+#include <iostream>
+#include <flat_map>
+#include <utility>
+
+void println(auto, auto const& container)
+{
+    for (const auto& [key, value] : container)
+        std::cout << '{' << key << ',' << value << '}' << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    auto container = std::flat_multimap{std::pair{1, 11}, {3, 33}, {2, 22}, {4, 44}};
+    const auto rg = {std::pair{-1, -11}, {3, -33}, {-2, -22}};
+#ifdef __cpp_lib_containers_ranges
+    container.insert_range(rg);
+#else
+    container.insert(rg.begin(), rg.end());
+#endif
+    println("{}", container);
+}
+```
+
+Output:
+
+```text
+{-2,-22} {-1,-11} {1,11} {2,22} {3,33} {3,-33} {4,44}
+```
+
+### See also
+
+insert inserts elements (public member function)

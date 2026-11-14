@@ -1,0 +1,43 @@
+# std::input_or_output_iterator
+
+| Defined in header `<iterator>` |  |
+| --- | --- |
+| `template< class I > concept input_or_output_iterator = requires(I i) { { *i } -> /*can-reference*/; } && std::weakly_incrementable<I>;` | (since C++20) |
+
+The `input_or_output_iterator` concept forms the basis of the iterator concept taxonomy; every iterator type satisfies the `input_or_output_iterator` requirements.
+
+The exposition-only concept `/*can-reference*/` is satisfied if and only if the type is referenceable.
+
+### Notes
+
+`input_or_output_iterator` itself only specifies operations for dereferencing and incrementing an iterator. Most algorithms will require additional operations, for example:
+
+- comparing iterators with sentinels (see `sentinel_for`);
+- reading values from an iterator (see `indirectly_readable` and `input_iterator`);
+- writing values to an iterator (see `indirectly_writable` and `output_iterator`);
+- a richer set of iterator movements (see `forward_iterator`, `bidirectional_iterator`, `random_access_iterator`).
+
+Unlike the LegacyIterator requirements, the `input_or_output_iterator` concept does not require copyability.
+
+`*i` is required to be equality-preserving, although the increment operations required by `weakly_incrementable` are not.
+
+### Example
+
+A minimum iterator.
+
+```cpp
+#include <cstddef>
+#include <iterator>
+
+struct SimpleIterator
+{
+    using difference_type = std::ptrdiff_t;
+
+    int operator*();
+
+    SimpleIterator& operator++();
+    void operator++(int) { ++*this; }
+};
+
+static_assert(std::input_or_output_iterator<SimpleIterator>);
+```

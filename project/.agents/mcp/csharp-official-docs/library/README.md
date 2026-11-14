@@ -24,7 +24,6 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [dotnet-standard](dotnet-standard.index.md) | .NET standard library guides | 11 | CC-BY-4.0 | 896 files, 6.8 MB |
 | [aspnetcore](aspnetcore.index.md) | ASP.NET Core documentation | 11 | CC-BY-4.0 | 1418 files, 17.4 MB |
 | [efcore](efcore.index.md) | Entity Framework Core documentation | 11 | CC-BY-4.0 | 311 files, 4.7 MB |
-| [dotnet-api](dotnet-api.index.md) | .NET API reference: the base class library and Microsoft.Extensions, for server and console applications | 11 | CC-BY-4.0 | 3321 files, 134.7 MB |
 | [dotnet-fundamentals](dotnet-fundamentals.index.md) | .NET fundamentals: dependency injection, configuration, logging, code analysis rules CA and IDE | 11 | CC-BY-4.0 | 664 files, 3.1 MB |
 | [dotnet-architecture](dotnet-architecture.index.md) | .NET architecture guides: microservices, containers, cloud-native, modern web applications | 11 | CC-BY-4.0 | 164 files, 1.9 MB |
 | [aspire](aspire.index.md) | .NET Aspire: app host, integrations, deployment, observability | 13 | MIT | 93 files, 0.3 MB |

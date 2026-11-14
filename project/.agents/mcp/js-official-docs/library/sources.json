@@ -111,7 +111,7 @@
       "repository": "https://github.com/angular/angular.git",
       "ref": "v22.2.6",
       "version": "22.2",
-      "license": "CC-BY-4.0",
+      "license": "MIT",
       "attribution": "Google LLC and the Angular contributors",
       "paths": [
         "adev/src/content/"

@@ -1,0 +1,53 @@
+# std::deque<T,Allocator>::max_size
+
+`size_type max_size() const;` (noexcept since C++11)
+
+Returns the maximum number of elements the container is able to hold due to system or library implementation limitations, i.e. `std::distance(begin(), end())` for the largest container.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Maximum number of elements.
+
+### Complexity
+
+Constant.
+
+### Notes
+
+This value typically reflects the theoretical limit on the size of the container, at most `std::numeric_limits<difference_type>::max()`. At runtime, the size of the container may be limited to a value smaller than `max_size()` by the amount of RAM available.
+
+### Example
+
+```cpp
+#include <iostream>
+#include <locale>
+#include <deque>
+
+int main()
+{
+    std::deque<char> p;
+    std::deque<long> q;
+
+    std::cout.imbue(std::locale("en_US.UTF-8"));
+    std::cout << std::uppercase
+              << "p.max_size() = " << std::dec << p.max_size() << " = 0x"
+              << std::hex << p.max_size() << '\n'
+              << "q.max_size() = " << std::dec << q.max_size() << " = 0x"
+              << std::hex << q.max_size() << '\n';
+}
+```
+
+Possible output:
+
+```text
+p.max_size() = 9,223,372,036,854,775,807 = 0x7,FFF,FFF,FFF,FFF,FFF
+q.max_size() = 2,305,843,009,213,693,951 = 0x1,FFF,FFF,FFF,FFF,FFF
+```
+
+### See also
+
+size returns the number of elements (public member function)

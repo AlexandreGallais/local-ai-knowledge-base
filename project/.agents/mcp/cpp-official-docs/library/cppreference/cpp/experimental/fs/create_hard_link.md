@@ -1,0 +1,77 @@
+# std::experimental::filesystem::create_hard_link
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `void create_hard_link( const path& target, const path& link ); void create_hard_link( const path& target, const path& link, error_code& ec );` | (filesystem TS) |
+
+Creates a hard link `link` with its target set to `target` as if by POSIX link(): the pathname `target` must exist.
+
+Once created, `link` and `target` are two logical names that refer to the same file (they are `equivalent`). Even if the original name `target` is deleted, the file continues to exist and is accessible as `link`.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| target | - | path of the file or directory to link to |
+| link | - | path of the new hard link |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+(none)
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `target` as the first argument, `link` as the second argument, and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+Some operating systems do not support hard links at all or support them only for regular files.
+
+Some file systems do not support hard links regardless of the operating system: the FAT file system used on memory cards and flash drives, for example.
+
+Some file systems limit the number of links per file.
+
+Hardlinking to directories is typically restricted to the superuser.
+
+Hard links typically cannot cross filesystem boundaries.
+
+The special pathname dot (`"."`) is a hard link to its parent directory. The special pathname dot-dot `".."` is a hard link to the directory that is the parent of its parent.
+
+### Example
+
+```cpp
+#include <experimental/filesystem>
+#include <fstream>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    fs::create_directories("sandbox/subdir");
+    std::ofstream("sandbox/a").put('a'); // create regular file
+    fs::create_hard_link("sandbox/a", "sandbox/b");
+    fs::remove("sandbox/a");
+    // read from the original file via surviving hard link
+    char c = std::ifstream("sandbox/b").get();
+    std::cout << c << '\n';
+    fs::remove_all("sandbox");
+}
+```
+
+Output:
+
+```text
+a
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| create_symlink, create_directory_symlink | creates a symbolic link (function) |
+| hard_link_count | returns the number of hard links referring to the specific file (function) |

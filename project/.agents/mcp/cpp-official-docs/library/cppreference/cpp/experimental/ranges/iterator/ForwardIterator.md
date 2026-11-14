@@ -1,0 +1,22 @@
+# std::experimental::ranges::ForwardIterator
+
+| Defined in header `<experimental/ranges/iterator>` |  |
+| --- | --- |
+| `template< class I > concept bool ForwardIterator = InputIterator<I> && DerivedFrom<ranges::iterator_category_t<I>, ranges::forward_iterator_tag> && Incrementable<I> && Sentinel<I, I>;` | (ranges TS) |
+
+The concept `ForwardIterator<I>` refines `InputIterator` by adding equality comparison and the multi-pass guarantee.
+
+The domain of `==` for forward iterators is that of iterators over the same underlying sequence, except that value-initialized iterators of the same type may be compared with each other and shall compare equal.
+
+Pointers and references obtained from a forward iterator into a range `[``i``,``s``)` must remain valid while `[``i``,``s``)` continues to denote a range.
+
+Let `a` and `b` be two dereferenceable iterators of type `I`. `ForwardIterator<I>` is satisfied only if:
+
+- `a == b` implies `++a == ++b`; and
+- The expression `([](X x){ ++x; }(a), *a)` is equivalent to `*a`, i.e., incrementing a copy of `a` has no effect on the result of dereferencing `a`.
+
+This is known as the *multi-pass guarantee*.
+
+### Notes
+
+A forward iterator cannot be "stashing": it cannot return a reference to an object within itself, because such references would be invalidated by the destruction of the forward iterator.

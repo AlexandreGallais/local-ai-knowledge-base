@@ -1,0 +1,71 @@
+# std::experimental::filesystem::equivalent
+
+| Defined in header `<experimental/filesystem>` |  |  |
+| --- | --- | --- |
+| `bool equivalent( const path& p1, const path& p2 ); bool equivalent( const path& p1, const path& p2, error_code& ec );` | (1) | (filesystem TS) |
+
+Checks whether the paths `p1` and `p2` refer to the same file or directory and have the same file status as determined by `status` (symlinks are followed).
+
+If `p1` or `p2` does not exist or if their file type is not file, directory, or symlink (as determined by `is_other`), an error is reported.
+
+The non-throwing overload returns `false` on errors.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| p1, p2 | - | paths to check for equivalence |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+`true` if the `p1` and `p2` refer to the same file or directory and their file status is the same. `false` otherwise.
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `p1` as the first argument, `p2` as the second argument, and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+Two paths are considered to resolve to the same file system entity if `st_dev` and `st_ino` of their POSIX stat structure, obtained as if by POSIX stat, are equal (meaning, the files are located on the same device at the same location).
+
+In particular, all hard links for the same file or directory are equivalent, and a symlink and its target on the same file system are equivalent.
+
+### Example
+
+```cpp
+#include <cstdint>
+#include <experimental/filesystem>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    // hard link equivalency
+    fs::path p1 = ".";
+    fs::path p2 = fs::current_path();
+    if (fs::equivalent(p1, p2))
+        std::cout << p1 << " is equivalent to " << p2 << '\n';
+
+    // symlink equivalency
+    fs::path p3 = "/lib/libc.so.6";
+    fs::path p4 = p3.parent_path() / fs::read_symlink(p3);
+    if (fs::equivalent(p3, p4))
+        std::cout << p3 << " is equivalent to " << p4 << '\n';
+}
+```
+
+Possible output:
+
+```text
+"." is equivalent to "/var/tmp/test"
+"/lib/libc.so.6" is equivalent to "/lib/libc-2.12.so"
+```
+
+### See also
+
+status, symlink_status determines file attributes determines file attributes, checking the symlink target (function)

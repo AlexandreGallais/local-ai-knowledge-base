@@ -1,11 +1,11 @@
 # Brick `cpp-official-docs`
 
-The official documentation of C and C++: cppreference.com (the languages and their standard libraries, the offline HTML book), CMake, Clang, the GNU Make manual and the GCC manual.
+The official documentation of C and C++: cppreference.com (the languages and their standard libraries), CMake and Clang.
 
-Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
-LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
-comments of the source code is taken from those comments, unchanged. The MCP server searches the
-documentation and returns one section at a time.
+Each file is the official file, unchanged, in its own format (reStructuredText), at a noted
+version. One exception: the pages of cppreference.com, published as HTML, are converted to Markdown
+(text, headings, lists, tables and code kept; the site navigation left out). The MCP server searches
+the documentation and returns one section at a time.
 
 ## What it holds
 
@@ -34,11 +34,12 @@ node .agents/mcp/cpp-official-docs/build-index.ts
 ## Set aside
 
 - The C++ Core Guidelines: their license allows personal or internal business use only, not publication.
-- The internals manual of GCC (`gccint.texi`).
+- The GCC and GNU Make manuals: under the GNU FDL with invariant sections or cover texts, which
+  no one may change or remove; that is not free under the Definition of Free Cultural Works.
 
 ## Licenses
 
-cppreference.com is under CC BY-SA 3.0 or the GNU FDL; CMake under BSD 3-Clause; Clang under Apache 2.0 with the LLVM exception; the GNU Make and GCC manuals under the GNU FDL. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+cppreference.com is under CC BY-SA 3.0 or the GNU FDL; CMake under BSD 3-Clause; Clang under Apache 2.0 with the LLVM exception. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` files) is under the MIT License of
 the base.
 

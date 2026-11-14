@@ -1,0 +1,74 @@
+# std::experimental::filesystem::create_symlink, std::experimental::filesystem::create_directory_symlink
+
+| Defined in header `<experimental/filesystem>` |  |  |
+| --- | --- | --- |
+| `void create_symlink( const path& target, const path& link ); void create_symlink( const path& target, const path& link, error_code& ec );` | (1) | (filesystem TS) |
+| `void create_directory_symlink( const path& target, const path& link ); void create_directory_symlink( const path& target, const path& link, error_code& ec );` | (2) | (filesystem TS) |
+
+Creates a symbolic link `link` with its target set to `target` as if by POSIX symlink(): the pathname `target` may be invalid or non-existing.
+
+Some operating systems require symlink creation to identify that the link is to a directory. Portable code should use (2) to create directory symlinks rather than (1), even though there is no distinction on POSIX systems.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| target | - | path to point the symlink to, does not have to exist |
+| link | - | path of the new symbolic link |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+(none)
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `target` as the first argument, `link` as the second argument, and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+Some operating systems do not support symbolic links at all or support them only for regular files.
+
+Some file systems do not support symbolic links regardless of the operating system, for example the FAT system used on some memory cards and flash drives.
+
+Like a hard link, a symbolic link allows a file to have multiple logical names. The presence of a hard link guarantees the existence of a file, even after the original name has been removed. A symbolic link provides no such assurance; in fact, the file named by the `target` argument need not exist when the link is created. A symbolic link can cross file system boundaries.
+
+### Example
+
+```cpp
+#include <experimental/filesystem>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    fs::create_directories("sandbox/subdir");
+    fs::create_symlink("target", "sandbox/sym1");
+    fs::create_directory_symlink("subdir", "sandbox/sym2");
+
+    for (auto it = fs::directory_iterator("sandbox"); it != fs::directory_iterator(); ++it)
+        if (is_symlink(it->symlink_status()))
+            std::cout << *it << "->" << read_symlink(*it) << '\n';
+
+    fs::remove_all("sandbox");
+}
+```
+
+Possible output:
+
+```text
+"sandbox/sym1"->"target"
+"sandbox/sym2"->"subdir"
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| status, symlink_status | determines file attributes determines file attributes, checking the symlink target (function) |
+| read_symlink | obtains the target of a symbolic link (function) |
+| create_hard_link | creates a hard link (function) |

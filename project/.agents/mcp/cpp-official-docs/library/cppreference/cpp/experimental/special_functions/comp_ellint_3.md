@@ -1,0 +1,72 @@
+# std::comp_ellint_3, std::comp_ellint_3f, std::comp_ellint_3l
+
+|  |  |
+| --- | --- |
+| `double comp_ellint_3( double k, double nu ); float comp_ellint_3( float k, float nu ); long double comp_ellint_3( long double k, long double nu ); float comp_ellint_3f( float k, float nu ); long double comp_ellint_3l( long double k, long double nu );` | (1) |
+| `double comp_ellint_3( IntegralType k, IntegralType nu );` | (2) |
+
+1) Computes the complete elliptic integral of the third kind of `arg`.
+
+2) A set of overloads or a function template accepting an argument of any integral type. Equivalent to (1) after casting the argument to `double`.
+
+As all special functions, `comp_ellint_3` is only guaranteed to be available in `<cmath>` if `__STDCPP_MATH_SPEC_FUNCS__` is defined by the implementation to a value at least 201003L and if the user defines `__STDCPP_WANT_MATH_SPEC_FUNCS__` before including any standard library headers.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| nu | - | value of a floating-point or integral type |
+| k | - | value of a floating-point or integral type |
+
+### Return value
+
+If no errors occur, value of the complete elliptic integral of the second kind of `arg`, that is `ellint_3(k, nu, π/2)`, is returned.
+
+### Error handling
+
+Errors may be reported as specified in math_errhandling.
+
+- If the argument is NaN, NaN is returned and domain error is not reported.
+- If either |k| > 1 or |nu| > 1, a domain error may occur.
+
+### Notes
+
+Implementations that do not support TR 29124 but support TR 19768, provide this function in the header `tr1/cmath` and namespace `std::tr1`.
+
+An implementation of this function is also available in boost.math.
+
+### Example
+
+(works as shown with gcc 6.0)
+
+```cpp
+#define __STDCPP_WANT_MATH_SPEC_FUNCS__ 1
+#include <cmath>
+#include <iostream>
+
+int main()
+{
+    double hpi = std::acos(-1) / 2;
+    std::cout << "Π(0, 0.75) = " << std::comp_ellint_3(0, 0.75) << '\n'
+              << "π/2 = " << hpi << '\n'
+              << "Π(0.5, 0.75) = " << std::comp_ellint_3(0.5, 0.75) << '\n'
+              << "Π(0.5, 0.75, π/2) = " << std::ellint_3(0.5, 0.75, hpi) << '\n';
+}
+```
+
+Output:
+
+```text
+Π(0, 0.75) = 3.14159
+π/2 = 1.5708
+Π(0.5, 0.75) = 3.45372
+Π(0.5, 0.75, π/2) = 3.45372
+```
+
+### External links
+
+Weisstein, Eric W. "Complete Elliptic Integral of the Third Kind." From MathWorld--A Wolfram Web Resource.
+
+### See also
+
+ellint_3, ellint_3f, ellint_3l (incomplete) elliptic integral of the third kind (function)

@@ -1,0 +1,39 @@
+# std::mask_array<T>::operator+=,-=,*=,/=,%=,&=,|=,^=,<<=,>>=
+
+`void operator+=( const std::valarray<T>& other ) const;`
+
+`void operator-=( const std::valarray<T>& other ) const;`
+
+`void operator*=( const std::valarray<T>& other ) const;`
+
+`void operator/=( const std::valarray<T>& other ) const;`
+
+`void operator%=( const std::valarray<T>& other ) const;`
+
+`void operator&=( const std::valarray<T>& other ) const;`
+
+`void operator\|=( const std::valarray<T>& other ) const;`
+
+`void operator^=( const std::valarray<T>& other ) const;`
+
+`void operator<<=( const std::valarray<T>& other ) const;`
+
+`void operator>>=( const std::valarray<T>& other ) const;`
+
+Applies the corresponding operation to the referred elements and the elements of `other`.
+
+### Parameters
+
+other - argument array to retrieve the values from
+
+### Return value
+
+(none)
+
+### Exceptions
+
+May throw implementation-defined exceptions.
+
+### Example
+
+This section is incomplete Reason: no example

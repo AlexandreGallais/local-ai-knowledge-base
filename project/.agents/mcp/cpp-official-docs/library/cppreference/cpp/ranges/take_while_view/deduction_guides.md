@@ -1,0 +1,11 @@
+# deduction guides for `std::ranges::take_while_view`
+
+| Defined in header `<ranges>` |  |
+| --- | --- |
+| `template< class R, class Pred > take_while_view( R&&, Pred ) -> take_while_view<views::all_t<R>, Pred>;` | (since C++20) |
+
+The deduction guide is provided for `std::ranges::take_while_view` to allow deduction from `range` and predicate.
+
+### Example
+
+This section is incomplete Reason: no example

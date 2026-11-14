@@ -1,0 +1,92 @@
+# std::thread::detach
+
+`void detach();` (since C++11)
+
+Separates the thread of execution from the thread object, allowing execution to continue independently. Any allocated resources will be freed once the thread exits.
+
+After calling `detach` `*this` no longer owns any thread.
+
+### Parameters
+
+(none)
+
+### Return value
+
+(none)
+
+### Postconditions
+
+`joinable` is `false`.
+
+### Exceptions
+
+`std::system_error` if `joinable() == false` or an error occurs.
+
+### Example
+
+```cpp
+#include <chrono>
+#include <iostream>
+#include <thread>
+
+void independentThread()
+{
+    std::cout << "Starting concurrent thread.\n";
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::cout << "Exiting concurrent thread.\n";
+}
+
+void threadCaller()
+{
+    std::cout << "Starting thread caller.\n";
+    std::thread t(independentThread);
+    t.detach();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "Exiting thread caller.\n";
+}
+
+int main()
+{
+    threadCaller();
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+}
+```
+
+Possible output:
+
+```text
+Starting thread caller.
+Starting concurrent thread.
+Exiting thread caller.
+Exiting concurrent thread.
+```
+
+### References
+
+- C++23 standard (ISO/IEC 14882:2024):
+
+- 33.4.3.6 Members [thread.thread.member]
+
+- C++20 standard (ISO/IEC 14882:2020):
+
+- 32.4.2.5 Members [thread.thread.member]
+
+- C++17 standard (ISO/IEC 14882:2017):
+
+- 33.3.2.5 thread members [thread.thread.member]
+
+- C++14 standard (ISO/IEC 14882:2014):
+
+- 30.3.1.5 thread members [thread.thread.member]
+
+- C++11 standard (ISO/IEC 14882:2011):
+
+- 30.3.1.5 thread members [thread.thread.member]
+
+### See also
+
+|  |  |
+| --- | --- |
+| join | waits for the thread to finish its execution (public member function) |
+| joinable | checks whether the thread is joinable, i.e. potentially running in parallel context (public member function) |
+| C documentation for thrd_detach |  |

@@ -26,7 +26,7 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [mdn-http](mdn-http.index.md) | MDN Web Docs: HTTP headers, methods, status codes and guides | 2026-11 | CC-BY-SA-2.5 | 376 files, 1.7 MB |
 | [mdn-svg](mdn-svg.index.md) | MDN Web Docs: SVG elements, attributes and guides | 2026-11 | CC-BY-SA-2.5 | 307 files, 1.2 MB |
 | [mdn-accessibility](mdn-accessibility.index.md) | MDN Web Docs: accessibility, ARIA roles, states and properties | 2026-11 | CC-BY-SA-2.5 | 172 files, 1.2 MB |
-| [angular](angular.index.md) | Angular documentation (angular.dev), without Material, CDK nor Angular Aria | 22.2 | CC-BY-4.0 | 325 files, 2.7 MB |
+| [angular](angular.index.md) | Angular documentation (angular.dev), without Material, CDK nor Angular Aria | 22.2 | MIT | 325 files, 2.7 MB |
 | [typescript](typescript.index.md) | TypeScript Handbook, reference and release notes | 6.0 | CC-BY-4.0 | 133 files, 1.9 MB |
 | [rxjs](rxjs.index.md) | RxJS 7 guides, operators and deprecations | 7.8 | Apache-2.0 | 23 files, 0.2 MB |
 | [ngrx-signals](ngrx-signals.index.md) | NgRx Signals guide (SignalStore, features, entities, events, testing) and the NgRx ESLint rules | 22.0 | MIT | 55 files, 0.2 MB |

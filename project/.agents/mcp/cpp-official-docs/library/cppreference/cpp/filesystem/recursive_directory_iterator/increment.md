@@ -1,0 +1,45 @@
+# std::filesystem::recursive_directory_iterator::operator++, std::filesystem::recursive_directory_iterator::increment
+
+|  |  |  |
+| --- | --- | --- |
+| `recursive_directory_iterator& operator++();` | (1) | (since C++17) |
+| `recursive_directory_iterator& increment( std::error_code& ec );` | (2) | (since C++17) |
+
+Advances the iterator to the next entry. Invalidates all copies of the previous value of `*this`.
+
+If there are no more entries left in the currently iterated directory, the iteration is resumed over the parent directory. The process is repeated if the parent directory has no sibling entries that can to be iterated on. If the parent of the directory hierarchy that has been recursively iterated on is reached (there are no candidate entries at `depth() == 0)`, `*this` is set to an end iterator.
+
+Otherwise, if `*this` refers to a directory, it is iterated into if the following conditions are met:
+
+- `disable_recursion_pending()` has not been called before this increment, i.e. `recursion_pending() == true`.
+- The directory is not a symlink or following symlinks is enabled, i.e., at least one of the following is true:
+  - `!is_symlink((*this)->symlink_status())`.
+  - `(options() & directory_options::follow_directory_symlink) != directory_options::none)`
+
+### Parameters
+
+ec - error code to store the error status to
+
+### Return value
+
+`*this`
+
+### Exceptions
+
+Any overload not marked `noexcept` may throw `std::bad_alloc` if memory allocation fails.
+
+1) Throws `std::filesystem::filesystem_error` on underlying OS API errors, constructed with the OS error code as the error code argument.
+
+2) Sets a `std::error_code&` parameter to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur.
+
+### Example
+
+This section is incomplete Reason: no example
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 3013 | C++17 | `error_code` overload marked noexcept but can allocate memory | noexcept removed |

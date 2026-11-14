@@ -1,0 +1,86 @@
+# std::execution::scheduler
+
+| Defined in header `<execution>` |  |  |
+| --- | --- | --- |
+| `template< class Sch > concept scheduler = std::derived_from< typename std::remove_cvref_t<Sch>::scheduler_concept, scheduler_t> && /*queryable*/<Sch> && requires(Sch&& sch) { { std::execution::schedule(std::forward<Sch>(sch)) } -> std::execution::sender; { auto( std::execution::get_completion_scheduler< std::execution::set_value_t>( std::execution::get_env( std::execution::schedule( std::forward<Sch>(sch))))) } -> std::same_as<std::remove_cvref_t<Sch>>; } && std::equality_comparable<std::remove_cvref_t<Sch>> && std::copy_constructible<std::remove_cvref_t<Sch>>; };` | (1) | (since C++26) |
+| Helper tag type |  |  |
+| `struct scheduler_t {};` | (2) | (since C++26) |
+
+The concept `scheduler` is modeled by types that are *schedulers*, that is, lightweight handlers to execution resources such as thread pools that work with the C++ execution library.
+
+### Semantic requirements
+
+Given a scheduler of type `Sch` and execution environment of type `Env` such that `sender_in<schedule_result_t<Sch>, Env>` is satisfied, then `/*sender-in-of*/<schedule_result_t<Sch>, Env>` is modeled.
+
+The scheduler's copy constructor, destructor, equality comparison, or swap member functions must be non-throwing.
+
+All of those member functions as well as the scheduler type's `schedule` function must be thread-safe.
+
+Two schedulers are equal only if they represent the same execution resource.
+
+For a given scheduler `sch`, the expression `get_completion_scheduler<set_value_t>(get_env(schedule(sch)))` compares equal to `sch`.
+
+For a given scheduler `sch`, if the expression `get_domain(sch)` is well-formed, then the expression `get_domain(get_env(schedule(sch)))` is also well-formed and has the same type.
+
+The destructor of a scheduler must not block pending completion of any receivers connected to the sender objects returned from schedule (the underlying resource may provide a separate API to wait for completion of submitted function objects)
+
+### Examples
+
+simple wrapper for `std::execution::run_loop` that constantly polls run_loop's queue on a single dedicated thread. Demo using draft reference implementation: https://godbolt.org/z/146fY4Y91
+
+```cpp
+#include <execution>
+#include <iostream>
+#include <thread>
+
+class single_thread_context
+{
+    std::execution::run_loop loop_{};
+    std::jthread thread_;
+
+public:
+    single_thread_context()
+        : thread_([this] { loop_.run(); })
+    {}
+    single_thread_context(single_thread_context&&) = delete;
+
+    ~single_thread_context()
+    {
+        loop_.finish();
+    }
+
+    std::execution::scheduler auto get_scheduler() noexcept
+    {
+        return loop_.get_scheduler();
+    }
+};
+
+int main()
+{
+    single_thread_context ctx;
+
+    std::execution::sender auto snd =
+        std::execution::schedule(ctx.get_scheduler())
+        | std::execution::then([]
+            {
+                std::cout << "Hello world! Have an int.\n";
+                return 015;
+            })
+        | std::execution::then([](int arg) { return arg + 42; });
+
+    auto [i] = std::this_thread::sync_wait(snd).value();
+
+    std::cout << "Back in the main thread, result is " << i << '\n';
+}
+```
+
+Output:
+
+```text
+Hello world! Have an int.
+Back in the main thread, result is 55
+```
+
+### See also
+
+execution::schedule (C++26) prepares a task graph for execution on a given scheduler (customization point object)

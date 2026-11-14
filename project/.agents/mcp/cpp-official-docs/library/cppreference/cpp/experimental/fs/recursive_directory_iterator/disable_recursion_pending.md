@@ -1,0 +1,69 @@
+# std::experimental::filesystem::recursive_directory_iterator::disable_recursion_pending
+
+`void disable_recursion_pending();` (filesystem TS)
+
+Disables recursion to the currently referred subdirectory, if any.
+
+The call modifies the pending recursion flag on the iterator in such a way that the next time `increment` is called, the iterator will advance within the current directly even if it is currently referring to a subdirectory that hasn't been visited.
+
+The status of the pending recursion flag can be queried with `recursion_pending()`, which is `false` after this call. It is reset back to `true` after `increment`, and its initial value is also `true`.
+
+The behavior is undefined if `*this` is the end iterator.
+
+### Parameters
+
+(none)
+
+### Return value
+
+(none)
+
+### Exceptions
+
+May throw implementation-defined exceptions.
+
+### Example
+
+```cpp
+#include <experimental/filesystem>
+#include <fstream>
+#include <iostream>
+#include <string>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    fs::create_directories("sandbox/a/b/c");
+    fs::create_directories("sandbox/a/b/d/e");
+    std::ofstream("sandbox/a/b/file1.txt");
+    fs::create_symlink("a", "sandbox/syma");
+    for (auto i = fs::recursive_directory_iterator("sandbox");
+             i != fs::recursive_directory_iterator(); ++i)
+    {
+        std::cout << std::string(i.depth(), ' ') << *i;
+        if (fs::is_symlink(i->symlink_status()))
+            std::cout << " -> " << fs::read_symlink(*i);
+        std::cout << '\n';
+
+        // do not descend into "b"
+        if (i->path().filename() == "b")
+            i.disable_recursion_pending();
+    }
+    fs::remove_all("sandbox");
+}
+```
+
+Output:
+
+```text
+"sandbox/a"
+ "sandbox/a/b"
+"sandbox/syma" -> "a"
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| recursion_pending | checks whether the recursion is disabled for the current directory (public member function) |
+| increment, operator++ | advances to the next entry (public member function) |

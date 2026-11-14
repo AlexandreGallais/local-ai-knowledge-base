@@ -1,0 +1,71 @@
+# std::experimental::filesystem::space
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `space_info space( const path& p ); space_info space( const path& p, error_code& ec ) noexcept;` | (filesystem TS) |
+
+Determines the information about the filesystem on which the pathname `p` is located, as if by POSIX `statvfs`.
+
+Populates and returns an object of type `space_info`, set from the members of the POSIX `struct statvfs` as follows:
+
+- `space_info.capacity` is set as if by `f_blocks * f_frsize`.
+- `space_info.free` is set to `f_bfree * f_frsize`.
+- `space_info.available` is set to `f_bavail * f_frsize`.
+- Any member that could not be determined is set to `static_cast<std::uintmax_t>(-1)`.
+
+The non-throwing overload sets all members to `static_cast<std::uintmax_t>(-1)` on error.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| p | - | path to examine |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+The filesystem information (a `space_info` object).
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `p` as the first argument and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+`space_info.available` may be less than `space_info.free`.
+
+### Example
+
+```cpp
+#include <experimental/filesystem>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+int main()
+{
+    fs::space_info devi = fs::space("/dev/null");
+    fs::space_info tmpi = fs::space("/tmp");
+
+    std::cout << "         Capacity         Free    Available\n"
+              << "/dev:   " << devi.capacity << "   "
+              << devi.free << "   " << devi.available << '\n'
+              << "/tmp: " << tmpi.capacity << ' '
+              << tmpi.free << ' ' << tmpi.available << '\n';
+}
+```
+
+Possible output:
+
+```text
+          Capacity         Free    Available
+/dev:   4175114240   4175110144   4175110144
+/tmp: 420651237376 411962273792 390570749952
+```
+
+### See also
+
+space_info information about free and available space on the filesystem (class)

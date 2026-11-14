@@ -1,0 +1,194 @@
+# std::adjacent_difference
+
+| Defined in header `<numeric>` |  |  |
+| --- | --- | --- |
+| `template< class InputIt, class OutputIt > OutputIt adjacent_difference( InputIt first, InputIt last, OutputIt d_first );` | (1) | (constexpr since C++20) |
+| `template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 > ForwardIt2 adjacent_difference( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first );` | (2) | (since C++17) |
+| `template< class InputIt, class OutputIt, class BinaryOp > OutputIt adjacent_difference( InputIt first, InputIt last, OutputIt d_first, BinaryOp op );` | (3) | (constexpr since C++20) |
+| `template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class BinaryOp > ForwardIt2 adjacent_difference( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first, BinaryOp op );` | (4) | (since C++17) |
+
+Let `T` be the value type of `decltype(first)`.
+
+1) If `[``first``,``last``)` is empty, does nothing.
+
+Otherwise, performs the following operations in order:
+
+1. Creates an accumulator `acc` of type `T`, and initializes it with `*first`.
+2. Assigns `acc` to `*d_first`.
+3. For each iterator `iter` in `[``++first``,``last``)` in order, performs the following operations in order:
+
+a) Creates an object `val` of type `T`, and initializes it with `*iter`.
+
+b) Computes `val - acc`(until C++20)`val - std::move(acc)`(since C++20).
+
+c) Assigns the result to `*++d_first`.
+
+d) Copy(until C++20)Move(since C++20) assigns from `val` to `acc`.
+
+2) If `[``first``,``last``)` is empty, does nothing.
+
+Otherwise, performs the following operations in order:
+
+1. Assigns `*first` to `*d_first`.
+2. For each integer `i` in `[``1``,``std::distance(first, last)``)`, performs the following operations in order:
+
+a) Computes `curr - prev`, where `curr` is the next `i`th iterator of `first`, and `prev` is the next `i - 1`th iterator of `first`.
+
+b) Assigns the result to `*dest`, where `dest` is the next `i`th iterator of `d_first`.
+
+3) Same as (1), but computes `op(val, acc)`(until C++20)`op(val, std::move(acc))`(since C++20) instead.
+
+4) Same as (2), but computes `op(curr, prev)` instead.
+
+Given `binary_op` as the actual binary operation:
+
+- If any of the following conditions is satisfied, the program is ill-formed:
+
+- For overloads (1,3):
+
+- `T` is not constructible from `*first`.
+- `acc` is not writable to `d_first`.
+- The result of `binary_op(val, acc)`(until C++20)`binary_op(val, std::move(acc))`(since C++20) is not writable to `d_first`.
+
+- For overloads (2,4):
+
+- `*first` is not writable to `d_first`.
+- The result of `binary_op(*first, *first)` is not writable to `d_first`.
+
+- Given `d_last` as the iterator to be returned, if any of the following conditions is satisfied, the behavior is undefined:
+
+For overloads (1,3), `T` is not MoveAssignable. (since C++20)
+
+- For overloads (2,4), `[``first``,``last``)` and `[``d_first``,``d_last``)` overlaps.
+- `binary_op` modifies any element of `[``first``,``last``)` or `[``d_first``,``d_last``)`.
+- `binary_op` invalidates any iterator or subrange in `[``first``,``last``]` or `[``d_first``,``d_last``]`.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | the range of elements |
+| d_first | - | the beginning of the destination range |
+| policy | - | the execution policy to use |
+| op | - | binary operation function object that will be applied. The signature of the function should be equivalent to the following: `Ret fun(const Type1 &a, const Type2 &b);` The signature does not need to have `const &`. The types `Type1` and `Type2` must be such that an object of type `iterator_traits<InputIt>::value_type` can be implicitly converted to both of them. The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`. ​ |
+| Type requirements |  |  |
+| - `InputIt` must meet the requirements of LegacyInputIterator. |  |  |
+| - `OutputIt` must meet the requirements of LegacyOutputIterator. |  |  |
+| - `ForwardIt1, ForwardIt2` must meet the requirements of LegacyForwardIterator. |  |  |
+
+### Return value
+
+Iterator to the element past the last element written, or `d_first` if `[``first``,``last``)` is empty.
+
+### Complexity
+
+Given \(\scriptsize N\)N as `std::distance(first, last)`:
+
+1,2) Exactly \(\scriptsize N-1\)N-1 applications of `operator-`.
+
+3,4) Exactly \(\scriptsize N-1\)N-1 applications of the binary function `op`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the standard policies, `std::terminate` is called. For any other `ExecutionPolicy`, the behavior is implementation-defined.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+adjacent_difference (1)
+
+`template<class InputIt, class OutputIt> constexpr // since C++20 OutputIt adjacent_difference(InputIt first, InputIt last, OutputIt d_first) { if (first == last) return d_first; typedef typename std::iterator_traits<InputIt>::value_type value_t; value_t acc = *first; *d_first = acc; while (++first != last) { value_t val = *first; *++d_first = val - std::move(acc); // std::move since C++20 acc = std::move(val); } return ++d_first; }`
+
+adjacent_difference (3)
+
+`template<class InputIt, class OutputIt, class BinaryOp> constexpr // since C++20 OutputIt adjacent_difference(InputIt first, InputIt last, OutputIt d_first, BinaryOp op) { if (first == last) return d_first; typedef typename std::iterator_traits<InputIt>::value_type value_t; value_t acc = *first; *d_first = acc; while (++first != last) { value_t val = *first; *++d_first = op(val, std::move(acc)); // std::move since C++20 acc = std::move(val); } return ++d_first; }`
+
+### Notes
+
+`acc` was introduced because of the resolution of LWG issue 539. The reason of using `acc` rather than directly calculating the differences is because the semantic of the latter is confusing if the following types mismatch:
+
+- the value type of `InputIt`
+- the writable type(s) of `OutputIt`
+- the types of the parameters of `operator-` or `op`
+- the return type of `operator-` or `op`
+
+`acc` serves as the intermediate object to cache values of the iterated elements:
+
+- its type is the value type of `InputIt`
+- the value written to `d_first` (which is the return value of `operator-` or `op`) is assigned to it
+- its value is passed to `operator-` or `op`
+
+```cpp
+char i_array[4] = {100, 100, 100, 100};
+int  o_array[4];
+
+// OK: performs conversions when needed
+// 1. creates “acc” of type char (the value type)
+// 2. “acc” is assigned to the first element of “o_array”
+// 3. the char arguments are used for long multiplication (char -> long)
+// 4. the long product is assigned to the output range (long -> int)
+// 5. the next value of “i_array” is assigned to “acc”
+// 6. go back to step 3 to process the remaining elements in the input range
+std::adjacent_difference(i_array, i_array + 4, o_array, std::multiplies<long>{});
+```
+
+### Example
+
+```cpp
+#include <array>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+void println(auto comment, const auto& sequence)
+{
+    std::cout << comment;
+    for (const auto& n : sequence)
+        std::cout << n << ' ';
+    std::cout << '\n';
+};
+
+int main()
+{
+    // Default implementation - the difference between two adjacent items
+    std::vector v{4, 6, 9, 13, 18, 19, 19, 15, 10};
+    println("Initially, v = ", v);
+    std::adjacent_difference(v.begin(), v.end(), v.begin());
+    println("Modified v = ", v);
+
+    // Fibonacci
+    std::array<int, 10> a {1};
+    std::adjacent_difference(std::begin(a), std::prev(std::end(a)),
+                             std::next(std::begin(a)), std::plus<>{});
+    println("Fibonacci, a = ", a);
+}
+```
+
+Output:
+
+```text
+Initially, v = 4 6 9 13 18 19 19 15 10
+Modified v = 4 2 3 4 5 1 0 -4 -5
+Fibonacci, a = 1 1 2 3 5 8 13 21 34 55
+```
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 242 | C++98 | `op` could not have side effects | it cannot modify the ranges involved |
+| LWG 539 | C++98 | the type requirements needed for the result evaluations and assignments to be valid were missing | added |
+| LWG 3058 | C++17 | for overloads (2,4), the result of each invocation of `operator-` or `op` was assigned to a temporary object, and that object is assigned to the output range | assign the results to the output range directly |
+
+### See also
+
+|  |  |
+| --- | --- |
+| partial_sum | computes the partial sum of a range of elements (function template) |
+| accumulate | sums up or folds a range of elements (function template) |

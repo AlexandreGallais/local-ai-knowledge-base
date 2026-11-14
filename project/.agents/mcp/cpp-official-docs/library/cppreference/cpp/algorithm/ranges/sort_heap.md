@@ -1,0 +1,95 @@
+# std::ranges::sort_heap
+
+| Defined in header `<algorithm>` |  |  |
+| --- | --- | --- |
+| Call signature |  |  |
+| `template< std::random_access_iterator I, std::sentinel_for<I> S, class Comp = ranges::less, class Proj = std::identity > requires std::sortable<I, Comp, Proj> constexpr I sort_heap( I first, S last, Comp comp = {}, Proj proj = {} );` | (1) | (since C++20) |
+| `template< ranges::random_access_range R, class Comp = ranges::less, class Proj = std::identity > requires std::sortable<ranges::iterator_t<R>, Comp, Proj> constexpr ranges::borrowed_iterator_t<R> sort_heap( R&& r, Comp comp = {}, Proj proj = {} );` | (2) | (since C++20) |
+
+Sorts the elements in the specified range with respect to `comp` and `proj`, where the range originally represents a heap with respect to `comp` and `proj`. The sorted range no longer maintains the heap property.
+
+1) The specified range is `[``first``,``last``)`.
+
+2) The specified range is `r`.
+
+If the specified range is not a heap with respect to `comp` and `proj`, the behavior is undefined.
+
+The function-like entities described on this page are *algorithm function objects* (informally known as *niebloids*), that is:
+
+- Explicit template argument lists cannot be specified when calling any of them.
+- None of them are visible to argument-dependent lookup.
+- When any of them are found by normal unqualified lookup as the name to the left of the function-call operator, argument-dependent lookup is inhibited.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | the iterator and sentinel designating the range of elements to modify |
+| r | - | the range of elements to modify |
+| comp | - | comparator to apply to the projected elements |
+| proj | - | projection to apply to the elements |
+
+### Return value
+
+1) `last`
+
+2) `ranges::end(r)`
+
+### Complexity
+
+At most \(\scriptsize 2N \cdot \log(N)\)2N⋅log(N) applications of `comp` and \(\scriptsize 4N \cdot \log(N)\)4N⋅log(N) applications of `proj`, where \(\scriptsize N \)N is:
+
+1) `ranges::distance(first, last)`
+
+2) `ranges::distance(r)`
+
+### Possible implementation
+
+`struct sort_heap_fn { template<std::random_access_iterator I, std::sentinel_for<I> S, class Comp = ranges::less, class Proj = std::identity> requires std::sortable<I, Comp, Proj> constexpr I operator()(I first, S last, Comp comp = {}, Proj proj = {}) const { auto ret{ranges::next(first, last)}; for (; first != last; --last) ranges::pop_heap(first, last, comp, proj); return ret; } template<ranges::random_access_range R, class Comp = ranges::less, class Proj = std::identity> requires std::sortable<ranges::iterator_t<R>, Comp, Proj> constexpr ranges::borrowed_iterator_t<R> operator()(R&& r, Comp comp = {}, Proj proj = {}) const { return (*this)(ranges::begin(r), ranges::end(r), std::move(comp), std::move(proj)); } }; inline constexpr sort_heap_fn sort_heap{};`
+
+### Example
+
+```cpp
+#include <algorithm>
+#include <array>
+#include <iostream>
+
+void print(auto const& rem, const auto& v)
+{
+    std::cout << rem;
+    for (const auto i : v)
+        std::cout << i << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::array v{3, 1, 4, 1, 5, 9};
+    print("original array:  ", v);
+
+    std::ranges::make_heap(v);
+    print("after make_heap: ", v);
+
+    std::ranges::sort_heap(v);
+    print("after sort_heap: ", v);
+}
+```
+
+Output:
+
+```text
+original array:  3 1 4 1 5 9
+after make_heap: 9 5 4 1 1 3
+after sort_heap: 1 1 3 4 5 9
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| ranges::is_heap (C++20) | checks if the given range is a max heap (algorithm function object) |
+| ranges::is_heap_until (C++20) | finds the largest subrange that is a max heap (algorithm function object) |
+| ranges::make_heap (C++20) | creates a max heap out of a range of elements (algorithm function object) |
+| ranges::pop_heap (C++20) | removes the largest element from a max heap (algorithm function object) |
+| ranges::push_heap (C++20) | adds an element to a max heap (algorithm function object) |
+| sort_heap | turns a max heap into a range of elements sorted in ascending order (function template) |

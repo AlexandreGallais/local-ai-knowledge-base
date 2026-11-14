@@ -1,0 +1,72 @@
+# std::function_ref::function_ref
+
+|  |  |  |
+| --- | --- | --- |
+| `template< class F > function_ref( F* f ) noexcept;` | (1) | (since C++26) |
+| `template< class F > function_ref( F&& f ) noexcept;` | (2) | (since C++26) |
+| `template< auto f > function_ref( std::nontype_t<f> ) noexcept;` | (3) | (since C++26) |
+| `template< auto f, class U > function_ref( std::nontype_t<f>, U&& obj ) noexcept;` | (4) | (since C++26) |
+| `template< auto f, class T > function_ref( std::nontype_t<f>, /*cv*/ T* obj ) noexcept;` | (5) | (since C++26) |
+| `function_ref( const function_ref& other ) = default;` | (6) | (since C++26) |
+
+Creates a new `std::function_ref`.
+
+1) Initializes `bound-entity` with `f`, and `thunk-ptr` with the address of a function `thunk`. The behavior is undefined if `f` is a null pointer.
+
+- This overload participates in overload resolution only if both `std::is_function_v<F>` and `/*is-invocable-using*/<F>` are `true`.
+
+2) Initializes `bound-entity` with `std::addressof(f)`, and `thunk-ptr` with the address of a function `thunk`.
+
+- Let `T` be `std::remove_reference_t<F>`. This overload participates in overload resolution only if :
+  - `std::remove_cvref_t<F>` is not the same type as `function_ref`,
+  - `std::is_member_pointer_v<T>` is `false`, and
+  - `/*is-invocable-using*/</*cv*/ T&>` is `true`.
+
+3) Initializes `bound-entity` with a pointer to an unspecified object or null pointer value, and `thunk-ptr` with the address of a function `thunk`.
+
+- Let `F` be `decltype(f)`. This overload participates in overload resolution only if `/*is-invocable-using*/<F>` is `true`.
+- The program is ill-formed if `f != nullptr` is `false` when `std::is_pointer_v<F> || std::is_member_pointer_v<F>` is `true`.
+
+4) Initializes `bound-entity` with `std::addressof(obj)`, and `thunk-ptr` with the address of a function `thunk`.
+
+- Let `T` be `std::remove_reference_t<U>` and `F` be `decltype(f)`. This overload participates in overload resolution only if :
+  - `std::is_rvalue_reference_v<U&&>` is `false`, and
+  - `/*is-invocable-using*/<F, /*cv*/ T&>` is `true`.
+- The program is ill-formed if `f != nullptr` is `false` when `std::is_pointer_v<F> || std::is_member_pointer_v<F>` is `true`.
+
+5) Initializes `bound-entity` with `obj`, and `thunk-ptr` with the address of a function `thunk`. The behavior is undefined if `obj` is a null pointer when `std::is_member_pointer_v<F>` is `true`.
+
+- Let `F` be `decltype(f)`. This overload participates in overload resolution only if `/*is-invocable-using*/<F, /*cv*/ T*>` is `true`.
+- The program is ill-formed if `f != nullptr` is `false` when `std::is_pointer_v<F> || std::is_member_pointer_v<F>` is `true`.
+
+6) Defaulted copy constructor copies the `bound-entity` and `thunk-ptr` of `other`.
+
+The address of a function `thunk` is used to initialize `thunk-ptr` such that a call to `thunk(bound-entity, call-args...)` is expression-equivalent to:
+
+| Overloads | Expression-equivalence |
+| --- | --- |
+| (1,3) | `std::invoke_r<R>(f, call-args...)` |
+| (2) | `std::invoke_r<R>(static_cast<cv T&>(f), call-args...)` |
+| (4) | `std::invoke_r<R>(f, static_cast<cv T&>(obj), call-args...)` |
+| (5) | `std::invoke_r<R>(f, obj, call-args...)` |
+
+`/*is-invocable-using*/<T...>` is `true` if and only if:
+
+- `std::is_nothrow_invocable_r_v<R, T..., Args...>` is `true` if noex is `true`, or
+- `std::is_invocable_r_v<R, T..., Args...>` is `true`
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| other | - | another `function_ref` to copy from |
+| f | - | a function or a Callable object to wrap |
+| obj | - | an object or pointer to bound |
+
+### Example
+
+This section is incomplete Reason: no example
+
+### See also
+
+(constructor) constructs a new `std::move_only_function` object (public member function of `std::move_only_function`)

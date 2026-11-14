@@ -1,0 +1,55 @@
+# std::ranges::equal_to
+
+| Defined in header `<functional>` |  |
+| --- | --- |
+| `struct equal_to;` | (since C++20) |
+
+Function object for performing comparisons. The parameter types of the function call operator (but not the return type) are deduced from the arguments.
+
+### Nested types
+
+| Nested type | Definition |
+| --- | --- |
+| `is_transparent` | unspecified |
+
+### Member functions
+
+operator() checks if the arguments are *equal* (public member function)
+
+## std::ranges::equal_to::operator()
+
+`template< class T, class U > constexpr bool operator()( T&& t, U&& u ) const;`
+
+Given the expression `std::forward<T>(t) == std::forward<U>(u)` as `expr`:
+
+- If `expr` results in a call to built-in `operator==` comparing pointers, given the composite pointer type of `t` and `u` as `P`:
+
+- For the two converted pointers (of type `P`), if one pointer precedes the other in the implementation-defined strict total order over pointers, returns `false`, otherwise returns `true`.
+- If the conversion sequence from `T` to `P` or the conversion sequence from `U` to `P` is not equality-preserving, the behavior is undefined.
+
+- Otherwise:
+
+- Returns the result of `expr`.
+- If `std::equality_comparable_with<T, U>` is not modeled, the behavior is undefined.
+
+This overload participates in overload resolution only if `std::equality_comparable_with<T, U>` is satisfied.
+
+### Notes
+
+Compared to `std::equal_to`, `std::ranges::equal_to` additionally requires `!=` to be valid, and that both argument types are required to be (homogeneously) comparable with themselves (via the `equality_comparable_with` constraint).
+
+### Example
+
+This section is incomplete Reason: no example
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 3530 | C++20 | syntactic checks were relaxed while comparing pointers | only semantic requirements are relaxed |
+
+### See also
+
+equal_to function object implementing `x == y` (class template)

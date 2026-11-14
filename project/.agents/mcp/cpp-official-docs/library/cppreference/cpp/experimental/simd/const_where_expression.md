@@ -1,0 +1,27 @@
+# std::experimental::const_where_expression
+
+| Defined in header `<experimental/simd>` |  |
+| --- | --- |
+| `template< class M, class V > class const_where_expression;` | (parallelism TS v2) |
+
+The class template `const_where_expression` abstracts the notion of selected elements of a given const object of arithmetic or data-parallel type. Selected elements signifies the elements `data[i]` for all i ∈ `{` j ∈ ℕ | `j < M::size() ⋀ mask[j]` `}`.
+
+### Template parameters
+
+|  |  |  |
+| --- | --- | --- |
+| M | - | The mask type |
+| V | - | The value type M applies on |
+
+Valid combinations of `(M, V)` are: (`simd_mask<T, Abi>`, `const simd<T, Abi>`), (`simd_mask<T, Abi>`, `const simd_mask<T, Abi>`), (`bool`, `const T`).
+
+### Member functions
+
+|  |  |
+| --- | --- |
+| operator-, operator+, operator~ | unary operators (public member function) |
+| copy_to | stores selected elements to address (public member function) |
+
+### Example
+
+This section is incomplete Reason: no example

@@ -1,0 +1,48 @@
+# std::experimental::filesystem::file_time_type
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `using file_time_type = chrono::time_point</*trivial-clock*/>;` | (filesystem TS) |
+
+Represents file time. `trivial-clock` is an implementation-defined type that satisfies TrivialClock and is sufficient to represent the resolution and range of the file time values offered by the filesystem.
+
+### Example
+
+```cpp
+#include <chrono>
+#include <experimental/filesystem>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+using namespace std::chrono_literals;
+
+int main()
+{
+    fs::path p = fs::current_path() / "example.bin";
+    std::ofstream(p.c_str()).put('a'); // create file
+    auto ftime = fs::last_write_time(p);
+
+    std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime); // assuming system_clock
+    std::cout << "File write time is " << std::asctime(std::localtime(&cftime)) << '\n';
+
+    fs::last_write_time(p, ftime + 1h); // move file write time 1 hour to the future
+    ftime = fs::last_write_time(p); // read back from the filesystem
+
+    cftime = decltype(ftime)::clock::to_time_t(ftime);
+    std::cout << "File write time is " << std::asctime(std::localtime(&cftime)) << '\n';
+    fs::remove(p);
+}
+```
+
+Possible output:
+
+```text
+File write time is Tue Mar 31 19:47:04 2015
+
+File write time is Tue Mar 31 20:47:04 2015
+```
+
+### See also
+
+last_write_time gets or sets the time of the last data modification (function)

@@ -1,0 +1,96 @@
+# swap(std::expected)
+
+`friend constexpr void swap( expected& lhs, expected& rhs ) noexcept(/*see below*/);` (since C++23)
+
+Overloads the `std::swap` algorithm for `std::expected`. Exchanges the state of `lhs` with that of `rhs`. Effectively calls `lhs.swap(rhs)`.
+
+This overload participates in overload resolution only if `lhs.swap(rhs)` is valid.
+
+This function is not visible to ordinary unqualified or qualified lookup, and can only be found by argument-dependent lookup when `std::expected<T, E>` is an associated class of the arguments.
+
+### Parameters
+
+lhs, rhs - `expected` objects whose states to swap
+
+### Return value
+
+(none)
+
+### Exceptions
+
+`noexcept` specification:
+
+`noexcept(noexcept(lhs.swap(rhs)))`
+
+### Example
+
+```cpp
+#include <expected>
+#include <iostream>
+#include <string>
+
+using Ex = std::expected<std::string, int>;
+
+void show(const Ex& ex1, const Ex& ex2)
+{
+    for (int i{}; i < 2; ++i)
+    {
+        std::cout << (i ? "ex2" : "ex1");
+        if (const Ex& ex = (i ? ex2 : ex1); ex.has_value())
+            std::cout << ".has_value() = " << *ex << '\n';
+        else
+            std::cout << ".error() = " << ex.error() << '\n';
+    }
+}
+
+int main()
+{
+    Ex ex1("\N{DOG FACE}");
+    Ex ex2{"\N{BONE}"};
+    show(ex1, ex2);
+    swap(ex1, ex2);
+    std::cout << "swap(ex1, ex2);\n";
+    show(ex1, ex2);
+    std::cout << '\n';
+
+    ex2 = std::unexpected(13);
+    show(ex1, ex2);
+    swap(ex1, ex2);
+    std::cout << "swap(ex1, ex2);\n";
+    show(ex1, ex2);
+    std::cout << '\n';
+
+    ex2 = std::unexpected(19937);
+    show(ex1, ex2);
+    swap(ex1, ex2);
+    std::cout << "swap(ex1, ex2);\n";
+    show(ex1, ex2);
+    std::cout << '\n';
+}
+```
+
+Output:
+
+```text
+ex1.has_value() = 🐶
+ex2.has_value() = 🦴
+swap(ex1, ex2);
+ex1.has_value() = 🦴
+ex2.has_value() = 🐶
+
+ex1.has_value() = 🦴
+ex2.error() = 13
+swap(ex1, ex2);
+ex1.error() = 13
+ex2.has_value() = 🦴
+
+ex1.error() = 13
+ex2.error() = 19937
+swap(ex1, ex2);
+ex1.error() = 19937
+ex2.error() = 13
+```
+
+### See also
+
+swap exchanges the contents (public member function)

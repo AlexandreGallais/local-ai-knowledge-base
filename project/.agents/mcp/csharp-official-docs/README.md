@@ -1,6 +1,6 @@
 # Brick `csharp-official-docs`
 
-The official documentation of C# and .NET: the language, the .NET guides and fundamentals (dependency injection, configuration, logging, the CA and IDE analysis rules), the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference: the base class library (ECMA XML) and the XML documentation of the ASP.NET Core shared framework and of EF Core, from their NuGet packages.
+The official documentation of C# and .NET: the language, the .NET guides and fundamentals (dependency injection, configuration, logging, the CA and IDE analysis rules), the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference: the XML documentation of the ASP.NET Core shared framework (the base class library included) and of EF Core, from their NuGet packages.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -35,6 +35,8 @@ node .agents/mcp/csharp-official-docs/build-index.ts
 
 - The code samples (`snippets/`) and the images (`media/`) of the guides.
 - The API of the other NuGet packages: add one with its own source in `library/sources.json`.
+- The ECMA XML of `dotnet/dotnet-api-docs` (135 MB): the XML documentation of the packages above
+  already gives the base class library.
 
 ## Licenses
 

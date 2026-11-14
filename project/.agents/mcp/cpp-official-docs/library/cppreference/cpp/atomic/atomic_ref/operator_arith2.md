@@ -1,0 +1,53 @@
+# std::atomic_ref<T>::operator+=,-=
+
+|  |  |  |
+| --- | --- | --- |
+| Provided only when `T` is an arithmetic type other than *cv* `bool` or a pointer-to-object type |  |  |
+| `value_type operator+=( difference_type arg ) const noexcept;` | (1) | (constexpr since C++26) |
+| `value_type operator-=( difference_type arg ) const noexcept;` | (2) | (constexpr since C++26) |
+
+Atomically replaces the current value referenced by `*ptr` with the result of computation involving the previous value and `arg`. These operations are read-modify-write operations.
+
+1) `operator+=` performs atomic addition. Equivalent to `return fetch_add(arg) + arg;`.
+
+2) `operator-=` performs atomic subtraction. Equivalent to `return fetch_sub(arg) - arg;`.
+
+- For signed integral types, arithmetic is defined to use two’s complement representation. There are no undefined results.
+- For floating-point types, the floating-point environment in effect may be different from the calling thread's floating-point environment. The operation need not be conform to the corresponding `std::numeric_limits` traits but is encouraged to do so. If the result is not a representable value for its type, the result is unspecified but the operation otherwise has no undefined behavior.
+- For pointer types, the result may be an undefined address, but the operation otherwise has no undefined behavior.
+  - If `std::remove_pointer_t<T>` is not a complete object type, the program is ill-formed.
+
+These overloads participate in overload resolution only if `std::is_const_v<T>` is `false`.
+
+### Parameters
+
+arg - the argument for the arithmetic operation
+
+### Return value
+
+The resulting value (that is, the result of applying the corresponding binary operator to the value referenced by `*ptr` immediately preceding the effects of the corresponding member function).
+
+### Notes
+
+Unlike most compound assignment operators, the compound assignment operators for `atomic_ref` return a copy of the stored value instead of a reference to `arg`.
+
+### Example
+
+This section is incomplete Reason: no example
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 3508 (P3323R1) | C++20 | compound assignment operators were meaningless for `const T` | constrained to accept only non-const `T` |
+
+### See also
+
+|  |  |
+| --- | --- |
+| fetch_add | atomically adds the argument to the value stored in the referenced object and obtains the value held previously (public member function) |
+| fetch_sub | atomically subtracts the argument from the value stored in the referenced object and obtains the value held previously (public member function) |
+| operator++, operator++(int), operator--, operator--(int) | atomically increments or decrements the referenced object by one (public member function) |
+| operator&=, operator\|=, operator^= | atomically performs bitwise AND, OR, XOR with the referenced value (public member function) |

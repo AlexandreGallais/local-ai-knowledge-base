@@ -1,0 +1,89 @@
+# std::beta, std::betaf, std::betal
+
+|  |  |
+| --- | --- |
+| `double beta( double x, double y ); float betaf( float x, float y ); long double betal( long double x, long double y );` | (1) |
+| `Promoted beta( Arithmetic x, Arithmetic y );` | (2) |
+
+1) Computes the beta function of `x` and `y`.
+
+2) A set of overloads or a function template for all combinations of arguments of arithmetic type not covered by (1). If any argument has integral type, it is cast to `double`. If any argument is `long double`, then the return type `Promoted` is also `long double`, otherwise the return type is always `double`.
+
+As all special functions, `beta` is only guaranteed to be available in `<cmath>` if `__STDCPP_MATH_SPEC_FUNCS__` is defined by the implementation to a value at least 201003L and if the user defines `__STDCPP_WANT_MATH_SPEC_FUNCS__` before including any standard library headers.
+
+### Parameters
+
+x, y - values of a floating-point or integral type
+
+### Return value
+
+If no errors occur, value of the beta function of `x` and `y`, that is ∫1 0tx-1 (1 - t)(y-1) d*t*, or, equivalently, Γ(x)Γ(y) Γ(x + y) is returned.
+
+### Error handling
+
+Errors may be reported as specified in math_errhandling.
+
+- If any argument is NaN, NaN is returned and domain error is not reported.
+- The function is only required to be defined where both `x` and `y` are greater than zero, and is allowed to report a domain error otherwise.
+
+### Notes
+
+Implementations that do not support TR 29124 but support TR 19768, provide this function in the header `tr1/cmath` and namespace `std::tr1`.
+
+An implementation of this function is also available in boost.math.
+
+`beta(x, y)` equals `beta(y, x)`.
+
+When `x` and `y` are positive integers, beta(x, y) equals \(\frac{(x - 1)!(y - 1)!}{(x + y - 1)!}\) (x - 1)!(y - 1)! (x + y - 1)! . Binomial coefficients can be expressed in terms of the beta function: \(\binom{n}{k} = \frac{1}{(n + 1)B(n - k + 1, k + 1)}\)⎛ ⎜ ⎝n k⎞ ⎟ ⎠= 1 (n + 1)Β(n - k + 1, k + 1) .
+
+### Example
+
+(works as shown with gcc 6.0)
+
+```cpp
+#define __STDCPP_WANT_MATH_SPEC_FUNCS__ 1
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <string>
+
+double binom(int n, int k)
+{
+    return 1 / ((n + 1) * std::beta(n - k + 1, k + 1));
+}
+
+int main()
+{
+    std::cout << "Pascal's triangle:\n";
+    for (int n = 1; n < 10; ++n)
+    {
+        std::cout << std::string(20 - n * 2, ' ');
+        for (int k = 1; k < n; ++k)
+            std::cout << std::setw(3) << binom(n, k) << ' ';
+        std::cout << '\n';
+    }
+}
+```
+
+Output:
+
+```text
+Pascal's triangle:
+
+                  2
+                3   3
+              4   6   4
+            5  10  10   5
+          6  15  20  15   6
+        7  21  35  35  21   7
+      8  28  56  70  56  28   8
+    9  36  84 126 126  84  36   9
+```
+
+### See also
+
+tgamma, tgammaf, tgammal (C++11), (C++11), (C++11) gamma function (function)
+
+### External links
+
+Weisstein, Eric W. "Beta Function." From MathWorld--A Wolfram Web Resource.

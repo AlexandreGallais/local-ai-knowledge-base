@@ -1,0 +1,95 @@
+# std::deque<T,Allocator>::resize
+
+|  |  |
+| --- | --- |
+| `void resize( size_type count );` | (1) |
+| `void resize( size_type count, const value_type& value );` | (2) |
+
+Resizes the container to contain `count` elements, does nothing if `count == size()`.
+
+If the current size is greater than `count`, the container is reduced to its first `count` elements.
+
+If the current size is less than `count`, then:
+
+1) Additional default-inserted elements are appended.
+
+2) Additional copies of `value` are appended.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| count | - | new size of the container |
+| value | - | the value to initialize the new elements with |
+| Type requirements |  |  |
+| - `T` must meet the requirements of MoveInsertable and DefaultInsertable in order to use overload (1). |  |  |
+| - `T` must meet the requirements of CopyInsertable in order to use overload (2). |  |  |
+
+### Complexity
+
+Linear in the difference between the current size and `count`.
+
+### Notes
+
+If value-initialization in overload (1) is undesirable, for example, if the elements are of non-class type and zeroing out is not needed, it can be avoided by providing a custom `Allocator::construct`.
+
+### Example
+
+```cpp
+#include <deque>
+#include <iostream>
+
+void print(auto rem, const std::deque<int>& c)
+{
+    for (std::cout << rem; const int el : c)
+        std::cout << el << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::deque<int> c = {1, 2, 3};
+    print("The deque holds: ", c);
+
+    c.resize(5);
+    print("After resize up to 5: ", c);
+
+    c.resize(2);
+    print("After resize down to 2: ", c);
+
+    c.resize(6, 4);
+    print("After resize up to 6 (initializer = 4): ", c);
+}
+```
+
+Output:
+
+```text
+The deque holds: 1 2 3
+After resize up to 5: 1 2 3 0 0
+After resize down to 2: 1 2
+After resize up to 6 (initializer = 4): 1 2 4 4 4 4
+```
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 679 | C++98 | `resize()` passed `value` by value | passes by const reference |
+| LWG 1418 | C++98 | the behavior of `resize(size())` was not specified | specified |
+| LWG 2033 | C++11 | 1. elements were removed by using `erase()`[1] 2. `T` was not required to be MoveInsertable | 1. uses `pop_back()` 2. required |
+| LWG 2066 | C++11 | overload (1) did not have the exception safety guarantee of overload (2) | added |
+| LWG 2160 | C++11 | elements were removed by using `pop_back()`[2] due to the resolution of LWG 2033 | does not specify the method of removing elements |
+
+1. ↑ `erase()` can remove elements in the middle of a `deque`, so the value type is required to be MoveAssignable so that the elements following the removed section can be moved forward to fill the gap. However, `resize()` can only remove elements at the end of the `deque`, making the MoveAssignable unnecessary.
+2. ↑ Removing elements by using `pop_back()` implies that the elements are required to be removed from back to front.
+
+### See also
+
+|  |  |
+| --- | --- |
+| max_size | returns the maximum possible number of elements (public member function) |
+| size | returns the number of elements (public member function) |
+| empty | checks whether the container is empty (public member function) |

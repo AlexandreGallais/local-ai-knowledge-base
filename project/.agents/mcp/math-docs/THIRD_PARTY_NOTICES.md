@@ -54,7 +54,7 @@ copyright notices, are in `licenses/<tool>/`.
 - Copyright: `Copyright (c)  2004  Robert A. Beezer.`
 - Copyright: `Copyright (c)  YEAR  YOUR NAME.`
 - Source: <https://github.com/rbeezer/fcla>, master, commit 347f27fe909b54b26970bcc0fcbf69c7e853c766
-- License: GFDL-1.3-or-later
+- License: GFDL-1.2-or-later
 - License text: [licenses/linear-algebra-beezer/COPYING.txt](licenses/linear-algebra-beezer/COPYING.txt), [licenses/linear-algebra-beezer/LICENSE-GFDL-1.3](licenses/linear-algebra-beezer/LICENSE-GFDL-1.3)
-- Terms: Copyleft: these files stay under the GNU Free Documentation License 1.3 or later, whose text travels with them.
+- Terms: Copyleft: these files stay under the GNU Free Documentation License 1.2 or later, whose text travels with them.
 - Changes: none; the files are copied as they are in the source, at the commit above.

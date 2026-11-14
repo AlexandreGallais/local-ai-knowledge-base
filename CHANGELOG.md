@@ -5,6 +5,22 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: a lighter documentation, free only
+
+- Every source of the documentation must have a free license, under the Definition of Free Cultural
+  Works: OSI and FSF software licenses, CC0, CC BY, CC BY-SA. A "non commercial" or "no derivatives"
+  clause is refused, and so is the GNU FDL when the work names invariant sections or cover texts.
+  `scripts/check-library.ts` refuses any other source.
+- The pages of cppreference.com are converted from HTML to Markdown: text, headings, lists, tables
+  and code kept, the site navigation left out. The brick drops from 347 MB to 21 MB.
+- The declared license of the Angular guides is MIT, the text the repository carries.
+
+### Removed: the .NET API reference and the GNU manuals
+
+- The ECMA XML of `dotnet/dotnet-api-docs` (135 MB): the XML documentation of the ASP.NET Core
+  package already gives the base class library.
+- The GCC and GNU Make manuals: under the GNU FDL with invariant sections or cover texts.
+
 ### Changed: the official documentation taken as it is
 
 - Every documentation file is the official file, unchanged, in its own format: Markdown, MDX,
@@ -30,7 +46,7 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - Rust: the Cargo book and Rust by Example. Java: Gradle and Maven.
 - Four new bricks, each with its server and its export pack: `containers-official-docs` (Dockerfile,
   Docker, Podman, Compose, Dev Containers, OCI), `git-official-docs`, `cpp-official-docs`
-  (cppreference.com, CMake, Clang, GNU Make, GCC) and `math-docs` (free textbooks of linear algebra,
+  (cppreference.com, CMake, Clang) and `math-docs` (free textbooks of linear algebra,
   discrete mathematics and combinatorics, in their LaTeX and PreTeXt source).
 - A source may be an archive (a NuGet package, a ZIP) instead of a Git repository.
 - `scripts/sync-docs-bricks.ts` copies the shared code of the documentation bricks.

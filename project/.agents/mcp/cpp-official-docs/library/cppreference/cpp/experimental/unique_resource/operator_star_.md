@@ -1,0 +1,31 @@
+# std::experimental::unique_resource<R, D>::operator*, std::experimental::unique_resource<R, D>::operator->
+
+|  |  |  |
+| --- | --- | --- |
+| `std::add_lvalue_reference_t<std::remove_pointer_t<R>> operator*() const noexcept;` | (1) | (library fundamentals TS v3) |
+| `R operator->() const noexcept;` | (2) | (library fundamentals TS v3) |
+
+1) Access the object or function pointed by the underlying resource handle which is a pointer. This function participates in overload resolution only if `std::is_pointer_v<R>` is `true` and `std::is_void_v<std::remove_pointer_t<R>>` is `false`. If the resource handle is not pointing to an object or a function, the behavior is undefined.
+
+2) Get a copy of the underlying resource handle which is a pointer. This function participates in overload resolution only if `std::is_pointer_v<R>` is `true`. The return value is typically used to access the pointed object.
+
+### Parameters
+
+(none)
+
+### Return value
+
+1) The object or function pointed by the underlying resource handle.
+
+2) Copy of the underlying resource handle.
+
+### Example
+
+This section is incomplete Reason: no example
+
+### See also
+
+|  |  |
+| --- | --- |
+| get | accesses the underlying resource handle (public member function) |
+| operator*, operator-> | dereferences pointer to the managed object (public member function of `std::unique_ptr<T,Deleter>`) |

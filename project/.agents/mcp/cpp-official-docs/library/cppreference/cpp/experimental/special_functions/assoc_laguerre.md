@@ -1,0 +1,87 @@
+# std::assoc_laguerre, std::assoc_laguerref, std::assoc_laguerrel
+
+|  |  |
+| --- | --- |
+| `double assoc_laguerre ( unsigned int n, unsigned int m, double x ); double assoc_laguerre ( unsigned int n, unsigned int m, float x ); double assoc_laguerre ( unsigned int n, unsigned int m, long double x ); float assoc_laguerref( unsigned int n, unsigned int m, float x ); long double assoc_laguerrel( unsigned int n, unsigned int m, long double x );` | (1) |
+| `double assoc_laguerre ( unsigned int n, unsigned int m, IntegralType x );` | (2) |
+
+1) Computes the associated Laguerre polynomials of the degree `n`, order `m`, and argument `x`.
+
+2) A set of overloads or a function template accepting an argument of any integral type. Equivalent to (1) after casting the argument to `double`.
+
+As all special functions, `assoc_laguerre` is only guaranteed to be available in `<cmath>` if `__STDCPP_MATH_SPEC_FUNCS__` is defined by the implementation to a value at least 201003L and if the user defines `__STDCPP_WANT_MATH_SPEC_FUNCS__` before including any standard library headers.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| n | - | the degree of the polynomial, a value of unsigned integer type |
+| m | - | the order of the polynomial, a value of unsigned integer type |
+| x | - | the argument, a value of a floating-point or integral type |
+
+### Return value
+
+If no errors occur, value of the associated Laguerre polynomial of `x`, that is (-1)m dm dxm Ln + m(x), is returned (where Ln + m(x) is the unassociated Laguerre polynomial, `std::laguerre(n + m, x)`).
+
+### Error handling
+
+Errors may be reported as specified in `math_errhandling`.
+
+- If the argument is NaN, NaN is returned and domain error is not reported.
+- If `x` is negative, a domain error may occur.
+- If `n` or `m` is greater or equal to 128, the behavior is implementation-defined.
+
+### Notes
+
+Implementations that do not support TR 29124 but support TR 19768, provide this function in the header `tr1/cmath` and namespace `std::tr1`.
+
+An implementation of this function is also available in boost.math.
+
+The associated Laguerre polynomials are the polynomial solutions of the equation xy,, + (m + 1 - x)y, + ny = 0.
+
+The first few are:
+
+- `assoc_laguerre(0, m, x)` = 1.
+- `assoc_laguerre(1, m, x)` = -x + m + 1.
+- `assoc_laguerre(2, m, x)` = 1 2 [x2 - 2(m + 2)x + (m + 1)(m + 2)].
+- `assoc_laguerre(3, m, x)` = 1 6 [-x3 - 3(m + 3)x2 - 3(m + 2)(m + 3)x + (m + 1)(m + 2)(m + 3)].
+
+### Example
+
+```cpp
+#define __STDCPP_WANT_MATH_SPEC_FUNCS__ 1
+#include <cmath>
+#include <iostream>
+
+double L1(unsigned m, double x)
+{
+    return -x + m + 1;
+}
+
+double L2(unsigned m, double x)
+{
+    return 0.5 * (x * x - 2 * (m + 2) * x + (m + 1) * (m + 2));
+}
+
+int main()
+{
+    // spot-checks
+    std::cout << std::assoc_laguerre(1, 10, 0.5) << '=' << L1(10, 0.5) << '\n'
+              << std::assoc_laguerre(2, 10, 0.5) << '=' << L2(10, 0.5) << '\n';
+}
+```
+
+Output:
+
+```text
+10.5=10.5
+60.125=60.125
+```
+
+### See also
+
+laguerre, laguerref, laguerrel Laguerre polynomials (function)
+
+### External links
+
+Weisstein, Eric W. "Associated Laguerre Polynomial." From MathWorld — A Wolfram Web Resource.

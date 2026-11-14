@@ -1,0 +1,89 @@
+# std::experimental::pmr::resource_adaptor, std::pmr::experimental::resource_adaptor
+
+| Defined in header `<experimental/memory_resource>` |  |
+| --- | --- |
+| `template< class Alloc > using resource_adaptor = /*resource-adaptor-imp*/< typename std::allocator_traits<Alloc>:: template rebind_alloc<char>>;` | (library fundamentals TS) |
+| `template< class Alloc > class /*resource-adaptor-imp*/ : public memory_resource; // for exposition only` | (library fundamentals TS) |
+
+The alias template `resource_adaptor` adapts the allocator type `Alloc` with a `memory_resource` interface. The allocator is rebound to a `char` value type before it is actually adapted (using the *`resource-adaptor-imp`* class template), so that adapting specializations of the same allocator template always yields the same type, regardless of the value type the allocator template is originally instantiated with.
+
+|  |  |
+| --- | --- |
+| `resource_adaptor` is defined in namespace `std::experimental::pmr`, and the base type `memory_resorce` in this page is `std::experimental::pmr::memory_resource`. | (library fundamentals TS) (until library fundamentals TS v3) |
+| `resource_adaptor` is defined in namespace `std::pmr::experimental`, and the base type `memory_resorce` in this page is `std::pmr::memory_resource`. | (library fundamentals TS v3) |
+
+*`resource-adaptor-imp`* is a class template whose members are described below. The name *`resource-adaptor-imp`* is for exposition purposes only and not normative.
+
+In addition to meeting the Allocator requirements, `Alloc` must additionally satisfy the following requirements:
+
+- `std::allocator_traits<Alloc>::pointer` shall be identical to `Alloc::value_type*`.
+- `std::allocator_traits<Alloc>::const_pointer` shall be identical to `Alloc::value_type const*`.
+- `std::allocator_traits<Alloc>::void_pointer` shall be identical to `void*`.
+- `std::allocator_traits<Alloc>::const_const_pointer` shall be identical to `void const*`.
+
+### Member types of *resource-adaptor-imp*
+
+| Member type | Definition |
+| --- | --- |
+| `allocator_type` | `Alloc` |
+
+### Member functions of *resource-adaptor-imp*
+
+## *resource-adaptor-imp*::*resource-adaptor-imp*
+
+|  |  |  |
+| --- | --- | --- |
+| `/*resource-adaptor-imp*/() = default;` | (1) | (library fundamentals TS) |
+| `/*resource-adaptor-imp*/(const /*resource-adaptor-imp*/& other) = default;` | (2) | (library fundamentals TS) |
+| `/*resource-adaptor-imp*/(/*resource-adaptor-imp*/&& other) = default;` | (3) | (library fundamentals TS) |
+| `explicit /*resource-adaptor-imp*/(const Alloc& a2);` | (4) | (library fundamentals TS) |
+| `explicit /*resource-adaptor-imp*/(Alloc&& a2);` | (5) | (library fundamentals TS) |
+
+1) Default constructor. Default constructs the wrapped allocator.
+
+2) Copy constructor. Copy constructs the wrapped allocator from the allocator wrapped by `other`.
+
+3) Move constructor. Move constructs the wrapped allocator from the allocator wrapped by `other`.
+
+4) Initializes the wrapped allocator with `a2`.
+
+5) Initializes the wrapped allocator with `std::move(a2)`.
+
+#### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| other | - | another *`resource-adaptor-imp`* object to copy or move from |
+| a2 | - | another `Alloc` object to copy or move from |
+
+## *resource-adaptor-imp*::get_allocator
+
+`allocator_type get_allocator() const;` (library fundamentals TS)
+
+Returns a copy of the wrapped allocator.
+
+## *resource-adaptor-imp*::operator=
+
+`/*resource-adaptor-imp*/& operator=(const /*resource-adaptor-imp*/& other) = default;` (library fundamentals TS)
+
+Defaulted copy assignment operator. Copy assigns the wrapped allocator from that of `other`.
+
+## *resource-adaptor-imp*::do_allocate
+
+`protected: virtual void* do_allocate(std::size_t bytes, std::size_t alignment);` (library fundamentals TS)
+
+Allocates memory using the `allocate` member function of the wrapped allocator.
+
+## *resource-adaptor-imp*::do_deallocate
+
+`protected: virtual void do_deallocate(void *p, std::size_t bytes, std::size_t alignment);` (library fundamentals TS)
+
+Deallocates the storage pointed to by `p` using the `deallocate` member function of the wrapped allocator.
+
+`p` must have been allocated using the `allocate` member function of an allocator that compares equal to the wrapped allocator, and must not have been subsequently deallocated.
+
+## *resource-adaptor-imp*::do_is_equal
+
+`protected: virtual bool do_is_equal(const memory_resource& other) const noexcept;` (library fundamentals TS)
+
+Let `p` be `dynamic_cast<const /*resource-adaptor-imp*/*>(&other)`. If `p` is a null pointer value, returns `false`. Otherwise, return the result of comparing the allocators wrapped by `*p` and `*this` using `operator==`.

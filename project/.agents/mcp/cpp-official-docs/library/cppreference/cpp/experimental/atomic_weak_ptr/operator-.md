@@ -1,0 +1,30 @@
+# std::experimental::atomic_weak_ptr<T>::operator=
+
+|  |  |
+| --- | --- |
+| `void operator=( weak_ptr<T> desired ) noexcept;` | (1) |
+| `void operator=( const atomic_weak_ptr& ) = delete;` | (2) |
+
+1) Atomically assigns a value `desired` to the atomic variable. Equivalent to `store(desired)`.
+
+2) Atomic variables are not CopyAssignable.
+
+### Parameters
+
+desired - value to assign
+
+### Notes
+
+Unlike most assignment operators, the assignment operators for `atomic_weak_ptr` returns `void`.
+
+### Remarks
+
+All changes to the `atomic_weak_ptr` object itself, and all associated `use_count` increments, are guaranteed to be performed atomically. Associated `use_count` decrements take place after the atomic operation, but are not required to be part of it. Any associated destruction or deallocation operations take place after the atomic operation and are not part of it.
+
+### See also
+
+|  |  |
+| --- | --- |
+| (constructor) | constructs an `atomic_weak_ptr` object (public member function) |
+| store | atomically replaces the value of the atomic object with a non-atomic argument (public member function) |
+| std::atomic_is_lock_free(std::shared_ptr), std::atomic_load(std::shared_ptr), std::atomic_load_explicit(std::shared_ptr), std::atomic_store(std::shared_ptr), std::atomic_store_explicit(std::shared_ptr), std::atomic_exchange(std::shared_ptr), std::atomic_exchange_explicit(std::shared_ptr), std::atomic_compare_exchange_weak(std::shared_ptr), std::atomic_compare_exchange_strong(std::shared_ptr), std::atomic_compare_exchange_weak_explicit(std::shared_ptr), std::atomic_compare_exchange_strong_explicit(std::shared_ptr) (deprecated in C++20), (removed in C++26) | specializes atomic operations for `std::shared_ptr` (function template) |

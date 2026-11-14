@@ -1,0 +1,60 @@
+# std::flat_map<Key,T,Compare,KeyContainer,MappedContainer>::extract
+
+`containers extract() &&;` (since C++23)
+
+Extracts adapted containers `c`. Equivalent to `return std::move(c);`.
+
+After this operation `*this` is empty, even if an exception is thrown.
+
+### Parameters
+
+(none)
+
+### Return value
+
+`std::move(c)`.
+
+### Complexity
+
+Constant.
+
+### Example
+
+```cpp
+#include <cassert>
+#include <flat_map>
+#include <print>
+#include <type_traits>
+#include <vector>
+
+int main()
+{
+    std::flat_map<int, double> map{{1, 1.1}, {2, 2.2}, {3, 3.3}};
+    const auto size = map.size();
+
+    auto c = map.extract();
+    assert(c.keys.size() == size);
+    assert(c.values.size() == size);
+    assert(map.empty());
+    assert(map.keys().empty());
+    assert(map.values().empty());
+
+    // The default keys and values containers are std::vector:
+    static_assert(std::is_same_v<decltype(c.keys), std::vector<int>>);
+    static_assert(std::is_same_v<decltype(c.value), std::vector<int>>);
+
+    std::println("keys: {}", c.keys);
+    std::println("values: {}", c.values);
+}
+```
+
+Output:
+
+```text
+keys: [1, 2, 3]
+values: [1.1, 2.2, 3.3]
+```
+
+### See also
+
+replace replaces the underlying containers (public member function)

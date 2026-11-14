@@ -1,0 +1,50 @@
+# deduction guides for `std::flat_map`
+
+| Defined in header `<flat_map>` |  |  |
+| --- | --- | --- |
+| `template< class KeyContainer, class MappedContainer, class Compare = std::less<typename KeyContainer::value_type> > flat_map( KeyContainer, MappedContainer, Compare = Compare() ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, Compare, KeyContainer, MappedContainer>;` | (1) | (since C++23) |
+| `template< class KeyContainer, class MappedContainer, class Allocator > flat_map( KeyContainer, MappedContainer, Allocator ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, std::less<typename KeyContainer::value_type>, KeyContainer, MappedContainer>;` | (2) | (since C++23) |
+| `template< class KeyContainer, class MappedContainer, class Compare, class Allocator > flat_map( KeyContainer, MappedContainer, Compare, Allocator ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, Compare, KeyContainer, MappedContainer>;` | (3) | (since C++23) |
+| `template< class KeyContainer, class MappedContainer, class Compare = std::less<typename KeyContainer::value_type> > flat_map( std::sorted_unique_t, KeyContainer, MappedContainer, Compare = Compare() ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, Compare, KeyContainer, MappedContainer>;` | (4) | (since C++23) |
+| `template< class KeyContainer, class MappedContainer, class Allocator > flat_map( std::sorted_unique_t, KeyContainer, MappedContainer, Allocator ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, std::less<typename KeyContainer::value_type>, KeyContainer, MappedContainer>;` | (5) | (since C++23) |
+| `template< class KeyContainer, class MappedContainer, class Compare, class Allocator> flat_map( std::sorted_unique_t, KeyContainer, MappedContainer, Compare, Allocator ) -> flat_map<typename KeyContainer::value_type, typename MappedContainer::value_type, Compare, KeyContainer, MappedContainer>;` | (6) | (since C++23) |
+| `template< class InputIter, class Compare = std::less</*iter-key-type*/<InputIter>> > flat_map( InputIter, InputIter, Compare = Compare() ) -> flat_map</*iter-key-type*/<InputIter>, /*iter-mapped-type*/<InputIter>, Compare>;` | (7) | (since C++23) |
+| `template< class InputIter, class Compare = std::less</*iter-key-type*/<InputIter>> > flat_map( std::sorted_unique_t, InputIter, InputIter, Compare = Compare() ) -> flat_map</*iter-key-type*/<InputIter>, /*iter-mapped-type*/<InputIter>, Compare>;` | (8) | (since C++23) |
+| `template< ranges::input_range R, class Compare = std::less</*range-key-type*/<R>>, class Allocator = allocator<byte> > flat_map( std::from_range_t, R&&, Compare = Compare(), Allocator = Allocator() ) -> flat_map</*range-key-type*/<R>, /*range-mapped-type*/<R>, Compare, std::vector</*range-key-type*/<R>, /*alloc-rebind*/<Allocator, /*range-key-type*/<R>>>, std::vector</*range-mapped-type*/<R>, /*alloc-rebind*/<Allocator, /*range-mapped-type*/<R>>>>;` | (9) | (since C++23) |
+| `template< ranges::input_range R, class Allocator > flat_map( std::from_range_t, R&&, Allocator ) -> flat_map</*range-key-type*/<R>, /*range-mapped-type*/<R>, std::less</*range-key-type*/<R>>, std::vector</*range-key-type*/<R>, /*alloc-rebind*/<Allocator, /*range-key-type*/<R>>>, std::vector</*range-mapped-type*/<R>, /*alloc-rebind*/<Allocator, /*range-mapped-type*/<R>>>>;` | (10) | (since C++23) |
+| `template< class Key, class T, class Compare = std::less<Key> > flat_map( std::initializer_list<pair<Key, T>>, Compare = Compare() ) -> flat_map<Key, T, Compare>;` | (11) | (since C++23) |
+| `template< class Key, class T, class Compare = std::less<Key> > flat_map( std::sorted_unique_t, std::initializer_list<pair<Key, T>>, Compare = Compare() ) -> flat_map<Key, T, Compare>;` | (12) | (since C++23) |
+
+These deduction guides are provided for to allow deduction from:
+
+1) A key-container, a mapped-container and a comparator.
+
+2) A key-container, a mapped-container and an allocator.
+
+3) A key-container, a mapped-container, a comparator and an allocator.
+
+4) The `std::sorted_unique_t` tag, a key-container, a mapped-container and a comparator.
+
+5) The `std::sorted_unique_t` tag, a key-container, a mapped-container and an allocator.
+
+6) The `std::sorted_unique_t` tag, a key-container, a mapped-container, a comparator and an allocator.
+
+7) An iterator range and a comparator.
+
+8) The `std::sorted_unique_t` tag, an iterator range and a comparator.
+
+9) The `std::from_range_t` tag, an `input_range` range, a comparator and an allocator.
+
+10) The `std::from_range_t` tag, an `input_range` range and an allocator.
+
+11) The `std::initializer_list` and a comparator.
+
+12) The `std::sorted_unique_t` tag, the `std::initializer_list` and a comparator.
+
+These overloads participate in overload resolution only if `InputIt` satisfies LegacyInputIterator, `Alloc` satisfies Allocator, and `Comp` does not satisfy Allocator.
+
+Note: the extent to which the library determines that a type does not satisfy LegacyInputIterator is unspecified, except that as a minimum integral types do not qualify as input iterators. Likewise, the extent to which it determines that a type does not satisfy Allocator is unspecified, except that as a minimum the member type `Alloc::value_type` must exist and the expression `std::declval<Alloc&>().allocate(std::size_t{})` must be well-formed when treated as an unevaluated operand.
+
+### Example
+
+This section is incomplete Reason: no example

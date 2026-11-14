@@ -88,7 +88,7 @@ copyright notices, are in `licenses/<tool>/`.
 - Authors: Google LLC and the Angular contributors
 - Copyright: `Copyright (c) 2010-2026 Google LLC. https://angular.dev/license`
 - Source: <https://github.com/angular/angular>, v22.2.6, commit dda2d41d948380d63619d597c9815db0aa77fd1d
-- License: CC-BY-4.0, <https://creativecommons.org/licenses/by/4.0/>
+- License: MIT, <https://opensource.org/license/mit>
 - License text: [licenses/angular/LICENSE](licenses/angular/LICENSE)
 - Changes: none; the files are copied as they are in the source, at the commit above.
 

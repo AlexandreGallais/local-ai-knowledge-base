@@ -1,0 +1,95 @@
+# std::ranges::ends_with
+
+| Defined in header `<algorithm>` |  |  |
+| --- | --- | --- |
+| Call signature |  |  |
+| `template< std::input_iterator I1, std::sentinel_for<I1> S1, std::input_iterator I2, std::sentinel_for<I2> S2, class Pred = ranges::equal_to, class Proj1 = std::identity, class Proj2 = std::identity > requires (std::forward_iterator<I1> \|\| std::sized_sentinel_for<S1, I1>) && (std::forward_iterator<I2> \|\| std::sized_sentinel_for<S2, I2>) && std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2> constexpr bool ends_with( I1 first1, S1 last1, I2 first2, S2 last2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );` | (1) | (since C++23) |
+| `template< ranges::input_range R1, ranges::input_range R2, class Pred = ranges::equal_to, class Proj1 = std::identity, class Proj2 = std::identity > requires (ranges::forward_range<R1> \|\| ranges::sized_range<R1>) && (ranges::forward_range<R2> \|\| ranges::sized_range<R2>) && std::indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, Pred, Proj1, Proj2> constexpr bool ends_with( R1&& r1, R2&& r2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );` | (2) | (since C++23) |
+
+Checks whether the second range matches the suffix of the first range.
+
+1) Let `N1` be `ranges::distance(first1, last1)` and `N2` be `ranges::distance(first2, last2)`:
+
+- If `N1 < N2` is `true`, returns `false`.
+- Otherwise, returns `ranges::equal(std::move(first1) + (N1 - N2), last1, std::move(first2), last2, pred, proj1, proj2)`.
+
+2) Let `N1` be `ranges::distance(r1)` and `N2` be `ranges::distance(r2)`.
+
+- If `N1 < N2` is `true`, returns `false`.
+- Otherwise, returns `ranges::equal(views::drop(ranges::ref_view(r1), N1 - static_cast<decltype(N1)>(N2)), r2, pred, proj1, proj2)`.
+
+The function-like entities described on this page are *algorithm function objects* (informally known as *niebloids*), that is:
+
+- Explicit template argument lists cannot be specified when calling any of them.
+- None of them are visible to argument-dependent lookup.
+- When any of them are found by normal unqualified lookup as the name to the left of the function-call operator, argument-dependent lookup is inhibited.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first1, last1 | - | the range of elements to examine |
+| r1 | - | the range of elements to examine |
+| first2, last2 | - | the range of elements to be used as the suffix |
+| r2 | - | the range of elements to be used as the suffix |
+| pred | - | the binary predicate that compares the projected elements |
+| proj1 | - | the projection to apply to the elements of the range to examine |
+| proj2 | - | the projection to apply to the elements of the range to be used as the suffix |
+
+### Return value
+
+`true` if the second range matches the suffix of the first range, `false` otherwise.
+
+### Complexity
+
+Generally linear: at most \(\scriptsize \min(N1,N2) \)min(N1,N2) applications of the predicate and both projections. The predicate and both projections are not applied if `N1 < N2` is `true`.
+
+If both `N1` and `N2` can be calculated in constant time (i.e. both iterator-sentinel type pairs model `sized_sentinel_for`, or both range types model `sized_range`) and `N1 < N2` is `true`, the time complexity is constant.
+
+### Possible implementation
+
+`struct ends_with_fn { template<std::input_iterator I1, std::sentinel_for<I1> S1, std::input_iterator I2, std::sentinel_for<I2> S2, class Pred = ranges::equal_to, class Proj1 = std::identity, class Proj2 = std::identity> requires (std::forward_iterator<I1> \|\| std::sized_sentinel_for<S1, I1>) && (std::forward_iterator<I2> \|\| std::sized_sentinel_for<S2, I2>) && std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2> constexpr bool operator()(I1 first1, S1 last1, I2 first2, S2 last2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const { const auto n1 = ranges::distance(first1, last1); const auto n2 = ranges::distance(first2, last2); if (n1 < n2) return false; ranges::advance(first1, n1 - n2); return ranges::equal(std::move(first1), last1, std::move(first2), last2, pred, proj1, proj2); } template<ranges::input_range R1, ranges::input_range R2, class Pred = ranges::equal_to, class Proj1 = std::identity, class Proj2 = std::identity> requires (ranges::forward_range<R1> \|\| ranges::sized_range<R1>) && (ranges::forward_range<R2> \|\| ranges::sized_range<R2>) && std::indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, Pred, Proj1, Proj2> constexpr bool operator()(R1&& r1, R2&& r2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const { const auto n1 = ranges::distance(r1); const auto n2 = ranges::distance(r2); if (n1 < n2) return false; return ranges::equal(views::drop(ranges::ref_view(r1), n1 - static_cast<decltype(n1)>(n2)), r2, pred, proj1, proj2); } }; inline constexpr ends_with_fn ends_with{};`
+
+### Notes
+
+| Feature-test macro | Value | Std | Feature |
+| --- | --- | --- | --- |
+| `__cpp_lib_ranges_starts_ends_with` | `202106L` | (C++23) | `std::ranges::starts_with`, `std::ranges::ends_with` |
+
+### Example
+
+```cpp
+#include <algorithm>
+#include <array>
+
+static_assert
+(
+    ! std::ranges::ends_with("for", "cast") &&
+    std::ranges::ends_with("dynamic_cast", "cast") &&
+    ! std::ranges::ends_with("as_const", "cast") &&
+    std::ranges::ends_with("bit_cast", "cast") &&
+    ! std::ranges::ends_with("to_underlying", "cast") &&
+    std::ranges::ends_with(std::array{1, 2, 3, 4}, std::array{3, 4}) &&
+    ! std::ranges::ends_with(std::array{1, 2, 3, 4}, std::array{4, 5})
+);
+
+int main() {}
+```
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 4105 | C++23 | overload (2) calculated the size difference by `N1 - N2`[1] | changed to `N1 - static_cast<decltype(N1)>(N2)` |
+
+1. ↑ Its result might be of an integer-class type, in this case `ranges::drop_view` cannot be constructed.
+
+### See also
+
+|  |  |
+| --- | --- |
+| ranges::starts_with (C++23) | checks whether a range starts with another range (algorithm function object) |
+| ends_with (C++20) | checks if the string ends with the given suffix (public member function of `std::basic_string<CharT,Traits,Allocator>`) |
+| ends_with (C++20) | checks if the string view ends with the given suffix (public member function of `std::basic_string_view<CharT,Traits>`) |

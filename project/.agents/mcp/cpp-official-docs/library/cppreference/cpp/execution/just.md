@@ -1,0 +1,31 @@
+# std::execution::just
+
+| Defined in header `<execution>` |  |  |
+| --- | --- | --- |
+| `struct just_t { /*unspecified*/ };` | (1) | (since C++26) |
+| `inline constexpr just_t just{};` | (2) | (since C++26) (customization point object) |
+| Call signature |  |  |
+| `execution::sender auto just( auto&&... values );` |  | (since C++26) |
+
+A sender factory that returns a sender which completes immediately by calling the receiver’s `set_value()`.
+
+Let `ts` be a pack of subexpressions. The expression `just(ts...)` is expression-equivalent to `/*make-sender*/(just, /*product-type*/(ts...))`
+
+### Customization point objects
+
+The name `execution::just` denotes a *customization point object*, which is a const function object of a literal `semiregular` class type. The cv-unqualified version of its type is a tag type denoted as `execution::just_t`.
+
+All instances of `execution::just_t` are equal. The effects of invoking different instances of type `execution::just_t` on the same arguments are equivalent, regardless of whether the expression denoting the instance is an lvalue or rvalue, and is const-qualified or not (however, a volatile-qualified instance is not required to be invocable). Thus, `execution::just` can be copied freely and its copies can be used interchangeably.
+
+Given a set of types `Args...`, if `std::declval<Args>()...` meet the requirements for arguments to `execution::just` above, `execution::just_t` models
+
+- `std::invocable<execution::just_t, Args...>`,
+- `std::invocable<const execution::just_t, Args...>`,
+- `std::invocable<execution::just_t&, Args...>`, and
+- `std::invocable<const execution::just_t&, Args...>`.
+
+Otherwise, no function call operator of `execution::just_t` participates in overload resolution.
+
+### Example
+
+This section is incomplete Reason: no example

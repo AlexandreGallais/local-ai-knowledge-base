@@ -1,0 +1,20 @@
+# std::experimental::ranges::Relation
+
+| Defined in header `<experimental/ranges/concepts>` |  |  |
+| --- | --- | --- |
+| `template< class R, class T, class U > concept bool Relation = Predicate<R, T, T> && Predicate<R, U, U> && CommonReference< const std::remove_reference_t<T>&, const std::remove_reference_t<U>&> && Predicate<R, ranges::common_reference_t< const std::remove_reference_t<T>&, const std::remove_reference_t<U>&>, ranges::common_reference_t< const std::remove_reference_t<T>&, const std::remove_reference_t<U>&>> && Predicate<R, T, U> && Predicate<R, U, T>;` | (1) | (ranges TS) |
+
+The concept `Relation<R, T, U>` specifies that `R` defines a binary relation over the set of expressions whose type and value category are those encoded by either `T` or `U`.
+
+Given
+
+- `r`, an expression such that `decltype((r))` is `R`,
+- `t`, an expression such that `decltype((t))` is `T`,
+- `u`, an expression such that `decltype((u))` is `U`,
+
+and let `C` be `ranges::common_reference_t<const std::remove_reference_t<T>&, const std::remove_reference_t<U>&>`,
+
+then `Relation<R, T, U>` is satisfied only if
+
+- `bool(r(t, u)) == bool(r(C(t), C(u)))` and
+- `bool(r(u, t)) == bool(r(C(u), C(t)))`.

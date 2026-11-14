@@ -29,12 +29,6 @@
     "bytes": 4668104,
     "built": "2026-11-14"
   },
-  "dotnet-api": {
-    "commit": "a010100852b71f33d67d913d7a9ed69f83a639b1",
-    "files": 3321,
-    "bytes": 134740728,
-    "built": "2026-11-14"
-  },
   "dotnet-fundamentals": {
     "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
     "files": 664,

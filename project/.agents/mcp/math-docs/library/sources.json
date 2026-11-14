@@ -76,7 +76,7 @@
       "repository": "https://github.com/rbeezer/fcla.git",
       "ref": "master",
       "version": "2026-11",
-      "license": "GFDL-1.3-or-later",
+      "license": "GFDL-1.2-or-later",
       "attribution": "Robert A. Beezer",
       "paths": [
         "src/"

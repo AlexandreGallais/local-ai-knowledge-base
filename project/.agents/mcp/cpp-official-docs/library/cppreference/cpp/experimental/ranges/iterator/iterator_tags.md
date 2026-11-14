@@ -1,0 +1,36 @@
+# std::experimental::ranges::input_iterator_tag, std::experimental::ranges::output_iterator_tag, std::experimental::ranges::forward_iterator_tag, std::experimental::ranges::bidirectional_iterator_tag, std::experimental::ranges::random_access_iterator_tag
+
+Defined in header `<experimental/ranges/iterator>`
+
+`struct input_iterator_tag {};`
+
+`struct output_iterator_tag {};`
+
+`struct forward_iterator_tag : public input_iterator_tag {};`
+
+`struct bidirectional_iterator_tag : public forward_iterator_tag {};`
+
+`struct random_access_iterator_tag : public bidirectional_iterator_tag {};`
+
+Defines the category of an iterator. Each tag is an empty type and corresponds to one of the five iterator categories:
+
+- `input_iterator_tag` corresponds to `InputIterator`.
+- `forward_iterator_tag` corresponds to `ForwardIterator`.
+- `bidirectional_iterator_tag` corresponds to `BidirectionalIterator`.
+- `random_access_iterator_tag` corresponds to `RandomAccessIterator`.
+- `output_iterator_tag` corresponds to `OutputIterator`; it is not used and provided solely for backward compatiblity.
+
+Iterator category tags carry information that can be used to select the most efficient algorithms for the specific requirement set that is implied by the category. However, concept-based overloading is preferred.
+
+For every `InputIterator` type `I`, `ranges::iterator_category_t<I>` must be defined to be an alias for the most specific category tag that describes the iterator's behavior.
+
+### Example
+
+This section is incomplete Reason: no example
+
+### See also
+
+|  |  |
+| --- | --- |
+| input_iterator_tag, output_iterator_tag, forward_iterator_tag, bidirectional_iterator_tag, random_access_iterator_tag, contiguous_iterator_tag (C++20) | empty class types used to indicate iterator categories (class) |
+| iterator_traits | compatibility traits class that collects an iterator’s associated types (alias template) |

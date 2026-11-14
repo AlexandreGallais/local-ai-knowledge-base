@@ -1,0 +1,28 @@
+# std::experimental::ranges::Writable
+
+| Defined in header `<experimental/ranges/iterator>` |  |
+| --- | --- |
+| `template< class Out, class T > concept bool Writable = requires(Out&& o, T&& t) { *o = std::forward<T>(t); *std::forward<Out>(o) = std::forward<T>(t); const_cast<const ranges::reference_t<Out>&&>(*o) = std::forward<T>(t); const_cast<const ranges::reference_t<Out>&&>(*std::forward<Out>(o)) = std::forward<T>(t); }; /* none of the four expressions above are required to be equality-preserving */` | (ranges TS) |
+
+The concept `Writable<Out, T>` specifies the requirements for writing a value whose type and value category are encoded by `T` into an iterator `Out`'s referenced object.
+
+Let `E` be an expression such that `decltype((E))` is `T`, and `o` be a dereferenceable object of type `Out`, then `Writable<Out, T>` is satisfied only if:
+
+- If `Readable<Out> && Same<ranges::value_type_t<Out>, std::decay_t<T>>` is satisfied, then `*o` after any above assignment is equal to the value of `E` before the assignment.
+
+`o` is not required to be dereferenceable after evaluating any of the assignment expressions above. If `E` is an xvalue, the resulting state of the object it denotes is valid but unspecified.
+
+### Equality preservation
+
+An expression is *equality preserving* if it results in equal outputs given equal inputs.
+
+- The inputs to an expression consist of its operands.
+- The outputs of an expression consist of its result and all operands modified by the expression (if any).
+
+Every expression required to be equality preserving is further required to be *stable*: two evaluations of such an expression with the same input objects must have equal outputs absent any explicit intervening modification of those input objects.
+
+### Notes
+
+The only valid use of `operator*` is on the left side of an assignment expression. Assignment through the same value of a writable type may happen only once.
+
+The required expressions with `const_cast` prevent `Readable` objects with prvalue `reference` types from satisfying the syntactic requirements of `Writable` by accident, while permitting proxy references to continue to work as long as their constness is shallow. See Ranges TS issue 381.

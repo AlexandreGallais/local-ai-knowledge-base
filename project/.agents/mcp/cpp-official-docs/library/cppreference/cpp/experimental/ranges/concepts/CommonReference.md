@@ -1,0 +1,31 @@
+# std::experimental::ranges::CommonReference
+
+| Defined in header `<experimental/ranges/concepts>` |  |
+| --- | --- |
+| `template< class T, class U > concept bool CommonReference = Same<ranges::common_reference_t<T, U>, ranges::common_reference_t<U, T>> && ConvertibleTo<T, ranges::common_reference_t<T, U>> && ConvertibleTo<U, ranges::common_reference_t<T, U>>;` | (ranges TS) |
+
+The concept `CommonReference<T, U>` specifies that two types `T` and `U` share a *common reference type* (as computed by `ranges::common_reference_t`) to which both can be converted.
+
+`CommonReference<T, U>` is satisfied only if, given expressions `t` and `u` such that `decltype((t))` is `T` and `decltype((u))` is `U`,
+
+- `ranges::common_reference_t<T, U>(t)` is equal to `ranges::common_reference_t<T, U>(t)` if and only if `t` is an equality-preserving expression; and
+- `ranges::common_reference_t<T, U>(u)` is equal to `ranges::common_reference_t<T, U>(u)` if and only if `u` is an equality-preserving expression.
+
+In other words, the conversion to the common reference type must not alter the equality-preservation property of the original expression.
+
+### Equality preservation
+
+An expression is *equality preserving* if it results in equal outputs given equal inputs.
+
+- The inputs to an expression consist of its operands.
+- The outputs of an expression consist of its result and all operands modified by the expression (if any).
+
+Every expression required to be equality preserving is further required to be *stable*: two evaluations of such an expression with the same input objects must have equal outputs absent any explicit intervening modification of those input objects.
+
+### See also
+
+|  |  |
+| --- | --- |
+| common_reference | determine the common reference type of a set of types (class template) |
+| Common | specifies that two types share a common type (concept) |
+| common_type | determine the common type of a set of types (class template) |

@@ -1,0 +1,116 @@
+# std::addressof
+
+| Defined in header `<memory>` |  |  |
+| --- | --- | --- |
+| `template< class T > T* addressof( T& arg ) noexcept;` | (1) | (since C++11) (constexpr since C++17) |
+| `template< class T > const T* addressof( const T&& ) = delete;` | (2) | (since C++11) |
+
+1) Obtains the actual address of the object or function `arg`, even in presence of overloaded `operator&`.
+
+2) Rvalue overload is deleted to prevent taking the address of `const` rvalues.
+
+The expression `std::addressof(e)` is a constant subexpression, if `e` is an lvalue constant subexpression. (since C++17)
+
+### Parameters
+
+arg - lvalue object or function
+
+### Return value
+
+Pointer to `arg`.
+
+### Possible implementation
+
+The implementation below is not `constexpr`, because `reinterpret_cast` is not usable in a constant expression. Compiler support is needed (see below).
+
+`template<class T> typename std::enable_if<std::is_object<T>::value, T*>::type addressof(T& arg) noexcept { return reinterpret_cast<T*>( &const_cast<char&>( reinterpret_cast<const volatile char&>(arg))); } template<class T> typename std::enable_if<!std::is_object<T>::value, T*>::type addressof(T& arg) noexcept { return &arg; }`
+
+Correct implementation of this function requires compiler support: GNU libstdc++, LLVM libc++, Microsoft STL.
+
+### Notes
+
+| Feature-test macro | Value | Std | Feature |
+| --- | --- | --- | --- |
+| `__cpp_lib_addressof_constexpr` | `201603L` | (C++17) | `constexpr` `std::addressof` |
+
+`constexpr` for `addressof` is added by LWG2296, and MSVC STL applies the change to C++14 mode as a defect report.
+
+There are some weird cases where use of built-in `operator&` is ill-formed due to argument-dependent lookup even if it is not overloaded, and `std::addressof` can be used instead.
+
+```cpp
+template<class T>
+struct holder { T t; };
+
+struct incomp;
+
+int main()
+{
+    holder<holder<incomp>*> x{};
+    // &x; // error: argument-dependent lookup attempts to instantiate holder<incomp>
+    std::addressof(x); // OK
+}
+```
+
+### Example
+
+`operator&` may be overloaded for a pointer wrapper class to obtain a pointer to pointer:
+
+```cpp
+#include <iostream>
+#include <memory>
+
+template<class T>
+struct Ptr
+{
+    T* pad; // add pad to show difference between 'this' and 'data'
+    T* data;
+    Ptr(T* arg) : pad(nullptr), data(arg)
+    {
+        std::cout << "Ctor this = " << this << '\n';
+    }
+
+    ~Ptr() { delete data; }
+    T** operator&() { return &data; }
+};
+
+template<class T>
+void f(Ptr<T>* p)
+{
+    std::cout << "Ptr   overload called with p = " << p << '\n';
+}
+
+void f(int** p)
+{
+    std::cout << "int** overload called with p = " << p << '\n';
+}
+
+int main()
+{
+    Ptr<int> p(new int(42));
+    f(&p);                // calls int** overload
+    f(std::addressof(p)); // calls Ptr<int>* overload, (= this)
+}
+```
+
+Possible output:
+
+```text
+Ctor this = 0x7fff59ae6e88
+int** overload called with p = 0x7fff59ae6e90
+Ptr   overload called with p = 0x7fff59ae6e88
+```
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 2598 | C++11 | `std::addressof<const T>` could take address of rvalues | disallowed by a deleted overload |
+
+### See also
+
+|  |  |
+| --- | --- |
+| allocator | the default allocator (class template) |
+| pointer_to [static] | obtains a dereferenceable pointer to its argument (public static member function of `std::pointer_traits<Ptr>`) |

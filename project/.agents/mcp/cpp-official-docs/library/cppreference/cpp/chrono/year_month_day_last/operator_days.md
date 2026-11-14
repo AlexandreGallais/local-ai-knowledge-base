@@ -1,0 +1,55 @@
+# std::chrono::year_month_day_last::operator sys_days, std::chrono::year_month_day_last::operator local_days
+
+|  |  |  |
+| --- | --- | --- |
+| `constexpr operator std::chrono::sys_days() const noexcept;` | (1) | (since C++20) |
+| `constexpr explicit operator std::chrono::local_days() const noexcept;` | (2) | (since C++20) |
+
+Converts `*this` to a `std::chrono::time_point` representing the same date as this `year_month_day_last`. This is equivalent to composing a `year_month_day` from `year()`, `month()` and `day()` and converting that `year_month_day` to the destination type.
+
+1) Equivalent to `std::chrono::sys_days(year()/month()/day())`.
+
+2) Equivalent to `std::chrono::local_days(year()/month()/day())`.
+
+### Example
+
+```cpp
+#include <array>
+#include <chrono>
+#include <iostream>
+#include <string_view>
+using namespace std::chrono;
+using namespace std::literals;
+
+int main()
+{
+    constexpr std::chrono::year y{2023y};
+    constexpr std::array quarters{"1st"sv, "2nd"sv, "3rd"sv, "4th"sv};
+    constexpr auto mq{12 / 4}; // months per quarter
+
+    std::cout << "In year " << static_cast<int>(y) << '\n';
+    for (auto q = 1; q < 5; ++q)
+    {
+        const auto ls = y / std::chrono::month(q * mq) / Sunday[last];
+        const auto ld = y / std::chrono::month(q * mq) / last;
+        // subtract last Sunday from last day for day of week
+        const auto index = (sys_days(ld) - sys_days(ls)).count();
+        std::cout << "The " << quarters[q - 1] << " quarter ends on a "
+                  << std::chrono::weekday(index) << '\n';
+    }
+}
+```
+
+Output:
+
+```text
+In year 2023
+The 1st quarter ends on a Fri
+The 2nd quarter ends on a Fri
+The 3rd quarter ends on a Sat
+The 4th quarter ends on a Sun
+```
+
+### See also
+
+operator sys_days, operator local_days converts to a `std::chrono::time_point` (public member function of `std::chrono::year_month_day`)

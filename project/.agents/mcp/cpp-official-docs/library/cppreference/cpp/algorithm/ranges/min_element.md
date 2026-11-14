@@ -1,0 +1,79 @@
+# std::ranges::min_element
+
+| Defined in header `<algorithm>` |  |  |
+| --- | --- | --- |
+| Call signature |  |  |
+| `template< std::forward_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_strict_weak_order<std::projected<I, Proj>> Comp = ranges::less > constexpr I min_element( I first, S last, Comp comp = {}, Proj proj = {} );` | (1) | (since C++20) |
+| `template< ranges::forward_range R, class Proj = std::identity, std::indirect_strict_weak_order< std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less > constexpr ranges::borrowed_iterator_t<R> min_element( R&& r, Comp comp = {}, Proj proj = {} );` | (2) | (since C++20) |
+
+1) Finds the smallest element in the range `[``first``,``last``)`.
+
+2) Same as (1), but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are *algorithm function objects* (informally known as *niebloids*), that is:
+
+- Explicit template argument lists cannot be specified when calling any of them.
+- None of them are visible to argument-dependent lookup.
+- When any of them are found by normal unqualified lookup as the name to the left of the function-call operator, argument-dependent lookup is inhibited.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | iterator-sentinel pair denoting the range to examine |
+| r | - | the range to examine |
+| comp | - | comparison to apply to the projected elements |
+| proj | - | projection to apply to the elements |
+
+### Return value
+
+Iterator to the smallest element in the range `[``first``,``last``)`. If several elements in the range are equivalent to the smallest element, returns the iterator to the first such element. Returns `last` if the range is empty (i.e., `first == last`).
+
+### Complexity
+
+Exactly max(N - 1, 0) comparisons, where `N = ranges::distance(first, last)`.
+
+### Possible implementation
+
+`struct min_element_fn { template<std::forward_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_strict_weak_order<std::projected<I, Proj>> Comp = ranges::less> constexpr I operator()(I first, S last, Comp comp = {}, Proj proj = {}) const { if (first == last) return last; auto smallest = first; while (++first != last) if (std::invoke(comp, std::invoke(proj, *first), std::invoke(proj, *smallest))) smallest = first; return smallest; } template<ranges::forward_range R, class Proj = std::identity, std::indirect_strict_weak_order< std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less> constexpr ranges::borrowed_iterator_t<R> operator()(R&& r, Comp comp = {}, Proj proj = {}) const { return (*this)(ranges::begin(r), ranges::end(r), std::ref(comp), std::ref(proj)); } }; inline constexpr min_element_fn min_element;`
+
+### Example
+
+```cpp
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <iostream>
+
+int main()
+{
+    namespace ranges = std::ranges;
+
+    std::array v{3, 1, -13, 1, 3, 7, -13};
+
+    auto iterator = ranges::min_element(v.begin(), v.end());
+    auto position = ranges::distance(v.begin(), iterator);
+    std::cout << "min element is v[" << position << "] == " << *iterator << '\n';
+
+    auto abs_compare = [](int a, int b) { return (std::abs(a) < std::abs(b)); };
+    iterator = ranges::min_element(v, abs_compare);
+    position = ranges::distance(v.begin(), iterator);
+    std::cout << "|min| element is v[" << position << "] == " << *iterator << '\n';
+}
+```
+
+Output:
+
+```text
+min element is v[2] == -13
+|min| element is v[1] == 1
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| ranges::max_element (C++20) | returns the largest element in a range (algorithm function object) |
+| ranges::minmax_element (C++20) | returns the smallest and the largest elements in a range (algorithm function object) |
+| ranges::max (C++20) | returns the greater of the given values (algorithm function object) |
+| min_element | returns the smallest element in a range (function template) |

@@ -1,0 +1,141 @@
+# std::remove_copy, std::remove_copy_if
+
+| Defined in header `<algorithm>` |  |  |
+| --- | --- | --- |
+|  | (1) |  |
+| `template< class InputIt, class OutputIt, class T > OutputIt remove_copy( InputIt first, InputIt last, OutputIt d_first, const T& value );` |  | (constexpr since C++20) (until C++26) |
+| `template< class InputIt, class OutputIt, class T = typename std::iterator_traits <InputIt>::value_type > constexpr OutputIt remove_copy( InputIt first, InputIt last, OutputIt d_first, const T& value );` |  | (since C++26) |
+|  | (2) |  |
+| `template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class T > ForwardIt2 remove_copy( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first, const T& value );` |  | (since C++17) (until C++26) |
+| `template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class T = typename std::iterator_traits <ForwardIt1>::value_type > ForwardIt2 remove_copy( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first, const T& value );` |  | (since C++26) |
+| `template< class InputIt, class OutputIt, class UnaryPred > OutputIt remove_copy_if( InputIt first, InputIt last, OutputIt d_first, UnaryPred p );` | (3) | (constexpr since C++20) |
+| `template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class UnaryPred > ForwardIt2 remove_copy_if( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first, UnaryPred p );` | (4) | (since C++17) |
+
+Copies elements from the range `[``first``,``last``)`, to another range beginning at `d_first`, omitting the elements which satisfy specific criteria.
+
+1) Ignores all elements that are equal to `value` (using `operator==`).
+
+3) Ignores all elements for which predicate `p` returns `true`.
+
+2,4) Same as (1,3), but executed according to `policy`.
+
+These overloads participate in overload resolution only if all following conditions are satisfied:
+
+|  |  |
+| --- | --- |
+| `std::is_execution_policy_v<std::decay_t<ExecutionPolicy>>` is `true`. | (until C++20) |
+| `std::is_execution_policy_v<std::remove_cvref_t<ExecutionPolicy>>` is `true`. | (since C++20) |
+
+If `*d_first = *first` is invalid(until C++20)`*first` is not writable to `d_first`(since C++20), the program is ill-formed.
+
+If source and destination ranges overlap, the behavior is undefined.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | the range of elements to copy |
+| d_first | - | the beginning of the destination range |
+| value | - | the value of the elements not to copy |
+| policy | - | the execution policy to use |
+| Type requirements |  |  |
+| - `InputIt` must meet the requirements of LegacyInputIterator. |  |  |
+| - `OutputIt` must meet the requirements of LegacyOutputIterator. |  |  |
+| - `ForwardIt1, ForwardIt2` must meet the requirements of LegacyForwardIterator. |  |  |
+| - `UnaryPred` must meet the requirements of Predicate. |  |  |
+
+### Return value
+
+Iterator to the element past the last element copied.
+
+### Complexity
+
+Given \(\scriptsize N\)N as `std::distance(first, last)`:
+
+1,2) Exactly \(\scriptsize N\)N comparisons with `value` using `operator==`.
+
+3,4) Exactly \(\scriptsize N\)N applications of the predicate `p`.
+
+For the overloads with an ExecutionPolicy, there may be a performance cost if `ForwardIt1`'s `value_type` is not MoveConstructible.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the standard policies, `std::terminate` is called. For any other `ExecutionPolicy`, the behavior is implementation-defined.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+remove_copy (1)
+
+`template<class InputIt, class OutputIt, class T = typename std::iterator_traits<InputIt>::value_type> constexpr OutputIt remove_copy(InputIt first, InputIt last, OutputIt d_first, const T& value) { for (; first != last; ++first) if (!(*first == value)) *d_first++ = *first; return d_first; }`
+
+remove_copy_if (3)
+
+`template<class InputIt, class OutputIt, class UnaryPred> constexpr OutputIt remove_copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPred p) { for (; first != last; ++first) if (!p(*first)) *d_first++ = *first; return d_first; }`
+
+### Notes
+
+| Feature-test macro | Value | Std | Feature |
+| --- | --- | --- | --- |
+| `__cpp_lib_algorithm_default_value_type` | `202403` | (C++26) | List-initialization for algorithms (1,2) |
+
+### Example
+
+```cpp
+#include <algorithm>
+#include <complex>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+
+int main()
+{
+    // Erase the hash characters '#' on the fly.
+    std::string str = "#Return #Value #Optimization";
+    std::cout << "before: " << std::quoted(str) << '\n';
+
+    std::cout << "after:  \"";
+    std::remove_copy(str.begin(), str.end(),
+                     std::ostream_iterator<char>(std::cout), '#');
+    std::cout << "\"\n";
+
+    // Erase {1, 3} value on the fly.
+    std::vector<std::complex<double>> nums{{2, 2}, {1, 3}, {4, 8}, {1, 3}};
+    std::remove_copy(nums.begin(), nums.end(),
+                     std::ostream_iterator<std::complex<double>>(std::cout),
+    #ifdef __cpp_lib_algorithm_default_value_type
+                     {1, 3}); // T gets deduced
+    #else
+                     std::complex<double>{1, 3});
+    #endif
+}
+```
+
+Output:
+
+```text
+before: "#Return #Value #Optimization"
+after:  "Return Value Optimization"
+(2,2)(4,8)
+```
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 779 | C++98 | `T` was required to be EqualityComparable, but the value type of `ForwardIt` is not always `T` | required `*d_first = *first` to be valid instead |
+
+### See also
+
+|  |  |
+| --- | --- |
+| remove, remove_if | removes elements satisfying specific criteria (function template) |
+| copy, copy_if (C++11) | copies a range of elements to a new location (function template) |
+| partition_copy (C++11) | copies a range dividing the elements into two groups (function template) |
+| ranges::remove_copy, ranges::remove_copy_if (C++20), (C++20) | copies a range of elements omitting those that satisfy specific criteria (algorithm function object) |

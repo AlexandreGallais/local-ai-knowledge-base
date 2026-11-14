@@ -35,7 +35,7 @@ copy of the small MCP core (`mcp.ts`, the same text everywhere). They need no np
 | `java-official-docs` | The same for the Java SE API (`java.base`, `java.net.http`), Gradle and Maven. |
 | `containers-official-docs` | The same for Docker, Podman, Compose, Dev Containers and the OCI specifications. |
 | `git-official-docs` | The same for Git: every command. |
-| `cpp-official-docs` | The same for C and C++: cppreference, CMake, Clang, GNU Make, GCC. |
+| `cpp-official-docs` | The same for C and C++: cppreference, CMake, Clang. |
 | `math-docs` | Free mathematics textbooks, in LaTeX, PreTeXt and XML: linear algebra, discrete mathematics, combinatorics. |
 
 The documentation bricks share the same server code; `brick.json` gives each its name. Each file of

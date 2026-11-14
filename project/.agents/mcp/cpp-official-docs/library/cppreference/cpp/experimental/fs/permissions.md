@@ -1,0 +1,96 @@
+# std::experimental::filesystem::permissions
+
+| Defined in header `<experimental/filesystem>` |  |
+| --- | --- |
+| `void permissions( const path& p, perms prms ); void permissions( const path& p, perms prms, error_code& ec );` | (filesystem TS) |
+
+Changes access permissions of the file to which `p` resolves, as if by POSIX fchmodat. Symlinks are followed if `prms::resolve_symlinks` is set.
+
+The effects depend on `prms` as follows:
+
+- If neither `perms::add_perms` nor `perms::remove_perms` is set, file permissions are set to exactly `prms & fs::perms::mask` (meaning, every valid bit of `prms` is applied).
+- If `perms::add_perms`, the file permissions are set to exactly `status(p).permissions() | (prms & perms::mask)` (meaning, any valid bit that is set in `prms`, but not in the file's current permissions is added to the file's permissions).
+- If `perms::remove_perms` is set, the file permissions are set to exactly `status(p).permissions() & ~(prms & perms::mask)` (meaning, any valid bit that is clear in `prms`, but set in the file's current permissions is cleared in the file's permissions).
+- If both `perms::add_perms` and `perms::remove_perms` are set, error occurs.
+
+The non-throwing overload has no special action on error.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| p | - | path to examine |
+| prms | - | permissions to set, add, or remove |
+| ec | - | out-parameter for error reporting in the non-throwing overload |
+
+### Return value
+
+(none)
+
+### Exceptions
+
+The overload that does not take an `error_code&` parameter throws filesystem_error on underlying OS API errors, constructed with `p` as the first argument and the OS error code as the error code argument. `std::bad_alloc` may be thrown if memory allocation fails. The overload taking an `error_code&` parameter sets it to the OS API error code if an OS API call fails, and executes `ec.clear()` if no errors occur. This overload has
+
+`noexcept` specification:
+
+`noexcept`
+
+### Notes
+
+Permissions may not necessarily be implemented as bits, but they are treated that way conceptually.
+
+Some permission bits may be ignored on some systems, and changing some bits may automatically change others (e.g. on platforms without owner/group/all distinction, setting any of the three write bits set all three).
+
+### Example
+
+```cpp
+#include <bitset>
+#include <experimental/filesystem>
+#include <fstream>
+#include <iostream>
+namespace fs = std::experimental::filesystem;
+
+void demo_perms(fs::perms p)
+{
+     std::cout << ((p & fs::perms::owner_read) != fs::perms::none ? "r" : "-")
+               << ((p & fs::perms::owner_write) != fs::perms::none ? "w" : "-")
+               << ((p & fs::perms::owner_exec) != fs::perms::none ? "x" : "-")
+               << ((p & fs::perms::group_read) != fs::perms::none ? "r" : "-")
+               << ((p & fs::perms::group_write) != fs::perms::none ? "w" : "-")
+               << ((p & fs::perms::group_exec) != fs::perms::none ? "x" : "-")
+               << ((p & fs::perms::others_read) != fs::perms::none ? "r" : "-")
+               << ((p & fs::perms::others_write) != fs::perms::none ? "w" : "-")
+               << ((p & fs::perms::others_exec) != fs::perms::none ? "x" : "-")
+               << '\n';
+}
+
+int main()
+{
+    std::ofstream("test.txt"); // create file
+
+    std::cout << "Created file with permissions: ";
+    demo_perms(fs::status("test.txt").permissions());
+
+    fs::permissions("test.txt", fs::perms::add_perms |
+                                fs::perms::owner_all | fs::perms::group_all);
+
+    std::cout << "After adding o+rwx and g+rwx:  ";
+    demo_perms(fs::status("test.txt").permissions());
+
+    fs::remove("test.txt");
+}
+```
+
+Possible output:
+
+```text
+Created file with permissions: rw-r--r--
+After adding o+rwx and g+rwx:  rwxrwxr--
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| perms | identifies file system permissions (enum) |
+| status, symlink_status | determines file attributes determines file attributes, checking the symlink target (function) |

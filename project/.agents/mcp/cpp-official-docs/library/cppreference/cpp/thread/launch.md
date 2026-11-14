@@ -1,0 +1,33 @@
+# std::launch
+
+| Defined in header `<future>` |  |
+| --- | --- |
+| `enum class launch : /* unspecified */ { async = /* unspecified */, deferred = /* unspecified */, /* implementation-defined */ };` | (since C++11) |
+
+`std::launch` is a BitmaskType. It specifies the launch policy for a task executed by the `std::async` function.
+
+### Constants
+
+The following constants denoting individual bits are defined by the standard library:
+
+| Name | Explanation |
+| --- | --- |
+| `async` | the task is executed on a different thread, potentially by creating and launching it first |
+| `deferred` | the task is executed on the calling thread the first time its result is requested (lazy evaluation) |
+
+In addition, implementations are allowed to:
+
+- define additional bits and bitmasks to specify restrictions on task interactions applicable to a subset of launch policies, and
+- enable those additional bitmasks for the first (default) overload of `std::async`.
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR | Applied to | Behavior as published | Correct behavior |
+| --- | --- | --- | --- |
+| LWG 2102 | C++11 | `std::launch` was an implementation-defined type | it is not implementation-defined |
+
+### See also
+
+async (C++11) runs a function asynchronously (potentially in a new thread) and returns a `std::future` that will hold the result (function template)

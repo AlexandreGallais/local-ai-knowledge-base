@@ -1,0 +1,188 @@
+# std::ranges::find, std::ranges::find_if, std::ranges::find_if_not
+
+| Defined in header `<algorithm>` |  |  |
+| --- | --- | --- |
+| Call signature |  |  |
+|  | (1) |  |
+| `template< std::input_iterator I, std::sentinel_for<I> S, class T, class Proj = std::identity > requires std::indirect_binary_predicate <ranges::equal_to, std::projected<I, Proj>, const T*> constexpr I find( I first, S last, const T& value, Proj proj = {} );` |  | (since C++20) (until C++26) |
+| `template< std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, class T = std::projected_value_t<I, Proj> > requires std::indirect_binary_predicate <ranges::equal_to, std::projected<I, Proj>, const T*> constexpr I find( I first, S last, const T& value, Proj proj = {} );` |  | (since C++26) |
+|  | (2) |  |
+| `template< ranges::input_range R, class T, class Proj = std::identity > requires std::indirect_binary_predicate <ranges::equal_to, std::projected<ranges::iterator_t<R>, Proj>, const T*> constexpr ranges::borrowed_iterator_t<R> find( R&& r, const T& value, Proj proj = {} );` |  | (since C++20) (until C++26) |
+| `template< ranges::input_range R, class Proj = std::identity, class T = std::projected_value_t<ranges::iterator_t<R>, Proj> > requires std::indirect_binary_predicate <ranges::equal_to, std::projected<ranges::iterator_t<R>, Proj>, const T*> constexpr ranges::borrowed_iterator_t<R> find( R&& r, const T& value, Proj proj = {} );` |  | (since C++26) |
+| `template< std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_unary_predicate<std::projected<I, Proj>> Pred > constexpr I find_if( I first, S last, Pred pred, Proj proj = {} );` | (3) | (since C++20) |
+| `template< ranges::input_range R, class Proj = std::identity, std::indirect_unary_predicate <std::projected<ranges::iterator_t<R>, Proj>> Pred > constexpr ranges::borrowed_iterator_t<R> find_if( R&& r, Pred pred, Proj proj = {} );` | (4) | (since C++20) |
+| `template< std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_unary_predicate<std::projected<I, Proj>> Pred > constexpr I find_if_not( I first, S last, Pred pred, Proj proj = {} );` | (5) | (since C++20) |
+| `template< ranges::input_range R, class Proj = std::identity, std::indirect_unary_predicate <std::projected<ranges::iterator_t<R>, Proj>> Pred > constexpr ranges::borrowed_iterator_t<R> find_if_not( R&& r, Pred pred, Proj proj = {} );` | (6) | (since C++20) |
+
+Returns the first element in the range `[``first``,``last``)` that satisfies specific criteria:
+
+1) `find` searches for an element equal to `value`.
+
+3) `find_if` searches for an element for which predicate `pred` returns `true`.
+
+5) `find_if_not` searches for an element for which predicate `pred` returns `false`.
+
+2,4,6) Same as (1,3,5), but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are *algorithm function objects* (informally known as *niebloids*), that is:
+
+- Explicit template argument lists cannot be specified when calling any of them.
+- None of them are visible to argument-dependent lookup.
+- When any of them are found by normal unqualified lookup as the name to the left of the function-call operator, argument-dependent lookup is inhibited.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| first, last | - | the range of elements to examine |
+| r | - | the range of the elements to examine |
+| value | - | value to compare the elements to |
+| pred | - | predicate to apply to the projected elements |
+| proj | - | projection to apply to the elements |
+
+### Return value
+
+Iterator to the first element satisfying the condition or iterator equal to `last` if no such element is found.
+
+### Complexity
+
+At most `last - first` applications of the predicate and projection.
+
+### Possible implementation
+
+find
+
+`struct find_fn { template<std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, class T = std::projected_value_t<I, Proj>> requires std::indirect_binary_predicate <ranges::equal_to, std::projected<I, Proj>, const T*> constexpr I operator()(I first, S last, const T& value, Proj proj = {}) const { for (; first != last; ++first) if (std::invoke(proj, *first) == value) return first; return first; } template<ranges::input_range R, class T, class Proj = std::identity> requires std::indirect_binary_predicate<ranges::equal_to, std::projected<ranges::iterator_t<R>, Proj>, const T*> constexpr ranges::borrowed_iterator_t<R> operator()(R&& r, const T& value, Proj proj = {}) const { return (*this)(ranges::begin(r), ranges::end(r), value, std::ref(proj)); } }; inline constexpr find_fn find;`
+
+find_if
+
+`struct find_if_fn { template<std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_unary_predicate<std::projected<I, Proj>> Pred> constexpr I operator()(I first, S last, Pred pred, Proj proj = {}) const { for (; first != last; ++first) if (std::invoke(pred, std::invoke(proj, *first))) return first; return first; } template<ranges::input_range R, class Proj = std::identity, std::indirect_unary_predicate <std::projected<ranges::iterator_t<R>, Proj>> Pred> constexpr ranges::borrowed_iterator_t<R> operator()(R&& r, Pred pred, Proj proj = {}) const { return (*this)(ranges::begin(r), ranges::end(r), std::ref(pred), std::ref(proj)); } }; inline constexpr find_if_fn find_if;`
+
+find_if_not
+
+`struct find_if_not_fn { template<std::input_iterator I, std::sentinel_for<I> S, class Proj = std::identity, std::indirect_unary_predicate<std::projected<I, Proj>> Pred> constexpr I operator()(I first, S last, Pred pred, Proj proj = {}) const { for (; first != last; ++first) if (!std::invoke(pred, std::invoke(proj, *first))) return first; return first; } template<ranges::input_range R, class Proj = std::identity, std::indirect_unary_predicate <std::projected<ranges::iterator_t<R>, Proj>> Pred> constexpr ranges::borrowed_iterator_t<R> operator()(R&& r, Pred pred, Proj proj = {}) const { return (*this)(ranges::begin(r), ranges::end(r), std::ref(pred), std::ref(proj)); } }; inline constexpr find_if_not_fn find_if_not;`
+
+### Notes
+
+| Feature-test macro | Value | Std | Feature |
+| --- | --- | --- | --- |
+| `__cpp_lib_algorithm_default_value_type` | `202403` | (C++26) | List-initialization for algorithms (1,2) |
+
+### Example
+
+```cpp
+#include <algorithm>
+#include <cassert>
+#include <complex>
+#include <format>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+
+void projector_example()
+{
+    struct folk_info
+    {
+        unsigned uid;
+        std::string name, position;
+    };
+
+    std::vector<folk_info> folks
+    {
+        {0, "Ana", "dev"},
+        {1, "Bob", "devops"},
+        {2, "Eve", "ops"}
+    };
+
+    const auto who{"Eve"};
+    if (auto it = std::ranges::find(folks, who, &folk_info::name); it != folks.end())
+        std::cout << std::format("Profile:\n"
+                                 "    UID: {}\n"
+                                 "    Name: {}\n"
+                                 "    Position: {}\n\n",
+                                 it->uid, it->name, it->position);
+}
+
+int main()
+{
+    namespace ranges = std::ranges;
+
+    projector_example();
+
+    const int n1 = 3;
+    const int n2 = 5;
+    const auto v = {4, 1, 3, 2};
+
+    if (ranges::find(v, n1) != v.end())
+        std::cout << "v contains: " << n1 << '\n';
+    else
+        std::cout << "v does not contain: " << n1 << '\n';
+
+    if (ranges::find(v.begin(), v.end(), n2) != v.end())
+        std::cout << "v contains: " << n2 << '\n';
+    else
+        std::cout << "v does not contain: " << n2 << '\n';
+
+    auto is_even = [](int x) { return x % 2 == 0; };
+
+    if (auto result = ranges::find_if(v.begin(), v.end(), is_even); result != v.end())
+        std::cout << "First even element in v: " << *result << '\n';
+    else
+        std::cout << "No even elements in v\n";
+
+    if (auto result = ranges::find_if_not(v, is_even); result != v.end())
+        std::cout << "First odd element in v: " << *result << '\n';
+    else
+        std::cout << "No odd elements in v\n";
+
+    auto divides_13 = [](int x) { return x % 13 == 0; };
+
+    if (auto result = ranges::find_if(v, divides_13); result != v.end())
+        std::cout << "First element divisible by 13 in v: " << *result << '\n';
+    else
+        std::cout << "No elements in v are divisible by 13\n";
+
+    if (auto result = ranges::find_if_not(v.begin(), v.end(), divides_13);
+        result != v.end())
+        std::cout << "First element indivisible by 13 in v: " << *result << '\n';
+    else
+        std::cout << "All elements in v are divisible by 13\n";
+
+    std::vector<std::complex<double>> nums{{4, 2}};
+    #ifdef __cpp_lib_algorithm_default_value_type
+        // T gets deduced in (2) making list-initialization possible
+        const auto it = ranges::find(nums, {4, 2});
+    #else
+        const auto it = ranges::find(nums, std::complex<double>{4, 2});
+    #endif
+    assert(it == nums.begin());
+}
+```
+
+Output:
+
+```text
+Profile:
+    UID: 2
+    Name: Eve
+    Position: ops
+
+v contains: 3
+v does not contain: 5
+First even element in v: 4
+First odd element in v: 1
+No elements in v are divisible by 13
+First element indivisible by 13 in v: 4
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| ranges::adjacent_find (C++20) | finds the first two adjacent items that are equal (or satisfy a given predicate) (algorithm function object) |
+| ranges::find_end (C++20) | finds the last sequence of elements in a certain range (algorithm function object) |
+| ranges::find_first_of (C++20) | searches for any one of a set of elements (algorithm function object) |
+| ranges::mismatch (C++20) | finds the first position where two ranges differ (algorithm function object) |
+| ranges::search (C++20) | searches for the first occurrence of a range of elements (algorithm function object) |
+| find, find_if, find_if_not (C++11) | finds the first element satisfying specific criteria (function template) |

@@ -1,0 +1,91 @@
+# std::ctype<CharT>::is, std::ctype<CharT>::do_is
+
+| Defined in header `<locale>` |  |
+| --- | --- |
+| `public: bool is( mask m, CharT c ) const;` | (1) |
+| `public: const CharT* is( const CharT* low, const CharT* high, mask* vec ) const;` | (2) |
+| `protected: virtual bool do_is( mask m, CharT c ) const;` | (3) |
+| `protected: virtual const CharT* do_is( const CharT* low, const CharT* high, mask* vec ) const;` | (4) |
+
+1,2) Public member function, calls the protected virtual member function `do_is` of the most derived class.
+
+3) Checks if the character `c` is classified by the mask `m`.
+
+4) For every character in the character array `[``low``,``high``)`, identifies the complete classification mask (e.g. `digit|xdigit|alnum|print|graph` for the digit `'0'` in the default locale), and stores the masks in the corresponding elements of the array pointed to by `vec`.
+
+### Parameters
+
+|  |  |  |
+| --- | --- | --- |
+| c | - | character to classify |
+| m | - | mask to use for classifying a single character |
+| low | - | pointer to the first character in an array of characters to classify |
+| high | - | one past the end pointer for the array of characters to classify |
+| vec | - | pointer to the first element of the array of masks to fill |
+
+### Return value
+
+1,3) `true` if `c` is classified by `m`.
+
+2,4) `high`
+
+### Example
+
+```cpp
+#include <cstddef>
+#include <iostream>
+#include <locale>
+#include <utility>
+#include <vector>
+
+// utility wrapper to make locale-bound facets destructible
+template<class Facet>
+struct deletable_facet : Facet
+{
+    template<class ...Args>
+    deletable_facet(Args&& ...args) : Facet(std::forward<Args>(args)...) {}
+    ~deletable_facet() {}
+};
+
+int main()
+{
+    // classify a single character using the default locale
+    auto& f = std::use_facet<std::ctype<char>>(std::locale());
+    char c = '0';
+    if (f.is(std::ctype_base::digit, c)) // or isdigit(c, locale());
+        std::cout << '\'' << c << "' is a digit\n";
+
+    // classify every character in a string using a named locale
+    deletable_facet<std::ctype_byname<wchar_t>> f2("en_US.utf8");
+    std::wstring str = L"z\u00df\u6c34\U0001d10b";
+    std::vector<std::ctype_base::mask> vec(str.size());
+    f2.is(&str[0], &str[0] + str.size(), &vec[0]);
+
+    for (std::size_t n = 0; n < str.size(); ++n)
+    {
+        std::cout << std::hex << "U+" << static_cast<wint_t>(str[n]) << " is: ";
+        if (vec[n] & std::ctype_base::alnum)
+            std::cout << "alnum";
+        if (vec[n] & std::ctype_base::punct)
+            std::cout << "punct";
+        std::cout << '\n';
+    }
+}
+```
+
+Output:
+
+```text
+'0' is a digit
+U+7a is: alnum
+U+df is: alnum
+U+6c34 is: alnum
+U+1d10b is: punct
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| is | classifies a character or a character sequence, using the classification table (public member function of `std::ctype<char>`) |
+| iswctype | classifies a wide character according to the specified `LC_CTYPE` category (function) |

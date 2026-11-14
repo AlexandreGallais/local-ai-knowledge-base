@@ -1,0 +1,48 @@
+# std::experimental::make_array
+
+| Defined in header `<experimental/array>` |  |
+| --- | --- |
+| `template< class D = void, class... Types > constexpr std::array<VT /* see below */, sizeof...(Types)> make_array( Types&&... t );` | (library fundamentals TS v2) |
+
+Creates a `std::array` whose size is equal to the number of arguments and whose elements are initialized from the corresponding arguments. Returns `std::array<VT, sizeof...(Types)>{std::forward<Types>(t)...`}.
+
+If `D` is `void`, then the deduced type `VT` is `std::common_type_t<Types...>`. Otherwise, it is `D`.
+
+If `D` is `void` and any of `std::decay_t<Types>...` is a specialization of `std::reference_wrapper`, the program is ill-formed.
+
+### Notes
+
+`make_array` is removed in Library Fundamentals TS v3 because the deduction guide for `std::array` and `std::to_array` have been already in C++20.
+
+### Possible implementation
+
+`namespace details { template<class> struct is_ref_wrapper : std::false_type{}; template<class T> struct is_ref_wrapper<std::reference_wrapper<T>> : std::true_type{}; template<class T> using not_ref_wrapper = std::negation<is_ref_wrapper<std::decay_t<T>>>; template<class D, class...> struct return_type_helper { using type = D; }; template<class... Types> struct return_type_helper<void, Types...> : std::common_type<Types...> { static_assert(std::conjunction_v<not_ref_wrapper<Types>...>, "Types cannot contain reference_wrappers when D is void"); }; template<class D, class... Types> using return_type = std::array<typename return_type_helper<D, Types...>::type, sizeof...(Types)>; } template<class D = void, class... Types> constexpr details::return_type<D, Types...> make_array(Types&&... t) { return {std::forward<Types>(t)...}; }`
+
+### Example
+
+```cpp
+#include <experimental/array>
+#include <iostream>
+#include <type_traits>
+
+int main()
+{
+    auto arr = std::experimental::make_array(1, 2, 3, 4, 5);
+    bool is_array_of_5_ints = std::is_same<decltype(arr), std::array<int, 5>>::value;
+    std::cout << "Returns an array of five ints? ";
+    std::cout << std::boolalpha << is_array_of_5_ints << '\n';
+}
+```
+
+Output:
+
+```text
+Returns an array of five ints? true
+```
+
+### See also
+
+|  |  |
+| --- | --- |
+| C++ documentation for `std::array` deduction guides |  |
+| to_array | creates a `std::array` object from a built-in array (function template) |
