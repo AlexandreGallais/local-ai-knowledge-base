@@ -1,0 +1,348 @@
+---
+title: "Built-in types and literals (part 3 of 5)"
+tool: "csharp"
+version: "15"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/types/built-in-types.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Built-in types and literals (part 3 of 5)
+
+## Literal syntax
+
+A *literal* is a value you write directly in your code. The compiler assigns each literal a type based on its format and any suffix you provide. C# supports the following kinds of literals:
+
+- **Integer literals** — Decimal (`42`), hexadecimal (`0x2A`), and binary (`0b_0010_1010`).
+- **Floating-point literals** — `double` by default (`3.14`), `float` with the `f` suffix (`3.14f`), and `decimal` with `m` (`3.14m`).
+- **Character literals** — A single character in single quotes (`'A'`), including escape sequences (`'\n'`).
+- **String literals** — Regular (`"hello"`), verbatim (`@"C:\path"`), raw (`""" ... """`), and interpolated (`$"value: {x}"`).
+- **Boolean literals** — `true` and `false`.
+- **The `null` literal** — Represents the absence of a value for reference types and nullable value types.
+- **The `default` literal** — Produces the default value for any type (covered in `default` expressions).
+
+The following sections cover the most common literal forms in detail.
+
+### Integer literals
+
+```csharp
+int population = 67_000_000;
+long distance = 384_400_000L;
+short temperature = -40;
+byte red = 255;
+
+double pi = 3.141592653589793;
+float gravity = 9.81f;
+decimal price = 19.99m;
+
+uint fileSize = 4_294_967_295;
+ulong totalBytes = 18_446_744_073_709_551_615;
+ushort port = 443;
+
+nint bufferSize = 1024;
+nuint elementCount = 256;
+
+bool isValid = true;
+char grade = 'A';
+string greeting = "Hello, world!";
+
+int dec = 42;
+int hex = 0x2A;
+int bin = 0b_0010_1010;
+long big = 1_000_000_000L;
+
+double d = 3.14;
+float f = 3.14f;
+decimal m = 3.14m;
+double scientific = 1.5e6; // 1,500,000
+
+char newline = '\n';
+char unicode = '\u0041'; // 'A'
+
+string message = $"Found {dec} items";            // interpolated string
+string path = @"C:\Users\docs\file.txt";        // verbatim string
+string json = """
+    { "name": "Alice", "age": 30 }
+    """;                                           // raw string literal
+string raw = $"""
+    Found {dec} items in "{greeting}"
+    """;                                           // raw + interpolated
+
+int defaultInt = default;          // 0
+bool defaultBool = default;        // false
+string? defaultString = default;   // null
+
+// Use default in a conditional:
+var limit = (args.Length > 0) ? int.Parse(args[0]) : default(int);
+
+var count = 10;              // compiler infers int
+var name = "C#";             // compiler infers string
+var items = new List<int>(); // compiler infers List<int>
+
+// var requires an initializer — the compiler needs a value to infer the type.
+// The following line wouldn't compile:
+// var unknown;
+
+List<string> names = new() { "Alice", "Bob", "Charlie" };
+Dictionary<string, int> scores = new()
+{
+    ["Alice"] = 95,
+    ["Bob"] = 87
+};
+
+dynamic value = 42;
+Console.WriteLine(value.GetType()); // System.Int32
+
+value = "Now I'm a string";
+Console.WriteLine(value.GetType()); // System.String
+
+// The compiler doesn't check operations on dynamic at compile time.
+// Errors surface at run time instead.
+
+Console.WriteLine($"population: {population}");
+Console.WriteLine($"distance: {distance}");
+Console.WriteLine($"temperature: {temperature}");
+Console.WriteLine($"red: {red}");
+Console.WriteLine($"pi: {pi}");
+Console.WriteLine($"gravity: {gravity}");
+Console.WriteLine($"price: {price}");
+Console.WriteLine($"fileSize: {fileSize}");
+Console.WriteLine($"totalBytes: {totalBytes}");
+Console.WriteLine($"port: {port}");
+Console.WriteLine($"bufferSize: {bufferSize}");
+Console.WriteLine($"elementCount: {elementCount}");
+Console.WriteLine($"isValid: {isValid}");
+Console.WriteLine($"grade: {grade}");
+Console.WriteLine($"greeting: {greeting}");
+Console.WriteLine($"dec: {dec}, hex: {hex}, bin: {bin}, big: {big}");
+Console.WriteLine($"d: {d}, f: {f}, m: {m}, scientific: {scientific}");
+Console.WriteLine($"newline char: [{newline}], unicode: {unicode}");
+Console.WriteLine($"path: {path}");
+Console.WriteLine($"message: {message}");
+Console.WriteLine($"json: {json}");
+Console.WriteLine($"raw: {raw}");
+Console.WriteLine($"defaultInt: {defaultInt}, defaultBool: {defaultBool}, defaultString: {defaultString}");
+Console.WriteLine($"limit: {limit}");
+Console.WriteLine($"count: {count}, name: {name}, items: {items.Count}");
+Console.WriteLine($"names: {string.Join(", ", names)}");
+Console.WriteLine($"scores: {string.Join(", ", scores.Select(kv => $"{kv.Key}={kv.Value}"))}");
+```
+Use the `0x` prefix for hexadecimal and `0b` for binary. Append `L` for `long`, `U` for `uint`, or `UL` for `ulong`.
+
+Place the `_` digit separator anywhere within a number to make it easier to read. Common patterns include thousand separators in decimal literals (`1_000_000_000`), byte or word boundaries in hexadecimal (`0xFF_FF`), and nibble boundaries in binary (`0b_0010_1010`).
+
+### Floating-point literals
+
+```csharp
+int population = 67_000_000;
+long distance = 384_400_000L;
+short temperature = -40;
+byte red = 255;
+
+double pi = 3.141592653589793;
+float gravity = 9.81f;
+decimal price = 19.99m;
+
+uint fileSize = 4_294_967_295;
+ulong totalBytes = 18_446_744_073_709_551_615;
+ushort port = 443;
+
+nint bufferSize = 1024;
+nuint elementCount = 256;
+
+bool isValid = true;
+char grade = 'A';
+string greeting = "Hello, world!";
+
+int dec = 42;
+int hex = 0x2A;
+int bin = 0b_0010_1010;
+long big = 1_000_000_000L;
+
+double d = 3.14;
+float f = 3.14f;
+decimal m = 3.14m;
+double scientific = 1.5e6; // 1,500,000
+
+char newline = '\n';
+char unicode = '\u0041'; // 'A'
+
+string message = $"Found {dec} items";            // interpolated string
+string path = @"C:\Users\docs\file.txt";        // verbatim string
+string json = """
+    { "name": "Alice", "age": 30 }
+    """;                                           // raw string literal
+string raw = $"""
+    Found {dec} items in "{greeting}"
+    """;                                           // raw + interpolated
+
+int defaultInt = default;          // 0
+bool defaultBool = default;        // false
+string? defaultString = default;   // null
+
+// Use default in a conditional:
+var limit = (args.Length > 0) ? int.Parse(args[0]) : default(int);
+
+var count = 10;              // compiler infers int
+var name = "C#";             // compiler infers string
+var items = new List<int>(); // compiler infers List<int>
+
+// var requires an initializer — the compiler needs a value to infer the type.
+// The following line wouldn't compile:
+// var unknown;
+
+List<string> names = new() { "Alice", "Bob", "Charlie" };
+Dictionary<string, int> scores = new()
+{
+    ["Alice"] = 95,
+    ["Bob"] = 87
+};
+
+dynamic value = 42;
+Console.WriteLine(value.GetType()); // System.Int32
+
+value = "Now I'm a string";
+Console.WriteLine(value.GetType()); // System.String
+
+// The compiler doesn't check operations on dynamic at compile time.
+// Errors surface at run time instead.
+
+Console.WriteLine($"population: {population}");
+Console.WriteLine($"distance: {distance}");
+Console.WriteLine($"temperature: {temperature}");
+Console.WriteLine($"red: {red}");
+Console.WriteLine($"pi: {pi}");
+Console.WriteLine($"gravity: {gravity}");
+Console.WriteLine($"price: {price}");
+Console.WriteLine($"fileSize: {fileSize}");
+Console.WriteLine($"totalBytes: {totalBytes}");
+Console.WriteLine($"port: {port}");
+Console.WriteLine($"bufferSize: {bufferSize}");
+Console.WriteLine($"elementCount: {elementCount}");
+Console.WriteLine($"isValid: {isValid}");
+Console.WriteLine($"grade: {grade}");
+Console.WriteLine($"greeting: {greeting}");
+Console.WriteLine($"dec: {dec}, hex: {hex}, bin: {bin}, big: {big}");
+Console.WriteLine($"d: {d}, f: {f}, m: {m}, scientific: {scientific}");
+Console.WriteLine($"newline char: [{newline}], unicode: {unicode}");
+Console.WriteLine($"path: {path}");
+Console.WriteLine($"message: {message}");
+Console.WriteLine($"json: {json}");
+Console.WriteLine($"raw: {raw}");
+Console.WriteLine($"defaultInt: {defaultInt}, defaultBool: {defaultBool}, defaultString: {defaultString}");
+Console.WriteLine($"limit: {limit}");
+Console.WriteLine($"count: {count}, name: {name}, items: {items.Count}");
+Console.WriteLine($"names: {string.Join(", ", names)}");
+Console.WriteLine($"scores: {string.Join(", ", scores.Select(kv => $"{kv.Key}={kv.Value}"))}");
+```
+Without a suffix, a numeric literal with a decimal point is `double`. Append `f` for `float` and `m` for `decimal`. Scientific notation (`1.5e6`) is also supported.
+
+### Character and string literals
+
+```csharp
+int population = 67_000_000;
+long distance = 384_400_000L;
+short temperature = -40;
+byte red = 255;
+
+double pi = 3.141592653589793;
+float gravity = 9.81f;
+decimal price = 19.99m;
+
+uint fileSize = 4_294_967_295;
+ulong totalBytes = 18_446_744_073_709_551_615;
+ushort port = 443;
+
+nint bufferSize = 1024;
+nuint elementCount = 256;
+
+bool isValid = true;
+char grade = 'A';
+string greeting = "Hello, world!";
+
+int dec = 42;
+int hex = 0x2A;
+int bin = 0b_0010_1010;
+long big = 1_000_000_000L;
+
+double d = 3.14;
+float f = 3.14f;
+decimal m = 3.14m;
+double scientific = 1.5e6; // 1,500,000
+
+char newline = '\n';
+char unicode = '\u0041'; // 'A'
+
+string message = $"Found {dec} items";            // interpolated string
+string path = @"C:\Users\docs\file.txt";        // verbatim string
+string json = """
+    { "name": "Alice", "age": 30 }
+    """;                                           // raw string literal
+string raw = $"""
+    Found {dec} items in "{greeting}"
+    """;                                           // raw + interpolated
+
+int defaultInt = default;          // 0
+bool defaultBool = default;        // false
+string? defaultString = default;   // null
+
+// Use default in a conditional:
+var limit = (args.Length > 0) ? int.Parse(args[0]) : default(int);
+
+var count = 10;              // compiler infers int
+var name = "C#";             // compiler infers string
+var items = new List<int>(); // compiler infers List<int>
+
+// var requires an initializer — the compiler needs a value to infer the type.
+// The following line wouldn't compile:
+// var unknown;
+
+List<string> names = new() { "Alice", "Bob", "Charlie" };
+Dictionary<string, int> scores = new()
+{
+    ["Alice"] = 95,
+    ["Bob"] = 87
+};
+
+dynamic value = 42;
+Console.WriteLine(value.GetType()); // System.Int32
+
+value = "Now I'm a string";
+Console.WriteLine(value.GetType()); // System.String
+
+// The compiler doesn't check operations on dynamic at compile time.
+// Errors surface at run time instead.
+
+Console.WriteLine($"population: {population}");
+Console.WriteLine($"distance: {distance}");
+Console.WriteLine($"temperature: {temperature}");
+Console.WriteLine($"red: {red}");
+Console.WriteLine($"pi: {pi}");
+Console.WriteLine($"gravity: {gravity}");
+Console.WriteLine($"price: {price}");
+Console.WriteLine($"fileSize: {fileSize}");
+Console.WriteLine($"totalBytes: {totalBytes}");
+Console.WriteLine($"port: {port}");
+Console.WriteLine($"bufferSize: {bufferSize}");
+Console.WriteLine($"elementCount: {elementCount}");
+Console.WriteLine($"isValid: {isValid}");
+Console.WriteLine($"grade: {grade}");
+Console.WriteLine($"greeting: {greeting}");
+Console.WriteLine($"dec: {dec}, hex: {hex}, bin: {bin}, big: {big}");
+Console.WriteLine($"d: {d}, f: {f}, m: {m}, scientific: {scientific}");
+Console.WriteLine($"newline char: [{newline}], unicode: {unicode}");
+Console.WriteLine($"path: {path}");
+Console.WriteLine($"message: {message}");
+Console.WriteLine($"json: {json}");
+Console.WriteLine($"raw: {raw}");
+Console.WriteLine($"defaultInt: {defaultInt}, defaultBool: {defaultBool}, defaultString: {defaultString}");
+Console.WriteLine($"limit: {limit}");
+Console.WriteLine($"count: {count}, name: {name}, items: {items.Count}");
+Console.WriteLine($"names: {string.Join(", ", names)}");
+Console.WriteLine($"scores: {string.Join(", ", scores.Select(kv => $"{kv.Key}={kv.Value}"))}");
+```
+Character literals use single quotes and support escape sequences (`\n`, `\t`, `\u`). String literals use double quotes.
+
+Prefix strings with `$` for interpolation. When a string contains quotes, backslashes, or embedded JSON or XML, use a raw string literal (delimited by `"""`) instead of escaping each character. Raw string literals also combine with interpolation (`$"""`).
+
+Older code uses `@` (verbatim strings) to avoid escape processing. Raw string literals are easier to read and write, so prefer them for new code.

@@ -1,0 +1,75 @@
+---
+title: "dotnet sdk check command"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-sdk-check.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# dotnet sdk check
+
+**This article applies to:** ✔️ .NET 6 SDK and later versions
+
+## Name
+
+`dotnet sdk check` - Lists the latest available version of the .NET SDK and .NET Runtime, for each feature band.
+
+## Synopsis
+
+```dotnetcli
+dotnet sdk check
+
+dotnet sdk check -h|--help
+```
+
+## Description
+
+The `dotnet sdk check` command makes it easier to track when new versions of the SDK and Runtimes are available. Within each feature band it tells you:
+
+* The latest available version of the .NET SDK and .NET Runtime.
+* Whether your installed versions are up-to-date or out of support.
+
+Here's an example of output from the command:
+
+```output
+.NET SDKs:
+Version      Status
+----------------------------------------
+3.1.426      .NET 3.1 is out of support.
+7.0.103      Up to date.
+7.0.200      Patch 7.0.201 is available.
+
+.NET Runtimes:
+Name                              Version      Status
+--------------------------------------------------------------------------
+Microsoft.AspNetCore.App          5.0.17       .NET 5.0 is out of support.
+Microsoft.NETCore.App             5.0.17       .NET 5.0 is out of support.
+Microsoft.WindowsDesktop.App      5.0.17       .NET 5.0 is out of support.
+Microsoft.NETCore.App             6.0.10       Patch 6.0.14 is available.
+Microsoft.NETCore.App             6.0.11       Patch 6.0.14 is available.
+Microsoft.NETCore.App             6.0.13       Patch 6.0.14 is available.
+Microsoft.AspNetCore.App          7.0.3        Up to date.
+Microsoft.NETCore.App             7.0.3        Up to date.
+Microsoft.WindowsDesktop.App      7.0.3        Up to date.
+
+The latest versions of .NET can be installed from https://aka.ms/dotnet-core-download. For more information about .NET lifecycles, see https://aka.ms/dotnet-core-support.
+```
+
+## Options
+
+- **`-?|-h|--help`**
+
+Prints out a description of how to use the command.
+
+## Examples
+
+- Show up-to-date status of installed .NET SDKs and .NET Runtimes.
+
+  ```dotnetcli
+  dotnet sdk check
+  ```
+
+## See also
+
+To get similar SDK status information as a build warning for the SDK that your build resolves, set the `CheckSdkVulnerabilities` MSBuild property to `true` in your project. See NETSDK1238, NETSDK1239, and NETSDK1240.

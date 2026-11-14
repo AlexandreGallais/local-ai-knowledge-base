@@ -1,0 +1,56 @@
+---
+title: "IllegalFormatConversionException class (java.util)"
+tool: "java-se"
+version: "25"
+source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/IllegalFormatConversionException.java"
+commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
+license: "GPL-2.0-only WITH Classpath-exception-2.0"
+---
+
+# IllegalFormatConversionException class (java.util)
+
+```java
+public non-sealed class IllegalFormatConversionException extends IllegalFormatException
+```
+
+Unchecked exception thrown when the argument corresponding to the format
+specifier is of an incompatible type.
+
+ Unless otherwise specified, passing a `null` argument to any
+method or constructor in this class will cause a `NullPointerException` to be thrown.
+
+**Since:** 1.5
+
+## IllegalFormatConversionException.IllegalFormatConversionException(char, Class<?>)
+
+```java
+public IllegalFormatConversionException(char c, Class<?> arg)
+```
+
+Constructs an instance of this class with the mismatched conversion and
+the corresponding argument class.
+
+Parameters:
+
+- `c`: Inapplicable conversion
+- `arg`: Class of the mismatched argument
+
+## IllegalFormatConversionException.getConversion()
+
+```java
+public char getConversion()
+```
+
+Returns the inapplicable conversion.
+
+**Returns:** The inapplicable conversion
+
+## IllegalFormatConversionException.getArgumentClass()
+
+```java
+public Class<?> getArgumentClass()
+```
+
+Returns the class of the mismatched argument.
+
+**Returns:** The class of the mismatched argument

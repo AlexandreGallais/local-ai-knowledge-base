@@ -1,0 +1,73 @@
+---
+title: "How to find an attribute of the parent - LINQ to XML"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-attribute-parent.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# How to find an attribute of the parent (LINQ to XML)
+
+This article shows how to use `System.Xml.XPath.Extensions.XPathEvaluate*` to find an attribute of a parent element, and how to use LINQ to XML query to do the same thing.
+
+## Example: Find the `Author` element, and then find the `id` attribute of its parent
+
+This example first finds an `Author` element in XML document Sample XML file: Books, and then finds the `id` attribute of its parent element.
+
+The XPath expression is `../@id`.
+
+```csharp
+XDocument books = XDocument.Load("Books.xml");
+
+XElement author =
+    books
+    .Root
+    .Element("Book")
+    .Element("Author");
+
+// LINQ to XML query
+XAttribute att1 =
+    author
+    .Parent
+    .Attribute("id");
+
+// XPath expression
+XAttribute att2 = ((IEnumerable)author.XPathEvaluate("../@id")).Cast<XAttribute>().First();
+
+if (att1 == att2)
+    Console.WriteLine("Results are identical");
+else
+    Console.WriteLine("Results differ");
+Console.WriteLine(att1);
+```
+
+```vb
+Dim books As XDocument = XDocument.Load("Books.xml")
+Dim author As XElement = books.Root.<Book>.<Author>.FirstOrDefault()
+
+' LINQ to XML query
+Dim att1 As XAttribute = author.Parent.Attribute("id")
+
+' XPath expression
+Dim att2 As XAttribute = DirectCast(author.XPathEvaluate("../@id"),  _
+    IEnumerable).Cast(Of XAttribute)().First()
+
+If att1 Is att2 Then
+    Console.WriteLine("Results are identical")
+Else
+    Console.WriteLine("Results differ")
+End If
+Console.WriteLine(att1)
+```
+
+This example produces the following output:
+
+```output
+Results are identical
+id="bk101"
+```
+
+## See also
+
+- LINQ to XML for XPath Users (Visual Basic)

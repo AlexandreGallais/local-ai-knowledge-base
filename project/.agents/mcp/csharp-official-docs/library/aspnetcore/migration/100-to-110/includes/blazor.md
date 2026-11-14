@@ -1,0 +1,111 @@
+---
+title: "blazor"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/100-to-110/includes/blazor.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# blazor
+
+### Blazor release notes
+
+For new feature coverage, see What's new in ASP.NET Core in .NET 11.
+
+### Adopt Inline JS event handler removed from the `NavMenu` component
+
+*This section only applies to Blazor Web Apps.*
+
+The inline JS event handler for the navigation bar toggler isn't present in the `NavMenu` component of the Blazor Web App project template in .NET 11 or later. Apps generated from the project template use a collocated JS module approach to show or hide the navigation links on the rendered page. The approach improves Content Security Policy (CSP) compliance because it doesn't require the CSP to include an unsafe hash for the inline JS.
+
+Use the following instructions to adopt the new JS module approach for the navigation links toggler in an existing app.
+
+Add a collocated JS module next to the app's `NavMenu` component.
+
+`NavMenu.razor.js`:
+
+```javascript
+// Handle navigation menu toggle
+const navScrollable = document.getElementById("nav-scrollable");
+const navToggler = document.querySelector(".navbar-toggler");
+
+if (navScrollable && navToggler) {
+    navScrollable.addEventListener("click", function() {
+        navToggler.click();
+    });
+}
+```
+
+At the top of the app's `NavMenu` component (`NavMenu.razor`), add a `<script>` tag for the collocated JS module:
+
+* If the app adopts client-side rendering (has a `.Client` project) with global interactivity (the render mode is set globally for the app by the app's `App` component), use the following tag, which indicates the path to the module in the `Layout` folder:
+
+```razor
+<script type="module" src="@Assets["Layout/NavMenu.razor.js"]"></script>
+```
+
+* Otherwise, use the following tag, which indicates the path to the module in the `Components/Layout` folder:
+
+```razor
+<script type="module" src="@Assets["Components/Layout/NavMenu.razor.js"]"></script>
+```
+
+Also in the app's `NavMenu` component, change the line that has the inline JS to toggle the navigation links:
+
+```diff
+- <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
++ <div id="nav-scrollable" class="nav-scrollable">
+```
+
+If the app has a Content Security Policy (CSP) with an unsafe hash for the inline JS removed by the preceding step, remove the unsafe hash:
+
+```diff
+- 'unsafe-hashes' 'sha256-qnHnQs7NjQNHHNYv/I9cW+I62HzDJjbnyS/OFzqlix0='
+```
+
+### QuickGrid adopts URL-based pagination and sorting
+
+The `QuickGrid` component persists pagination and sort state in the URL query string (for example, `?page=2&sort=Name&direction=asc`), which enables link sharing, browser back/forward navigation, and operation under static server-side rendering (static SSR). This behavior is enabled by default.
+
+To work without a JavaScript runtime, sortable column headers and paginator controls now render as `` (link) elements instead of `` elements. Update any custom CSS that targets the previous markup:
+
+```diff
+- button.col-title { ... }
++ button.col-title, a.col-title { ... }
+- nav button:disabled { ... }
++ nav button:disabled, nav a[aria-disabled="true"] { ... }
+```
+
+Disabled paginator links use `aria-disabled="true"` instead of the HTML `disabled` attribute, which isn't valid on `` elements. The built-in QuickGrid CSS already covers both markup styles.
+
+When more than one `QuickGrid` is rendered on the same page, set unique query parameter names with `QueryParameterNameOptions` on all but one grid (and give each its own `PaginationState`) to prevent the grids from sharing the page, sort, and direction query parameters:
+
+```diff
+- <QuickGrid Items="@cities" Pagination="@pagination2">...</QuickGrid>
++ <QuickGrid Items="@cities" Pagination="@pagination2" QueryParameterNameOptions="@(new QueryParameterNameOptions("cities_"))">...</QuickGrid>
+```
+
+To revert to the previous ``-based markup, which requires an interactive render mode, set the following AppContext switch to false:
+
+```csharp
+AppContext.SetSwitch(
+    "Microsoft.AspNetCore.Components.QuickGrid.EnableUrlBasedQuickGridNavigationAndSorting",
+    false);
+```
+
+The switch only controls the rendered HTML element; sort and page state is read from and written to the URL query string regardless of the setting.
+
+For more information, see QuickGrid sorting and pagination controls render as links.
+
+### Upgrade from the experimental `ValidatableTypeAttribute` and `SkipValidationAttribute` in .NET 10
+
+`Microsoft.Extensions.Validation.ValidatableTypeAttribute` and `Microsoft.Extensions.Validation.SkipValidationAttribute` were published as *experimental* in .NET 10. In .NET 11 or later, they aren't experimental. Referencing them from any project, including a plain class library that uses the `Microsoft.NET.Sdk` SDK, no longer produces the `ASP0029` code analysis warning.
+
+Apps upgrading from .NET 10 can remove the workarounds that warning required:
+
+* Delete `#pragma warning disable ASP0029` and `#pragma warning restore ASP0029` directives around uses of the attributes.
+* Remove `ASP0029` from any `<NoWarn>` property in the project file.
+* Replace any locally declared `Microsoft.Extensions.Validation.Embedded.ValidatableType` or `Microsoft.Extensions.Validation.Embedded.SkipValidation` attribute with the real `Microsoft.Extensions.Validation.ValidatableTypeAttribute` and `Microsoft.Extensions.Validation.SkipValidationAttribute`, and remove the `global using Microsoft.Extensions.Validation.Embedded;` statement or the `<Using Include="Microsoft.Extensions.Validation.Embedded" />` item that made it visible.
+
+Leaving the suppressions in place is harmless, so an upgraded app doesn't fail because of them. Removing them keeps the project free of suppressions that no longer correspond to a diagnostic.

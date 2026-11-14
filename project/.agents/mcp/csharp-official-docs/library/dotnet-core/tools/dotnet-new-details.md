@@ -1,0 +1,75 @@
+---
+title: "dotnet new details"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-details.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# dotnet new details
+
+**This article applies to:** ✔️ .NET 8
+
+## Name
+
+`dotnet new details` - Displays template package metadata.
+
+## Synopsis
+
+```dotnetcli
+dotnet new details [<PACKAGE_NAME>] [--interactive] [--add-source|--nuget-source <SOURCE>]
+    [--force] [-d|--diagnostics] [-h|--help]
+```
+
+## Description
+
+The `dotnet new details` command displays the metadata of the template package from the package name provided. By default, the command searches for the latest available version.
+If the package is installed locally or is found on the official NuGet website, it also displays the templates that the package contains, otherwise it only displays basic metadata.
+
+## Arguments
+
+- **`PACKAGE_NAME`**
+
+  The package identifier to display the details for.
+
+## Options
+
+- **`--add-source|--nuget-source `**
+
+  By default, `dotnet new details` uses the hierarchy of NuGet configuration files from the current directory to determine the NuGet sources for the operation. Specify `--nuget-source` to use a source in addition to the configured sources.
+  To check the configured sources for the current directory, use `dotnet nuget list source`. For more information, see Common NuGet Configurations.
+
+- **`--interactive`**
+
+Allows the command to stop and wait for user input or action. For example, to complete authentication.
+
+- **`-d|--diagnostics`**
+
+  Enables diagnostic output.
+
+- **`-?|-h|--help`**
+
+Prints out a description of how to use the command.
+
+## Examples
+
+- Display package data from the latest version of NUnit templates:
+
+   ```dotnetcli
+  dotnet new details NUnit3.DotNetNew.Template
+  ```
+
+- Display package data of the NUnit templates from a custom NuGet source using interactive mode:
+
+  ```dotnetcli
+  dotnet new details NUnit3.DotNetNew.Template --add-source "https://api.my-custom-nuget.com/v3/index.json" --interactive
+  ```
+
+## See also
+
+- dotnet new command
+- dotnet new uninstall command
+- dotnet new list command
+- dotnet new search command
+- .NET templates for authors

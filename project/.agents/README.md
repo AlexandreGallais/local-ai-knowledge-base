@@ -29,6 +29,13 @@ copy of the small MCP core (`mcp.ts`, the same text everywhere). They need no np
 | --- | --- |
 | `parse` | The outline, then one part, then the images of a heavy file. |
 | `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. |
+| `csharp-official-docs` | The same for C# and .NET: the language, .NET, ASP.NET Core, EF Core and the API reference. |
+| `python-official-docs` | The same for Python, and the `inkex` API of the Inkscape extensions. |
+| `rust-official-docs` | The same for Rust: the book, the reference and the standard library. |
+| `java-official-docs` | The same for the Java SE API (`java.base`, `java.net.http`). |
+
+The documentation bricks share the same server code; `brick.json` gives each its name. Keep only the
+languages the project uses: each one is its own pack in the export.
 
 ## Remove a brick
 

@@ -1,0 +1,225 @@
+---
+title: "std::sync"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/mod.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# std::sync
+
+Useful synchronization primitives.
+
+#### The need for synchronization
+
+Conceptually, a Rust program is a series of operations which will
+be executed on a computer. The timeline of events happening in the
+program is consistent with the order of the operations in the code.
+
+Consider the following code, operating on some global static variables:
+
+```rust
+// FIXME(static_mut_refs): use raw pointers instead of references
+#![allow(static_mut_refs)]
+
+static mut A: u32 = 0;
+static mut B: u32 = 0;
+static mut C: u32 = 0;
+
+fn main() {
+    unsafe {
+        A = 3;
+        B = 4;
+        A = A + B;
+        C = B;
+        println!("{A} {B} {C}");
+        C = A;
+    }
+}
+```
+
+It appears as if some variables stored in memory are changed, an addition
+is performed, result is stored in `A` and the variable `C` is
+modified twice.
+
+When only a single thread is involved, the results are as expected:
+the line `7 4 4` gets printed.
+
+As for what happens behind the scenes, when optimizations are enabled the
+final generated machine code might look very different from the code:
+
+- The first store to `C` might be moved before the store to `A` or `B`,
+  _as if_ we had written `C = 4; A = 3; B = 4`.
+
+- Assignment of `A + B` to `A` might be removed, since the sum can be stored
+  in a temporary location until it gets printed, with the global variable
+  never getting updated.
+
+- The final result could be determined just by looking at the code
+  at compile time, so [constant folding] might turn the whole
+  block into a simple `println!("7 4 4")`.
+
+The compiler is allowed to perform any combination of these
+optimizations, as long as the final optimized code, when executed,
+produces the same results as the one without optimizations.
+
+Due to the [concurrency] involved in modern computers, assumptions
+about the program's execution order are often wrong. Access to
+global variables can lead to nondeterministic results, **even if**
+compiler optimizations are disabled, and it is **still possible**
+to introduce synchronization bugs.
+
+Note that thanks to Rust's safety guarantees, accessing global (static)
+variables requires `unsafe` code, assuming we don't use any of the
+synchronization primitives in this module.
+
+#### Out-of-order execution
+
+Instructions can execute in a different order from the one we define, due to
+various reasons:
+
+- The **compiler** reordering instructions: If the compiler can issue an
+  instruction at an earlier point, it will try to do so. For example, it
+  might hoist memory loads at the top of a code block, so that the CPU can
+  start [prefetching] the values from memory.
+
+  In single-threaded scenarios, this can cause issues when writing
+  signal handlers or certain kinds of low-level code.
+  Use [compiler fences] to prevent this reordering.
+
+- A **single processor** executing instructions [out-of-order]:
+  Modern CPUs are capable of [superscalar] execution,
+  i.e., multiple instructions might be executing at the same time,
+  even though the machine code describes a sequential process.
+
+  This kind of reordering is handled transparently by the CPU.
+
+- A **multiprocessor** system executing multiple hardware threads
+  at the same time: In multi-threaded scenarios, you can use two
+  kinds of primitives to deal with synchronization:
+  - [memory fences] to ensure memory accesses are made visible to
+  other CPUs in the right order.
+  - [atomic operations] to ensure simultaneous access to the same
+  memory location doesn't lead to undefined behavior.
+
+#### Higher-level synchronization objects
+
+Most of the low-level synchronization primitives are quite error-prone and
+inconvenient to use, which is why the standard library also exposes some
+higher-level synchronization objects.
+
+These abstractions can be built out of lower-level primitives.
+For efficiency, the sync objects in the standard library are usually
+implemented with help from the operating system's kernel, which is
+able to reschedule the threads while they are blocked on acquiring
+a lock.
+
+The following is an overview of the available synchronization
+objects:
+
+- `Arc`: Atomically Reference-Counted pointer, which can be used
+  in multithreaded environments to prolong the lifetime of some
+  data until all the threads have finished using it.
+
+- `Barrier`: Ensures multiple threads will wait for each other
+  to reach a point in the program, before continuing execution all
+  together.
+
+- `Condvar`: Condition Variable, providing the ability to block
+  a thread while waiting for an event to occur.
+
+- `mpsc`: Multi-producer, single-consumer queues, used for
+  message-based communication. Can provide a lightweight
+  inter-thread synchronisation mechanism, at the cost of some
+  extra memory.
+
+- `mpmc`: Multi-producer, multi-consumer queues, used for
+  message-based communication. Can provide a lightweight
+  inter-thread synchronisation mechanism, at the cost of some
+  extra memory.
+
+- `Mutex`: Mutual Exclusion mechanism, which ensures that at
+  most one thread at a time is able to access some data.
+
+- `Once`: Used for a thread-safe, one-time global initialization routine.
+  Mostly useful for implementing other types like `OnceLock`.
+
+- `OnceLock`: Used for thread-safe, one-time initialization of a
+  variable, with potentially different initializers based on the caller.
+
+- `LazyLock`: Used for thread-safe, one-time initialization of a
+  variable, using one nullary initializer function provided at creation.
+
+- `RwLock`: Provides a mutual exclusion mechanism which allows
+  multiple readers at the same time, while allowing only one
+  writer at a time. In some cases, this can be more efficient than
+  a mutex.
+
+#### Blocking guarantees
+
+Methods that are documented not to block will never block for an unbounded length of time.
+That is, they may internally block through platform primitives but still "behave" like they are non-blocking. This difference is invisible to most programs.
+
+This is only of note to platforms which disallow blocking, such as multithreaded WebAssembly on the main thread.
+None of the implementations in `std::sync` are guaranteed to be (or remain) non-blocking in this regard.
+
+## struct WaitTimeoutResult
+
+```rust
+pub struct WaitTimeoutResult(bool)
+```
+
+A type indicating whether a timed wait on a condition variable returned
+due to a time out or not.
+
+It is returned by the `wait_timeout` method.
+
+## WaitTimeoutResult::timed_out
+
+```rust
+pub fn timed_out(&self) -> bool
+```
+
+Returns `true` if the wait was known to have timed out.
+
+# Examples
+
+This example spawns a thread which will sleep 20 milliseconds before
+updating a boolean value and then notifying the condvar.
+
+The main thread will wait with a 10 millisecond timeout on the condvar
+and will leave the loop upon timeout.
+
+```rust
+use std::sync::{Arc, Condvar, Mutex};
+use std::thread;
+use std::time::Duration;
+
+let pair = Arc::new((Mutex::new(false), Condvar::new()));
+let pair2 = Arc::clone(&pair);
+
+thread::spawn(move || {
+    let (lock, cvar) = &*pair2;
+
+    // Let's wait 20 milliseconds before notifying the condvar.
+    thread::sleep(Duration::from_millis(20));
+
+    let mut started = lock.lock().unwrap();
+    // We update the boolean value.
+    *started = true;
+    cvar.notify_one();
+});
+
+// Wait for the thread to start up.
+let (lock, cvar) = &*pair;
+loop {
+    // Let's put a timeout on the condvar's wait.
+    let result = cvar.wait_timeout(lock.lock().unwrap(), Duration::from_millis(10)).unwrap();
+    // 10 milliseconds have passed.
+    if result.1.timed_out() {
+        // timed out now and we can leave.
+        break
+    }
+}
+```

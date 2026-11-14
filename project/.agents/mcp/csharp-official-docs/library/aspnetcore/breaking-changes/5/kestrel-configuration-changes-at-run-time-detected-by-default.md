@@ -1,0 +1,98 @@
+---
+title: "Breaking change: Kestrel: Configuration changes at runtime detected by default"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/kestrel-configuration-changes-at-run-time-detected-by-default.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# Kestrel: Configuration changes at runtime detected by default
+
+Kestrel now reacts to changes made to the `Kestrel` section of the project's `IConfiguration` instance (for example, *appsettings.json*) at runtime. To learn more about how to configure Kestrel using *appsettings.json*, see the *appsettings.json* example in Endpoint configuration.
+
+Kestrel will bind, unbind, and rebind endpoints as necessary to react to these configuration changes.
+
+For discussion, see issue dotnet/aspnetcore#22807.
+
+## Version introduced
+
+5.0 Preview 7
+
+## Old behavior
+
+Before ASP.NET Core 5.0 Preview 6, Kestrel didn't support changing configuration at runtime.
+
+In ASP.NET Core 5.0 Preview 6, you could opt in to the now-default behavior of reacting to configuration changes at runtime. Opting in required binding Kestrel's configuration manually:
+
+```csharp
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+public class Program
+{
+    public static void Main(string[] args) =>
+        CreateHostBuilder(args).Build().Run();
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseKestrel((builderContext, kestrelOptions) =>
+                {
+                    kestrelOptions.Configure(
+                        builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: true);
+                });
+
+                webBuilder.UseStartup<Startup>();
+            });
+}
+```
+
+## New behavior
+
+Kestrel reacts to configuration changes at runtime by default. To support that change, `Microsoft.Extensions.Hosting.GenericHostBuilderExtensions.ConfigureWebHostDefaults*` calls `KestrelServerOptions.Configure(IConfiguration, bool)` with `reloadOnChange: true` by default.
+
+## Reason for change
+
+The change was made to support endpoint reconfiguration at runtime without completely restarting the server. Unlike with a full server restart, unchanged endpoints aren't unbound even temporarily.
+
+## Recommended action
+
+* For most scenarios in which Kestrel's default configuration section doesn't change at runtime, this change has no impact and no action is needed.
+* For scenarios in which Kestrel's default configuration section does change at runtime and Kestrel should react to it, this is now the default behavior.
+* For scenarios in which Kestrel's default configuration section changes at runtime and Kestrel shouldn't react to it, you can opt out as follows:
+
+    ```csharp
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+
+    public class Program
+    {
+        public static void Main(string[] args) =>
+            CreateHostBuilder(args).Build().Run();
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseKestrel((builderContext, kestrelOptions) =>
+                    {
+                        kestrelOptions.Configure(
+                            builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: false);
+                    });
+
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+    ```
+
+**Notes:**
+
+This change doesn't modify the behavior of the `KestrelServerOptions.Configure(IConfiguration)` overload, which still defaults to the `reloadOnChange: false` behavior.
+
+It's also important to make sure the configuration source supports reloading. For JSON sources, reloading is configured by calling `AddJsonFile(path, reloadOnChange: true)`. Reloading is already configured by default for *appsettings.json* and *appsettings.{Environment}.json*.
+
+## Affected APIs
+
+`Microsoft.Extensions.Hosting.GenericHostBuilderExtensions.ConfigureWebHostDefaults*`

@@ -34,7 +34,16 @@ removes the server, its documentation and its rules, without breaking the other 
 | Brick | What the AI gets |
 | --- | --- |
 | `parse` | The outline, then one part, then the images of a heavy file: XD, Word, Excel, PowerPoint, PDF, SVG. |
-| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. |
+| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: MDN, Angular, TypeScript, RxJS, NgRx Signals, Node.js, npm, Vite, Vitest, Playwright, ESLint, Stylelint. |
+| `csharp-official-docs` | C# and .NET: the language, .NET guides, ASP.NET Core, EF Core and the API reference. |
+| `python-official-docs` | Python: language reference, standard library, tutorial, how-to guides, what is new; the `inkex` API of the Inkscape extensions and their guides. |
+| `rust-official-docs` | Rust: the book, the reference and the standard library (`core`, `alloc`, `std`). |
+| `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http`, from OpenJDK 25. |
+
+Each documentation brick searches its own documentation only, then gives one section at a time. Only
+the official documentation is there, each source under its own license, noted in the
+`THIRD_PARTY_NOTICES.md` of its brick; the `README.md` of a brick lists its sources, their versions,
+and what was set aside and why.
 
 [`project/.agents/README.md`](project/.agents/README.md) explains each part, and the `README.md` of each
 brick says what it holds and how to remove it.
@@ -83,7 +92,7 @@ project. When a package is missing, the AI runs `npm install` itself, after your
 ### 4. Work
 
 Open OpenCode CLI 2.2.7 at the root of the project and describe what you want. Check that it sees the
-servers: `/mcps` lists `parse` and `js-official-docs`.
+servers: `/mcps` lists `parse` and each documentation brick pasted.
 
 ## Update the documentation of a tool
 
@@ -95,7 +104,9 @@ repository. The workstation never does it: it receives the new export.
    is behind the versions of `package.json`.
 2. Move a source to its new tag, fetch it again, check it:
    `node scripts/update-tool.ts angular v23.0.0`, `node scripts/fetch-library.ts --tool angular`,
-   `node scripts/check-library.ts`.
+   `node scripts/check-library.ts`. For another language, name its brick:
+   `node scripts/fetch-library.ts --brick python-official-docs`, then
+   `node scripts/check-library.ts project/.agents/mcp/python-official-docs`.
 3. When a lint plugin follows the major version of the tool (angular-eslint follows Angular), update
    its version in `project/lint/packages.json`.
 4. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in

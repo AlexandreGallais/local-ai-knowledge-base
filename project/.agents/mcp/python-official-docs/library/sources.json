@@ -1,0 +1,65 @@
+{
+  "sources": [
+    {
+      "tool": "python",
+      "title": "Python documentation: language reference, standard library, tutorial, how-to guides, FAQ and what is new in each version",
+      "repository": "https://github.com/python/cpython.git",
+      "ref": "v3.15.2",
+      "version": "3.15",
+      "license": "PSF-2.0 AND 0BSD",
+      "attribution": "Python Software Foundation",
+      "flavor": "markdown",
+      "core": false,
+      "paths": [
+        "Doc/library/",
+        "Doc/reference/",
+        "Doc/tutorial/",
+        "Doc/howto/",
+        "Doc/faq/",
+        "Doc/whatsnew/"
+      ],
+      "docs": [
+        "Doc/library",
+        "Doc/reference",
+        "Doc/tutorial",
+        "Doc/howto",
+        "Doc/faq",
+        "Doc/whatsnew"
+      ],
+      "converter": "rst"
+    },
+    {
+      "tool": "inkex",
+      "title": "Inkscape extensions: the API of the inkex package, from its docstrings",
+      "repository": "https://gitlab.com/inkscape/extensions.git",
+      "ref": "EXTENSIONS_AT_INKSCAPE_1.4.1",
+      "version": "1.4.1",
+      "license": "GPL-2.0-or-later",
+      "attribution": "The Inkscape extension developers",
+      "flavor": "markdown",
+      "core": false,
+      "paths": ["inkex/"],
+      "docs": ["inkex"],
+      "exclude": ["inkex/deprecated-simple"],
+      "converter": "python-docstrings"
+    },
+    {
+      "tool": "inkscape-extensions-guide",
+      "title": "Inkscape extensions: the guides and tutorials for extension authors",
+      "repository": "https://gitlab.com/inkscape/extensions.git",
+      "ref": "EXTENSIONS_AT_INKSCAPE_1.4.1",
+      "version": "1.4.1",
+      "license": "GPL-2.0-or-later",
+      "attribution": "The Inkscape extension developers",
+      "flavor": "markdown",
+      "core": false,
+      "paths": ["docs/"],
+      "docs": [
+        "docs/authors",
+        "docs/tutorial",
+        "docs/dev"
+      ],
+      "converter": "rst"
+    }
+  ]
+}

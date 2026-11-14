@@ -1,0 +1,8 @@
+{
+  "name": "rust-official-docs",
+  "instructions": "The official documentation of Rust, kept locally: the book, the language reference and the standard library (core, alloc, std). Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
+  "search": "Search the official documentation of Rust: The Rust Programming Language (the book), The Rust Reference and the standard library (core, alloc, std). Returns 10 section ids at most.",
+  "queryExample": "\"Vec push\" or \"HashMap entry\"",
+  "toolExample": "\"rust-std\" or \"rust-book\"",
+  "idExample": "library/rust-std/alloc/src/vec/mod-p2.md#vecpush"
+}

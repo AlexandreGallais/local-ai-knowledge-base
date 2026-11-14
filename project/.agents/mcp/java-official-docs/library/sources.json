@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "tool": "java-se",
+      "title": "Java SE API: the java.base and java.net.http modules, from the Javadoc of OpenJDK",
+      "repository": "https://github.com/openjdk/jdk.git",
+      "ref": "jdk-25-ga",
+      "version": "25",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "attribution": "Oracle and/or its affiliates, and the OpenJDK contributors",
+      "flavor": "markdown",
+      "core": false,
+      "paths": [
+        "src/java.base/share/classes/java/",
+        "src/java.net.http/share/classes/java/net/http/"
+      ],
+      "docs": [
+        "src/java.base/share/classes/java",
+        "src/java.net.http/share/classes/java"
+      ],
+      "converter": "javadoc"
+    }
+  ]
+}

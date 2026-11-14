@@ -5,6 +5,22 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added: the official documentation of C#, Python, Rust and Java
+
+- Four documentation bricks, each with its own MCP server and its own export pack:
+  `csharp-official-docs` (C#, .NET, ASP.NET Core, EF Core and the API reference of 88 namespaces),
+  `python-official-docs` (Python 3.15 and the `inkex` API of the Inkscape extensions with their
+  guides), `rust-official-docs` (the book, the reference and the standard library of Rust 1.100),
+  `java-official-docs` (the Java SE API of OpenJDK 25).
+- Only the official documentation, each source under its own license, checked in its repository at
+  the version taken: CC BY 4.0, PSF License, MIT or Apache 2.0, GPL 2.0 or later, GPL 2.0 with the
+  Classpath exception. The `README.md` of each brick lists its sources and what was set aside.
+- Converters to Markdown for the formats that are not Markdown: the ECMA XML of the .NET API
+  reference, reStructuredText, the documentation comments of Rust, Javadoc, Python docstrings.
+- The documentation bricks share the same server code; `brick.json` gives each its name and the
+  words of its tools. The search puts first a title that names exactly the API asked, as `List<T>`
+  or `Vec push`.
+
 ### Changed: the format and the lint of a plain project
 
 - The format and the lint live at the root of the project, as in any project: `eslint.format.config.mjs`

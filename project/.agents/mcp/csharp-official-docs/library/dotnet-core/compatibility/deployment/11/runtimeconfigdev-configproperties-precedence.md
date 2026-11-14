@@ -1,0 +1,76 @@
+---
+title: "Breaking change: configProperties in .runtimeconfig.dev.json override .runtimeconfig.json"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/11/runtimeconfigdev-configproperties-precedence.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# configProperties in .runtimeconfig.dev.json override .runtimeconfig.json
+
+If an app defines the same runtime `configProperties` key in both `.runtimeconfig.json` and `.runtimeconfig.dev.json`, the `.runtimeconfig.dev.json` value takes precedence.
+
+## Version introduced
+
+.NET 11
+
+## Previous behavior
+
+Previously, `.runtimeconfig.json` took precedence over `.runtimeconfig.dev.json` for duplicate `configProperties` keys.
+
+For example:
+
+```json
+// app.runtimeconfig.json
+{
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Concurrent": true
+    }
+  }
+}
+```
+
+```json
+// app.runtimeconfig.dev.json
+{
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Concurrent": false
+    }
+  }
+}
+```
+
+With this configuration, the runtime used `System.GC.Concurrent: true`.
+
+## New behavior
+
+To support development-time overrides in .NET 11, `.runtimeconfig.dev.json` takes precedence over `.runtimeconfig.json` for duplicate `configProperties` keys.
+
+Using the same example, the runtime now uses `System.GC.Concurrent: false`.
+
+## Type of breaking change
+
+This change is a behavioral change.
+
+## Reason for change
+
+This change enables developers to override production settings during development without modifying production configuration files.
+
+For more information, see dotnet/runtime#126606.
+
+## Recommended action
+
+For predictable production behavior, only place development-time overrides in `.runtimeconfig.dev.json`.
+
+To prevent a development-time override, remove the duplicate key from `.runtimeconfig.dev.json`.
+
+## Affected APIs
+
+None.
+
+## See also
+
+- .NET runtime configuration settings

@@ -1,0 +1,152 @@
+---
+title: "How to: Encrypt XML Elements with X.509 Certificates (part 5 of 5)"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/how-to-encrypt-xml-elements-with-x-509-certificates.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# How to: Encrypt XML Elements with X.509 Certificates (part 5 of 5)
+
+## Example
+
+ This example assumes that a file named `"test.xml"` exists in the same directory as the compiled program.  It also assumes that `"test.xml"` contains a `"creditcard"` element.  You can place the following XML into a file called `test.xml` and use it with this example.
+
+```xml
+<root>
+    <creditcard>
+        <number>19834209</number>
+        <expiry>02/02/2002</expiry>
+    </creditcard>
+</root>
+```
+
+ ```csharp
+using System;
+using System.Xml;
+using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
+using System.Security.Cryptography.X509Certificates;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            // Create an XmlDocument object.
+            XmlDocument xmlDoc = new XmlDocument();
+
+            // Load an XML file into the XmlDocument object.
+            xmlDoc.PreserveWhitespace = true;
+            xmlDoc.Load("test.xml");
+
+            // Open the X.509 "Current User" store in read only mode.
+            X509Store store = new X509Store(StoreLocation.CurrentUser);
+            store.Open(OpenFlags.ReadOnly);
+
+            // Place all certificates in an X509Certificate2Collection object.
+            X509Certificate2Collection certCollection = store.Certificates;
+
+            X509Certificate2 cert = null;
+
+            // Loop through each certificate and find the certificate
+            // with the appropriate name.
+            foreach (X509Certificate2 c in certCollection)
+            {
+                if (c.Subject == "CN=XML_ENC_TEST_CERT")
+                {
+                    cert = c;
+
+                    break;
+                }
+            }
+
+            if (cert == null)
+            {
+                throw new CryptographicException("The X.509 certificate could not be found.");
+            }
+
+            // Close the store.
+            store.Close();
+
+            // Encrypt the "creditcard" element.
+            Encrypt(xmlDoc, "creditcard", cert);
+
+            // Save the XML document.
+            xmlDoc.Save("test.xml");
+
+            // Display the encrypted XML to the console.
+            Console.WriteLine("Encrypted XML:");
+            Console.WriteLine();
+            Console.WriteLine(xmlDoc.OuterXml);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    public static void Encrypt(XmlDocument Doc, string ElementToEncrypt, X509Certificate2 Cert)
+    {
+        // Check the arguments.
+        if (Doc == null)
+            throw new ArgumentNullException("Doc");
+        if (ElementToEncrypt == null)
+            throw new ArgumentNullException("ElementToEncrypt");
+        if (Cert == null)
+            throw new ArgumentNullException("Cert");
+
+        ////////////////////////////////////////////////
+        // Find the specified element in the XmlDocument
+        // object and create a new XmlElement object.
+        ////////////////////////////////////////////////
+
+        XmlElement elementToEncrypt = Doc.GetElementsByTagName(ElementToEncrypt)[0] as XmlElement;
+        // Throw an XmlException if the element was not found.
+        if (elementToEncrypt == null)
+        {
+            throw new XmlException("The specified element was not found");
+        }
+
+        //////////////////////////////////////////////////
+        // Create a new instance of the EncryptedXml class
+        // and use it to encrypt the XmlElement with the
+        // X.509 Certificate.
+        //////////////////////////////////////////////////
+
+        EncryptedXml eXml = new EncryptedXml();
+
+        // Encrypt the element.
+        EncryptedData edElement = eXml.Encrypt(elementToEncrypt, Cert);
+
+        ////////////////////////////////////////////////////
+        // Replace the element from the original XmlDocument
+        // object with the EncryptedData element.
+        ////////////////////////////////////////////////////
+        EncryptedXml.ReplaceElement(elementToEncrypt, edElement, false);
+    }
+}
+```
+
+## Compiling the Code
+
+- In a project that targets .NET Framework, include a reference to `System.Security.dll`.
+
+- In a project that targets .NET Core or .NET 5, install NuGet package System.Security.Cryptography.Xml.
+
+- Include the following namespaces: `System.Xml`, `System.Security.Cryptography`, and `System.Security.Cryptography.Xml`.
+
+## .NET Security
+
+The X.509 certificate used in this example is for test purposes only.  Applications should use an X.509 certificate generated by a trusted certificate authority.
+
+## See also
+
+- Cryptography Model
+- Cryptographic Services
+- Cross-Platform Cryptography
+- `System.Security.Cryptography.Xml`
+- How to: Decrypt XML Elements with X.509 Certificates
+- ASP.NET Core Data Protection

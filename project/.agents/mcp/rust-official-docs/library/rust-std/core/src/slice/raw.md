@@ -1,0 +1,178 @@
+---
+title: "core::slice::raw"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/slice/raw.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# core::slice::raw
+
+Free functions to create `&[T]` and `&mut [T]`.
+
+## fn from_raw_parts
+
+```rust
+pub const unsafe fn from_raw_parts<'a, T>(data: *const T, len: usize) -> &'a [T]
+```
+
+Forms a slice from a pointer and a length.
+
+The `len` argument is the number of **elements**, not the number of bytes.
+
+# Safety
+
+Behavior is undefined if any of the following conditions are violated:
+
+* `data` must be non-null, [valid] for reads for `len * size_of::<T>()` many bytes,
+  and it must be properly aligned. This means in particular:
+
+    * The entire memory range of this slice must be contained within a single allocation!
+      Slices can never span across multiple allocations. See below
+      for an example incorrectly not taking this into account.
+    * `data` must be non-null and aligned even for zero-length slices or slices of ZSTs. One
+      reason for this is that enum layout optimizations may rely on references
+      (including slices of any length) being aligned and non-null to distinguish
+      them from other data. You can obtain a pointer that is usable as `data`
+      for zero-length slices using `NonNull::dangling()`.
+
+* `data` must point to `len` consecutive properly initialized values of type `T`.
+
+* The memory referenced by the returned slice must not be mutated for the duration
+  of lifetime `'a`, except inside an `UnsafeCell`.
+
+* The total size `len * size_of::<T>()` of the slice must be no larger than `isize::MAX`,
+  and adding that size to `data` must not "wrap around" the address space.
+  See the safety documentation of `pointer::offset`.
+
+# Caveat
+
+The lifetime for the returned slice is inferred from its usage. To
+prevent accidental misuse, it's suggested to tie the lifetime to whichever
+source lifetime is safe in the context, such as by providing a helper
+function taking the lifetime of a host value for the slice, or by explicit
+annotation.
+
+# Examples
+
+```rust
+use std::slice;
+
+// manifest a slice for a single element
+let x = 42;
+let ptr = &x as *const _;
+let slice = unsafe { slice::from_raw_parts(ptr, 1) };
+assert_eq!(slice[0], 42);
+```
+
+### Incorrect usage
+
+The following `join_slices` function is **unsound** ⚠️
+
+```rust
+use std::slice;
+
+fn join_slices<'a, T>(fst: &'a [T], snd: &'a [T]) -> &'a [T] {
+    let fst_end = fst.as_ptr().wrapping_add(fst.len());
+    let snd_start = snd.as_ptr();
+    assert_eq!(fst_end, snd_start, "Slices must be contiguous!");
+    unsafe {
+        // The assertion above ensures `fst` and `snd` are contiguous, but they might
+        // still be contained within _different allocations_, in which case
+        // creating this slice is undefined behavior.
+        slice::from_raw_parts(fst.as_ptr(), fst.len() + snd.len())
+    }
+}
+
+fn main() {
+    // `a` and `b` are different allocations...
+    let a = 42;
+    let b = 27;
+    // ... which may nevertheless be laid out contiguously in memory: | a | b |
+    let _ = join_slices(slice::from_ref(&a), slice::from_ref(&b)); // UB
+}
+```
+
+### FFI: Handling null pointers
+
+In languages such as C++, pointers to empty collections are not guaranteed to be non-null.
+When accepting such pointers, they have to be checked for null-ness to avoid undefined
+behavior.
+
+```rust
+use std::slice;
+
+/// Sum the elements of an FFI slice.
+///
+/// # Safety
+///
+/// If ptr is not NULL, it must be correctly aligned and
+/// point to `len` initialized items of type `f32`.
+unsafe extern "C" fn sum_slice(ptr: *const f32, len: usize) -> f32 {
+    let data = if ptr.is_null() {
+        // `len` is assumed to be 0.
+        &[]
+    } else {
+        // SAFETY: see function docstring.
+        unsafe { slice::from_raw_parts(ptr, len) }
+    };
+    data.into_iter().sum()
+}
+
+// This could be the result of C++'s std::vector::data():
+let ptr = std::ptr::null();
+// And this could be std::vector::size():
+let len = 0;
+assert_eq!(unsafe { sum_slice(ptr, len) }, 0.0);
+```
+
+## fn from_raw_parts_mut
+
+```rust
+pub const unsafe fn from_raw_parts_mut<'a, T>(data: *mut T, len: usize) -> &'a mut [T]
+```
+
+Performs the same functionality as `from_raw_parts`, except that a
+mutable slice is returned.
+
+# Safety
+
+Behavior is undefined if any of the following conditions are violated:
+
+* `data` must be non-null, [valid] for both reads and writes for `len * size_of::<T>()` many bytes,
+  and it must be properly aligned. This means in particular:
+
+    * The entire memory range of this slice must be contained within a single allocation!
+      Slices can never span across multiple allocations.
+    * `data` must be non-null and aligned even for zero-length slices or slices of ZSTs. One
+      reason for this is that enum layout optimizations may rely on references
+      (including slices of any length) being aligned and non-null to distinguish
+      them from other data. You can obtain a pointer that is usable as `data`
+      for zero-length slices using `NonNull::dangling()`.
+
+* `data` must point to `len` consecutive properly initialized values of type `T`.
+
+* The memory referenced by the returned slice must not be accessed through any other pointer
+  (not derived from the return value) for the duration of lifetime `'a`.
+  Both read and write accesses are forbidden.
+
+* The total size `len * size_of::<T>()` of the slice must be no larger than `isize::MAX`,
+  and adding that size to `data` must not "wrap around" the address space.
+  See the safety documentation of `pointer::offset`.
+
+## fn from_ref
+
+```rust
+pub const fn from_ref<T>(s: &T) -> &[T]
+```
+
+Converts a reference to T into a slice of length 1 (without copying).
+
+## fn from_mut
+
+```rust
+pub const fn from_mut<T>(s: &mut T) -> &mut [T]
+```
+
+Converts a reference to T into a slice of length 1 (without copying).

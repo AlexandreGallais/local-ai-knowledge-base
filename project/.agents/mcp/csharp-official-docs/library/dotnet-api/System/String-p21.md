@@ -1,0 +1,209 @@
+---
+title: "String class (part 21 of 26)"
+tool: "dotnet-api"
+version: "11"
+source: "https://github.com/dotnet/dotnet-api-docs/blob/a010100852b71f33d67d913d7a9ed69f83a639b1/xml/System/String.xml"
+commit: "a010100852b71f33d67d913d7a9ed69f83a639b1"
+license: "CC-BY-4.0"
+---
+
+# String class (part 21 of 26)
+
+## String.Split(Char[], StringSplitOptions) method
+
+```csharp
+public string[] Split (char[]? separator, StringSplitOptions options);
+```
+
+Splits a string into substrings based on specified delimiting characters and options.
+
+Parameters:
+
+- `separator`: An array of characters that delimit the substrings in this string, an empty array that contains no delimiters, or `null`.
+- `options`: A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.
+
+Returns: An array whose elements contain the substrings in this string that are delimited by one or more characters in `separator`. For more information, see the Remarks section.
+
+Exceptions:
+
+- `ArgumentException`: `options` is not one of the `StringSplitOptions` values.
+
+#### Remarks
+
+Delimiter characters (the characters in the `separator` array) are not included in the elements of the returned array. For example, if the `separator` array includes the character "-" and the value of the current string instance is "aa-bb-cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
+
+If this instance does not contain any of the characters in `separator`, the returned array consists of a single element that contains this instance.
+
+If the `options` parameter is `RemoveEmptyEntries` and the length of this instance is zero, the method returns an empty array.
+
+Each element of `separator` defines a separate delimiter that consists of a single character. If the `options` argument is `None`, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains `Empty`. For example, if `separator` includes two elements, `'-'` and `'_'`, the value of the string instance is "-\_aa-\_", and the value of the `options` argument is `None`, the method returns a string array with the following five elements:
+
+1. `Empty`, which represents the empty string that precedes the "-" character at index 0.
+
+2. `Empty`, which represents the empty string between the "-" character at index 0 and the "_" character at index 1.
+
+3. "aa".
+
+4. `Empty`, which represents the empty string that follows the "-" character at index 4.
+
+5. `Empty`, which represents the empty string that follows the "_" character at index 5.
+
+#### The separator array
+
+If the `separator` parameter is `null` or contains no characters, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the `Char.IsWhiteSpace` method returns `true` if they are passed to it.
+
+To pass `null` for the `char[] separator` parameter, you must indicate the type of the `null` to disambiguate the call from some other overloads, such as `Split`. The following example shows several ways to unambiguously identify this overload.
+
+_Code sample not included: ~/snippets/csharp/System/String/Split/identify.cs._
+
+#### Comparison details
+The `String.Split` method extracts the substrings in this string that are delimited by one or more of the characters in the `separator` parameter, and returns those substrings as elements of an array.
+
+The `String.Split` method looks for delimiters by performing comparisons using case-sensitive ordinal sort rules. For more information about word, string, and ordinal sorts, see the `CompareOptions` enumeration.
+
+#### Performance considerations
+The `String.Split` methods allocate memory for the returned array object and a `String` object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the `String.IndexOf` or `String.IndexOfAny` method, and optionally the `String.Compare` method, to locate a substring within a string.
+
+If you are splitting a string at a separator character, use the `String.IndexOf` or `String.IndexOfAny` method to locate a separator character in the string. If you are splitting a string at a separator string, use the `String.IndexOf` or `String.IndexOfAny` method to locate the first character of the separator string. Then use the `String.Compare` method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
+
+In addition, if the same set of characters is used to split strings in multiple `String.Split` method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
+
+#### Examples
+The following example uses the `StringSplitOptions` enumeration to include or exclude substrings generated by the `String.Split` method.
+
+_Code sample not included: ~/snippets/csharp/System/String/Split/options.cs._
+
+## String.Split(String, StringSplitOptions) method
+
+```csharp
+public string[] Split (string? separator, StringSplitOptions options = System.StringSplitOptions.None);
+```
+
+Splits a string into substrings that are based on the provided string separator.
+
+Parameters:
+
+- `separator`: A string that delimits the substrings in this string.
+- `options`: A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.
+
+Returns: An array whose elements contain the substrings from this instance that are delimited by `separator`.
+
+To be added.
+
+## String.Split(String[], StringSplitOptions) method
+
+```csharp
+public string[] Split (string[]? separator, StringSplitOptions options);
+```
+
+Splits a string into substrings based on a specified delimiting string and, optionally, options.
+
+Parameters:
+
+- `separator`: An array of strings that delimit the substrings in this string, an empty array that contains no delimiters, or `null`.
+- `options`: A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.
+
+Returns: An array whose elements contain the substrings in this string that are delimited by one or more strings in `separator`. For more information, see the Remarks section.
+
+Exceptions:
+
+- `ArgumentException`: `options` is not one of the `StringSplitOptions` values.
+
+#### Remarks
+
+When a string is delimited by a known set of strings, you can use the `String.Split` method to separate it into substrings.
+
+Delimiter strings are not included in the elements of the returned array. For example, if the `separator` array includes the string "--" and the value of the current string instance is "aa--bb--cc", the method returns an array that contains three elements: "aa", "bb", and "cc".
+
+If this instance does not contain any of the strings in `separator`, the returned array consists of a single element that contains this instance.
+
+If the `options` parameter is `RemoveEmptyEntries` and the length of this instance is zero, the method returns an empty array.
+
+Each element of `separator` defines a separate delimiter that consists of one or more characters. If the `options` argument is `None`, and two delimiters are adjacent or a delimiter is found at the beginning or end of this instance, the corresponding array element contains `Empty`. For example, if `separator` includes two elements, "-" and "\_", the value of the string instance is "-\_aa-\_", and the value of the `options` argument is `None`, the method returns a string array with the following five elements:
+
+1. `Empty`, which represents the empty string that precedes the "-" substring at index 0.
+
+2. `Empty`, which represents the empty string between the "-" substring at index 0 and the "_" substring at index 1.
+
+3. "aa".
+
+4. `Empty`, which represents the empty string that follows the "-" substring at index 4.
+
+5. `Empty`, which represents the empty string that follows the "_" substring at index 5.
+
+#### The separator array
+
+If any of the elements in `separator` consists of multiple characters, the entire substring is considered a delimiter. For example, if one of the elements in `separator` is "10", attempting to split the string "This10is10a10string." returns the following four-element array: { "This", "is", "a", "string." }.
+
+If the `separator` parameter is `null` or contains no non-empty strings, white-space characters are assumed to be the delimiters. White-space characters are defined by the Unicode standard and the `Char.IsWhiteSpace` method returns `true` if they are passed to it.
+
+To pass `null` for the `string[] separator` parameter, you must indicate the type of the `null` to disambiguate the call from some other overloads, such as `Split`. The following example shows several ways to unambiguously identify this overload.
+
+_Code sample not included: ~/snippets/csharp/System/String/Split/identify.cs._
+
+#### Comparison details
+The `String.Split` method extracts the substrings in this string that are delimited by one or more of the strings in the `separator` parameter, and returns those substrings as elements of an array.
+
+The `String.Split` method looks for delimiters by performing comparisons using case-sensitive ordinal sort rules. For more information about word, string, and ordinal sorts, see the `CompareOptions` enumeration.
+
+The `String.Split` method ignores any element of `separator` whose value is `null` or the empty string ("").
+
+To avoid ambiguous results when strings in `separator` have characters in common, the `String.Split` operation proceeds from the beginning to the end of the value of the instance, and matches the first element in `separator` that is equal to a delimiter in the instance. The order in which substrings are encountered in the instance takes precedence over the order of elements in `separator`.
+
+For example, consider an instance whose value is "abcdef". If the first element in `separator` was "ef" and the second element was "bcde", the result of the split operation would be a string array that contains two elements, "a" and "f". This is because the substring in the instance, "bcde", is encountered and matches an element in `separator` before the substring "f" is encountered.
+
+However, if the first element of `separator` was "bcd" and the second element was "bc", the result of the split operation would be a string array that contains two elements, "a" and "ef". This is because "bcd" is the first delimiter in `separator` that matches a delimiter in the instance. If the order of the separators was reversed so the first element was "bc" and the second element was "bcd", the result would be a string array that contains two elements,  "a" and "def".
+
+#### Performance considerations
+The `String.Split` methods allocate memory for the returned array object and a `String` object for each array element. If your application requires optimal performance or if managing memory allocation is critical in your application, consider using the `String.IndexOf` or `String.IndexOfAny` method, and optionally the `String.Compare` method, to locate a substring within a string.
+
+If you are splitting a string at a separator character, use the `String.IndexOf` or `String.IndexOfAny` method to locate a separator character in the string. If you are splitting a string at a separator string, use the `String.IndexOf` or `String.IndexOfAny` method to locate the first character of the separator string. Then use the `String.Compare` method to determine whether the characters after that first character are equal to the remaining characters of the separator string.
+
+In addition, if the same set of characters is used to split strings in multiple `String.Split` method calls, consider creating a single array and referencing it in each method call. This significantly reduces the additional overhead of each method call.
+
+#### Examples
+
+The following example illustrates the difference in the arrays returned by calling a string's `Split` method with its `options` parameter equal to `None` and `RemoveEmptyEntries`.
+
+_Code sample not included: ~/snippets/csharp/System/String/Split/options.cs._
+
+The following example defines an array of separators that include punctuation and white-space characters. Passing this array along with a value of `RemoveEmptyEntries` to the `Split` method returns an array that consists of the individual words from the string.
+
+_Code sample not included: ~/snippets/csharp/System/String/Split/options.cs._
+
+Note that the method is called with the `options` argument set to `RemoveEmptyEntries`. This prevents the returned array from including `Empty` values that represent empty substring matches between punctuation marks and white-space characters.
+
+## String.Split(Rune, StringSplitOptions) method
+
+```csharp
+public string[] Split (System.Text.Rune separator, StringSplitOptions options = System.StringSplitOptions.None);
+```
+
+To be added.
+
+Parameters:
+
+- `separator`: To be added.
+- `options`: To be added.
+
+Returns: To be added.
+
+To be added.
+
+## String.Split(Char, Int32, StringSplitOptions) method
+
+```csharp
+public string[] Split (char separator, int count, StringSplitOptions options = System.StringSplitOptions.None);
+```
+
+Splits a string into a maximum number of substrings based on the provided character separator, optionally omitting empty substrings from the result.
+
+Parameters:
+
+- `separator`: A character that delimits the substrings in this instance.
+- `count`: The maximum number of elements expected in the array.
+- `options`: A bitwise combination of the enumeration values that specifies whether to trim substrings and include empty substrings.
+
+Returns: An array that contains at most `count` substrings from this instance that are delimited by `separator`.
+
+If the string has already been split `count` - 1 times, but the end of the string has not been reached, then the last string in the returned array will contain this instance's remaining trailing substring, untouched.

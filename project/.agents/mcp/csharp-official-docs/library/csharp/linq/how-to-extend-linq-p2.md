@@ -1,0 +1,433 @@
+---
+title: "Write your own extensions to LINQ (part 2 of 3)"
+tool: "csharp"
+version: "15"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/linq/how-to-extend-linq.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Write your own extensions to LINQ (part 2 of 3)
+
+## Add custom methods for LINQ queries
+
+Extend the set of methods that you use for LINQ queries by adding extension methods to the `System.Collections.Generic.IEnumerable`1` interface. For example, in addition to the standard average or maximum operations, you create a custom aggregate method to compute a single value from a sequence of values. You also create a method that works as a custom filter or a specific data transform for a sequence of values and returns a new sequence. Examples of such methods are `System.Linq.Enumerable.Distinct*`, `System.Linq.Enumerable.Skip*`, and `System.Linq.Enumerable.Reverse*`.
+
+When you extend the `System.Collections.Generic.IEnumerable`1` interface, you can apply your custom methods to any enumerable collection. For more information, see Extension members.
+
+An *aggregate* method computes a single value from a set of values. LINQ provides several aggregate methods, including `System.Linq.Enumerable.Average*`, `System.Linq.Enumerable.Min*`, and `System.Linq.Enumerable.Max*`. Create your own aggregate method by adding an extension method to the `System.Collections.Generic.IEnumerable`1` interface.
+
+Beginning in C# 14, you can declare an *extension block* to contain multiple extension members. Declare an extension block with the keyword `extension` followed by the receiver parameter in parentheses. The following code example shows how to create an extension method called `Median` in an extension block. The method computes a median for a sequence of numbers of type `double`.
+
+```csharp
+﻿namespace NewExtensionMember;
+
+public static class EnumerableExtension
+{
+    extension(IEnumerable<double>? source)
+    {
+        public double Median()
+        {
+            if (source is null || !source.Any())
+            {
+                throw new InvalidOperationException("Cannot compute median for a null or empty set.");
+            }
+
+            var sortedList =
+                source.OrderBy(number => number).ToList();
+
+            int itemIndex = sortedList.Count / 2;
+
+            if (sortedList.Count % 2 == 0)
+            {
+                // Even number of items.
+                return (sortedList[itemIndex] + sortedList[itemIndex - 1]) / 2;
+            }
+            else
+            {
+                // Odd number of items.
+                return sortedList[itemIndex];
+            }
+        }
+    }
+
+    extension(IEnumerable<int> source)
+    {
+        public double Median() =>
+            (from number in source select (double)number).Median();
+    }
+
+    extension<T>(IEnumerable<T> source)
+    {
+        public double Median(Func<T, double> selector) =>
+            (from num in source select selector(num)).Median();
+
+        public IEnumerable<T> AlternateElements()
+        {
+            int index = 0;
+            foreach (T element in source)
+            {
+                if (index % 2 == 0)
+                {
+                    yield return element;
+                }
+
+                index++;
+            }
+        }
+    }
+}
+```
+You can also add the `this` modifier to a static method to declare an *extension method*. The following code shows the equivalent `Median` extension method:
+
+```csharp
+﻿namespace Custom.Linq.Extensions;
+
+public static class EnumerableExtension
+{
+    public static double Median(this IEnumerable<double>? source)
+    {
+        if (source is null || !source.Any())
+        {
+            throw new InvalidOperationException("Cannot compute median for a null or empty set.");
+        }
+
+        var sortedList =
+            source.OrderBy(number => number).ToList();
+
+        int itemIndex = sortedList.Count / 2;
+
+        if (sortedList.Count % 2 == 0)
+        {
+            // Even number of items.
+            return (sortedList[itemIndex] + sortedList[itemIndex - 1]) / 2;
+        }
+        else
+        {
+            // Odd number of items.
+            return sortedList[itemIndex];
+        }
+    }
+}
+
+public static class OtherExtensions
+{
+    // int overload
+    public static double Median(this IEnumerable<int> source) =>
+        (from number in source select (double)number).Median();
+
+    // generic overload
+    public static double Median<T>(
+        this IEnumerable<T> numbers, Func<T, double> selector) =>
+        (from num in numbers select selector(num)).Median();
+
+    // Extension method for the IEnumerable<T> interface.
+    // The method returns every other element of a sequence.
+    public static IEnumerable<T> AlternateElements<T>(this IEnumerable<T> source)
+    {
+        int index = 0;
+        foreach (T element in source)
+        {
+            if (index % 2 == 0)
+            {
+                yield return element;
+            }
+
+            index++;
+        }
+    }
+}
+```
+Call either extension method for any enumerable collection in the same way you call other aggregate methods from the `System.Collections.Generic.IEnumerable`1` interface.
+
+The following code example shows how to use the `Median` method for an array of type `double`.
+
+```csharp
+﻿using Custom.Linq.Extensions;
+
+Console.WriteLine("MedianUsage");
+MedianUsage();
+Console.WriteLine();
+Console.WriteLine("OverloadUsage");
+OverloadUsage();
+Console.WriteLine();
+Console.WriteLine("GenericUsage");
+GenericUsage();
+Console.WriteLine();
+Console.WriteLine("SequenceUsage");
+SequenceUsage();
+
+static void MedianUsage()
+{
+    double[] numbers = [1.9, 2, 8, 4, 5.7, 6, 7.2, 0];
+    var query = numbers.Median();
+
+    Console.WriteLine($"double: Median = {query}");
+    // This code produces the following output:
+    //     double: Median = 4.85
+}
+static void OverloadUsage()
+{
+    double[] numbers1 = [1.9, 2, 8, 4, 5.7, 6, 7.2, 0];
+    var query1 = numbers1.Median();
+
+    Console.WriteLine($"double: Median = {query1}");
+
+    int[] numbers2 = [1, 2, 3, 4, 5];
+    var query2 = numbers2.Median();
+
+    Console.WriteLine($"int: Median = {query2}");
+    // This code produces the following output:
+    //     double: Median = 4.85
+    //     int: Median = 3
+}
+
+static void GenericUsage()
+{
+    int[] numbers3 = [1, 2, 3, 4, 5];
+
+    /*
+        You can use the num => num lambda expression as a parameter for the Median method
+        so that the compiler will implicitly convert its value to double.
+        If there is no implicit conversion, the compiler will display an error message.
+    */
+    var query3 = numbers3.Median(num => num);
+
+    Console.WriteLine($"int: Median = {query3}");
+
+    string[] numbers4 = ["one", "two", "three", "four", "five"];
+
+    // With the generic overload, you can also use numeric properties of objects.
+    var query4 = numbers4.Median(str => str.Length);
+
+    Console.WriteLine($"string: Median = {query4}");
+    // This code produces the following output:
+    //     int: Median = 3
+    //     string: Median = 4
+}
+
+static void SequenceUsage()
+{
+    string[] strings = ["a", "b", "c", "d", "e"];
+
+    var query5 = strings.AlternateElements();
+
+    foreach (var element in query5)
+    {
+        Console.WriteLine(element);
+    }
+    // This code produces the following output:
+    //     a
+    //     c
+    //     e
+}
+```
+*Overload your aggregate method* so that it accepts sequences of various types. The standard approach is to create an overload for each type. Another approach is to create an overload that takes a generic type and convert it to a specific type by using a delegate. You can also combine both approaches.
+
+Create a specific overload for each type that you want to support. The following code example shows an overload of the `Median` method for the `int` type.
+
+```csharp
+﻿namespace Custom.Linq.Extensions;
+
+public static class EnumerableExtension
+{
+    public static double Median(this IEnumerable<double>? source)
+    {
+        if (source is null || !source.Any())
+        {
+            throw new InvalidOperationException("Cannot compute median for a null or empty set.");
+        }
+
+        var sortedList =
+            source.OrderBy(number => number).ToList();
+
+        int itemIndex = sortedList.Count / 2;
+
+        if (sortedList.Count % 2 == 0)
+        {
+            // Even number of items.
+            return (sortedList[itemIndex] + sortedList[itemIndex - 1]) / 2;
+        }
+        else
+        {
+            // Odd number of items.
+            return sortedList[itemIndex];
+        }
+    }
+}
+
+public static class OtherExtensions
+{
+    // int overload
+    public static double Median(this IEnumerable<int> source) =>
+        (from number in source select (double)number).Median();
+
+    // generic overload
+    public static double Median<T>(
+        this IEnumerable<T> numbers, Func<T, double> selector) =>
+        (from num in numbers select selector(num)).Median();
+
+    // Extension method for the IEnumerable<T> interface.
+    // The method returns every other element of a sequence.
+    public static IEnumerable<T> AlternateElements<T>(this IEnumerable<T> source)
+    {
+        int index = 0;
+        foreach (T element in source)
+        {
+            if (index % 2 == 0)
+            {
+                yield return element;
+            }
+
+            index++;
+        }
+    }
+}
+```
+You can now call the `Median` overloads for both `integer` and `double` types, as shown in the following code:
+
+```csharp
+﻿using Custom.Linq.Extensions;
+
+Console.WriteLine("MedianUsage");
+MedianUsage();
+Console.WriteLine();
+Console.WriteLine("OverloadUsage");
+OverloadUsage();
+Console.WriteLine();
+Console.WriteLine("GenericUsage");
+GenericUsage();
+Console.WriteLine();
+Console.WriteLine("SequenceUsage");
+SequenceUsage();
+
+static void MedianUsage()
+{
+    double[] numbers = [1.9, 2, 8, 4, 5.7, 6, 7.2, 0];
+    var query = numbers.Median();
+
+    Console.WriteLine($"double: Median = {query}");
+    // This code produces the following output:
+    //     double: Median = 4.85
+}
+static void OverloadUsage()
+{
+    double[] numbers1 = [1.9, 2, 8, 4, 5.7, 6, 7.2, 0];
+    var query1 = numbers1.Median();
+
+    Console.WriteLine($"double: Median = {query1}");
+
+    int[] numbers2 = [1, 2, 3, 4, 5];
+    var query2 = numbers2.Median();
+
+    Console.WriteLine($"int: Median = {query2}");
+    // This code produces the following output:
+    //     double: Median = 4.85
+    //     int: Median = 3
+}
+
+static void GenericUsage()
+{
+    int[] numbers3 = [1, 2, 3, 4, 5];
+
+    /*
+        You can use the num => num lambda expression as a parameter for the Median method
+        so that the compiler will implicitly convert its value to double.
+        If there is no implicit conversion, the compiler will display an error message.
+    */
+    var query3 = numbers3.Median(num => num);
+
+    Console.WriteLine($"int: Median = {query3}");
+
+    string[] numbers4 = ["one", "two", "three", "four", "five"];
+
+    // With the generic overload, you can also use numeric properties of objects.
+    var query4 = numbers4.Median(str => str.Length);
+
+    Console.WriteLine($"string: Median = {query4}");
+    // This code produces the following output:
+    //     int: Median = 3
+    //     string: Median = 4
+}
+
+static void SequenceUsage()
+{
+    string[] strings = ["a", "b", "c", "d", "e"];
+
+    var query5 = strings.AlternateElements();
+
+    foreach (var element in query5)
+    {
+        Console.WriteLine(element);
+    }
+    // This code produces the following output:
+    //     a
+    //     c
+    //     e
+}
+```
+You can also create an overload that accepts a *generic sequence* of objects. This overload takes a delegate as a parameter and uses it to convert a sequence of objects of a generic type to a specific type.
+
+The following code shows an overload of the `Median` method that takes the `System.Func`2` delegate as a parameter. This delegate takes an object of generic type T and returns an object of type `double`.
+
+```csharp
+﻿namespace Custom.Linq.Extensions;
+
+public static class EnumerableExtension
+{
+    public static double Median(this IEnumerable<double>? source)
+    {
+        if (source is null || !source.Any())
+        {
+            throw new InvalidOperationException("Cannot compute median for a null or empty set.");
+        }
+
+        var sortedList =
+            source.OrderBy(number => number).ToList();
+
+        int itemIndex = sortedList.Count / 2;
+
+        if (sortedList.Count % 2 == 0)
+        {
+            // Even number of items.
+            return (sortedList[itemIndex] + sortedList[itemIndex - 1]) / 2;
+        }
+        else
+        {
+            // Odd number of items.
+            return sortedList[itemIndex];
+        }
+    }
+}
+
+public static class OtherExtensions
+{
+    // int overload
+    public static double Median(this IEnumerable<int> source) =>
+        (from number in source select (double)number).Median();
+
+    // generic overload
+    public static double Median<T>(
+        this IEnumerable<T> numbers, Func<T, double> selector) =>
+        (from num in numbers select selector(num)).Median();
+
+    // Extension method for the IEnumerable<T> interface.
+    // The method returns every other element of a sequence.
+    public static IEnumerable<T> AlternateElements<T>(this IEnumerable<T> source)
+    {
+        int index = 0;
+        foreach (T element in source)
+        {
+            if (index % 2 == 0)
+            {
+                yield return element;
+            }
+
+            index++;
+        }
+    }
+}
+```
+You can now call the `Median` method for a sequence of objects of any type. If the type doesn't have its own method overload, pass a delegate parameter. In C#, you can use a lambda expression for this purpose. Also, in Visual Basic only, if you use the `Aggregate` or `Group By` clause instead of the method call, you can pass any value or expression that's in the scope this clause.
+
+The following example code shows how to call the `Median` method for an array of integers and an array of strings. For strings, the median for the lengths of strings in the array is calculated. The example shows how to pass the `System.Func`2` delegate parameter to the `Median` method for each case.

@@ -1,0 +1,70 @@
+---
+title: "IMetaDataEmit::DefineEvent Method"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-defineevent-method.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# IMetaDataEmit::DefineEvent Method
+
+Creates a definition for an event with the specified metadata signature, and gets a token to that event definition.
+
+## Syntax
+
+```cpp
+HRESULT DefineEvent (
+    [in]  mdTypeDef    td,
+    [in]  LPCWSTR      szEvent,
+    [in]  DWORD        dwEventFlags,
+    [in]  mdToken      <example-value>,
+    [in]  mdMethodDef  mdAddOn,
+    [in]  mdMethodDef  mdRemoveOn,
+    [in]  mdMethodDef  mdFire,
+    [in]  mdMethodDef  rmdOtherMethods[],
+    [out] mdEvent      *pmdEvent
+);
+```
+
+## Parameters
+
+ `td`
+ [in] The token for the target class or interface. This is either a `mdTypeDef` or `mdTypeDefNil` token.
+
+ `szEvent`
+ [in] The name of the event.
+
+ `dwEventFlags`
+ [in] Event flags.
+
+ `tkEventType`
+ [in] The token for the event class. This is a `mdTypeDef`, a `mdTypeRef`, or a `mdTokenNil` token.
+
+ `mdAddOn`
+ [in] The method used to subscribe to the event, or null.
+
+ `mdRemoveOn`
+ [in] The method used to unsubscribe to the event, or null.
+
+ `mdFire`
+ [in] The method used (by a derived class) to raise the event.
+
+ `rmdOtherMethods[]`
+ [in] An array of tokens for other methods associated with the event. The array is terminated with a `mdMethodDefNil` token.
+
+ `pmdEvent`
+ [out] The metadata token <example-value> to the event.
+
+## Requirements
+
+ **Platforms:** See .NET supported operating systems.
+
+ **Header:** Cor.h
+
+ **Library:** CorGuids.lib
+
+## See also
+
+- IMetaDataEmit Interface
+- IMetaDataEmit2 Interface

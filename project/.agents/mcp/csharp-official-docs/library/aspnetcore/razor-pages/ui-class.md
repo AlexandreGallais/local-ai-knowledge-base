@@ -1,0 +1,268 @@
+---
+title: "Reusable Razor UI in class libraries with ASP.NET Core"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/razor-pages/ui-class.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# Create reusable UI using the Razor class library project in ASP.NET Core
+
+By Rick Anderson
+
+Razor views, pages, controllers, page models, Razor components, View components, and data models can be built into a Razor class library (RCL). The RCL can be packaged and reused. Applications can include the RCL and override the views and pages it contains. When a view, partial view, or Razor Page is found in both the web app and the RCL, the Razor markup (`.cshtml` file) in the web app takes precedence.
+
+For information on how to integrate npm and webpack into the build process for a RCL, see Build client web assets for your Razor Class Library.
+
+# Visual Studio
+
+* From Visual Studio's **Start Window**, select **Create a new project**. Alternatively, select the **File** > **New** > **Project/Solution**.
+* Select **Razor Class Library** > **Next**.
+* Name the library (for example, "RazorClassLib"), > **Create**. To avoid a file name collision with the generated view library, ensure the library name doesn't end in `.Views`.
+* Select **Support pages and views** if you need the library to contain pages and/or views. By default, only Razor components are supported. Select **Create**.
+
+The Razor Class Library template defaults to Razor component development by default. The **Support pages and views** option supports pages and views. For more information on RCL support in Blazor, see Consume ASP.NET Core Razor components from a Razor class library (RCL).
+
+# .NET CLI
+
+From the command line, run `dotnet new razorclasslib`. For example:
+
+```dotnetcli
+dotnet new razorclasslib -o RazorUIClassLib
+```
+
+The Razor Class Library template defaults to Razor component development by default. Pass the `--support-pages-and-views` option (`dotnet new razorclasslib --support-pages-and-views`) to provide support for pages and views.
+
+For more information, see dotnet new. To avoid a file name collision with the generated view library, ensure the library name doesn't end in `.Views`.
+
+---
+
+Add Razor files to the RCL.
+
+The ASP.NET Core templates assume the RCL content is in the `Areas` folder. See RCL Pages layout below to create an RCL that exposes content in `~/Pages` rather than `~/Areas/Pages`.
+
+## Reference RCL content
+
+The RCL can be referenced by:
+
+* NuGet package. See Creating NuGet packages and dotnet add package and Create and publish a NuGet package.
+* `{ProjectName}.csproj`. See dotnet-add reference.
+
+## Override views, partial views, and pages
+
+When a view, partial view, or Razor Page is found in both the web app and the RCL, the Razor markup (`.cshtml` file) in the web app takes precedence. For example, add `WebApp1/Areas/MyFeature/Pages/Page1.cshtml` to WebApp1, and Page1 in the WebApp1 will take precedence over Page1 in the RCL.
+
+In the sample download, rename `WebApp1/Areas/MyFeature2` to `WebApp1/Areas/MyFeature` to test precedence.
+
+Copy the `RazorUIClassLib/Areas/MyFeature/Pages/Shared/_Message.cshtml` partial view to `WebApp1/Areas/MyFeature/Pages/Shared/_Message.cshtml`. Update the markup to indicate the new location. Build and run the app to verify the app's version of the partial is being used.
+
+If the RCL uses Razor Pages, enable the Razor Pages services and endpoints in the hosting app:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
+app.Run();
+```
+
+### RCL Pages layout
+
+To reference RCL content as though it is part of the web app's `Pages` folder, create the RCL project with the following file structure:
+
+* `RazorUIClassLib/Pages`
+* `RazorUIClassLib/Pages/Shared`
+
+Suppose `RazorUIClassLib/Pages/Shared` contains two partial files: `_Header.cshtml` and `_Footer.cshtml`. The `<partial>` tags could be added to `_Layout.cshtml` file:
+
+```cshtml
+<body>
+  <partial name="_Header">
+  @RenderBody()
+  <partial name="_Footer">
+</body>
+```
+
+Add the `_ViewStart.cshtml` file to the RCL project's `Pages` folder to use the `_Layout.cshtml` file from the host web app:
+
+```cshtml
+@{
+    Layout = "_Layout";
+}
+```
+
+## Create an RCL with static assets
+
+An RCL may require companion static assets that can be referenced by either the RCL or the consuming app of the RCL. ASP.NET Core allows creating RCLs that include static assets that are available to a consuming app.
+
+To include companion assets as part of an RCL, create a `wwwroot` folder in the class library and include any required files in that folder.
+
+When packing an RCL, all companion assets in the `wwwroot` folder are automatically included in the package.
+
+Use the `dotnet pack` command rather than the NuGet.exe version `nuget pack`.
+
+### Add client web assets to the build process
+
+Integrating client web assets into the build pipeline is nontrivial. See Build client web assets for your Razor Class Library for more information.
+
+### Exclude static assets
+
+To exclude static assets, add the desired exclusion path to the `$(DefaultItemExcludes)` property group in the project file. Separate entries with a semicolon (`;`).
+
+In the following example, the `lib.css` stylesheet in the `wwwroot` folder isn't considered a static asset and isn't included in the published RCL:
+
+```xml
+<PropertyGroup>
+  <DefaultItemExcludes>$(DefaultItemExcludes);wwwroot\lib.css</DefaultItemExcludes>
+</PropertyGroup>
+```
+
+### Typescript integration
+
+To include TypeScript files in an RCL:
+
+* Reference the `Microsoft.TypeScript.MSBuild` NuGet package in the project.
+
+   > **Note:**
+> For guidance on adding packages to .NET apps, see the articles under *Install and manage packages* at Package consumption workflow (NuGet documentation). Confirm correct package versions at NuGet.org.
+
+* Place the TypeScript files (`.ts`) outside of the `wwwroot` folder. For example, place the files in a `Client` folder.
+* Add the following markup to the project file:
+  * Configure the TypeScript build output for the `wwwroot` folder with the `TypescriptOutDir` property.
+  * Include the TypeScript target as a dependency of the `PrepareForBuildDependsOn` target.
+  * Remove the output in the `wwwroot folder`.
+  * Remove deleted TypeScript outputs from the `Content` item group.
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    // Markup removed for brevity.
+    <TypescriptOutDir>wwwroot</TypescriptOutDir>
+    <PrepareForBuildDependsOn>
+      CompileTypeScriptWithTSConfig;
+      GetTypeScriptOutputForPublishing;$(PrepareForBuildDependsOn)
+    </PrepareForBuildDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\{path-to-typescript-outputs}" />
+  </ItemGroup>
+
+  <Target Name="RemoveDeletedTypeScriptOutputsFromContent" AfterTargets="TypeScriptDeleteCompilerOutput">
+    <ItemGroup>
+      <Content Remove="@(Content)" Condition="!Exists('%(FullPath)') And ('%(Extension)' == '.js' Or '%(Extension)' == '.map')" />
+    </ItemGroup>
+  </Target>
+
+</Project>
+```
+
+### Consume content from a referenced RCL
+
+The files included in the `wwwroot` folder of the RCL are exposed to either the RCL or the consuming app under the prefix `_content/{PACKAGE ID}/`. For example, a library with an assembly name of `Razor.Class.Lib` and without a `<PackageId>` specified in its project file results in a path to static content at `_content/Razor.Class.Lib/`. When producing a NuGet package and the assembly name isn't the same as the package ID (`<PackageId>` in the library's project file), use the package ID as specified in the project file for `{PACKAGE ID}`.
+
+The consuming app references static assets provided by the library with `<script>`, `<style>`, ``, and other HTML tags. The consuming app must have static file support enabled in:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
+app.Run();
+```
+
+When running the consuming app from build output (`dotnet run`), static web assets are enabled by default in the `Development` environment. To support assets in other environments when running from build output, call `Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.UseStaticWebAssets*` on the host builder in `Program.cs`:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseWebRoot("wwwroot");
+builder.WebHost.UseStaticWebAssets();
+
+builder.Services.AddRazorPages();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+
+app.Run();
+```
+
+Calling `UseStaticWebAssets` isn't required when running an app from published output (`dotnet publish`).
+
+### Multi-project development flow
+
+When the consuming app runs:
+
+* The assets in the RCL stay in their original folders. The assets aren't moved to the consuming app.
+* Any change within the RCL's `wwwroot` folder is reflected in the consuming app after the RCL is rebuilt and without rebuilding the consuming app.
+
+When the RCL is built, a manifest is produced that describes the static web asset locations. The consuming app reads the manifest at runtime to consume the assets from referenced projects and packages. When a new asset is added to an RCL, the RCL must be rebuilt to update its manifest before a consuming app can access the new asset.
+
+### Publish
+
+When the app is published, the companion assets from all referenced projects and packages are copied into the `wwwroot` folder of the published app under `_content/{PACKAGE ID}/`. When producing a NuGet package and the assembly name isn't the same as the package ID (`<PackageId>` in the library's project file), use the package ID as specified in the project file for `{PACKAGE ID}` when examining the `wwwroot` folder for the published assets.
+
+## Related content
+
+* View or download sample code (how to download)
+
+* Consume ASP.NET Core Razor components from a Razor class library (RCL)
+* ASP.NET Core Blazor CSS isolation

@@ -1,0 +1,322 @@
+---
+title: "RandomGeneratorFactory class (java.util.random)"
+tool: "java-se"
+version: "25"
+source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/random/RandomGeneratorFactory.java"
+commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
+license: "GPL-2.0-only WITH Classpath-exception-2.0"
+---
+
+# RandomGeneratorFactory class (java.util.random)
+
+```java
+public final class RandomGeneratorFactory<T extends RandomGenerator>
+```
+
+This is a factory class for generating multiple random number generators
+of a specific algorithm.
+`RandomGeneratorFactory` also provides
+methods for selecting random number generator algorithms.
+
+A specific `RandomGeneratorFactory` can be located by using the
+`RandomGeneratorFactory.of(String)` method, where the argument string
+is the name of the algorithm
+required. The method
+`RandomGeneratorFactory.all()` produces a non-empty `Stream` of all available
+RandomGeneratorFactorys that can be searched
+to locate a `RandomGeneratorFactory` suitable to the task.
+
+There are three methods for constructing a RandomGenerator instance,
+depending on the type of initial seed required.
+`RandomGeneratorFactory.create(long)` is used for long
+seed construction,
+`RandomGeneratorFactory.create(byte[])` is used for byte[]
+seed construction, and
+`RandomGeneratorFactory.create()` is used for random seed
+construction. Example;
+
+RandomGeneratorFactory also provides methods describing the attributes (or properties)
+of a generator and can be used to select random number generator
+algorithms.
+These methods are typically used in
+conjunction with `RandomGeneratorFactory.all()`. In this example, the code
+locates the `RandomGeneratorFactory` that produces
+RandomGenerators
+with the highest number of state bits.
+
+Parameters:
+
+- `<T>`: type of created random generator
+
+**Since:** 17
+
+**See also:** java.util.random
+
+## RandomGeneratorFactory.of(String)
+
+```java
+public static <T extends RandomGenerator> RandomGeneratorFactory<T> of(String name)
+```
+
+Returns a `RandomGeneratorFactory` that can produce instances of
+`RandomGenerator` that utilize the `name`
+algorithm.
+
+Parameters:
+
+- `name`: Name of random number generator algorithm
+- `<T>`: Sub-interface of `RandomGenerator` to produce
+
+**Returns:** `RandomGeneratorFactory` of `RandomGenerator`
+
+Throws:
+
+- `NullPointerException`: if name is null
+- `IllegalArgumentException`: if the named algorithm is not found
+
+## RandomGeneratorFactory.getDefault()
+
+```java
+public static RandomGeneratorFactory<RandomGenerator> getDefault()
+```
+
+Returns a `RandomGeneratorFactory` meeting the minimal requirement
+of having an algorithm whose state bits are greater than or equal 64.
+
+**Implementation requirements:** Since algorithms will improve over time, there is no
+guarantee that this method will return the same algorithm over time.
+
+**Returns:** a `RandomGeneratorFactory`
+
+## RandomGeneratorFactory.all()
+
+```java
+public static Stream<RandomGeneratorFactory<RandomGenerator>> all()
+```
+
+Returns a non-empty stream of available RandomGeneratorFactory(s).
+
+RandomGenerators that are marked as deprecated are not included in the result.
+
+**Returns:** a non-empty stream of all available RandomGeneratorFactory(s).
+
+## RandomGeneratorFactory.name()
+
+```java
+public String name()
+```
+
+Return the name of the algorithm
+used by the random number generator.
+
+**Returns:** Name of the algorithm.
+
+## RandomGeneratorFactory.group()
+
+```java
+public String group()
+```
+
+Return the group name of the algorithm
+used by the random number generator.
+
+**Returns:** Group name of the algorithm.
+
+## RandomGeneratorFactory.stateBits()
+
+```java
+public int stateBits()
+```
+
+Returns number of bits used by the algorithm
+to maintain state of seed.
+
+**Returns:** number of bits used by the algorithm
+        to maintain state of seed.
+
+## RandomGeneratorFactory.equidistribution()
+
+```java
+public int equidistribution()
+```
+
+Returns the equidistribution of the algorithm.
+
+**Returns:** the equidistribution of the algorithm.
+
+## RandomGeneratorFactory.period()
+
+```java
+public BigInteger period()
+```
+
+Return the period of the algorithm
+used by the random number generator.
+Returns BigInteger.ZERO if period is not determinable.
+
+**Returns:** BigInteger period.
+
+## RandomGeneratorFactory.isStatistical()
+
+```java
+public boolean isStatistical()
+```
+
+Return true if random generator is computed using an arithmetic
+algorithm
+and is statistically deterministic.
+
+**Returns:** true if random generator is statistical.
+
+## RandomGeneratorFactory.isStochastic()
+
+```java
+public boolean isStochastic()
+```
+
+Return true if random generator is computed using external or entropic
+sources as inputs.
+
+**Returns:** true if random generator is stochastic.
+
+## RandomGeneratorFactory.isHardware()
+
+```java
+public boolean isHardware()
+```
+
+Return true if random generator uses a hardware device (HRNG) to produce
+entropic input.
+
+**Returns:** true if random generator is generated by hardware.
+
+## RandomGeneratorFactory.isArbitrarilyJumpable()
+
+```java
+public boolean isArbitrarilyJumpable()
+```
+
+Return true if random generator can jump an arbitrarily specified distant
+point in the state cycle.
+
+**Returns:** true if random generator is arbitrarily jumpable.
+
+## RandomGeneratorFactory.isJumpable()
+
+```java
+public boolean isJumpable()
+```
+
+Return true if random generator can jump a specified distant point in
+the state cycle.
+
+**Returns:** true if random generator is jumpable.
+
+## RandomGeneratorFactory.isLeapable()
+
+```java
+public boolean isLeapable()
+```
+
+Return true if random generator is jumpable and can leap to a very distant
+point in the state cycle.
+
+**Returns:** true if random generator is leapable.
+
+## RandomGeneratorFactory.isSplittable()
+
+```java
+public boolean isSplittable()
+```
+
+Return true if random generator can be cloned into a separate object with
+the same properties but positioned further in the state cycle.
+
+**Returns:** true if random generator is splittable.
+
+## RandomGeneratorFactory.isStreamable()
+
+```java
+public boolean isStreamable()
+```
+
+Return true if random generator can be used to create
+Streams of random numbers.
+
+**Returns:** true if random generator is streamable.
+
+## RandomGeneratorFactory.isDeprecated()
+
+```java
+public boolean isDeprecated()
+```
+
+Return true if the implementation of RandomGenerator (algorithm) has been
+marked for deprecation.
+
+**Implementation note:** Random number generator algorithms evolve over time; new
+          algorithms will be introduced and old algorithms will
+          lose standing. If an older algorithm is deemed unsuitable
+          for continued use, it will be marked as deprecated to indicate
+          that it may be removed at some point in the future.
+
+**Returns:** true if the implementation of RandomGenerator (algorithm) has been
+        marked for deprecation
+
+## RandomGeneratorFactory.create()
+
+```java
+public T create()
+```
+
+Create an instance of `RandomGenerator` based on the
+algorithm chosen.
+
+**Returns:** new instance of `RandomGenerator`.
+
+## RandomGeneratorFactory.create(long)
+
+```java
+public T create(long seed)
+```
+
+Create an instance of `RandomGenerator` based on the
+algorithm chosen,
+and the provided `seed`.
+If the `RandomGenerator` doesn't support instantiation through
+a `seed` of type `long` then this method throws
+an `UnsupportedOperationException`.
+
+Parameters:
+
+- `seed`: long random seed value.
+
+**Returns:** new instance of `RandomGenerator`.
+
+Throws:
+
+- `UnsupportedOperationException`: if a `seed` of type `long` in not supported.
+
+## RandomGeneratorFactory.create(byte[])
+
+```java
+public T create(byte[] seed)
+```
+
+Create an instance of `RandomGenerator` based on the
+algorithm chosen,
+and the provided `seed`.
+If the `RandomGenerator` doesn't support instantiation through
+a `seed` of type `byte[]` then this method throws
+an `UnsupportedOperationException`.
+
+Parameters:
+
+- `seed`: byte array random seed value.
+
+**Returns:** new instance of `RandomGenerator`.
+
+Throws:
+
+- `UnsupportedOperationException`: if a `seed` of type `byte[]` in not supported.
+- `NullPointerException`: if seed is null.

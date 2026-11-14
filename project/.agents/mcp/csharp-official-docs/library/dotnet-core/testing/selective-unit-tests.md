@@ -1,0 +1,340 @@
+---
+title: "Run selected unit tests"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/selective-unit-tests.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Run selected unit tests
+
+With the `dotnet test` command in .NET Core, you can use a filter expression to run selected tests. This article demonstrates how to filter tests. The examples use `dotnet test`. If you're using `vstest.console.exe`, replace `--filter` with `--testcasefilter:`.
+
+> **Note:**
+> The `--filter` syntax described in the following sections applies to MSTest, NUnit, and xUnit. TUnit uses a different syntax; select **TUnit** at the top of this article for details.
+
+## Syntax
+
+```dotnetcli
+dotnet test --filter <Expression>
+```
+
+* **Expression** is in the format `<Property><Operator><Value>[|&<Expression>]`.
+
+  Expressions can be joined with boolean operators: `|` for boolean **or**, `&` for boolean **and**.
+
+  Expressions can be enclosed in parentheses. For example: `(Name~MyClass) | (Name~MyClass2)`.
+
+  An expression without any **operator** is interpreted as a **contains** on the `FullyQualifiedName` property. For example, `dotnet test --filter xyz` is the same as `dotnet test --filter FullyQualifiedName~xyz`.
+
+* **Property** is an attribute of the `Test Case`. For example, the following properties are supported by popular unit test frameworks.
+
+  | Test framework | Supported properties |
+  | -------------- | -------------------- |
+  | MSTest         | `FullyQualifiedName``Name``ClassName``Priority``TestCategory``Id` |
+  | NUnit          | `FullyQualifiedName``Name``Priority``TestCategory``Category``Property` |
+  | xUnit          | `FullyQualifiedName``DisplayName``Traits` |
+
+* **Operators**
+
+  * `=` exact match
+  * `!=`not exact match
+  * `~` contains
+  * `!~` doesn't contain
+
+* **Value** is a string. All the lookups are case insensitive.
+
+## Character escaping
+
+Use escape sequences to represent filter operator characters in a filter value. These escape sequences are separate from any escaping your shell requires.
+
+| Escape sequence | Represents           |
+| --------------- | -------------------- |
+| `\\`          | `\`                  |
+| `\(`           | `(`                  |
+| `\)`           | `)`                  |
+| `\&`           | `&`                  |
+| `\|`           | `&#124;` |
+| `\=`           | `=`                  |
+| `\!`           | `!`                  |
+| `\~`           | `~`                  |
+
+To escape filter values programmatically, use the `Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities.FilterHelper.Escape` API from the `Microsoft.VisualStudio.TestPlatform.ObjectModel` NuGet package.
+
+To use an exclamation mark (`!`) in a filter expression, you have to escape it in some Linux or macOS shells by putting a backslash in front of it (`\!`). For example, the following filter skips all tests in a namespace that contains `IntegrationTests`:
+
+```dotnetcli
+dotnet test --filter FullyQualifiedName\!~IntegrationTests
+```
+
+For `FullyQualifiedName` values that include a comma for generic type parameters, escape the comma with `%2C`. For example:
+
+```dotnetcli
+dotnet test --filter "FullyQualifiedName=MyNamespace.MyTestsClass<ParameterType1%2CParameterType2>.MyTestMethod"
+```
+
+Because your shell also parses the filter expression, quote the entire `--filter` value whenever it contains characters your shell treats specially, such as `<`, `>`, or `,`. Quoting is required in PowerShell, where the comma is the array operator.
+
+For `Name` or `DisplayName`, use the URL encoding for the special characters. For example, to run a test with the name `MyTestMethod` and a string value `"text"`, use the following filter:
+
+```dotnetcli
+dotnet test --filter "Name=MyTestMethod \(%22text%22\)"
+```
+
+**mstest:**
+
+## MSTest examples
+
+```csharp
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace MSTestNamespace
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        [TestMethod, Priority(1), TestCategory("CategoryA")]
+        public void TestMethod1()
+        {
+        }
+
+        [TestMethod, Priority(2)]
+        public void TestMethod2()
+        {
+        }
+    }
+}
+```
+
+| Expression | Result |
+|--|--|
+| `dotnet test --filter Method` | Runs tests whose `System.Reflection.Module.FullyQualifiedName` contains `Method`. |
+| `dotnet test --filter Name~TestMethod1` | Runs tests whose name contains `TestMethod1`. |
+| `dotnet test --filter ClassName=MSTestNamespace.UnitTest1` | Runs tests that are in class `MSTestNamespace.UnitTest1`.**Note:** The `ClassName` value should have a namespace, so `ClassName=UnitTest1` won't work. |
+| `dotnet test --filter FullyQualifiedName!=MSTestNamespace.UnitTest1.TestMethod1` | Runs all tests except `MSTestNamespace.UnitTest1.TestMethod1`. |
+| `dotnet test --filter TestCategory=CategoryA` | Runs tests that are annotated with `[TestCategory("CategoryA")]`. |
+| `dotnet test --filter Priority=2` | Runs tests that are annotated with `[Priority(2)]`. |
+| `dotnet test --filter "Id=<guid>"` | Runs the test case whose discovered `TestCase.Id` value exactly matches the GUID. |
+
+`Id` filtering requires MSTest.TestAdapter 3.6 or later. Obtain the GUID from the test case that VSTest discovery returns in `TestCase.Id`. This filter can select one unfolded data-driven iteration without matching or escaping its display name. Each row must be discovered as an individual test case; a folded data-driven test exposes only one parent identity.
+
+Examples using the conditional operators `|` and `&`:
+
+* To run tests that have `UnitTest1` in their `System.Reflection.Module.FullyQualifiedName` **or** `Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute` is `"CategoryA"`.
+
+  ```dotnetcli
+  dotnet test --filter "FullyQualifiedName~UnitTest1|TestCategory=CategoryA"
+  ```
+
+* To run tests that have `UnitTest1` in their `System.Reflection.Module.FullyQualifiedName` **and** have a `Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute` of `"CategoryA"`.
+
+  ```dotnetcli
+  dotnet test --filter "FullyQualifiedName~UnitTest1&TestCategory=CategoryA"
+  ```
+
+* To run tests that have either `System.Reflection.Module.FullyQualifiedName` containing `UnitTest1` **and** have a `Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute` of `"CategoryA"` **or** have a `Microsoft.VisualStudio.TestTools.UnitTesting.PriorityAttribute` with a priority of `1`.
+
+  ```dotnetcli
+  dotnet test --filter "(FullyQualifiedName~UnitTest1&TestCategory=CategoryA)|Priority=1"
+  ```
+
+**xunit:**
+
+## xUnit examples
+
+```csharp
+using Xunit;
+
+namespace XUnitNamespace
+{
+    public class TestClass1
+    {
+        [Fact, Trait("Priority", "1"), Trait("Category", "CategoryA")]
+        public void Test1()
+        {
+        }
+
+        [Fact, Trait("Priority", "2")]
+        public void Test2()
+        {
+        }
+    }
+}
+```
+
+| Expression | Result |
+|--|--|
+| `dotnet test --filter DisplayName=XUnitNamespace.TestClass1.Test1` | Runs only one test, `XUnitNamespace.TestClass1.Test1`. |
+| `dotnet test --filter FullyQualifiedName!=XUnitNamespace.TestClass1.Test1` | Runs all tests except `XUnitNamespace.TestClass1.Test1`. |
+| `dotnet test --filter DisplayName~TestClass1` | Runs tests whose display name contains `TestClass1`. |
+
+In the code example, the defined traits with keys `"Category"` and `"Priority"` can be used for filtering.
+
+| Expression | Result |
+|--|--|
+| `dotnet test --filter XUnit` | Runs tests whose `System.Reflection.Module.FullyQualifiedName` contains `XUnit`.|
+| `dotnet test --filter Category=CategoryA` | Runs tests that have `[Trait("Category", "CategoryA")]`. |
+
+Examples using the conditional operators `|` and `&`:
+
+* To run tests that have `TestClass1` in their `System.Reflection.Module.FullyQualifiedName` **or** have a `Trait` with a key of `"Category"` and value of `"CategoryA"`.
+
+  ```dotnetcli
+  dotnet test --filter "FullyQualifiedName~TestClass1|Category=CategoryA"
+  ```
+
+* To run tests that have `TestClass1` in their `System.Reflection.Module.FullyQualifiedName` **and** have a `Trait` with a key of `"Category"` and value of `"CategoryA"`.
+
+  ```dotnetcli
+  dotnet test --filter "FullyQualifiedName~TestClass1&Category=CategoryA"
+  ```
+
+* To run tests that have either `System.Reflection.Module.FullyQualifiedName` containing `TestClass1` **and** have a `Trait` with a key of `"Category"` and value of `"CategoryA"` **or** have a `Trait` with a key of `"Priority"` and value of `1`.
+
+  ```dotnetcli
+  dotnet test --filter "(FullyQualifiedName~TestClass1&Category=CategoryA)|Priority=1"
+  ```
+
+**nunit:**
+
+## NUnit examples
+
+For NUnit, `TestCategory` and `Category` are interchangeable filter property names. Both filter the categories that you assign with the `Category` attribute, so existing NUnit commands that use `--filter Category=MyCategory` don't need to change.
+
+```csharp
+using NUnit.Framework;
+
+namespace NUnitNamespace
+{
+    public class UnitTest1
+    {
+        [Test, Property("Priority", 1), Category("CategoryA")]
+        public void TestMethod1()
+        {
+        }
+
+        [Test, Property("Priority", 2)]
+        public void TestMethod2()
+        {
+        }
+    }
+}
+```
+
+| Expression | Result |
+|--|--|
+| `dotnet test --filter Method` | Runs tests whose `System.Reflection.Module.FullyQualifiedName` contains `Method`. |
+| `dotnet test --filter Name~TestMethod1` | Runs tests whose name contains `TestMethod1`. |
+| `dotnet test --filter FullyQualifiedName~NUnitNamespace.UnitTest1` | Runs tests that are in class `NUnitNamespace.UnitTest1`. |
+| `dotnet test --filter FullyQualifiedName!=NUnitNamespace.UnitTest1.TestMethod1` | Runs all tests except `NUnitNamespace.UnitTest1.TestMethod1`. |
+| `dotnet test --filter TestCategory=CategoryA` | Runs tests that are annotated with `[Category("CategoryA")]`. |
+| `dotnet test --filter Category=CategoryA` | Runs the same tests as `TestCategory=CategoryA`. |
+| `dotnet test --filter Priority=2` | Runs tests that are annotated with `[Priority(2)]`. |
+
+Examples using the conditional operators `|` and `&`:
+
+To run tests that have `UnitTest1` in their `System.Reflection.Module.FullyQualifiedName` **or** have a `Category` of `"CategoryA"`.
+
+```dotnetcli
+dotnet test --filter "FullyQualifiedName~UnitTest1|TestCategory=CategoryA"
+```
+
+To run tests that have `UnitTest1` in their `System.Reflection.Module.FullyQualifiedName` **and** have a `Category` of `"CategoryA"`.
+
+```dotnetcli
+dotnet test --filter "FullyQualifiedName~UnitTest1&TestCategory=CategoryA"
+```
+
+To run tests that have either a `System.Reflection.Module.FullyQualifiedName` containing `UnitTest1` **and** have a `Category` of `"CategoryA"` **or** have a `Property` with a `"Priority"` of `1`.
+
+```dotnetcli
+dotnet test --filter "(FullyQualifiedName~UnitTest1&TestCategory=CategoryA)|Priority=1"
+```
+
+For more information, see TestCase filter.
+
+**tunit:**
+
+## TUnit examples
+
+TUnit doesn't support the `--filter` option described earlier in this article. Instead, it uses the MTP `--treenode-filter` option. A tree node filter is a path in the form `/<Assembly>/<Namespace>/<Class>/<Method>`, where:
+
+* `*` matches any value within a single path segment, and can be combined with other text, such as `*Method*`.
+* `**` matches any number of path segments.
+* `[<Property>=<Value>]` after a path segment matches tests that have that property. `[Category("CategoryA")]` is exposed as the property `Category`, and `[Property("Priority", "2")]` as the property `Priority`.
+* `|` (or) and `&` (and) combine alternatives within a single path segment or property filter. Enclose each alternative in parentheses, for example `/*/*/(UnitTest1)|(UnitTest2)/*` or `[(Category=CategoryA)|(Priority=2)]`.
+
+The `--treenode-filter` option is an MTP option, so `dotnet test` must run in its MTP mode. With the .NET 10 SDK or later, add the following configuration to the *global.json* file in your solution root:
+
+```json
+{
+    "test": {
+        "runner": "Microsoft.Testing.Platform"
+    }
+}
+```
+
+Without it, `dotnet test` runs in VSTest mode and fails with `MSB1001: Unknown switch` before any test runs. For more information, including how to run MTP projects with earlier SDKs, see MTP mode of dotnet test.
+
+The examples use the following test class:
+
+```csharp
+namespace TUnitNamespace;
+
+public class UnitTest1
+{
+    [Test, Property("Priority", "1"), Category("CategoryA")]
+    public void TestMethod1()
+    {
+    }
+
+    [Test, Property("Priority", "2")]
+    public void TestMethod2()
+    {
+    }
+}
+```
+
+| Expression | Result |
+|--|--|
+| `dotnet test --treenode-filter "/*/*/*/*Method*"` | Runs tests whose method name contains `Method`. |
+| `dotnet test --treenode-filter "/*/*/*/TestMethod1"` | Runs tests whose name is `TestMethod1`. |
+| `dotnet test --treenode-filter "/*/TUnitNamespace/UnitTest1/*"` | Runs all tests in class `TUnitNamespace.UnitTest1`. |
+| `dotnet test --treenode-filter "/**[Category=CategoryA]"` | Runs tests that are annotated with `[Category("CategoryA")]`. |
+| `dotnet test --treenode-filter "/**[Priority=2]"` | Runs tests that are annotated with `[Property("Priority", "2")]`. |
+
+Examples using the conditional operators `|` and `&`:
+
+To run tests that are in class `UnitTest1` **and** have a `Category` of `"CategoryA"`:
+
+```dotnetcli
+dotnet test --treenode-filter "/*/*/UnitTest1/*[Category=CategoryA]"
+```
+
+To run tests that have a `Category` of `"CategoryA"` **or** a `Priority` of `"2"`:
+
+```dotnetcli
+dotnet test --treenode-filter "/**[(Category=CategoryA)|(Priority=2)]"
+```
+
+To run tests that are in class `UnitTest1` **and** have either a `Category` of `"CategoryA"` **or** a `Priority` of `"2"`:
+
+```dotnetcli
+dotnet test --treenode-filter "/*/*/UnitTest1/*[(Category=CategoryA)|(Priority=2)]"
+```
+
+To run tests that have a `Category` of `"CategoryA"` **and** a `Priority` of `"1"`:
+
+```dotnetcli
+dotnet test --treenode-filter "/**[(Category=CategoryA)&(Priority=1)]"
+```
+
+## See also
+
+- dotnet test
+- dotnet test --filter
+
+## Next steps
+
+> Order unit tests

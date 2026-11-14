@@ -1,0 +1,122 @@
+---
+title: "std::sys::helpers::c_opaque"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/helpers/c_opaque.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# std::sys::helpers::c_opaque
+
+## struct COpaque
+
+```rust
+pub struct COpaque<T>
+```
+
+A wrapper for an opaque C object.
+
+Some libraries like UNIX's pthread have data types that must be treated
+as entirely opaque. Soundly wrapping these types is very hard since
+Rust's operational semantics are much stricter when it comes to e.g. the
+initialization state of data types and pointer aliasing. For instance, a
+function like `pthread_mutexattr_init` might not fully initialize the
+`libc::pthread_mutexattr_t` passed to it, so doing e.g.
+```
+let mut attr = MaybeUninit::uninit();
+pthread_mutexattr_init(attr.as_mut_ptr());
+let attr = attr.assume_init();
+```rust
+is unsound. Another example: on platforms like macOS a `pthread_mutex_t`
+cannot be moved because the implementation will dynamically align some inner
+fields to a higher alignment than required by the definition. And furthermore,
+some implementations (e.g. AIX) of `pthread_cond_t` use intrinsically linked
+lists, and hence doing
+```
+pub struct Condvar(UnsafeCell<libc::pthread_cont_t>);
+
+/* initialization and usage omitted for brevity */
+
+impl Drop for Condvar {
+    fn drop(&mut self) {
+        unsafe { libc::pthread_cond_destroy(self.0.get()) };
+    }
+}
+```rust
+results in undefined behaviour (even when utilizing `Pin` to ensure
+immovability) because the creation of the `&mut Condvar` passed to `drop`
+invalidates other pointers in the linked list.
+
+`COpaque` helps with avoiding all these caveats:
+* it wraps the inner value in `MaybeUninit` and thus is entirely oblivious
+  of its initialization state.
+* `COpaque::get` takes a `Pin` and thus prevents accidental moves.
+* it utilizes `UnsafePinned` to relax the aliasing guarantees of mutable
+  references to the `COpaque`.
+
+The only way to access the inner value is via `COpaque::get`. It returns
+a pointer which should be directly passed to the platform functions.
+
+In effect, a pinned instance of this wrapper acts very much like a C variable.
+
+## COpaque::uninit
+
+```rust
+pub fn uninit() -> COpaque<T>
+```
+
+Creates an uninitialized C-like storage for `T`.
+
+If you'd write
+```
+T var;
+```rust
+in C, the equivalent Rust code is
+```
+let var = pin!(COpaque::uninit());
+```rust
+
+## COpaque::zeroed
+
+```rust
+pub fn zeroed() -> COpaque<T>
+```
+
+Creates a zero-initialized C-like storage for `T`.
+
+If you'd write
+```
+T var = {};
+```rust
+in C, the equivalent Rust code is
+```
+let var = pin!(COpaque::zeroed());
+```rust
+
+## COpaque::new
+
+```rust
+pub fn new(initializer: T) -> COpaque<T>
+```
+
+Creates a pre-initialized C-like storage for `T`.
+
+If you'd write
+```
+T var = T_INITIALIZER;
+```rust
+in C, the equivalent Rust code is
+```
+let var = pin!(COpaque::new(T_INITIALIZER));
+```rust
+
+## COpaque::get
+
+```rust
+pub fn get(self: Pin<&Self>) -> *mut T
+```
+
+Gets a pointer to the value.
+
+Use this as a replacement for C's ampersand operator.

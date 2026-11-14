@@ -1,0 +1,195 @@
+---
+title: "xml.dom.pulldom --- Support for building partial DOM trees"
+tool: "python"
+version: "3.15"
+source: "https://github.com/python/cpython/blob/5e58eaad7c58df58dfa8ea549c87996e01dd1077/Doc/library/xml.dom.pulldom.rst"
+commit: "5e58eaad7c58df58dfa8ea549c87996e01dd1077"
+license: "PSF-2.0 AND 0BSD"
+---
+
+# `xml.dom.pulldom` --- Support for building partial DOM trees
+
+Module `xml.dom.pulldom`.
+
+**Source code:** Lib/xml/dom/pulldom.py
+
+The `xml.dom.pulldom` module provides a "pull parser" which can also be
+asked to produce DOM-accessible fragments of the document where necessary. The
+basic <example-value> involves pulling "events" from a stream of incoming XML and
+processing them. In contrast to SAX which also employs an event-driven
+processing model together with callbacks, the user of a pull parser is
+responsible for explicitly pulling events from the stream, looping over those
+events until either processing is finished or an error condition occurs.
+
+> **Note:** If you need to parse untrusted or unauthenticated data, see
+> xml-security.
+
+> *Changed in version 3.7.1.*
+> The SAX parser no longer processes general external entities by default to
+> increase security by default. To enable processing of external entities,
+> pass a custom parser instance in:
+>
+>
+> ```
+> from xml.dom.pulldom import parse
+> from xml.sax import make_parser
+> from xml.sax.handler import feature_external_ges
+>
+> parser = make_parser()
+> parser.setFeature(feature_external_ges, True)
+> parse(filename, parser=parser)
+> ```
+>
+
+Example:
+
+```
+from xml.dom import pulldom
+
+doc = pulldom.parse('sales_items.xml')
+for event, node in doc:
+    if event == pulldom.START_ELEMENT and node.tagName == 'item':
+        if int(node.getAttribute('price')) > 50:
+            doc.expandNode(node)
+            print(node.toxml())
+```
+
+`event` is one of the following constants,
+and `node` is the node which the event is about.
+The nodes implement the `xml.dom` interfaces;
+they are created by the DOM implementation given to `PullDOM`,
+which is `xml.dom.minidom` by default.
+
+### `START_DOCUMENT`
+
+```python
+END_DOCUMENT
+```
+
+The start and the end of the document.
+*node* is the `Document`.
+
+### `START_ELEMENT`
+
+```python
+END_ELEMENT
+```
+
+The start tag and the end tag of an element.
+*node* is the `Element`.
+
+### `CHARACTERS`
+
+Character data.
+*node* is the `Text` node.
+
+### `IGNORABLE_WHITESPACE`
+
+White space in element content, as declared in the DTD.
+*node* is the `Text` node.
+
+### `COMMENT`
+
+A comment.
+*node* is the `Comment` node.
+
+### `PROCESSING_INSTRUCTION`
+
+A processing instruction.
+*node* is the `ProcessingInstruction` node.
+
+Since the document is treated as a "flat" stream of events, the document "tree"
+is implicitly traversed and the desired elements are found regardless of their
+depth in the tree. In other words, one does not need to consider hierarchical
+issues such as recursive searching of the document nodes, although if the
+context of elements were important, one would either need to maintain some
+context-related state (i.e. remembering where one is in the document at any
+given point) or to make use of the `DOMEventStream.expandNode()` method
+and switch to DOM-related processing.
+
+### class `PullDOM(documentFactory=None)`
+
+Subclass of `xml.sax.handler.ContentHandler` which turns SAX events
+into the events of the pull parser.
+The nodes are created, but they are not added to the tree,
+unless `expandNode()` is called.
+*documentFactory*, if given, is a DOM implementation used to create
+the document; by default the implementation of `xml.dom.minidom`
+is used.
+
+### class `SAX2DOM(documentFactory=None)`
+
+Subclass of `PullDOM` which also adds every created node
+to the tree, so that the complete document is built.
+
+### `parse(stream_or_string, parser=None, bufsize=None)`
+
+Return a `DOMEventStream` from the given input. *stream_or_string* may be
+either a file name, or a file-like object. *parser*, if given, must be an
+`XMLReader` object. This function will change the
+document handler of the
+parser and activate namespace support; other parser configuration (like
+setting an entity resolver) must have been done in advance.
+
+If you have XML in a string, you can use the `parseString()` function instead:
+
+### `parseString(string, parser=None)`
+
+Return a `DOMEventStream` that represents the *string*.
+*string* must be a `str` instance;
+to parse bytes, pass a binary file object to `parse()`.
+
+### `default_bufsize`
+
+Default value for the *bufsize* parameter to `parse()`.
+
+The value of this variable can be changed before calling `parse()` and
+the new value will take effect.
+
+## DOMEventStream Objects
+
+### class `DOMEventStream(stream, parser, bufsize)`
+
+Produce the events for the data read from the file object *stream*
+by the `XMLReader` *parser*.
+The data is read by *bufsize* bytes, or characters for a text stream,
+at a time.
+
+> *Changed in version 3.11.*
+> Support for `__getitem__()` method has been removed.
+
+### `getEvent()`
+
+Return the next `(event, node)` tuple,
+or `None` at the end of the document.
+See above for the events and the corresponding nodes.
+The current node does not contain information about its children, unless
+`expandNode()` is called.
+
+### `expandNode(node)`
+
+Expands all children of *node* into *node*. Example:
+
+```
+from xml.dom import pulldom
+
+xml = '<html><title>Foo</title> <p>Some text <div>and more</div></p> </html>'
+doc = pulldom.parseString(xml)
+for event, node in doc:
+    if event == pulldom.START_ELEMENT and node.tagName == 'p':
+        # Following statement only prints '<p/>'
+        print(node.toxml())
+        doc.expandNode(node)
+        # Following statement prints node with all its children '<p>Some text <div>and more</div></p>'
+        print(node.toxml())
+```
+
+### `reset()`
+
+Discard the events which are not read yet
+and prepare the object for parsing a new document.
+
+### `clear()`
+
+Release the parser and the document.
+The stream is not closed, and the object can no longer be used.

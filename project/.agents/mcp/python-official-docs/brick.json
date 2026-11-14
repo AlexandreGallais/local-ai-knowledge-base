@@ -1,0 +1,8 @@
+{
+  "name": "python-official-docs",
+  "instructions": "The official documentation of Python, kept locally: the language reference, the standard library, the tutorial and the how-to guides, and the API of the Inkscape extensions (inkex) with their guides. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
+  "search": "Search the official documentation of Python (language reference, standard library, tutorial, how-to guides) and of the Inkscape extensions (the inkex API and the guides for extension authors). Returns 10 section ids at most.",
+  "queryExample": "\"pathlib glob\" or \"PathElement\"",
+  "toolExample": "\"python\" or \"inkex\"",
+  "idExample": "library/python/library/pathlib.md#basic-use"
+}

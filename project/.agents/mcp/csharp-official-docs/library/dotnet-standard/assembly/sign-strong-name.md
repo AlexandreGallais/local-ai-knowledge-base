@@ -1,0 +1,99 @@
+---
+title: "How to: Sign an assembly with a strong name"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/sign-strong-name.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# How to: Sign an assembly with a strong name
+
+> **Note:**
+> Although .NET Core supports strong-named assemblies, and all assemblies in the .NET Core library are signed, the majority of third-party assemblies do not need strong names. For more information, see Strong Name Signing on GitHub.
+
+There are a number of ways to sign an assembly with a strong name:
+
+- By using the **Build** > **Strong naming** page in the project designer for a project in Visual Studio. This is the easiest and most convenient way to sign an assembly with a strong name.
+- By using the Assembly Linker (Al.exe) to link a .NET Framework code module (a _.netmodule_ file) with a key file.
+- By using assembly attributes to insert the strong name information into your code. You can use either the `System.Reflection.AssemblyKeyFileAttribute` or the `System.Reflection.AssemblyKeyNameAttribute` attribute, depending on where the key file to be used is located.
+- By using compiler options.
+
+You must have a cryptographic key pair to sign an assembly with a strong name. For more information about creating a key pair, see How to: Create a public-private key pair.
+
+## Create and sign an assembly with a strong name by using Visual Studio
+
+1. In **Solution Explorer**, open the shortcut menu for the project, and then choose **Properties**.
+1. Under the **Build** tab you'll find a **Strong naming** node.
+1. Select the **Sign the assembly** checkbox, which expands the options.
+1. Select the **Browse** button to choose a **Strong name key file** path.
+
+> **Note:**
+> In order to delay sign an assembly, choose a public key file.
+
+### Create and sign an assembly with a strong name by using the Assembly Linker
+
+Open Visual Studio Developer Command Prompt or Visual Studio Developer PowerShell, and enter the following command:
+
+**al** **/out:**\<_assemblyName_> _\<moduleName>_ **/keyfile:**\<_keyfileName_>
+
+Where:
+
+- _assemblyName_ is the name of the strongly signed assembly (a _.dll_ or _.exe_ file) that Assembly Linker will emit.
+- _moduleName_ is the name of a .NET Framework code module (a _.netmodule_ file) that includes one or more types. You can create a _.netmodule_ file by compiling your code with the `/target:module` switch in C# or Visual Basic.
+- _keyfileName_ is the name of the container or file that contains the key pair. Assembly Linker interprets a relative path in relation to the current directory.
+
+The following example signs the assembly _MyAssembly.dll_ with a strong name by using the key file _sgKey.snk_.
+
+```console
+al /out:MyAssembly.dll MyModule.netmodule /keyfile:sgKey.snk
+```
+
+For more information about this tool, see Assembly Linker.
+
+## Sign an assembly with a strong name by using attributes
+
+1. Add the `System.Reflection.AssemblyKeyFileAttribute` or `System.Reflection.AssemblyKeyNameAttribute` attribute to your source code file, and specify the name of the file or container that contains the key pair to use when signing the assembly with a strong name.
+
+2. Compile the source code file normally.
+
+    > **Note:**
+    > The C# and Visual Basic <example-value> issue compiler warnings (CS1699 and BC41008, respectively) when they encounter the `System.Reflection.AssemblyKeyFileAttribute` or `System.Reflection.AssemblyKeyNameAttribute` attribute in source code. You can ignore the warnings.
+
+The following example uses the `System.Reflection.AssemblyKeyFileAttribute` attribute with a key file called _keyfile.snk_, which is located in the directory where the assembly is compiled.
+
+```cpp
+[assembly:AssemblyKeyFileAttribute("keyfile.snk")];
+```
+
+```csharp
+[assembly:AssemblyKeyFileAttribute("keyfile.snk")]
+```
+
+```vb
+<Assembly:AssemblyKeyFileAttribute("keyfile.snk")>
+```
+
+You can also delay sign an assembly when compiling your source file. For more information, see Delay-sign an assembly.
+
+## Sign an assembly with a strong name by using the compiler
+
+Compile your source code file or files with the `/keyfile` or `/delaysign` compiler option in C# and Visual Basic, or the `/KEYFILE` or `/DELAYSIGN` linker option in C++. After the option name, add a colon and the name of the key file. When using command-line compilers, you can copy the key file to the directory that contains your source code files.
+
+For information on delay signing, see Delay-sign an assembly.
+
+The following example uses the C# compiler and signs the assembly _UtilityLibrary.dll_ with a strong name by using the key file _sgKey.snk_.
+
+```cmd
+csc /t:library UtilityLibrary.cs /keyfile:sgKey.snk
+```
+
+## See also
+
+- Create and use strong-named assemblies
+- How to: Create a public-private key pair
+- Al.exe (Assembly Linker)
+- Delay-sign an assembly
+- Strong-name APIs throw PlatformNotSupportedException
+- Manage assembly and manifest signing
+- Signing page, Project Designer

@@ -1,0 +1,55 @@
+{
+  "sources": [
+    {
+      "tool": "rust-book",
+      "title": "The Rust Programming Language",
+      "repository": "https://github.com/rust-lang/book.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "Steve Klabnik, Carol Nichols, Chris Krycho and the Rust community",
+      "flavor": "mdbook",
+      "core": false,
+      "paths": [
+        "src/",
+        "listings/"
+      ],
+      "docs": ["src"]
+    },
+    {
+      "tool": "rust-reference",
+      "title": "The Rust Reference",
+      "repository": "https://github.com/rust-lang/reference.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "The Rust Project Developers",
+      "flavor": "mdbook",
+      "core": false,
+      "paths": ["src/"],
+      "docs": ["src"]
+    },
+    {
+      "tool": "rust-std",
+      "title": "The Rust standard library: core, alloc and std, from their documentation comments",
+      "repository": "https://github.com/rust-lang/rust.git",
+      "ref": "1.100.0",
+      "version": "1.100",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "The Rust Project Developers",
+      "flavor": "markdown",
+      "core": false,
+      "paths": [
+        "library/core/src/",
+        "library/alloc/src/",
+        "library/std/src/"
+      ],
+      "docs": [
+        "library/core/src",
+        "library/alloc/src",
+        "library/std/src"
+      ],
+      "converter": "rustdoc"
+    }
+  ]
+}

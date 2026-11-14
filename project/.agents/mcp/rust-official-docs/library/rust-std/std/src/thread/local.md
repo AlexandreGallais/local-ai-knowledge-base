@@ -1,0 +1,537 @@
+---
+title: "std::thread::local"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/local.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# std::thread::local
+
+Thread local storage
+
+## struct LocalKey
+
+```rust
+pub struct LocalKey<T: 'static>
+```
+
+A thread local storage (TLS) key which owns its contents.
+
+This key uses the fastest implementation available on the target platform.
+It is instantiated with the `thread_local!` macro and the
+primary method is the `with` method, though there are helpers to make
+working with `Cell` types easier.
+
+The `with` method yields a reference to the contained value which cannot
+outlive the current thread or escape the given closure.
+
+# Initialization and Destruction
+
+Initialization is dynamically performed on the first call to a setter (e.g.
+`with`) within a thread, and values that implement `Drop` get
+destructed when a thread exits. Some platform-specific caveats apply, which
+are explained below.
+Note that, should the destructor panic, the whole process will be [aborted].
+On platforms where initialization requires memory allocation, this is
+performed directly through `System`, allowing the [global allocator]
+to make use of thread local storage.
+
+A `LocalKey`'s initializer cannot recursively depend on itself. Using a
+`LocalKey` in this way may cause panics, aborts, or infinite recursion on
+the first call to `with`.
+
+# Single-thread Synchronization
+
+Though there is no potential race with other threads, it is still possible to
+obtain multiple references to the thread-local data in different places on
+the call stack. For this reason, only shared (`&T`) references may be obtained.
+
+To allow obtaining an exclusive mutable reference (`&mut T`), typically a
+`Cell` or `RefCell` is used (see the `std::cell` for more information
+on how exactly this works). To make this easier there are specialized
+implementations for `LocalKey<Cell<T>>` and `LocalKey<RefCell<T>>`.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+use std::thread;
+
+// explicit `const {}` block enables more efficient initialization
+thread_local!(static FOO: Cell<u32> = const { Cell::new(1) });
+
+assert_eq!(FOO.get(), 1);
+FOO.set(2);
+
+// each thread starts out with the initial value of 1
+let t = thread::spawn(move || {
+    assert_eq!(FOO.get(), 1);
+    FOO.set(3);
+});
+
+// wait for the thread to complete and bail out on panic
+t.join().unwrap();
+
+// we retain our original value of 2 despite the child thread
+assert_eq!(FOO.get(), 2);
+```
+
+# Platform-specific behavior
+
+Note that a "best effort" is made to ensure that destructors for types
+stored in thread local storage are run, but not all platforms can guarantee
+that destructors will be run for all types in thread local storage. For
+example, there are a number of known caveats where destructors are not run:
+
+1. On Unix systems when pthread-based TLS is being used, destructors will
+   not be run for TLS values on the main thread when it exits. Note that the
+   application will exit immediately after the main thread exits as well.
+2. On all platforms it's possible for TLS to re-initialize other TLS slots
+   during destruction. Some platforms ensure that this cannot happen
+   infinitely by preventing re-initialization of any slot that has been
+   destroyed, but not all platforms have this guard. Those platforms that do
+   not guard typically have a synthetic limit after which point no more
+   destructors are run.
+3. When the process exits on Windows systems, TLS destructors may only be
+   run on the thread that causes the process to exit. This is because the
+   other threads may be forcibly terminated.
+
+   TLS destructors may be leaked if a thread exits while [converted into a fiber],
+   or if Rust TLS destructor support is first needed while running in a fiber.
+
+   If a process loads a Rust `cdylib`, it must not cause the Rust TLS destructor support
+   to be initialized for the first time during process shutdown.
+
+   When dynamically unloading a Rust `cdylib`, pending TLS destructors may run
+   during the unload or may be leaked.
+
+## macro thread_local!
+
+```rust
+macro_rules! thread_local
+```
+
+Declare a new thread local storage key of type `std::thread::LocalKey`.
+
+# Syntax
+
+The macro wraps any number of static declarations and makes them thread local.
+Publicity and attributes for each static are allowed. Example:
+
+```rust
+use std::cell::{Cell, RefCell};
+
+thread_local! {
+    pub static FOO: Cell<u32> = const { Cell::new(1) };
+
+    static BAR: RefCell<Vec<f32>> = RefCell::new(vec![1.0, 2.0]);
+}
+
+assert_eq!(FOO.get(), 1);
+BAR.with_borrow(|v| assert_eq!(v[1], 2.0));
+```
+
+Note that only shared references (`&T`) to the inner data may be obtained, so a
+type such as `Cell` or `RefCell` is typically used to allow mutating access.
+
+This macro supports a special `const {}` syntax that can be used
+when the initialization expression can be evaluated as a constant.
+This can enable a more efficient thread local implementation that
+can avoid lazy initialization. For types that do not
+need to be dropped, this can enable an
+even more efficient implementation that does not need to
+track any additional state.
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    pub static FOO: RefCell<Vec<u32>> = const { RefCell::new(Vec::new()) };
+}
+
+FOO.with_borrow(|v| assert_eq!(v.len(), 0));
+```
+
+See [`LocalKey` documentation]`std::thread::LocalKey` for more
+information.
+
+## struct AccessError
+
+```rust
+pub struct AccessError
+```
+
+An error returned by `LocalKey::try_with`.
+
+## LocalKey::with
+
+```rust
+pub fn with<F, R>(&'static self, f: F) -> R where F: FnOnce(&T) -> R,
+```
+
+Acquires a reference to the value in this TLS key.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+This function will `panic!()` if the key <example-value> has its
+destructor running, and it **may** panic if the destructor has
+previously been run for this thread.
+
+# Examples
+
+```rust
+thread_local! {
+    pub static STATIC: String = String::from("I am");
+}
+
+assert_eq!(
+    STATIC.with(|original_value| format!("{original_value} initialized")),
+    "I am initialized",
+);
+```
+
+## LocalKey::try_with
+
+```rust
+pub fn try_with<F, R>(&'static self, f: F) -> Result<R, AccessError> where F: FnOnce(&T) -> R,
+```
+
+Acquires a reference to the value in this TLS key.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet. If the key has been destroyed (which may happen if this is called
+in a destructor), this function may return an `AccessError`.
+
+# Panics
+
+This function will still `panic!()` if the key is uninitialized and the
+key's initializer panics.
+
+# Examples
+
+```rust
+thread_local! {
+    pub static STATIC: String = String::from("I am");
+}
+
+assert_eq!(
+    STATIC.try_with(|original_value| format!("{original_value} initialized")),
+    Ok(String::from("I am initialized")),
+);
+```
+
+## LocalKey::set
+
+```rust
+pub fn set(&'static self, value: T)
+```
+
+Sets or initializes the contained value.
+
+Unlike the other methods, this will *not* run the lazy initializer of
+the thread local. Instead, it will be directly initialized with the
+given value if it wasn't initialized yet.
+
+# Panics
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+
+thread_local! {
+    static X: Cell<i32> = panic!("!");
+}
+
+// Calling X.get() here would result in a panic.
+
+X.set(123); // But X.set() is fine, as it skips the initializer above.
+
+assert_eq!(X.get(), 123);
+```
+
+## LocalKey::get
+
+```rust
+pub fn get(&'static self) -> T where T: Copy,
+```
+
+Returns a copy of the contained value.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+
+thread_local! {
+    static X: Cell<i32> = const { Cell::new(1) };
+}
+
+assert_eq!(X.get(), 1);
+```
+
+## LocalKey::take
+
+```rust
+pub fn take(&'static self) -> T where T: Default,
+```
+
+Takes the contained value, leaving `Default::default()` in its place.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+
+thread_local! {
+    static X: Cell<Option<i32>> = const { Cell::new(Some(1)) };
+}
+
+assert_eq!(X.take(), Some(1));
+assert_eq!(X.take(), None);
+```
+
+## LocalKey::replace
+
+```rust
+pub fn replace(&'static self, value: T) -> T
+```
+
+Replaces the contained value, returning the old value.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+
+thread_local! {
+    static X: Cell<i32> = const { Cell::new(1) };
+}
+
+assert_eq!(X.replace(2), 1);
+assert_eq!(X.replace(3), 2);
+```
+
+## LocalKey::update
+
+```rust
+pub fn update(&'static self, f: impl FnOnce(T) -> T) where T: Copy,
+```
+
+Updates the contained value using a function.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::Cell;
+
+thread_local! {
+    static X: Cell<i32> = const { Cell::new(5) };
+}
+
+X.update(|x| x + 1);
+assert_eq!(X.get(), 6);
+```
+
+## LocalKey::with_borrow
+
+```rust
+pub fn with_borrow<F, R>(&'static self, f: F) -> R where F: FnOnce(&T) -> R,
+```
+
+Acquires a reference to the contained value.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the value is currently mutably borrowed.
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    static X: RefCell<Vec<i32>> = RefCell::new(Vec::new());
+}
+
+X.with_borrow(|v| assert!(v.is_empty()));
+```
+
+## LocalKey::with_borrow_mut
+
+```rust
+pub fn with_borrow_mut<F, R>(&'static self, f: F) -> R where F: FnOnce(&mut T) -> R,
+```
+
+Acquires a mutable reference to the contained value.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the value is currently borrowed.
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    static X: RefCell<Vec<i32>> = RefCell::new(Vec::new());
+}
+
+X.with_borrow_mut(|v| v.push(1));
+
+X.with_borrow(|v| assert_eq!(*v, vec![1]));
+```
+
+## LocalKey::set
+
+```rust
+pub fn set(&'static self, value: T)
+```
+
+Sets or initializes the contained value.
+
+Unlike the other methods, this will *not* run the lazy initializer of
+the thread local. Instead, it will be directly initialized with the
+given value if it wasn't initialized yet.
+
+# Panics
+
+Panics if the value is currently borrowed.
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    static X: RefCell<Vec<i32>> = panic!("!");
+}
+
+// Calling X.with() here would result in a panic.
+
+X.set(vec![1, 2, 3]); // But X.set() is fine, as it skips the initializer above.
+
+X.with_borrow(|v| assert_eq!(*v, vec![1, 2, 3]));
+```
+
+## LocalKey::take
+
+```rust
+pub fn take(&'static self) -> T where T: Default,
+```
+
+Takes the contained value, leaving `Default::default()` in its place.
+
+This will lazily initialize the value if this thread has not referenced
+this key yet.
+
+# Panics
+
+Panics if the value is currently borrowed.
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    static X: RefCell<Vec<i32>> = RefCell::new(Vec::new());
+}
+
+X.with_borrow_mut(|v| v.push(1));
+
+let a = X.take();
+
+assert_eq!(a, vec![1]);
+
+X.with_borrow(|v| assert!(v.is_empty()));
+```
+
+## LocalKey::replace
+
+```rust
+pub fn replace(&'static self, value: T) -> T
+```
+
+Replaces the contained value, returning the old value.
+
+# Panics
+
+Panics if the value is currently borrowed.
+
+Panics if the key <example-value> has its destructor running,
+and it **may** panic if the destructor has previously been run for this thread.
+
+# Examples
+
+```rust
+use std::cell::RefCell;
+
+thread_local! {
+    static X: RefCell<Vec<i32>> = RefCell::new(Vec::new());
+}
+
+let prev = X.replace(vec![1, 2, 3]);
+assert!(prev.is_empty());
+
+X.with_borrow(|v| assert_eq!(*v, vec![1, 2, 3]));
+```

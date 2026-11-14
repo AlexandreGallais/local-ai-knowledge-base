@@ -1,0 +1,38 @@
+{
+  "csharp": {
+    "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
+    "files": 1389,
+    "bytes": 8300636,
+    "built": "2026-11-14"
+  },
+  "dotnet-core": {
+    "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
+    "files": 2584,
+    "bytes": 9586938,
+    "built": "2026-11-14"
+  },
+  "dotnet-standard": {
+    "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
+    "files": 1642,
+    "bytes": 12739517,
+    "built": "2026-11-14"
+  },
+  "aspnetcore": {
+    "commit": "692feee601358eeb5d8915b46143303f45e83887",
+    "files": 1903,
+    "bytes": 12163636,
+    "built": "2026-11-14"
+  },
+  "efcore": {
+    "commit": "1459c99ecffb85202e1bbcf32504d074c430bfde",
+    "files": 503,
+    "bytes": 4437678,
+    "built": "2026-11-14"
+  },
+  "dotnet-api": {
+    "commit": "a010100852b71f33d67d913d7a9ed69f83a639b1",
+    "files": 4718,
+    "bytes": 33882289,
+    "built": "2026-11-14"
+  }
+}

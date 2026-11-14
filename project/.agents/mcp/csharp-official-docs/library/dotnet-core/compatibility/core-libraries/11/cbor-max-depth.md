@@ -1,0 +1,103 @@
+---
+title: "Breaking change: CborReader and CborWriter enforce a default maximum nesting depth"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/cbor-max-depth.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# CborReader and CborWriter enforce a default maximum nesting depth
+
+Starting in .NET 11, `System.Formats.Cbor.CborReader` and `System.Formats.Cbor.CborWriter` enforce a maximum nesting depth by default. Reading or writing CBOR data that exceeds the configured maximum depth throws an exception.
+
+## Version introduced
+
+.NET 11
+
+## Previous behavior
+
+Previously, `CborReader` and `CborWriter` had no maximum nesting depth limit. Reading or writing arbitrarily nested CBOR data structures succeeded without restriction.
+
+```csharp
+// Deeply nested CBOR data (100 levels of nested arrays)
+var reader = new CborReader(deeplyNestedBuffer);
+
+for (int i = 0; i < 100; i++)
+{
+    reader.ReadStartArray(); // Succeeded at any depth
+}
+```
+
+```csharp
+var writer = new CborWriter();
+
+for (int i = 0; i < 2000; i++)
+{
+    writer.WriteStartArray(1); // Succeeded at any depth
+}
+```
+
+## New behavior
+
+Starting in .NET 11, `CborReader` throws `System.Formats.Cbor.CborContentException` when reading a container (array, map, or indefinite-length string) that would exceed the maximum allowed depth (default: 64). `CborWriter` throws `System.InvalidOperationException` when writing a container that would exceed the maximum allowed depth (default: 1000).
+
+```csharp
+// Throws CborContentException when nesting depth exceeds 64
+var reader = new CborReader(deeplyNestedBuffer);
+
+for (int i = 0; i < 65; i++)
+{
+    reader.ReadStartArray(); // Throws CborContentException on the 65th call
+}
+```
+
+```csharp
+// Throws InvalidOperationException when nesting depth exceeds 1000
+var writer = new CborWriter();
+
+for (int i = 0; i < 1001; i++)
+{
+    writer.WriteStartArray(1); // Throws InvalidOperationException on the 1001st call
+}
+```
+
+## Type of breaking change
+
+This change is a behavioral change.
+
+## Reason for change
+
+This change limits the nesting depth to prevent excessive memory consumption and execution time. When you skip over a deeply nested array or map, the system must process every element in the structure, which can use a surprising amount of memory. This change is also consistent with the behavior of `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8JsonWriter`.
+
+## Recommended action
+
+If your application processes CBOR data nested more deeply than the defaults allow (64 levels for reading, 1000 levels for writing), use the new options types to specify a larger limit:
+
+```csharp
+// For reading CBOR data nested more than 64 levels deep
+var options = new CborReaderOptions { MaxDepth = 256 };
+var reader = new CborReader(data, options);
+```
+
+```csharp
+// For writing CBOR data nested more than 1000 levels deep
+var writerOptions = new CborWriterOptions { MaxDepth = 2000 };
+var writer = new CborWriter(writerOptions);
+```
+
+> **Note:**
+> Unlike `Utf8JsonReader`/`Utf8JsonWriter`, setting `MaxDepth = 0` in CBOR means *no nesting is allowed* (not "use the runtime default"). To use the runtime default, set `MaxDepth = -1` or omit the property when constructing `CborReaderOptions`/`CborWriterOptions`.
+
+There is no AppContext switch to restore the previous unlimited-depth behavior.
+
+## Affected APIs
+
+- `System.Formats.Cbor.CborReader.ReadStartArray`
+- `System.Formats.Cbor.CborReader.ReadStartMap`
+- `System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthByteString`
+- `System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthTextString`
+- `System.Formats.Cbor.CborWriter.WriteStartArray(System.Nullable{System.Int32})`
+- `System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthByteString`
+- `System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthTextString`
+- `System.Formats.Cbor.CborWriter.WriteStartMap(System.Nullable{System.Int32})`

@@ -1,0 +1,39 @@
+---
+title: "Exceptions in Managed Threads"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/exceptions-in-managed-threads.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Exceptions in managed threads
+
+The common language runtime allows most unhandled exceptions in threads to proceed naturally. In most cases, this means that the unhandled exception causes the application to terminate. However, the common language runtime provides a backstop for certain unhandled exceptions that are used for controlling program flow:
+
+- A `System.Threading.ThreadAbortException` is thrown in a thread because `System.Threading.Thread.Abort*` was called. This only applies to .NET Framework apps. In .NET 5 and later versions, `System.Threading.Thread.Abort*` throws a `System.PlatformNotSupportedException`. For more information, see SYSLIB0006: Thread.Abort is not supported.
+
+- An `System.AppDomainUnloadedException` is thrown in a thread because the application domain in which the thread is executing is being unloaded.
+
+- The common language runtime or a host process terminates the thread by throwing an internal exception.
+
+If any of these exceptions are unhandled in threads created by the common language runtime, the exception terminates the thread, but the common language runtime does not allow the exception to proceed further.
+
+If these exceptions are unhandled in the main thread, or in threads that entered the runtime from unmanaged code, they proceed normally, resulting in termination of the application.
+
+> **Note:**
+> It's possible for the runtime to throw an unhandled exception before any managed code has had a chance to install an exception handler. Even though managed code had no chance to handle such an exception, the exception is allowed to proceed naturally.
+
+## Expose threading problems during development
+
+ When threads are allowed to fail silently, without terminating the application, serious programming problems can go undetected. This is a particular problem for services and other applications that run for extended periods. As threads fail, program state gradually becomes corrupted. Application performance may degrade, or the application might become unresponsive.
+
+ Allowing unhandled exceptions in threads to proceed naturally, until the operating system terminates the program, exposes such problems during development and testing. Error reports on program terminations support debugging.
+
+## Host override
+
+An unmanaged host can use the ICLRPolicyManager interface in the Hosting API to override the default unhandled exception policy of the common language runtime. The ICLRPolicyManager::SetUnhandledExceptionPolicy function is used to set the policy for unhandled exceptions.
+
+## See also
+
+- Managed Threading Basics

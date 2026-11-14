@@ -1,7 +1,7 @@
-// MCP server "js-official-docs": search the official documentation of the JavaScript and
-// TypeScript tools held in this brick (library/), then read one section. It never writes a file,
-// but its index, built once in index/ when missing.
-// Run by OpenCode in the project folder: node .agents/mcp/js-official-docs/server.ts
+// MCP server of a documentation brick: search the official documentation held in the brick
+// (library/), then read one section. Its name and the words of its tools come from brick.json; the
+// code is the same in every documentation brick. It never writes a file, but its index, built once
+// in index/ when missing. Run by OpenCode in the project folder: node .agents/mcp/<brick>/server.ts
 import {
   existsSync,
   readdirSync,
@@ -27,6 +27,18 @@ import {
   sections,
 } from './search.ts';
 
+// What makes this brick itself: its name, what it holds, the examples of its tools. The code of the
+// server is the same in every documentation brick.
+interface BrickSettings {
+  name: string;
+  instructions: string;
+  search: string;
+  queryExample: string;
+  toolExample: string;
+  idExample: string;
+}
+
+const settings = JSON.parse(readFileSync(join(import.meta.dirname, 'brick.json'), 'utf8')) as BrickSettings;
 const cache = new Map<string, IndexEntry[]>();
 const DOCUMENT = /^library\/[\w./-]+\.md$/;
 
@@ -92,7 +104,7 @@ export function readDoc(args: Arguments): string {
   ] = id.split('#');
 
   if (!DOCUMENT.test(path)) {
-    throw new ToolError(`"${id}" is not a document id. Use an id that search_docs gives, as "library/mdn-api/dommatrix.md#syntax".`);
+    throw new ToolError(`"${id}" is not a document id. Use an id that search_docs gives, as "${settings.idExample}".`);
   }
   const file = inside(brickRoot(), path);
 
@@ -116,21 +128,21 @@ export function readDoc(args: Arguments): string {
 }
 
 export const server: Server = {
-  name: 'js-official-docs',
+  name: settings.name,
   version: '0.3.0',
-  instructions: 'The official documentation of the JavaScript and TypeScript tools, kept locally. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.',
+  instructions: settings.instructions,
   tools: [
     {
       name: 'search_docs',
-      description: 'Search the official documentation: MDN, Angular, TypeScript, NgRx Signals, RxJS, Node.js, npm, Vite, Vitest, Playwright, ESLint and its plugins, Stylelint. Returns 10 section ids at most.',
+      description: settings.search,
       properties: {
         query: {
           type: 'string',
-          description: 'English words or an API name, as "DOMMatrix multiply" or "signalStoreFeature".',
+          description: `English words or an API name, as ${settings.queryExample}.`,
         },
         tool: {
           type: 'string',
-          description: 'Optional: search one tool only, as "angular" or "mdn-api".',
+          description: `Optional: search one tool only, as ${settings.toolExample}.`,
         },
       },
       required: ['query'],
@@ -142,7 +154,7 @@ export const server: Server = {
       properties: {
         id: {
           type: 'string',
-          description: 'A section id from search_docs, as "library/mdn-api/dommatrix.md#syntax".',
+          description: `A section id from search_docs, as "${settings.idExample}".`,
         },
       },
       required: ['id'],

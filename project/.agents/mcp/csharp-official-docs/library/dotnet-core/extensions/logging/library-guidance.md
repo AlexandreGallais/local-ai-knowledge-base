@@ -1,0 +1,105 @@
+---
+title: "Logging guidance for .NET library authors"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/logging/library-guidance.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Logging guidance for .NET library authors
+
+As a library author, exposing logging is a great way to provide consumers with insight into the inner workings of your library. This guidance helps you expose logging in a way that's consistent with other .NET libraries and frameworks. It also helps you avoid common performance bottlenecks.
+
+## When to use the `ILoggerFactory` interface
+
+When writing a library that emits logs, you need an `Microsoft.Extensions.Logging.ILogger` object to record the logs. To get that object, your API can either accept an `Microsoft.Extensions.Logging.ILogger`1` parameter, or it can accept an `Microsoft.Extensions.Logging.ILoggerFactory` after which you call `Microsoft.Extensions.Logging.ILoggerFactory.CreateLogger*`. Which approach should be preferred?
+
+- When you need a logging object that can be passed along to multiple classes so that all of them can emit logs, use `ILoggerFactory`. It's recommended that each class creates logs with a separate category, named the same as the class. To do this, you need the factory to create unique `ILogger<TCategoryName>` objects for each class that emits logs. Common examples include public entry point APIs for a library or public constructors of types that might create helper classes internally.
+- When you need a logging object that's only used inside one class and never shared, use `ILogger<TCategoryName>`, where `TCategoryName` is the type that produces the logs. A common example of this is a constructor for a class created by dependency injection.
+
+If you're designing a public API that must remain stable over time, keep in mind that you might desire to refactor your internal implementation in the future. Even if a class doesn't create any internal helper types initially, that might change as the code evolves. Using `ILoggerFactory` accommodates creating new `ILogger<TCategoryName>` objects for any new classes without changing the public API.
+
+For more information, see How filtering rules are applied.
+
+## Prefer source-generated logging
+
+The `ILogger` API supports two approaches to using the API. You can either call methods such as `Microsoft.Extensions.Logging.LoggerExtensions.LogError*` and `Microsoft.Extensions.Logging.LoggerExtensions.LogInformation*`, or you can use the logging source generator to define strongly typed logging methods. For most situations, the source generator is recommended because it offers superior performance and stronger typing. It also isolates logging-specific concerns such as message templates, IDs, and log levels from the calling code. The non-source-generated approach is primarily useful for scenarios where you're willing to give up those advantages to make the code more concise.
+
+```csharp
+﻿using Microsoft.Extensions.Logging;
+
+namespace Logging.LibraryAuthors;
+
+internal static partial class LogMessages
+{
+    [LoggerMessage(
+        Message = "Sold {Quantity} of {Description}",
+        Level = LogLevel.Information)]
+    internal static partial void LogProductSaleDetails(
+        this ILogger logger,
+        int quantity,
+        string description);
+}
+```
+The preceding code:
+
+- Defines a `partial class` named `LogMessages`, which is `static` so that it can be used to define extension methods on the `ILogger` type.
+- Decorates a `LogProductSaleDetails` extension method with the `LoggerMessage` attribute and `Message` template.
+- Declares `LogProductSaleDetails`, which extends the `ILogger` and accepts a `quantity` and `description`.
+
+> **Tip:**
+> You can step into the source-generated code during debugging, because it's part of the same assembly as the code that calls it.
+
+### Use `IsEnabled` to avoid expensive parameter evaluation
+
+There might be situations where evaluating parameters is expensive. Expanding upon the previous example, imagine the `description` parameter is a `string` that is expensive to compute. Perhaps the product being sold gets a friendly product description and relies on a database query, or reading from a file. In these situations, you can instruct the source generator to skip the `IsEnabled` guard and manually add the `IsEnabled` guard at the call site. This allows the user to determine where the guard is called and ensures that parameters that might be expensive to compute are only evaluated when truly needed. Consider the following code:
+
+```csharp
+using Microsoft.Extensions.Logging;
+
+namespace Logging.LibraryAuthors;
+
+internal static partial class LogMessages
+{
+    [LoggerMessage(
+        Message = "Sold {Quantity} of {Description}",
+        Level = LogLevel.Information,
+        SkipEnabledCheck = true)]
+    internal static partial void LogProductSaleDetails(
+        this ILogger logger,
+        int quantity,
+        string description);
+}
+```
+
+When the `LogProductSaleDetails` extension method is called, the `IsEnabled` guard is manually invoked and the expensive parameter evaluation is limited to when it's needed. Consider the following code:
+
+```csharp
+if (_logger.IsEnabled(LogLevel.Information))
+{
+    // Expensive parameter evaluation
+    var description = product.GetFriendlyProductDescription();
+
+    _logger.LogProductSaleDetails(
+        quantity,
+        description);
+}
+```
+
+For more information, see Compile-time logging source generation and High-performance logging in .NET.
+
+## Avoid string interpolation in logging
+
+A common mistake is to use string interpolation to build log messages. String interpolation in logging is problematic for performance, as the string is evaluated even if the corresponding `LogLevel` isn't enabled. Instead of string interpolation, use the log message template, formatting, and argument list. For more information, see Logging in .NET: Log message template.
+
+## Use no-op logging defaults
+
+When you consume a library that exposes logging APIs that expect either an `ILogger` or `ILoggerFactory`, there might be times that you don't want to provide a logger. In these cases, the Microsoft.Extensions.Logging.Abstractions NuGet package provides no-op logging defaults.
+
+Library consumers can default to _null logging_ if no `ILoggerFactory` is provided. The use of _null logging_ differs from defining types as nullable (`ILoggerFactory?`), as the types are non-null. These convenience-based types don't log anything and are essentially no-ops. Consider using any of the available abstraction types where applicable:
+
+- `Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance`
+- `Microsoft.Extensions.Logging.Abstractions.NullLogger`1`
+- `Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance`
+- `Microsoft.Extensions.Logging.Abstractions.NullLoggerProvider.Instance`

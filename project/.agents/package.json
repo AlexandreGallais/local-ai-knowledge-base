@@ -1,0 +1,6 @@
+{
+  "name": "agents-bricks",
+  "private": true,
+  "description": "Makes Node read the TypeScript of the bricks of .agents/mcp/ as ES modules, whatever the package.json of the project says.",
+  "type": "module"
+}

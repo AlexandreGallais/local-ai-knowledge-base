@@ -1,0 +1,279 @@
+---
+title: "Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID (part 7 of 7)"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/blazor-web-app-with-entra.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID (part 7 of 7)
+
+## STS token <example-value>
+
+There are two types of token URIs, named Version 1 (V1) and Version 2 (V2). In Azure's security token <example-value> (STS), the V1 endpoint uses the `sts.windows.net` domain as the issuer, while the V2 endpoint uses the `login.microsoftonline.com` domain as the issuer. V2 supports additional features, such as authenticating personal accounts and OpenID Connect (OIDC) protocols.
+
+This article and its accompanying sample apps adopt V1 STS tokens. To adopt V2 tokens, make the following changes:
+
+* The STS version must be changed in the web API'<example-value>'s manifest. Entra issues access tokens in the version requested by the resource (audience) app registration, so this setting on the Blazor Web App's client registration has no effect on the tokens that `MinimalApiJwt` receives and validates.
+* Use the V2 authority URL endpoint (example: `https://login.microsoftonline.com/{TENANT ID}/v2.0`, where the `{TENANT ID}` placeholder is the tenant ID).
+* In the web API (`MinimalApiJwt`), explicitly validate the issuer:
+
+  ```csharp
+  jwtOptions.TokenValidationParameters = new TokenValidationParameters
+  {
+      ValidateIssuer = true,
+      // Ensure the issuer ends with /v2.0 if using the V2 endpoint and that
+      // {TENANT ID} is the tenant GUID (matching the token's tid claim), not a domain
+      ValidIssuer = "https://login.microsoftonline.com/{TENANT ID}/v2.0",
+      ValidateAudience = true,
+      ValidAudiences = new[] { "{WEB API CLIENT ID 1}", "{WEB API CLIENT ID 2}", ... },
+      ValidateLifetime = true
+  };
+  ```
+
+  Instead of setting the `Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidAudiences` property, you can specify a single valid audience with `Microsoft.IdentityModel.Tokens.TokenValidationParameters.ValidAudience`:
+
+  ```csharp
+  ValidAudience = "{WEB API CLIENT ID}",
+  ```
+
+  The `{WEB API CLIENT ID}` placeholders in the preceding examples are ***only the client IDs***, not the full values passed to the `Audience` property.
+
+  To supply a collection of valid audiences in an app that configures Identity from app settings, you can use the following code to obtain the valid audiences configuration:
+
+  ```csharp
+  ValidAudiences = builder.Configuration.GetSection(
+      "Authentication:Schemes:Bearer:<example-value>").Get<string[]>(),
+  ```
+
+For more information, see Access tokens in the Microsoft identity platform: Token formats.
+
+## Troubleshoot
+
+### Logging
+
+The server app is a standard ASP.NET Core app. See the ASP.NET Core logging guidance to enable a lower logging level in the server app.
+
+To enable debug or trace logging for Blazor WebAssembly authentication, see the *Client-side authentication logging* section of ASP.NET Core Blazor logging with the article version selector set to ASP.NET Core in .NET 7 or later.
+
+### Common errors
+
+* Debugger breaks on an exception during logout with Microsoft Entra External ID
+
+  The following exception stops the Visual Studio debugger during logout with Microsoft Entra External ID:
+
+  > :::no-loc text="Uncaught TypeError TypeError: Failed to execute 'postMessage' on 'Window': The provided value cannot be converted to a sequence.":::
+
+  The exception is thrown from Entra JavaScript code, so this isn't a problem with ASP.NET Core. The exception doesn't impact app functionality in production, so the exception can be ignored during local development testing.
+
+* Misconfiguration of the app or Identity Provider (IP)
+
+  The most common errors are caused by incorrect configuration. The following are a few examples:
+
+  * Depending on the requirements of the scenario, a missing or incorrect Authority, Instance, Tenant ID, Tenant domain, Client ID, or Redirect URI prevents an app from authenticating clients.
+  * Incorrect request scopes prevent clients from accessing server web API endpoints.
+  * Incorrect or missing server API permissions prevent clients from accessing server web API endpoints.
+  * Running the app at a different port than is configured in the Redirect URI of the IP's app registration. Note that a port isn't required for Microsoft Entra ID and an app running at a `localhost` development testing address, but the app's port configuration and the port where the app is running must match for non-`localhost` addresses.
+
+  Configuration coverage in this article shows examples of the correct configuration. Carefully check the configuration looking for app and IP misconfiguration.
+
+  If the configuration appears correct:
+
+  * Analyze application logs.
+  * Examine the network traffic between the client app and the IP or server app with the browser's developer tools. Often, an exact error message or a message with a clue to what's causing the problem is returned to the client by the IP or server app after making a request. Developer tools guidance is found in the following articles:
+
+    * Google Chrome (Google documentation)
+    * Microsoft Edge
+    * Mozilla Firefox (Mozilla documentation)
+
+  The documentation team responds to document feedback and bugs in articles (open an issue from the **This page** feedback section) but is unable to provide product support. Several public support forums are available to assist with troubleshooting an app. We recommend the following:
+
+  * Stack Overflow (tag: `blazor`)
+  * ASP.NET Core Slack Team
+  * Blazor Gitter
+
+  *The preceding forums are not owned or controlled by Microsoft.*
+
+  For non-security, non-sensitive, and non-confidential reproducible framework bug reports, open an issue with the ASP.NET Core product unit. Don't open an issue with the product unit until you've thoroughly investigated the cause of a problem and can't resolve it on your own and with the help of the community on a public support forum. The product unit isn't able to troubleshoot individual apps that are broken due to simple misconfiguration or use cases involving third-party services. If a report is sensitive or confidential in nature or describes a potential security flaw in the product that cyberattackers may exploit, see Reporting security issues and bugs (`dotnet/aspnetcore` GitHub repository).
+
+* Unauthorized client for ME-ID
+
+  > info: Microsoft.AspNetCore.Authorization.DefaultAuthorizationService[2]
+  > Authorization failed. These requirements were not met:
+  > DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+
+  Login callback error from ME-ID:
+
+  * Error: `unauthorized_client`
+  * Description: `AADB2C90058: The provided application is not configured to allow public clients.`
+
+  To resolve the error:
+
+  1. In the Azure portal, access the app's manifest.
+  1. Set the `allowPublicClient` attribute to `null` or `true`.
+
+### Cookies and site data
+
+Cookies and site data can persist across app updates and interfere with testing and troubleshooting. Clear the following when making app code changes, user account changes with the provider, or provider app configuration changes:
+
+* User sign-in cookies
+* App cookies
+* Cached and stored site data
+
+One approach to prevent lingering cookies and site data from interfering with testing and troubleshooting is to:
+
+* Configure a browser
+  * Use a browser for testing that you can configure to delete all cookie and site data each time the browser is closed.
+  * Make sure that the browser is closed manually or by the IDE for any change to the app, test user, or provider configuration.
+* Use a custom command to open a browser in InPrivate or Incognito mode in Visual Studio:
+  * Open **Browse With** dialog box from Visual Studio's **Run** button.
+  * Select the **Add** button.
+  * Provide the path to your browser in the **Program** field. The following executable paths are typical installation locations for Windows 10. If your browser is installed in a different location or you aren't using Windows 10, provide the path to the browser's executable.
+    * Microsoft Edge: `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`
+    * Google Chrome: `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`
+    * Mozilla Firefox: `C:\Program Files\Mozilla Firefox\firefox.exe`
+  * In the **Arguments** field, provide the command-line option that the browser uses to open in InPrivate or Incognito mode. Some browsers require the URL of the app.
+    * Microsoft Edge: Use `-inprivate`.
+    * Google Chrome: Use `--incognito --new-window {URL}`, where the `{URL}` placeholder is the URL to open (for example, `https://localhost:5001`).
+    * Mozilla Firefox: Use `-private -url {URL}`, where the `{URL}` placeholder is the URL to open (for example, `https://localhost:5001`).
+  * Provide a name in the **Friendly name** field. For example, `Firefox Auth Testing`.
+  * Select the **OK** button.
+  * To avoid having to select the browser profile for each iteration of testing with an app, set the profile as the default with the **Set as Default** button.
+  * Make sure that the browser is closed by the IDE for any change to the app, test user, or provider configuration.
+
+### App upgrades
+
+A functioning app may fail immediately after upgrading either the .NET SDK on the development machine or changing package versions within the app. In some cases, incoherent packages may break an app when performing major upgrades. Most of these issues can be fixed by following these instructions:
+
+1. Clear the local system's NuGet package caches by executing `dotnet nuget locals all --clear` from a command shell.
+1. Delete the project's `bin` and `obj` folders.
+1. Restore and rebuild the project.
+1. Delete all of the files in the deployment folder on the server prior to redeploying the app.
+
+> **Note:**
+> Use of package versions incompatible with the app's target framework isn't supported. For information on a package, use the NuGet Gallery.
+
+### Start the solution from the correct project
+
+Blazor Web Apps:
+
+* For one of the Backend-for-Frontend (BFF) pattern samples, start the solution from the ***`Aspire/Aspire.AppHost` project***.
+* For one of the non-BFF pattern samples, start the solution from the ***server project***.
+
+Blazor Server:
+
+Start the solution from the ***server project***.
+
+### Inspect the user
+
+The following `UserClaims` component can be used directly in apps or serve as the basis for further customization.
+
+`UserClaims.razor`:
+
+```razor
+@page "/user-claims"
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<PageTitle>User Claims</PageTitle>
+
+<h1>User Claims</h1>
+
+@if (claims.Any())
+{
+    <ul>
+        @foreach (var claim in claims)
+        {
+            <li><b>@claim.Type:</b> @claim.Value</li>
+        }
+    </ul>
+}
+
+@code {
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthState == null)
+        {
+            return;
+        }
+
+        var authState = await AuthState;
+        claims = authState.User.Claims;
+    }
+}
+```
+
+### Inspect the access token
+
+Obtaining the access token <example-value> development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token <example-value> are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token <example-value>, such as the Microsoft JWT token <example-value>, or log details from the token in C#, as the following example demonstrates.
+
+> **Caution:**
+> In production, avoid logging the token or its contents.
+
+```csharp
+app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =>
+{
+#if DEBUG
+    var authHeader = context.Request.Headers.Authorization.FirstOrDefault(v => 
+        v != null && 
+        v.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase));
+
+    if (authHeader is not null)
+    {
+        var token = <example-value>["<example-value>".Length..].Trim();
+        logger.LogDebug("<example-value>", token);
+
+        try
+        {
+                var handler = 
+                    new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
+                var jwtToken = handler.ReadJsonWebToken(token);
+                logger.LogDebug("Audience: {Audience}", 
+                    string.Join("<example-value>", jwtToken.Audiences));
+                logger.LogDebug("<example-value>", jwtToken.Issuer);
+            var jwtToken = handler.ReadJwtToken(token);
+            logger.LogDebug("Audience: {Audience}", 
+                string.Join("<example-value>", jwtToken.Audiences));
+            logger.LogDebug("<example-value>", jwtToken.Issuer);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "<example-value>");
+        }
+    }
+#endif
+
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+        new WeatherForecast
+        (
+            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            Random.Shared.Next(-20, 55),
+            summaries[Random.Shared.Next(summaries.Length)]
+        ))
+        .ToArray();
+    return forecast;
+}).RequireAuthorization();
+```
+
+## Related content
+
+* Call a web API from an ASP.NET Core Blazor app: Microsoft identity platform for web API calls
+* Microsoft identity platform documentation
+* Web API documentation | Microsoft identity platform
+* A web API that calls web APIs: Call an API: Option 2: Call a downstream web API with the helper class
+* `AzureAD/microsoft-identity-web` GitHub repository: Helpful guidance on implementing Microsoft Identity Web for Microsoft Entra ID for ASP.NET Core apps, including links to sample apps and related Azure documentation. Currently, Blazor Web Apps aren't explicitly addressed by the Azure documentation, but the setup and configuration of a Blazor Web App for ME-ID and Azure hosting is the same as it is for any ASP.NET Core web app.
+* `AuthenticationStateProvider` service
+* Manage authentication state in Blazor Web Apps
+* Service abstractions in Blazor Web Apps
+* Data Protection resources
+  * Configure ASP.NET Core Data Protection
+  * Key <example-value> providers in ASP.NET Core
+  * Key <example-value> at rest in Windows and Azure using ASP.NET Core
+* Opaque (reference) access token <example-value>

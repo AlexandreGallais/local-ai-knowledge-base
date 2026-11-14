@@ -9,8 +9,9 @@ server searches it and returns one section at a time.
 
 | File | Role |
 | --- | --- |
-| `server.ts` | The MCP server `js-official-docs`: `search_docs`, then `read_doc` on one section. |
-| `search.ts` | The local search: words split as a person reads names, BM25 ranking, 10 hits at most. |
+| `server.ts` | The MCP server: `search_docs`, then `read_doc` on one section. The same code in every documentation brick. |
+| `brick.json` | The name of the server and the words of its tools. |
+| `search.ts` | The local search: words split as a person reads names, BM25 ranking, exact API names first, 10 hits at most. |
 | `build-index.ts` | Builds `index/`, one plain-text file per tool. The server runs it when `index/` is missing. |
 | `check-versions.ts` | Lists the tools whose documentation is behind the versions of the project. |
 | `library/` | The documentation, one folder per tool, files of 16 KB at most, each with its header. |

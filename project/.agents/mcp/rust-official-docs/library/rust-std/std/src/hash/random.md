@@ -1,0 +1,63 @@
+---
+title: "std::hash::random"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/hash/random.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# std::hash::random
+
+This module exists to isolate `RandomState` and `DefaultHasher` outside of the
+`collections` module without actually publicly exporting them, so that parts of that
+implementation can more easily be moved to the `alloc` crate.
+
+Although its items are public and contain stability attributes, they can't actually be accessed
+outside this crate.
+
+## struct RandomState
+
+```rust
+pub struct RandomState
+```
+
+`RandomState` is the default state for `HashMap` types.
+
+A particular instance `RandomState` will create the same instances of
+`Hasher`, but the hashers created by two different `RandomState`
+instances are unlikely to produce the same result for the same values.
+
+# Examples
+
+```rust
+use std::collections::HashMap;
+use std::hash::RandomState;
+
+let s = RandomState::new();
+let mut map = HashMap::with_hasher(s);
+map.insert(1, 2);
+```
+
+## struct DefaultHasher
+
+```rust
+pub struct DefaultHasher(SipHasher13)
+```
+
+The default `Hasher` used by `RandomState`.
+
+The internal algorithm is not specified, and so it and its hashes should
+not be relied upon over releases.
+
+## DefaultHasher::new
+
+```rust
+pub const fn new() -> DefaultHasher
+```
+
+Creates a new `DefaultHasher`.
+
+This hasher is not guaranteed to be the same as all other
+`DefaultHasher` instances, but is the same as all other `DefaultHasher`
+instances created through `new` or `default`.

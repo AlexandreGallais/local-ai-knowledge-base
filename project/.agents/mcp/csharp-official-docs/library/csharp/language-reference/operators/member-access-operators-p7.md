@@ -1,0 +1,494 @@
+---
+title: "Member access and null-conditional operators and expressions: (part 7 of 8)"
+tool: "csharp"
+version: "15"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/operators/member-access-operators.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Member access and null-conditional operators and expressions: (part 7 of 8)
+
+## Range operator `..`
+
+The `..` operator specifies the start and end of a range of indices as its operands. The left-hand operand is an *inclusive* start of a range. The right-hand operand is an *exclusive* end of a range. Either operand can be an index from the start or from the end of a sequence, as the following example shows:
+
+```csharp
+using System.Collections.Generic;
+
+namespace operators;
+
+public static class MemberAccessOperators
+{
+    public static void Examples()
+    {
+        TypeMemberAccess();
+        Arrays();
+        Indexers();
+        NullConditional();
+        NullConditionalWithNullCoalescing();
+        Invocation();
+        IndexFromEnd();
+        Ranges();
+        RangesOptional();
+        RangesAllPossible();
+    }
+
+    private static void QualifiedName()
+    {
+        System.Collections.Generic.IEnumerable<int> numbers = [1, 2, 3];
+    }
+
+    private static void TypeMemberAccess()
+    {
+        List<double> constants =
+        [
+            Math.PI,
+            Math.E
+        ];
+        Console.WriteLine($"{constants.Count} values to show:");
+        Console.WriteLine(string.Join(", ", constants));
+        // Output:
+        // 2 values to show:
+        // 3.14159265358979, 2.71828182845905
+    }
+
+    private static void Arrays()
+    {
+        int[] fib = new int[10];
+        fib[0] = fib[1] = 1;
+        for (int i = 2; i < fib.Length; i++)
+        {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+        Console.WriteLine(fib[fib.Length - 1]);  // output: 55
+
+        double[,] matrix = new double[2,2];
+        matrix[0,0] = 1.0;
+        matrix[0,1] = 2.0;
+        matrix[1,0] = matrix[1,1] = 3.0;
+        var determinant = matrix[0,0] * matrix[1,1] - matrix[1,0] * matrix[0,1];
+        Console.WriteLine(determinant);  // output: -3
+    }
+
+    private static void Indexers()
+    {
+        var dict = new Dictionary<string, double>();
+        dict["one"] = 1;
+        dict["pi"] = Math.PI;
+        Console.WriteLine(dict["one"] + dict["pi"]);  // output: 4.14159265358979
+    }
+
+    private static void NullConditional()
+    {
+        double SumNumbers(List<double[]> setsOfNumbers, int indexOfSetToSum)
+        {
+            return setsOfNumbers?[indexOfSetToSum]?.Sum() ?? double.NaN;
+        }
+
+        var sum1 = SumNumbers(null, 0);
+        Console.WriteLine(sum1);  // output: NaN
+
+        List<double[]?> numberSets =
+        [
+            [1.0, 2.0, 3.0],
+            null
+        ];
+
+        var sum2 = SumNumbers(numberSets, 0);
+        Console.WriteLine(sum2);  // output: 6
+
+        var sum3 = SumNumbers(numberSets, 1);
+        Console.WriteLine(sum3);  // output: NaN
+    }
+
+    private static void NullConditionalWithNullCoalescing()
+    {
+        int GetSumOfFirstTwoOrDefault(int[]? numbers)
+        {
+            if ((numbers?.Length ?? 0) < 2)
+            {
+                return 0;
+            }
+            return numbers[0] + numbers[1];
+        }
+
+        Console.WriteLine(GetSumOfFirstTwoOrDefault(null));  // output: 0
+        Console.WriteLine(GetSumOfFirstTwoOrDefault([]));  // output: 0
+        Console.WriteLine(GetSumOfFirstTwoOrDefault([3, 4, 5]));  // output: 7
+    }
+
+    private static void Invocation()
+    {
+        Action<int> display = s => Console.WriteLine(s);
+
+        List<int> numbers =
+        [
+            10,
+            17
+        ];
+        display(numbers.Count);   // output: 2
+
+        numbers.Clear();
+        display(numbers.Count);   // output: 0
+    }
+
+    private static void IndexFromEnd()
+    {
+        int[] xs = [0, 10, 20, 30, 40];
+        int last = xs[^1];
+        Console.WriteLine(last);  // output: 40
+
+        List<string> lines = ["one", "two", "three", "four"];
+        string prelast = lines[^2];
+        Console.WriteLine(prelast);  // output: three
+
+        string word = "Twenty";
+        Index toFirst = ^word.Length;
+        char first = word[toFirst];
+        Console.WriteLine(first);  // output: T
+    }
+
+    private static void Ranges()
+    {
+        int[] numbers = [0, 10, 20, 30, 40, 50];
+        int start = 1;
+        int amountToTake = 3;
+        int[] subset = numbers[start..(start + amountToTake)];
+        Display(subset);  // output: 10 20 30
+
+        int margin = 1;
+        int[] inner = numbers[margin..^margin];
+        Display(inner);  // output: 10 20 30 40
+
+        string line = "one two three";
+        int amountToTakeFromEnd = 5;
+        Range endIndices = ^amountToTakeFromEnd..^0;
+        string end = line[endIndices];
+        Console.WriteLine(end);  // output: three
+
+        void Display<T>(IEnumerable<T> xs) => Console.WriteLine(string.Join(" ", xs));
+    }
+
+    private static void RangesOptional()
+    {
+        int[] numbers = [0, 10, 20, 30, 40, 50];
+        int amountToDrop = numbers.Length / 2;
+
+        int[] rightHalf = numbers[amountToDrop..];
+        Display(rightHalf);  // output: 30 40 50
+
+        int[] leftHalf = numbers[..^amountToDrop];
+        Display(leftHalf);  // output: 0 10 20
+
+        int[] all = numbers[..];
+        Display(all);  // output: 0 10 20 30 40 50
+
+        void Display<T>(IEnumerable<T> xs) => Console.WriteLine(string.Join(" ", xs));
+    }
+
+    private static void RangesAllPossible()
+    {
+        int[] oneThroughTen =
+        [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        ];
+
+        Write(oneThroughTen, ..);
+        Write(oneThroughTen, ..3);
+        Write(oneThroughTen, 2..);
+        Write(oneThroughTen, 3..5);
+        Write(oneThroughTen, ^2..);
+        Write(oneThroughTen, ..^3);
+        Write(oneThroughTen, 3..^4);
+        Write(oneThroughTen, ^4..^2);
+
+        static void Write(int[] values, Range range) =>
+            Console.WriteLine($"{range}:\t{string.Join(", ", values[range])}");
+        // Sample output:
+        //      0..^0:      1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        //      0..3:       1, 2, 3
+        //      2..^0:      3, 4, 5, 6, 7, 8, 9, 10
+        //      3..5:       4, 5
+        //      ^2..^0:     9, 10
+        //      0..^3:      1, 2, 3, 4, 5, 6, 7
+        //      3..^4:      4, 5, 6
+        //      ^4..^2:     7, 8
+    }
+}
+```
+As the preceding example shows, expression `a..b` is of the `System.Range` type. In expression `a..b`, the results of `a` and `b` must be implicitly convertible to `System.Int32` or `System.Index`.
+
+> **Important:**
+> Implicit conversions from `int` to `Index` throw an `System.ArgumentOutOfRangeException` when the value is negative.
+
+You can omit any of the operands of the `..` operator to obtain an open-ended range:
+
+- `a..` is equivalent to `a..^0`
+- `..b` is equivalent to `0..b`
+- `..` is equivalent to `0..^0`
+
+```csharp
+using System.Collections.Generic;
+
+namespace operators;
+
+public static class MemberAccessOperators
+{
+    public static void Examples()
+    {
+        TypeMemberAccess();
+        Arrays();
+        Indexers();
+        NullConditional();
+        NullConditionalWithNullCoalescing();
+        Invocation();
+        IndexFromEnd();
+        Ranges();
+        RangesOptional();
+        RangesAllPossible();
+    }
+
+    private static void QualifiedName()
+    {
+        System.Collections.Generic.IEnumerable<int> numbers = [1, 2, 3];
+    }
+
+    private static void TypeMemberAccess()
+    {
+        List<double> constants =
+        [
+            Math.PI,
+            Math.E
+        ];
+        Console.WriteLine($"{constants.Count} values to show:");
+        Console.WriteLine(string.Join(", ", constants));
+        // Output:
+        // 2 values to show:
+        // 3.14159265358979, 2.71828182845905
+    }
+
+    private static void Arrays()
+    {
+        int[] fib = new int[10];
+        fib[0] = fib[1] = 1;
+        for (int i = 2; i < fib.Length; i++)
+        {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+        Console.WriteLine(fib[fib.Length - 1]);  // output: 55
+
+        double[,] matrix = new double[2,2];
+        matrix[0,0] = 1.0;
+        matrix[0,1] = 2.0;
+        matrix[1,0] = matrix[1,1] = 3.0;
+        var determinant = matrix[0,0] * matrix[1,1] - matrix[1,0] * matrix[0,1];
+        Console.WriteLine(determinant);  // output: -3
+    }
+
+    private static void Indexers()
+    {
+        var dict = new Dictionary<string, double>();
+        dict["one"] = 1;
+        dict["pi"] = Math.PI;
+        Console.WriteLine(dict["one"] + dict["pi"]);  // output: 4.14159265358979
+    }
+
+    private static void NullConditional()
+    {
+        double SumNumbers(List<double[]> setsOfNumbers, int indexOfSetToSum)
+        {
+            return setsOfNumbers?[indexOfSetToSum]?.Sum() ?? double.NaN;
+        }
+
+        var sum1 = SumNumbers(null, 0);
+        Console.WriteLine(sum1);  // output: NaN
+
+        List<double[]?> numberSets =
+        [
+            [1.0, 2.0, 3.0],
+            null
+        ];
+
+        var sum2 = SumNumbers(numberSets, 0);
+        Console.WriteLine(sum2);  // output: 6
+
+        var sum3 = SumNumbers(numberSets, 1);
+        Console.WriteLine(sum3);  // output: NaN
+    }
+
+    private static void NullConditionalWithNullCoalescing()
+    {
+        int GetSumOfFirstTwoOrDefault(int[]? numbers)
+        {
+            if ((numbers?.Length ?? 0) < 2)
+            {
+                return 0;
+            }
+            return numbers[0] + numbers[1];
+        }
+
+        Console.WriteLine(GetSumOfFirstTwoOrDefault(null));  // output: 0
+        Console.WriteLine(GetSumOfFirstTwoOrDefault([]));  // output: 0
+        Console.WriteLine(GetSumOfFirstTwoOrDefault([3, 4, 5]));  // output: 7
+    }
+
+    private static void Invocation()
+    {
+        Action<int> display = s => Console.WriteLine(s);
+
+        List<int> numbers =
+        [
+            10,
+            17
+        ];
+        display(numbers.Count);   // output: 2
+
+        numbers.Clear();
+        display(numbers.Count);   // output: 0
+    }
+
+    private static void IndexFromEnd()
+    {
+        int[] xs = [0, 10, 20, 30, 40];
+        int last = xs[^1];
+        Console.WriteLine(last);  // output: 40
+
+        List<string> lines = ["one", "two", "three", "four"];
+        string prelast = lines[^2];
+        Console.WriteLine(prelast);  // output: three
+
+        string word = "Twenty";
+        Index toFirst = ^word.Length;
+        char first = word[toFirst];
+        Console.WriteLine(first);  // output: T
+    }
+
+    private static void Ranges()
+    {
+        int[] numbers = [0, 10, 20, 30, 40, 50];
+        int start = 1;
+        int amountToTake = 3;
+        int[] subset = numbers[start..(start + amountToTake)];
+        Display(subset);  // output: 10 20 30
+
+        int margin = 1;
+        int[] inner = numbers[margin..^margin];
+        Display(inner);  // output: 10 20 30 40
+
+        string line = "one two three";
+        int amountToTakeFromEnd = 5;
+        Range endIndices = ^amountToTakeFromEnd..^0;
+        string end = line[endIndices];
+        Console.WriteLine(end);  // output: three
+
+        void Display<T>(IEnumerable<T> xs) => Console.WriteLine(string.Join(" ", xs));
+    }
+
+    private static void RangesOptional()
+    {
+        int[] numbers = [0, 10, 20, 30, 40, 50];
+        int amountToDrop = numbers.Length / 2;
+
+        int[] rightHalf = numbers[amountToDrop..];
+        Display(rightHalf);  // output: 30 40 50
+
+        int[] leftHalf = numbers[..^amountToDrop];
+        Display(leftHalf);  // output: 0 10 20
+
+        int[] all = numbers[..];
+        Display(all);  // output: 0 10 20 30 40 50
+
+        void Display<T>(IEnumerable<T> xs) => Console.WriteLine(string.Join(" ", xs));
+    }
+
+    private static void RangesAllPossible()
+    {
+        int[] oneThroughTen =
+        [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        ];
+
+        Write(oneThroughTen, ..);
+        Write(oneThroughTen, ..3);
+        Write(oneThroughTen, 2..);
+        Write(oneThroughTen, 3..5);
+        Write(oneThroughTen, ^2..);
+        Write(oneThroughTen, ..^3);
+        Write(oneThroughTen, 3..^4);
+        Write(oneThroughTen, ^4..^2);
+
+        static void Write(int[] values, Range range) =>
+            Console.WriteLine($"{range}:\t{string.Join(", ", values[range])}");
+        // Sample output:
+        //      0..^0:      1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        //      0..3:       1, 2, 3
+        //      2..^0:      3, 4, 5, 6, 7, 8, 9, 10
+        //      3..5:       4, 5
+        //      ^2..^0:     9, 10
+        //      0..^3:      1, 2, 3, 4, 5, 6, 7
+        //      3..^4:      4, 5, 6
+        //      ^4..^2:     7, 8
+    }
+}
+```
+The following table shows various ways to express collection ranges:
+
+| Range operator expression | Description                                                                      |
+|---------------------------|----------------------------------------------------------------------------------|
+| `..`                      | All values in the collection.                                                    |
+| `..end`                   | Values from the start to the `end` exclusively.                                  |
+| `start..`                 | Values from the `start` inclusively to the end.                                  |
+| `start..end`              | Values from the `start` inclusively to the `end` exclusively.                    |
+| `^start..`                | Values from the `start` inclusively to the end counting from the end.            |
+| `..^end`                  | Values from the start to the `end` exclusively counting from the end.            |
+| `start..^end`             | Values from `start` inclusively to `end` exclusively counting from the end.      |
+| `^start..^end`            | Values from `start` inclusively to `end` exclusively both counting from the end. |
+
+The following example demonstrates the effect of using all the ranges presented in the preceding table:
+
+```csharp
+int[] oneThroughTen =
+[
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+];
+
+Write(oneThroughTen, ..);
+Write(oneThroughTen, ..3);
+Write(oneThroughTen, 2..);
+Write(oneThroughTen, 3..5);
+Write(oneThroughTen, ^2..);
+Write(oneThroughTen, ..^3);
+Write(oneThroughTen, 3..^4);
+Write(oneThroughTen, ^4..^2);
+
+static void Write(int[] values, Range range) =>
+    Console.WriteLine($"{range}:\t{string.Join(", ", values[range])}");
+// Sample output:
+//      0..^0:      1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+//      0..3:       1, 2, 3
+//      2..^0:      3, 4, 5, 6, 7, 8, 9, 10
+//      3..5:       4, 5
+//      ^2..^0:     9, 10
+//      0..^3:      1, 2, 3, 4, 5, 6, 7
+//      3..^4:      4, 5, 6
+//      ^4..^2:     7, 8
+```
+For more information, see Indices and ranges.
+
+The `..` token is also used for the spread element in a collection expression.
+
+## Operator overloadability
+
+You can't overload the `.`, `()`, `^`, and `..` operators. You also can't overload the `[]` operator. Use indexers to support indexing with user-defined types.
+
+## C# language specification
+
+For more information, see the following sections of the C# language specification:
+
+- Member access
+- Element access
+- Null-conditional member access
+- Invocation expressions
+
+For more information about indices and ranges, see the feature proposal note.

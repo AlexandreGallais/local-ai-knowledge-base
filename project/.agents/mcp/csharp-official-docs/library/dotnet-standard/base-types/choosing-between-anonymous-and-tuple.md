@@ -1,0 +1,122 @@
+---
+title: "Choosing between anonymous and tuple types"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/choosing-between-anonymous-and-tuple.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Choosing between anonymous and tuple types
+
+Choose between anonymous types, `System.Tuple`2`, and `System.ValueTuple`2` based on usability, performance, and tradeoffs. `ValueTuple` provides a value type with the flexibility of anonymous types. This article explains when to choose each type.
+
+## Usability and functionality
+
+With Language-Integrated Query (LINQ), you often project query results into anonymous types that hold a few selected properties from the source objects. The following example instantiates an array of `System.DateTime` objects and projects each object into an anonymous type with two properties.
+
+```csharp
+var dates = new[]
+{
+    DateTime.UtcNow.AddHours(-1),
+    DateTime.UtcNow,
+    DateTime.UtcNow.AddHours(1),
+};
+
+foreach (var anonymous in
+             dates.Select(
+                 date => new { Formatted = $"{date:MMM dd, yyyy hh:mm zzz}", date.Ticks }))
+{
+    Console.WriteLine($"Ticks: {anonymous.Ticks}, formatted: {anonymous.Formatted}");
+}
+```
+
+Anonymous types are instantiated by using the `new` operator, and the property names and types are inferred from the declaration. If two or more anonymous object initializers in the same assembly specify a sequence of properties that are in the same order and that have the same names and types, the compiler treats the objects as instances of the same type. They share the same compiler-generated type information.
+
+The previous C# snippet projects an anonymous type with two properties, much like the following compiler-generated C# class:
+
+```csharp
+internal sealed class f__AnonymousType0
+{
+    public string Formatted { get; }
+    public long Ticks { get; }
+
+    public f__AnonymousType0(string formatted, long ticks)
+    {
+        Formatted = formatted;
+        Ticks = ticks;
+    }
+}
+```
+
+For more information, see anonymous types. The same functionality exists with tuples when projecting into LINQ queries, you can select properties into tuples. These tuples flow through the query, just as anonymous types would. Now consider the following example using the `System.Tuple<string, long>`.
+
+```csharp
+var dates = new[]
+{
+    DateTime.UtcNow.AddHours(-1),
+    DateTime.UtcNow,
+    DateTime.UtcNow.AddHours(1),
+};
+
+foreach (var tuple in
+            dates.Select(
+                date => new Tuple<string, long>($"{date:MMM dd, yyyy hh:mm zzz}", date.Ticks)))
+{
+    Console.WriteLine($"Ticks: {tuple.Item2}, formatted: {tuple.Item1}");
+}
+```
+
+With the `System.Tuple`2`, the instance exposes numbered item properties, such as `Item1`, and `Item2`. These property names can make it more difficult to understand the intent of the property values, as the property name only provides the ordinal. Furthermore, the `System.Tuple` types are reference `class` types. The `System.ValueTuple`2` however, is a value `struct` type. The following C# snippet, uses `ValueTuple<string, long>` to project into. In doing so, it assigns using a literal syntax.
+
+```csharp
+var dates = new[]
+{
+    DateTime.UtcNow.AddHours(-1),
+    DateTime.UtcNow,
+    DateTime.UtcNow.AddHours(1),
+};
+
+foreach (var (formatted, ticks) in
+            dates.Select(
+                date => (Formatted: $"{date:MMM dd, yyyy at hh:mm zzz}", date.Ticks)))
+{
+    Console.WriteLine($"Ticks: {ticks}, formatted: {formatted}");
+}
+```
+
+For more information about tuples, see Tuple types (C# reference) or Tuples (Visual Basic).
+
+The previous examples are all functionally equivalent, however, there are slight differences in their usability and their underlying implementations.
+
+## Tradeoffs
+
+You might want to always use `System.ValueTuple` over `System.Tuple`, and anonymous types, but there are tradeoffs you should consider. The `System.ValueTuple` types are mutable, whereas `System.Tuple` are read-only. Anonymous types can be used in expression trees, while tuples cannot. The following table is an overview of some of the key differences.
+
+### Key <example-value>
+
+| Name                     | Access modifier | Type     | Custom member name | Deconstruction support | Expression tree support |
+|--------------------------|-----------------|----------|--------------------|------------------------|-------------------------|
+| Anonymous types          | `internal`      | `class`  | ✔️                 | ❌                     | ✔️ |
+| `System.Tuple`      | `public`        | `class`  | ❌                 | ❌                     | ✔️ |
+| `System.ValueTuple` | `public`        | `struct` | ✔️                 | ✔️                     | ❌ |
+
+### Serialization
+
+One important consideration when choosing a type, is whether or not it will need to be serialized. Serialization is the process of converting the state of an object into a form that can be persisted or transported. For more information, see serialization. When serialization is important, creating a `class` or `struct` is preferred over anonymous types or tuple types.
+
+## Performance
+
+Performance between these types depends on the scenario. The major impact involves the tradeoff between allocations and copying. In most scenarios, the impact is small. When major impacts could arise, measurements should be taken to inform the decision.
+
+## Conclusion
+
+As a developer choosing between tuples and anonymous types, there are several factors to consider. Generally speaking, if you're not working with expression trees, and you're comfortable with tuple syntax then choose `System.ValueTuple` as they provide a value type with the flexibility to name properties. If you're working with expression trees, and you'd prefer to name properties, choose anonymous types. Otherwise, use `System.Tuple`.
+
+## See also
+
+- Anonymous types
+- Expression trees
+- Tuple types (C# reference)
+- Tuples (Visual Basic)
+- Type design guidelines

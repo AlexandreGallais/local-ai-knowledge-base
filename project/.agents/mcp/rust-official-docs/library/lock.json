@@ -1,0 +1,20 @@
+{
+  "rust-book": {
+    "commit": "2771df165f092a4fbb9f46b5b2e7450f19010adb",
+    "files": 183,
+    "bytes": 1314849,
+    "built": "2026-11-14"
+  },
+  "rust-reference": {
+    "commit": "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c",
+    "files": 159,
+    "bytes": 1049025,
+    "built": "2026-11-14"
+  },
+  "rust-std": {
+    "commit": "0ef1bc386059596dada8fb65b50425aab2ea637a",
+    "files": 754,
+    "bytes": 3214113,
+    "built": "2026-11-14"
+  }
+}

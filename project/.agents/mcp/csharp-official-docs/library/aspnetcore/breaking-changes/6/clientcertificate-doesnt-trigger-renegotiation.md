@@ -1,0 +1,50 @@
+---
+title: "Breaking change: ClientCertificate property no longer triggers renegotiation for HttpSys"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/clientcertificate-doesnt-trigger-renegotiation.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# ClientCertificate property no longer triggers renegotiation for HttpSys
+
+The `HttpContext.Connection.ClientCertificate` property no longer triggers TLS renegotiations for HttpSys.
+
+## Version introduced
+
+ASP.NET Core 6.0
+
+### Old behavior
+
+Setting `HttpSysOptions.ClientCertificateMethod = ClientCertificateMethod.AllowRenegotiation` allowed renegotiation to be triggered by both `HttpContext.Connection.ClientCertificate` and `HttpContext.Connection.GetClientCertificateAsync`.
+
+### New behavior
+
+Setting `HttpSysOptions.ClientCertificateMethod = ClientCertificateMethod.AllowRenegotiation` allows renegotiation to be triggered only by `HttpContext.Connection.GetClientCertificateAsync`. `HttpContext.Connection.ClientCertificate` returns the current certificate if available, but does not renegotiate with the client to request the certificate.
+
+## Reason for change
+
+When implementing the same features for Kestrel, it became clear that applications need to be able to check the state of the client certificate before triggering a renegotiation. For issues like the request body conflicting with the renegotiation, checking the state enables the following usage pattern to deal with the issue:
+
+```csharp
+if (connection.ClientCertificate == null)
+{
+  await BufferRequestBodyAsync();
+  await connection.GetClientCertificateAsync();
+}
+```
+
+## Recommended action
+
+Apps that use delayed client-certificate negotiation should call `Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)` to trigger renegotiation.
+
+## Affected APIs
+
+- `Microsoft.AspNetCore.Server.HttpSys.HttpSysOptions.ClientCertificateMethod`
+- `Microsoft.AspNetCore.Http.ConnectionInfo.ClientCertificate`
+- `Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)`
+
+## See also
+
+- dotnet/aspnetcore issue number 34124

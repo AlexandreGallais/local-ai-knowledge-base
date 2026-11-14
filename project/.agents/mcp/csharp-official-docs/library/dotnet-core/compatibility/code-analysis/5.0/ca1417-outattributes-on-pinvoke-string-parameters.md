@@ -1,0 +1,53 @@
+---
+title: "Breaking change: CA1417: OutAttribute on string parameter for P/Invoke"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/code-analysis/5.0/ca1417-outattributes-on-pinvoke-string-parameters.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Warning CA1417: OutAttribute on string parameter for P/Invoke
+
+.NET code analyzer rule CA1417 is enabled, by default, starting in .NET 5. It produces a build warning for any Platform Invoke (P/Invoke) method definitions where a `System.String` parameter is passed by value and marked with `System.Runtime.InteropServices.OutAttribute`.
+
+## Change description
+
+Starting in .NET 5, the .NET SDK includes .NET source code analyzers. Several of these rules are enabled, by default, including CA1417. If your project contains code that violates this rule and is configured to treat warnings as errors, this change could break your build.
+
+Rule CA1417 flags P/Invoke method definitions where a `System.String` parameter is marked with the `System.Runtime.InteropServices.OutAttribute` attribute and is passed by value. For example:
+
+```csharp
+[DllImport("MyLibrary")]
+private static extern void PIMethod([Out] string s);
+```
+
+The .NET runtime maintains a table, called the intern pool, that contains a single reference to each unique literal string in a program. If an interned string marked with `System.Runtime.InteropServices.OutAttribute` is passed by value to a P/Invoke method, the runtime can be destabilized. For more information about string interning, see the remarks for `System.String.Intern(System.String)`.
+
+## Version introduced
+
+5.0
+
+## Recommended action
+
+- If you need to marshal modified string data back to the caller, pass the string by reference instead.
+
+  ```csharp
+  [DllImport("MyLibrary")]
+  private static extern void PIMethod(out string s);
+  ```
+
+- If you don't need to marshal modified string data back to the caller, simply remove the `System.Runtime.InteropServices.OutAttribute`.
+
+  ```csharp
+  [DllImport("MyLibrary")]
+  private static extern void PIMethod(string s);
+  ```
+
+  For more information, see CA1417.
+
+- To disable code analysis completely, set `EnableNETAnalyzers` to `false` in your project file. For more information, see EnableNETAnalyzers.
+
+## Affected APIs
+
+Not detectable via API analysis.

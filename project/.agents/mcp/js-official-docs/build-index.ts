@@ -1,7 +1,7 @@
 // Builds the plain-text search index of this brick: one file per tool of library/, in index/.
 // The server builds it by itself when index/ is missing; run it again after a change of library/.
 // Node 22.18 or later, no package. From the project root:
-//   node .agents/mcp/js-official-docs/build-index.ts
+//   node .agents/mcp/<brick>/build-index.ts
 import {
   existsSync,
   mkdirSync,

@@ -1,0 +1,41 @@
+---
+title: "Dictionary<TKey,TValue>+KeyCollection class (part 2 of 2)"
+tool: "dotnet-api"
+version: "11"
+source: "https://github.com/dotnet/dotnet-api-docs/blob/a010100852b71f33d67d913d7a9ed69f83a639b1/xml/System.Collections.Generic/Dictionary`2+KeyCollection.xml"
+commit: "a010100852b71f33d67d913d7a9ed69f83a639b1"
+license: "CC-BY-4.0"
+---
+
+# Dictionary<TKey,TValue>+KeyCollection class (part 2 of 2)
+
+## Dictionary<TKey,TValue>+KeyCollection.System.Collections.IEnumerable.GetEnumerator() method
+
+```csharp
+System.Collections.IEnumerator IEnumerable.GetEnumerator ();
+```
+
+Returns an enumerator that iterates through a collection.
+
+Returns: An `IEnumerator` that can be used to iterate through the collection.
+
+#### Remarks
+The `foreach` statement of the C# language (`For Each` in Visual Basic) hides the complexity of the enumerators. Therefore, using `foreach` is recommended, instead of directly manipulating the enumerator.
+
+Enumerators can be used to read the data in the collection, but they cannot be used to modify the underlying collection.
+
+Initially, the enumerator is positioned before the first element in the collection. `IEnumerator.Reset` also brings the enumerator back to this position.  At this position, `IEnumerator.Current` is undefined. Therefore, you must call `IEnumerator.MoveNext` to advance the enumerator to the first element of the collection before reading the value of `IEnumerator.Current`.
+
+`IEnumerator.Current` returns the same object until either `IEnumerator.MoveNext` or `IEnumerator.Reset` is called. `IEnumerator.MoveNext` sets `IEnumerator.Current` to the next element.
+
+If `IEnumerator.MoveNext` passes the end of the collection, the enumerator is positioned after the last element in the collection and `IEnumerator.MoveNext` returns `false`. When the enumerator is at this position, subsequent calls to `IEnumerator.MoveNext` also return `false`. If the last call to `IEnumerator.MoveNext` returned `false`, `IEnumerator.Current` is undefined. To set `IEnumerator.Current` to the first element of the collection again, you can call `IEnumerator.Reset` followed by `IEnumerator.MoveNext`.
+
+An enumerator remains valid as long as the collection remains unchanged. If changes are made to the collection, such as adding elements or changing the capacity, the enumerator is irrecoverably invalidated and the next call to `Enumerator.MoveNext` or `Enumerator.System%23Collections%23IEnumerator%23Reset` throws an `InvalidOperationException`.
+
+The only mutating methods that do not invalidate enumerators are `Dictionary<T1,T2>.Remove` and `Dictionary<T1,T2>.Clear`.
+
+The enumerator does not have exclusive access to the collection; therefore, enumerating through a collection is intrinsically not a thread-safe procedure.  To guarantee thread safety during enumeration, you can lock the collection during the entire enumeration.  To allow the collection to be accessed by multiple threads for reading and writing, you must implement your own synchronization.
+
+Default implementations of collections in `Generic` are not synchronized.
+
+This method is an O(1) operation.

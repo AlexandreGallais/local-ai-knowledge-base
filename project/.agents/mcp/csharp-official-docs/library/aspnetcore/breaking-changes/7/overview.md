@@ -1,0 +1,38 @@
+---
+title: "Breaking changes in ASP.NET Core 7"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/overview.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# Breaking changes in ASP.NET Core 7
+
+If you're migrating an app to ASP.NET Core 7, the breaking changes listed here might affect you.
+
+This article categorizes each breaking change as *binary incompatible* or *source incompatible*, or as a *behavioral change*:
+
+- **Binary incompatible** - When run against the new runtime or component, existing binaries may encounter a breaking change in behavior, such as failure to load or execute, and if so, require recompilation.
+
+- **Source incompatible** - When recompiled using the new SDK or component or to target the new runtime, existing source code may require source changes to compile successfully.
+
+- **Behavioral change** - Existing code and binaries may behave differently at runtime. If the new behavior is undesirable, existing code would need to be updated and recompiled.
+
+| Title                                                                                            | Type of change      |
+|--------------------------------------------------------------------------------------------------|:-------------------:|
+| API controller actions try to infer parameters from DI | Source incompatible |
+| ASPNET-prefixed environment variable precedence            | Behavioral change   |
+| AuthenticateAsync for remote auth providers            | Source incompatible |
+| Authentication in WebAssembly apps                                 | Binary incompatible |
+| Default authentication scheme                                | Binary incompatible |
+| Event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed | Binary incompatible |
+| Fallback file endpoints                                            | Binary incompatible |
+| IHubClients and IHubCallerClients hide members               | Source incompatible |
+| Kestrel: Default HTTPS binding removed                               | Binary incompatible |
+| Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll removed | Binary/source incompatible |
+| Microsoft.Data.SqlClient updated to 4.0.1        | Source incompatible |
+| Middleware no longer defers to endpoint with null request delegate | Binary incompatible |
+| MVC's detection of an empty body in model binding changed     | Binary incompatible |
+| Output caching API changes                                          | Binary/source incompatible |
+| SignalR Hub methods try to resolve parameters from DI     | Source incompatible |

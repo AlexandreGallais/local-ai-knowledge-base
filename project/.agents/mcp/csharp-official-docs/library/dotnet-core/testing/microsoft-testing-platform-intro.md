@@ -1,0 +1,102 @@
+---
+title: "Microsoft.Testing.Platform overview - .NET test runner"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-intro.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Microsoft.Testing.Platform (MTP) overview
+
+Microsoft.Testing.Platform (MTP) is a lightweight and portable alternative to VSTest for running tests in all contexts, including continuous integration (CI) pipelines, CLI, Visual Studio Test Explorer, and VS Code Test Explorer. MTP is embedded directly in your test projects, and there's no other app dependencies, such as `vstest.console` or `dotnet test` needed to run your tests.
+
+> **Tip:**
+> If you need help choosing between VSTest and MTP, start with Test platforms overview.
+
+Use this article when you already decided to use MTP and you want to understand its model, capabilities, and operational behavior.
+
+MTP is open source. You can find the `Microsoft.Testing.Platform` code in the microsoft/testfx GitHub repository.
+
+## Start here
+
+Use the following path, based on what you need next:
+
+- Run and debug tests from CLI, IDE, or CI: Run and debug tests
+- Understand platform behavior in CLI: Testing with `dotnet test`
+- Find platform and extension CLI switches in one place: MTP CLI options reference
+- Configure framework runners: Run tests with MSTest or MTP support in NUnit (NUnit runner)
+- Host MTP in a UWP or WinUI 3 app: Test UWP and WinUI 3 apps with MSTest and MTP
+- Migrate an existing VSTest setup: Migrate from VSTest to MTP
+- Add diagnostics, coverage, and reporting: MTP features
+- Build your own extension: MTP architecture, Extension points, and Services
+- Build editor or IDE integration: MTP server mode
+
+## MTP pillars
+
+This new testing platform is built on the .NET Developer Experience Testing team's experience and aims to address the challenges encountered since the release of .NET Core in 2016. While there's a high level of compatibility between the .NET Framework and the .NET Core/.NET, some key <example-value> like the plugin-system and the new possible form factors of .NET compilations have made it complex to evolve or fully support the new runtime feature with the current VSTest platform architecture.
+
+The main driving factors for the evolution of the new testing platform are detailed in the following:
+
+* **Determinism**: Ensuring that running the same tests in different contexts (local, CI) will produce the same result. The new runtime does not rely on reflection or any other dynamic .NET runtime feature to coordinate a test run.
+
+* **Runtime transparency**: The test runtime does not interfere with the test framework code, it does not create isolated contexts like `AppDomain` or `AssemblyLoadContext`, and it does not use reflection or custom assembly resolvers.
+
+* **Compile-time registration of extensions**: Extensions, such as test frameworks and in/out-of-process extensions, are registered during compile-time to ensure determinism and to facilitate detection of inconsistencies.
+
+* **Zero dependencies**: The core of the platform is a single .NET assembly, `Microsoft.Testing.Platform.dll`, which has no dependencies other than the supported runtimes.
+
+* **Hostable**: The test runtime can be hosted in any .NET application. While a console application is commonly used to run tests, you can create a test application in any type of .NET application. This allows you to run tests within special contexts, such as devices or browsers, where there may be limitations.
+
+* **Support all .NET form factors**: Support current and future .NET form factors, including Native AOT.
+
+* **Performant**: Finding the right balance between features and extension points to avoid bloating the runtime with non-fundamental code. The new test platform is designed to "orchestrate" a test run, rather than providing implementation details on how to do it.
+
+* **Extensible enough**: The new platform is built on extensibility points to allow for maximum customization of runtime execution. It allows you to configure the test process host, observe the test process, and consume information from the test framework within the test host process.
+
+* **Single module deploy**: The hostability feature enables a single module deploy model, where a single compilation result can be used to support all extensibility points, both out-of-process and in-process, without the need to ship different executable modules.
+
+## Supported test frameworks
+
+* MSTest. In MSTest, the support of MTP is done via MSTest runner.
+* NUnit. In NUnit, the support of MTP is done via NUnit runner.
+* TUnit. TUnit is built entirely on top of MTP and doesn't support VSTest. For more information, see TUnit documentation and Unit testing C# with TUnit.
+* xUnit.net. For more information, see Microsoft Testing Platform (xUnit.net v3) and Microsoft Testing Platform (xUnit.net v2) from the xUnit.net documentation.
+
+## Supported target frameworks
+
+MTP supports .NET (.NET 8 and later), .NET Framework (versions 4.6.2 and later), and targets NETStandard 2.0 for maximum compatibility with other runtimes.
+
+Starting with MTP 2.5 and MSTest 4.5, MTP also supports classic UWP, modern .NET UWP, and WinUI 3 AppContainer test hosts through the MSTest.Sdk app-model sidecar. Packaged full-trust and unpackaged WinUI 3 test hosts are also supported. For details, see Test UWP and WinUI 3 apps with MSTest and MTP.
+
+## Run and debug tests
+
+For detailed guidance on running and debugging MTP test projects from CLI, Visual Studio, Visual Studio Code, and CI pipelines, see Run and debug tests.
+
+## Options
+
+For the full list of platform and extension command-line options, see MTP CLI options reference.
+
+## MSBuild integration
+
+The NuGet package Microsoft.Testing.Platform.MSBuild provides various integrations for MTP with MSBuild:
+
+- Support for `dotnet test`. For more information, see Testing with dotnet test.
+- Support for `ProjectCapability` required by `Visual Studio` and `Visual Studio Code` Test Explorers.
+- Automatic generation of the entry point (`Main` method).
+- Automatic generation of the configuration file.
+- Automatic detection and registration of installed extension packages.
+
+When this package is active (the default for MSTest, NUnit, and xUnit runners), installing an extension NuGet package is all that's needed — extensions are auto-registered with no code changes. If you disable the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`, you must register extensions manually in your `Main` method. Each extension page documents its manual registration call.
+
+Starting with MTP 2.4, Microsoft-provided extension packages constrain their `Microsoft.Testing.Platform` dependency to the current major version. For example, a 2.4 extension requires `Microsoft.Testing.Platform` in the range `[2.4.0, 3.0.0)`. This range prevents NuGet from silently combining an extension with an unsupported future platform major. Keep the platform and extension packages on the same release line.
+
+> **Note:**
+> This integration works in a transitive way (a project that references another project referencing this package will behave as if it references the package) and can be disabled through the `IsTestingPlatformApplication` MSBuild property.
+
+## See also
+
+- Test platforms overview
+- MTP features
+- MTP telemetry
+- MTP troubleshooting

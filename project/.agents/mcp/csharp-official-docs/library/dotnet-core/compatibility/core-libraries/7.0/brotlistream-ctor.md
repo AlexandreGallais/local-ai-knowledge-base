@@ -1,0 +1,52 @@
+---
+title: ".NET 7 breaking change: BrotliStream no longer allows undefined CompressionLevel values"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/brotlistream-ctor.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# BrotliStream no longer allows undefined CompressionLevel values
+
+The `System.IO.Compression.BrotliStream` constructors that take a `System.IO.Compression.CompressionLevel` argument no longer allow values that aren't defined in the `System.IO.Compression.CompressionLevel` enumeration. If you pass an invalid value, an `System.ArgumentException` is thrown.
+
+## Previous behavior
+
+`System.IO.Compression.BrotliStream` allowed you to pass an arbitrary compression level to the constructor by casting the desired level directly to `System.IO.Compression.CompressionLevel`. For example:
+
+```csharp
+BrotliStream brotli = new BrotliStream(baseStream,
+                                       (CompressionLevel)5); // Use level 5
+```
+
+However, if an arbitrary level was provided, that was passed through as-is to the underlying library, resulting in inconsistent and potentially unexpected behavior.
+
+## New behavior
+
+`System.IO.Compression.BrotliStream` only allows the values defined in `System.IO.Compression.CompressionLevel`. If you pass an undefined value to the constructor, an `System.ArgumentException` is thrown.
+
+## Version introduced
+
+.NET 7
+
+## Type of breaking change
+
+This change can affect binary compatibility.
+
+## Reason for change
+
+The purpose of the `System.IO.Compression.CompressionLevel` enumeration is to let developers use compression algorithms without needing to understand the meaning of their tuning parameters.
+
+If an arbitrary level was provided, that was passed through as-is to the underlying library, resulting in inconsistent and potentially unexpected behavior. With this change, the behavior is aligned with other compression streams, for example, `System.IO.Compression.DeflateStream`.
+
+With the new tuning of the `System.IO.Compression.CompressionLevel` values and the addition of `System.IO.Compression.CompressionLevel.SmallestSize`, it's now possible to have a variety of trade-offs in the compression algorithms. Users can continue to rely on `System.IO.Compression.CompressionLevel` values as being abstractions of such trade-offs.
+
+## Recommended action
+
+If you were relying on passing undefined values as the `System.IO.Compression.CompressionLevel`, revisit your use case and decide which documented value is the most optimal for it.
+
+## Affected APIs
+
+- `System.IO.Compression.BrotliStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionLevel,System.Boolean)`
+- `System.IO.Compression.BrotliStream.#ctor(System.IO.Stream,System.IO.Compression.CompressionLevel)`

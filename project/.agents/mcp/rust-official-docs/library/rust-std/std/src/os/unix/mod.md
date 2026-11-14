@@ -1,0 +1,39 @@
+---
+title: "std::os::unix"
+tool: "rust-std"
+version: "1.100"
+source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/mod.rs"
+commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
+license: "MIT OR Apache-2.0"
+---
+
+# std::os::unix
+
+Platform-specific extensions to `std` for Unix platforms.
+
+Provides access to platform-level information on Unix platforms, and
+exposes Unix-specific functions that would otherwise be inappropriate as
+part of the core `std` library.
+
+It exposes more ways to deal with platform-specific strings (`OsStr`,
+`OsString`), allows to set permissions more granularly, extract low-level
+file descriptors from files and sockets, and has platform-specific helpers
+for spawning processes.
+
+#### Examples
+
+use std::fs::File;
+use std::os::unix::prelude::*;
+
+fn main() -> std::io::Result<()> {
+    let f = File::create("foo.txt")?;
+    let fd = f.as_raw_fd();
+
+    // use fd with native unix bindings
+
+    Ok(())
+}
+```rust
+
+`OsStr`: crate::ffi::OsStr
+`OsString`: crate::ffi::OsString

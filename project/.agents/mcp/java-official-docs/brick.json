@@ -1,0 +1,8 @@
+{
+  "name": "java-official-docs",
+  "instructions": "The official documentation of the Java API, kept locally: the classes of the java.base module (java.lang, java.util, java.io, java.nio, java.time, java.net...) and of java.net.http, from the Javadoc of OpenJDK. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
+  "search": "Search the Java API documentation of OpenJDK: the java.base module (java.lang, java.util, java.io, java.nio, java.time, java.math, java.net, java.text, java.security) and java.net.http. Returns 10 section ids at most.",
+  "queryExample": "\"HashMap put\" or \"CompletableFuture thenApply\"",
+  "toolExample": "\"java-se\" (the only tool)",
+  "idExample": "library/java-se/java.base/share/classes/java/util/HashMap.md#hashmapputk-v"
+}

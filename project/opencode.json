@@ -51,6 +51,22 @@
   },
   "mcp": {
     "servers": {
+      "csharp-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/csharp-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
+      "java-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/java-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "js-official-docs": {
         "type": "local",
         "command": [
@@ -64,6 +80,22 @@
         "command": [
           "node",
           ".agents/mcp/parse/server.ts"
+        ],
+        "codemode": false
+      },
+      "python-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/python-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
+      "rust-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/rust-official-docs/server.ts"
         ],
         "codemode": false
       }

@@ -1,0 +1,124 @@
+---
+title: "Resolve errors and warnings related to record declarations"
+tool: "csharp"
+version: "15"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/record-declaration-errors.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Resolve errors and warnings for record declarations
+
+The C# compiler generates errors and warnings when you misuse record types. Record types provide built-in members that implement value-based equality. These diagnostics help you follow the rules for declaring and using record types.
+
+- **CS8851**: *'type' defines 'Equals' but not 'GetHashCode'*
+- **CS8857**: *The receiver of a `with` expression must have a non-void type.*
+- **CS8858**: *The receiver type 'type' is not a valid record type and is not a struct type.*
+- **CS8859**: *Members named 'Clone' are disallowed in records.*
+- **CS8860**: *Types and aliases should not be named 'record'.*
+- **CS8864**: *Records may only inherit from object or another record.*
+- **CS8865**: *Only records may inherit from records.*
+- **CS8866**: *Record member 'member' must be a readable instance property or field of type 'type' to match positional parameter 'parameter'.*
+- **CS8869**: *'member' does not override expected method from 'object'.*
+- **CS8870**: *'member' cannot be sealed because containing record is not sealed.*
+- **CS8871**: *'member' does not override expected method from 'type'.*
+- **CS8872**: *'member' must allow overriding because the containing record is not sealed.*
+- **CS8873**: *Record member 'member' must be public.*
+- **CS8874**: *Record member 'member' must return 'type'.*
+- **CS8875**: *Record member 'member' must be protected.*
+- **CS8876**: *'member' does not override expected property from 'type'.*
+- **CS8877**: *Record member 'member' may not be static.*
+- **CS8879**: *Record member 'member' must be private.*
+- **CS8906**: *Record equality contract property 'member' must have a get accessor.*
+- **CS8908**: *The type 'type' may not be used for a field of a record.*
+- **CS8913**: *The positional member 'member' found corresponding to this parameter is hidden.*
+- **CS9391**: *Record member 'member' must be declared explicitly because 'base member' is abstract.*
+
+In addition, this article covers the following warning:
+
+- **CS8907**: *Parameter 'name' is unread. Did you forget to use it to initialize the property with that name?*
+
+## Synthesized member signatures
+
+- **CS8869**: *'member' does not override expected method from 'object'.*
+- **CS8870**: *'member' cannot be sealed because containing record is not sealed.*
+- **CS8871**: *'member' does not override expected method from 'type'.*
+- **CS8872**: *'member' must allow overriding because the containing record is not sealed.*
+- **CS8873**: *Record member 'member' must be public.*
+- **CS8874**: *Record member 'member' must return 'type'.*
+- **CS8875**: *Record member 'member' must be protected.*
+- **CS8876**: *'member' does not override expected property from 'type'.*
+- **CS8877**: *Record member 'member' may not be static.*
+- **CS8879**: *Record member 'member' must be private.*
+- **CS8906**: *Record equality contract property 'member' must have a get accessor.*
+- **CS9391**: *Record member 'member' must be declared explicitly because 'base member' is abstract.*
+
+When you explicitly declare a member that the compiler would otherwise synthesize for a record type, your declaration must match the expected signature, accessibility, and modifiers. For the complete rules, see the records specification in the C# language specification.
+
+To correct these errors, apply the following changes to your explicitly declared record members:
+
+- Change the accessibility of the `Equals` method, `GetHashCode`, `ToString`, the deconstruct method, and the `EqualityContract` property or `op_Equality` and `op_Inequality` operators to `public`. The compiler requires these members to be publicly accessible so that value-based equality works correctly across all calling contexts (**CS8873**).
+- Change the accessibility of the `PrintMembers` method to `protected` when you declare it in a non-sealed record class. The method must be `protected` because derived records override it to include their own properties in the formatted output (**CS8875**).
+- Change the accessibility of the `PrintMembers` method to `private` when you declare it in a sealed record class or a record struct. Because no derived type can exist, the method doesn't need to be accessible outside the type (**CS8879**).
+- Remove the `static` modifier from any explicitly declared synthesized member. Synthesized members operate on specific record instances to implement behaviors like equality comparison, formatting, and copying, so they must be instance members (**CS8877**).
+- Change the return type of the member to match the type the compiler expects. For example, the `EqualityContract` property must return `System.Type`, and the `Equals` method must return `bool`. The compiler relies on these exact return types to generate correct code for equality and other synthesized behaviors (**CS8874**).
+- Remove the `sealed` modifier from any explicitly declared synthesized member in a non-sealed record. Derived records must be able to override these members to provide their own value-based equality and formatting logic (**CS8870**).
+- Declare explicitly provided synthesized members as `virtual` or `override` in a non-sealed record. The compiler requires these members to allow overriding so that derived records in the inheritance hierarchy can customize their behavior (**CS8872**).
+- Ensure that your explicitly declared member overrides the expected method from `object` or from the base record type. For example, the `Equals` method must override `object.Equals`, and `GetHashCode` must override `object.GetHashCode`. The compiler checks that these members participate in the correct override chain so that value-based equality and other synthesized behaviors work correctly across the type hierarchy (**CS8869**, **CS8871**).
+- Ensure that your explicitly declared `EqualityContract` property overrides the base record's `EqualityContract` property. The compiler relies on the override chain for the equality contract to distinguish record types at run time within the inheritance hierarchy (**CS8876**).
+- Add a `get` accessor to the `EqualityContract` property. The compiler reads the equality contract at run time to determine whether two record instances are of the same type, so the property must be readable (**CS8906**).
+- Explicitly declare and implement the reported member in the derived record. The compiler can't synthesize that member when its generated body would call the reported abstract base member (**CS9391**).
+
+## Positional members
+
+- **CS8866**: *Record member 'member' must be a readable instance property or field of type 'type' to match positional parameter 'parameter'.*
+- **CS8907**: *Parameter 'name' is unread. Did you forget to use it to initialize the property with that name?*
+- **CS8908**: *The type 'type' may not be used for a field of a record.*
+- **CS8913**: *The positional member 'member' found corresponding to this parameter is hidden.*
+
+When you declare a positional record, the compiler synthesizes properties that correspond to each positional parameter. These diagnostics indicate that your explicit declarations conflict with those synthesized properties. For the complete rules, see the records specification in the C# language specification.
+
+To correct these errors, apply the following changes to your positional record declarations:
+
+- Change any explicitly declared member that corresponds to a positional parameter so it's a readable instance property or field with the same type as the parameter. The compiler needs the member to be readable and type-compatible so that the synthesized `Deconstruct` method and positional pattern matching can access the value correctly (**CS8866**).
+- Ensure that each positional parameter initializes its corresponding property in the constructor body when you provide an explicit constructor. The compiler raises a warning when a parameter goes unused because it typically indicates a typo or a mismatch between the parameter name and the property name, which would leave the property uninitialized (**CS8907**).
+- Change the type of a field declared in a record to a type that's valid in that context. Certain types, such as `Span<T>` or other `ref struct` types, can't be used as fields in a record because record types require all fields to be compatible with heap allocation and value-based equality (**CS8908**).
+- Remove the `new` modifier from a member in a derived record that hides a positional member from the base record. When a positional member is hidden, the compiler can't match the positional parameter to its corresponding property, which breaks the synthesized `Deconstruct` method and positional pattern matching (**CS8913**).
+
+## Equality members
+
+- **CS8851**: *'type' defines 'Equals' but not 'GetHashCode'*
+- **CS8857**: *The receiver of a `with` expression must have a non-void type.*
+- **CS8858**: *The receiver type 'type' is not a valid record type and is not a struct type.*
+
+Record types provide built-in value-based equality. These diagnostics arise when your declarations conflict with the equality contract. For the complete rules on equality, see C# equality comparisons.
+
+To correct these errors, apply the following changes:
+
+- Add a `GetHashCode` method whenever you define an `Equals` method. The equivalence contract requires that objects considered equal produce the same hash code, so the compiler enforces that these two methods are always defined together (**CS8851**).
+- Change the receiver of a `with` expression so that it's a record type or a struct type. The `with` expression creates a modified copy by using the `record` copy constructor, or value copy semantics for `struct` types (**CS8858**).
+- Ensure the receiver of a `with` expression has a non-void type. The `with` expression produces a new copy of the receiver, so the receiver must evaluate to a value that can be copied (**CS8857**).
+
+## Record inheritance
+
+- **CS8864**: *Records may only inherit from object or another record*
+- **CS8865**: *Only records may inherit from records.*
+
+Record class types follow specific inheritance rules. For the complete rules, see the records specification in the C# language specification.
+
+To correct these errors, apply the following changes:
+
+- Change the base type of a record class so that it inherits from `object` or from another record class. Record types rely on compiler-synthesized members for equality and copying that are only compatible with other record types, so the compiler doesn't allow a record to inherit from a non-record class (**CS8864**).
+- Change a non-record class that inherits from a record class so that it's declared as a record class instead. Because record types synthesize equality, cloning, and other members that depend on a consistent inheritance chain, the compiler requires every type in the hierarchy to be a record class (**CS8865**). Record struct types can't participate in inheritance hierarchies beyond implementing interfaces.
+
+## Reserved member names
+
+- **CS8859**: *Members named 'Clone' are disallowed in records.*
+- **CS8860**: *Types and aliases should not be named 'record'.*
+
+The compiler reserves certain names for use with record types. For the complete rules, see the records specification in the C# language specification.
+
+To correct these errors, apply the following changes:
+
+- Rename any member called `Clone` in a record type to a different name. The compiler uses `Clone` internally to implement the copy semantics for `with` expressions, so declaring your own `Clone` member conflicts with the synthesized implementation (**CS8859**).
+- Rename any type or alias named `record` to a different name. Because `record` is a contextual keyword used for declaring record types, naming a type or alias `record` creates ambiguity that can confuse both the compiler and developers reading the code (**CS8860**).

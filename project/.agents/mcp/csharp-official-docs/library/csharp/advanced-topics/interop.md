@@ -1,0 +1,59 @@
+---
+title: "Interoperability Overview"
+tool: "csharp"
+version: "15"
+source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/advanced-topics/interop/index.md"
+commit: "94b7dca39d8dca4374f326176874381661f4dd59"
+license: "CC-BY-4.0"
+---
+
+# Interoperability Overview
+
+Interoperability enables you to preserve and take advantage of existing investments in unmanaged code. Code that runs under the control of the common language runtime (CLR) is *managed code*, and code that runs outside the CLR is *unmanaged code*. COM, COM+, C++ components, ActiveX components, and Microsoft Windows API are examples of unmanaged code.
+
+.NET enables interoperability with unmanaged code through platform invoke services, the `System.Runtime.InteropServices` namespace, C++ interoperability, and COM interoperability (COM interop).
+
+## Platform Invoke
+
+*Platform invoke* is a service that enables managed code to call unmanaged functions implemented in dynamic link libraries (DLLs), such as the Microsoft Windows API. It locates and invokes an exported function and marshals its arguments (integers, strings, arrays, structures, and so on) across the interoperation boundary as needed.
+
+For more information, see Consuming Unmanaged DLL Functions and How to use platform invoke to play a WAV file.
+
+> **Note:**
+> The Common Language Runtime (CLR) manages access to system resources. Calling unmanaged code that is outside the CLR bypasses this security mechanism, and therefore presents a security risk. For example, unmanaged code might call resources in unmanaged code directly, bypassing CLR security mechanisms. For more information, see Security in .NET.
+
+## C++ Interop
+
+You can use C++ interop, also known as It Just Works (IJW), to wrap a native C++ class. C++ interop enables code authored in C# or another .NET language to access it. You write C++ code to wrap a native DLL or COM component. Unlike other .NET languages, Visual C++ has interoperability support that enables managed and unmanaged code in the same application and even in the same file. You then build the C++ code by using the **/clr** compiler switch to produce a managed assembly. Finally, you add a reference to the assembly in your C# project and use the wrapped objects just as you would use other managed classes.
+
+## Exposing COM Components to C\#
+
+You can consume a COM component from a C# project. The general steps are as follows:
+
+1. Locate a COM component to use and register it. Use regsvr32.exe to register or un–register a COM DLL.
+1. Add to the project a reference to the COM component or type library.
+   When you add the reference, Visual Studio uses the Tlbimp.exe (Type Library Importer), which takes a type library as input, to output a .NET interop assembly. The assembly, also named a runtime callable wrapper (RCW), contains managed classes and interfaces that wrap the COM classes and interfaces that are in the type library. Visual Studio adds to the project a reference to the generated assembly.
+1. Create an instance of a class defined in the RCW. Creating an instance of that class creates an instance of the COM object.
+1. Use the object just as you use other managed objects. When the object is reclaimed by garbage collection, the instance of the COM object is also released from memory.
+
+For more information, see Exposing COM Components to the .NET Framework.
+
+## Exposing C# to COM
+
+COM clients can consume C# types that have been correctly exposed. The basic steps to expose C# types are as follows:
+
+1. Add interop attributes in the C# project.
+   You can make an assembly COM visible by modifying C# project properties. For more information, see Assembly Information Dialog Box.
+1. Generate a COM type library and register it for COM usage.
+   You can modify C# project properties to automatically register the C# assembly for COM interop. Visual Studio uses the Regasm.exe (Assembly Registration Tool), using the `/tlb` command-line switch, which takes a managed assembly as input, to generate a type library. This type library describes the `public` types in the assembly and adds registry entries so that COM clients can create managed classes.
+
+ For more information, see Exposing .NET Framework Components to COM and Example COM Class.
+
+## See also
+
+- Improving Interop Performance
+- Introduction to Interoperability between COM and .NET
+- Introduction to COM Interop in Visual Basic
+- Marshaling between Managed and Unmanaged Code
+- Interoperating with Unmanaged Code
+- Registering Assemblies with COM

@@ -1,0 +1,253 @@
+---
+title: "Enable QR code generation for TOTP authenticator apps in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 3)"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/webassembly/standalone-with-identity/qrcodes-for-authenticator-apps.md"
+commit: "692feee601358eeb5d8915b46143303f45e83887"
+license: "CC-BY-4.0"
+---
+
+# Enable QR code generation for TOTP authenticator apps in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 3)
+
+## Replace `Login` component
+
+Replace the `Login` component. The following version of the `Login` component:
+
+* Accepts a user's email address and password for an initial login attempt.
+* If login is successful (2FA is disabled), the component notifies the user that they're authenticated.
+* If the login attempt results in a response indicating that 2FA is required, a 2FA input element appears to receive either a 2FA TOTP code from an authenticator app or a recovery code. Depending on which code the user enters, login is attempted again by calling either `LoginTwoFactorCodeAsync` for a TOTP code or `LoginTwoFactorRecoveryCodeAsync` for a recovery code.
+
+`Components/Identity/Login.razor`:
+
+```razor
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using BlazorWasmAuth.Identity
+@using BlazorWasmAuth.Identity.Models
+@inject IAccountManagement Acct
+@inject ILogger<Login> Logger
+@inject NavigationManager Navigation
+
+<PageTitle>Login</PageTitle>
+
+<h1>Login</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="alert alert-success">
+            You're logged in as @context.User.Identity?.Name.
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        @foreach (var error in formResult.ErrorList)
+        {
+            <div class="alert alert-danger">@error</div>
+        }
+        <div class="row">
+            <div class="col">
+                <section>
+                    <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" 
+                            FormName="login" Context="editform_context">
+                        <DataAnnotationsValidator />
+                        <h2>Use a local account to log in.</h2>
+                        <hr />
+                        <div style="display:@(requiresTwoFactor ? "none" : "block")">
+                            <div class="form-floating mb-3">
+                                <InputText @bind-Value="Input.Email" 
+                                    id="Input.Email" 
+                                    class="form-control" 
+                                    autocomplete="username" 
+                                    aria-required="true" 
+                                    placeholder="user@example.com" />
+                                <label for="Input.Email" class="form-label">
+                                    Email
+                                </label>
+                                <ValidationMessage For="() => Input.Email" 
+                                    class="text-danger" />
+                            </div>
+                            <div class="form-floating mb-3">
+                                <InputText type="<example-value>" 
+                                    @bind-Value="<example-value>" 
+                                    id="<example-value>" 
+                                    class="form-control" 
+                                    autocomplete="<example-value>" 
+                                    aria-required="true" 
+                                    placeholder="<example-value>" />
+                                <label for="<example-value>" <example-value>"<example-value>">
+                                    Password
+                                </label>
+                                <ValidationMessage For="<example-value>" 
+                                    class="text-danger" />
+                            </div>
+                        </div>
+                        <div style="display:@(requiresTwoFactor ? "block" : "none")">
+                            <div class="form-floating mb-3">
+                                <InputText @bind-Value="Input.TwoFactorCodeOrRecoveryCode" 
+                                    id="Input.TwoFactorCodeOrRecoveryCode" 
+                                    class="form-control" 
+                                    autocomplete="off" 
+                                    placeholder="###### or #####-#####" />
+                                <label for="Input.TwoFactorCodeOrRecoveryCode" class="form-label">
+                                    Two-factor Code or Recovery Code
+                                </label>
+                                <ValidationMessage For="() => Input.TwoFactorCodeOrRecoveryCode" 
+                                    class="text-danger" />
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">
+                                Log in
+                            </button>
+                        </div>
+                        <div class="mt-3">
+                            <p>
+                                <a href="<example-value>">Forgot password</a>
+                            </p>
+                            <p>
+                                <a href="register">Register as a new user</a>
+                            </p>
+                        </div>
+                    </EditForm>
+                </section>
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private FormResult formResult = new();
+    private bool requiresTwoFactor;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    public async Task LoginUser()
+    {
+        if (requiresTwoFactor)
+        {
+            if (!string.IsNullOrEmpty(Input.TwoFactorCodeOrRecoveryCode))
+            {
+                // The [RegularExpression] data annotation ensures that the input 
+                // is either a six-digit authenticator code (######) or an 
+                // eleven-character alphanumeric recovery code (#####-#####)
+                if (Input.TwoFactorCodeOrRecoveryCode.Length == 6)
+                {
+                    formResult = await Acct.LoginTwoFactorCodeAsync(
+                        Input.Email, Input.Password, 
+                        Input.TwoFactorCodeOrRecoveryCode);
+                }
+                else
+                {
+                    formResult = await Acct.LoginTwoFactorRecoveryCodeAsync(
+                        Input.Email, Input.Password, 
+                        Input.TwoFactorCodeOrRecoveryCode);
+
+                    if (formResult.Succeeded)
+                    {
+                        var twoFactorResponse = await Acct.TwoFactorRequestAsync(new());
+                    }
+                }
+            }
+            else
+            {
+                formResult = 
+                    new FormResult
+                    {
+                        Succeeded = false,
+                        ErrorList = [ "Invalid two-factor code." ]
+                    };
+            }
+        }
+        else
+        {
+            formResult = await Acct.LoginAsync(Input.Email, Input.Password);
+            requiresTwoFactor = formResult.ErrorList.Contains("RequiresTwoFactor");
+            Input.TwoFactorCodeOrRecoveryCode = string.Empty;
+
+            if (requiresTwoFactor)
+            {
+                formResult.ErrorList = [];
+            }
+        }
+
+        if (formResult.Succeeded && !string.IsNullOrEmpty(ReturnUrl))
+        {
+            Navigation.NavigateTo(ReturnUrl);
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "<example-value>")]
+        public string Password { get; set; } = string.Empty;
+
+        [RegularExpression(@"^([0-9]{6})|([A-Z0-9]{5}[-]{1}[A-Z0-9]{5})$", 
+            ErrorMessage = "Must be a six-digit authenticator code (######) or " +
+            "eleven-character alphanumeric recovery code (#####-#####, dash " +
+            "required)")]
+        [Display(Name = "Two-factor Code or Recovery Code")]
+        public string TwoFactorCodeOrRecoveryCode { get; set; } = string.Empty;
+    }
+}
+```
+
+Using the preceding component, the user is remembered after a successful login with a valid TOTP code from an authenticator app. If you want to always require a TOTP code for login and not remember the machine, call the `TwoFactorRequestAsync` method with `TwoFactorRequest.ForgetMachine` set to `true` immediately after a successful two-factor login:
+
+```diff
+if (Input.TwoFactorCodeOrRecoveryCode.Length == 6)
+{
+    formResult = await Acct.LoginTwoFactorCodeAsync(Input.Email, Input.Password, 
+        Input.TwoFactorCodeOrRecoveryCode);
+
++    if (formResult.Succeeded)
++    {
++        var forgetMachine = 
++            await Acct.TwoFactorRequestAsync(new() { ForgetMachine = true });
++    }
+}
+```
+
+## Add a component to display recovery codes
+
+Add the following `ShowRecoveryCodes` component to the app to display recovery codes to the user.
+
+`Components/Identity/ShowRecoveryCodes.razor`:
+
+```razor
+<h3>Recovery codes</h3>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>Put these codes in a safe place.</strong>
+    </p>
+    <p>
+        If you lose your device and don't have an unused 
+        recovery code, you can't access your account.
+    </p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @foreach (var recoveryCode in RecoveryCodes)
+        {
+            <div>
+                <code class="recovery-code">@recoveryCode</code>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string[] RecoveryCodes { get; set; } = [];
+}
+```

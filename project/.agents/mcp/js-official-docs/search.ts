@@ -78,6 +78,9 @@ const K1 = 1.2;
 const B = 0.75;
 const TITLE_WEIGHT = 2;
 const NAME_WEIGHT = 3;
+// Points given to a title that names the API of a one-name query, exactly or as its start.
+const EXACT_WEIGHT = 40;
+const PREFIX_WEIGHT = 15;
 
 export const MAX_HITS = 10;
 
@@ -278,10 +281,54 @@ function apiNames(query: string): string[] {
     .map((chunk) => chunk.toLowerCase());
 }
 
+// The kinds that titles add to a name ("List<T> class", "struct Vec"), and the notes in brackets.
+const KINDS = /\b(?:class|struct|interface|enum|delegate|record|method|property|constructor|field|event|operator|fn|trait|type|const|static|union|macro|annotation|exception|function|module|namespace)\b|\([^)]*\)$|`/g;
+
+function bareName(text: string): string {
+  return text
+    .replaceAll(KINDS, '')
+    .replaceAll(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+// The API names a query may stand for: "List<T>" is one name; "List<T> Add" is the member
+// "List<T>.Add" (or "List<T>::Add" in Rust). None for a query of other words.
+function exactNames(query: string): string[] {
+  const words = query
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word) => word !== '');
+
+  if (words.length === 1) {
+    return words;
+  }
+  return words.length === 2 ? [
+    `${words[0] ?? ''}.${words[1] ?? ''}`,
+    `${words[0] ?? ''}::${words[1] ?? ''}`,
+  ] : [];
+}
+
+// A title that names the API of the query exactly comes first; one that starts with it comes next.
+function nameBonus(title: string, names: string[]): number {
+  const parts = title
+    .split(' > ')
+    .map((part) => bareName(part));
+  const exact = (name: string): boolean => parts.some((part) => part === name || part.startsWith(`${name}(`));
+  const prefix = (name: string): boolean => parts.some((part) => part.startsWith(`${name} `) || part.startsWith(`${name}.`) || part.startsWith(`${name}::`));
+
+  if (names.some((name) => exact(name))) {
+    return EXACT_WEIGHT;
+  }
+  return names.some((name) => prefix(name)) ? PREFIX_WEIGHT : 0;
+}
+
 // BM25 over the sections; a section needs no more than one of the query words to be found.
 export function search(entries: IndexEntry[], query: string, limit = MAX_HITS): Hit[] {
   const terms = [...new Set(tokenize(query))];
   const names = apiNames(query);
+  const exact = exactNames(query);
   const frequencies = documentFrequencies(entries);
   const average = entries.reduce((sum, entry) => sum + entry.length, 0) / Math.max(entries.length, 1);
   const idf = (term: string): number => {
@@ -303,6 +350,7 @@ export function search(entries: IndexEntry[], query: string, limit = MAX_HITS): 
         score += entry.titleTerms.has(term) ? TITLE_WEIGHT * idf(term) : 0;
       }
       score += names.filter((name) => entry.titleTerms.has(name)).length * NAME_WEIGHT * Math.max(...names.map((name) => idf(name)), 1);
+      score += score > 0 ? nameBonus(entry.title, exact) : 0;
       return {
         id: entry.id,
         title: entry.title,
