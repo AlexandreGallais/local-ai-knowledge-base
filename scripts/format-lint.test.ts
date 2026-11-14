@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {
+  cpSync,
   readdirSync,
   readFileSync,
   rmSync,
@@ -128,13 +129,26 @@ describe('the two passes', { skip: SKIP }, () => {
 describe('the four sample projects', { skip: SKIP }, () => {
   for (const profile of PROFILES) {
     it(`end at zero errors after format then lint (${profile})`, () => {
-      const project = join(SAMPLES, profile);
+      // A copy beside the samples, so that it finds their packages, without the files other test
+      // files write into the samples at the same time (zz-* folders, generated cases).
+      const project = join(SAMPLES, `zz-check-${profile}-${process.pid}`);
 
-      assert.equal(runTool('format-file.ts', ['--all'], project).status, 0);
-      assert.deepEqual(runTool('lint-file.ts', ['--all'], project), {
-        status: 0,
-        output: '',
+      cpSync(join(SAMPLES, profile), project, {
+        recursive: true,
+        filter: (source) => !/[/\\]zz-|[/\\]node_modules/.test(source.slice(join(SAMPLES, profile).length)),
       });
+      try {
+        assert.equal(runTool('format-file.ts', ['--all'], project).status, 0);
+        assert.deepEqual(runTool('lint-file.ts', ['--all'], project), {
+          status: 0,
+          output: '',
+        });
+      } finally {
+        rmSync(project, {
+          recursive: true,
+          force: true,
+        });
+      }
     });
   }
 });

@@ -62,12 +62,9 @@ describe('the OpenCode configuration of the global base', () => {
 
     assert.deepEqual(servers.map(([name]) => name), [
       'docs',
-      'practices',
-      'skills',
       'project',
       'code',
       'parse',
-      'geometry',
     ]);
     for (const [
       name,
@@ -107,14 +104,18 @@ describe('one flat agent', () => {
     const texts = [
       join(ROOT, 'global', 'rules.md'),
       join(ROOT, 'project', 'AGENTS.md'),
-      ...[
-        join(ROOT, 'global', 'skills'),
-      ].flatMap((folder) => readdirSync(folder, { recursive: true }).map(String).filter((name) => name.endsWith('SKILL.md')).map((name) => join(folder, name))),
+      ...[join(ROOT, 'project', '.agents', 'skills')].flatMap((folder) => readdirSync(folder, { recursive: true }).map(String).filter((name) => name.endsWith('SKILL.md')).map((name) => join(folder, name))),
     ];
 
     for (const path of texts) {
       assert.doesNotMatch(readFileSync(path, 'utf8'), /skill `welcome`|load the skill welcome|sub-agent|tasks\.md|The user runs every command|Ask the user to install|profile\.json gives/i, path);
     }
+  });
+});
+describe('the skills', () => {
+  it('live in the project only: no skill list in the common config, no skill folder in the global base', () => {
+    assert.equal((config as Config & { skills?: unknown }).skills, undefined);
+    assert.equal(existsSync(join(ROOT, 'global', 'skills')), false);
   });
 });
 describe('the project kit', () => {

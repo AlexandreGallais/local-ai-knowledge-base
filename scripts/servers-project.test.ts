@@ -82,14 +82,14 @@ describe('the project server', () => {
   it('gives the profile, the versions and the check commands of a project that chose strict lint', async () => {
     const result = await withProfile.call('info', {});
 
-    assert.match(result.text, /Profile: angular-app/);
+    assert.match(result.text, /Strict format and lint: angular-app/);
     assert.match(result.text, /@angular\/core \^22\.2\.0/);
     assert.match(result.text, /- format: `npm run format`\n- lint: `npm run lint`/);
   });
   it('works on a project without profile, and sends it to its own scripts', async () => {
     const result = await plain.call('info', {});
 
-    assert.match(result.text, /Profile: none\. Strict format and lint are optional/);
+    assert.match(result.text, /Strict format and lint: none\. They are optional/);
     assert.match(result.text, /typescript 6\.0\.3/);
     assert.match(result.text, /use the scripts of package\.json/);
     assert.doesNotMatch(result.text, /welcome|Agents for the tasks/);

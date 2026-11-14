@@ -28,15 +28,12 @@ const SERVERS = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 's
 const folders: string[] = [];
 let client: Client;
 let project = '';
-// An invented base: two tools of the library, one of them for Angular projects only.
+// An invented base: two tools of the library and a topic of docs/.
 const BASE: Record<string, string> = {
   'library/sources.json': JSON.stringify({
     sources: [
       { tool: 'mdn-api' },
-      {
-        tool: 'angular',
-        profiles: ['angular-app'],
-      },
+      { tool: 'angular' },
     ],
   }),
   'library/mdn-api/dommatrix.md': '# DOMMatrix\n\nA 2D or 3D matrix.\n\n## Multiply\n\nmultiply() returns the product.\n\n## Invert\n\ninvertSelf() inverts in place.\n',
@@ -62,8 +59,8 @@ before(() => {
     mkdirSync(dirname(join(base, path)), { recursive: true });
     writeFileSync(join(base, path), content);
   }
+  // A project equipped with the kit: the journal of the calls goes into its .agents/ folder.
   mkdirSync(join(project, '.agents'));
-  writeFileSync(join(project, '.agents', 'profile.json'), JSON.stringify({ profile: 'ts-lib' }));
   client = startServer(join(SERVERS, 'docs.ts'), {
     BASE_ROOT: base,
     PROJECT_ROOT: project,
@@ -90,14 +87,14 @@ describe('the docs server', () => {
       'read_doc',
     ]);
   });
-  it('returns 10 lines at most, and only the tools of the profile', async () => {
+  it('returns 10 lines at most, from every tool of the base', async () => {
     const result = await client.call('search_docs', { query: 'matrix multiply signal computed' });
     const lines = result.text.split('\n');
 
     assert.equal(result.isError, false);
     assert.ok(lines.length <= 11);
     assert.match(result.text, /library\/mdn-api\/dommatrix\.md#multiply/);
-    assert.doesNotMatch(result.text, /library\/angular\//);
+    assert.match(result.text, /library\/angular\/signals\.md/);
   });
   it('reads one section only', async () => {
     const result = await client.call('read_doc', { id: 'library/mdn-api/dommatrix.md#multiply' });

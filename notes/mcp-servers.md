@@ -1,20 +1,19 @@
 # MCP servers of the base
 
-Eight servers in `global/servers/`, one TypeScript file each, run by `node` without packages, over
+Four servers in `global/servers/`, one TypeScript file each, run by `node` without packages, over
 stdio (decisions 0012 and 0019 of the project). They share `global/servers/lib/mcp.ts`: the
 "initialize" handshake that OpenCode 2.2.7 uses, answers capped at 16,000 characters, errors in one
 line, and a journal of every call in the project's `.agents/work/mcp-calls.log`.
 
 | Server | Tools | What for | Writes |
 | --- | --- | --- | --- |
-| docs | `search_docs`, `read_doc` | Search the documentation of the profile, read one section | nothing |
-| practices | `rule`, `search_practices` | The sheet of a lint rule by its id, or its official page | nothing |
-| skills | `list_skills`, `load_skill` | The skills of the base, of the profile and of the project | nothing |
-| project | `info`, `versions_behind` | Profile, versions, check commands, state of the base | nothing |
-| work | `next_task`, `write_report`, `read_status`, `finish_task`, `block_task`, `check_tasks`, `check_brief`, `get_questions`, `save_answers`, `resume` | The brief and the task list of a subject, one task at a time; the resume after a break | `.agents/work/<subject>/` |
-| geometry | `list_functions`, `call_function`, `resolve_placement` | The tested maths and geometry kit, and the placement of SVG elements | nothing |
+| docs | `search_docs`, `read_doc` | Search all the documentation of the base (`docs/` and `library/`), read one section | nothing |
+| project | `info`, `versions_behind` | Versions, check commands, strict lint, skills of the project, state of the base | nothing |
 | code | `outline`, `read_symbol`, `find_references`, `type_errors` | Read TypeScript through the project's compiler | nothing |
 | parse | `outline`, `part`, `images` | Read a heavy file (XD, Word, Excel, PowerPoint, PDF, SVG, big JSON, logs): its outline, one part, its images | `.agents/work/extract/<hash>/` |
+
+Removed on 2026-11-14 (decision 0022): `skills`, as OpenCode reads the skills of `.agents/skills/` by
+itself; `geometry`, with the kit of functions it ran; `practices`, with its rule sheets.
 
 ## Cost before any call
 
@@ -25,23 +24,14 @@ model receives at every request.
 | --- | --- | --- | --- |
 | code | 4 | 1536 | 384 |
 | docs | 2 | 1066 | 267 |
-| geometry | 3 | 1293 | 324 |
 | parse | 3 | 1708 | 427 |
-| practices | 2 | 843 | 211 |
 | project | 2 | 552 | 138 |
-| skills | 2 | 706 | 177 |
-| work | 10 | 3852 | 963 |
-| **All** |  | 11556 | 2889 |
-
-Each agent is refused the tools it does not need (`global/opencode/agents/`): the `work` tools but
-`resume` for every agent outside the orchestration, `geometry` outside the agents that place or compute.
-Whether OpenCode 2.2.7 then leaves the refused schemas out of the request is to be measured on the
-workstation.
+| **All** |  | 4862 | 1216 |
 
 ## Declared in
 
 `global/opencode/opencode.jsonc`, under `mcp.servers`, each with `"codemode": false`. OpenCode gives
-each tool the name of its server as a prefix: the model sees `work_next_task`, `project_info`.
+each tool the name of its server as a prefix: the model sees `docs_search_docs`, `project_info`.
 
 ## The parse server
 

@@ -335,9 +335,8 @@ export function renderLibraryReadme(sources: Source[], lock: Lock): string {
   const rows = sources.map((source) => {
     const entry = lock[source.tool];
     const built = entry === undefined ? 'not built' : `${entry.files} files, ${megabytes(entry.bytes)}`;
-    const profiles = source.profiles === undefined ? 'all' : source.profiles.join(', ');
 
-    return `| [${source.tool}](${source.tool}/index.md) | ${source.title} | ${source.version} | ${source.license} | ${profiles} | ${built} |`;
+    return `| [${source.tool}](${source.tool}/index.md) | ${source.title} | ${source.version} | ${source.license} | ${built} |`;
   });
 
   return [
@@ -345,7 +344,7 @@ export function renderLibraryReadme(sources: Source[], lock: Lock): string {
     '',
     'The official documentation of the tools, converted to plain Markdown, at a pinned version, cut into',
     'files of 16 KB at most, with one index per tool. The AI searches it with the docs tools of the base,',
-    'then reads one section; each profile of project searches only the tools it uses.',
+    'then reads one section.',
     '',
     '## Usage',
     '',
@@ -359,8 +358,8 @@ export function renderLibraryReadme(sources: Source[], lock: Lock): string {
     '',
     '## Tools',
     '',
-    '| Tool | Documentation | Version | License | Profiles | Size |',
-    '| --- | --- | --- | --- | --- | --- |',
+    '| Tool | Documentation | Version | License | Size |',
+    '| --- | --- | --- | --- | --- |',
     ...rows,
     '',
   ].join(NEWLINE);

@@ -14,8 +14,6 @@ license: MIT, written for this base; facts summarized from the NgRx documentatio
 
 Contents: 1. Rules · 2. A store · 3. A feature alone · 4. Effects and protected state · Sources
 
-Tested templates: `skills/angular/write-store/assets/composed-store/*.spec.ts` and `skills/angular/write-store/assets/small-store/`.
-
 ## 1. Rules (public API, TestBed, fakes)
 
 - Test the public API only: call methods, read signals. Never spy on the store's methods. [S1]

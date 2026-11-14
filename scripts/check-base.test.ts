@@ -15,10 +15,7 @@ import {
   describe,
   it,
 } from 'node:test';
-import {
-  checkBase,
-  checkFormulaSections,
-} from './check-base.ts';
+import { checkBase } from './check-base.ts';
 
 const roots: string[] = [];
 const SKILL = `---
@@ -62,7 +59,7 @@ Call the signal as a function.
 const VALID: Record<string, string> = {
   'global/rules.md': '# Common rules\n\n1. Answer in the language of the question.\n',
   'global/opencode/opencode.jsonc': '{\n  // rules\n  "instructions": ["/opt/local-ai-base/rules.md"],\n}\n',
-  'global/skills/angular/write-component/SKILL.md': SKILL,
+  'project/.agents/skills/write-component/SKILL.md': SKILL,
   'global/docs/angular/index.md': '# Angular\n\n- [Signals](signals.md): Read and write signals.\n',
   'global/docs/angular/signals.md': DOCUMENT,
   'project/AGENTS.md': '# AGENTS.md\n\nRead the [signals](../global/docs/angular/signals.md#read-a-signal) document.\n',
@@ -114,7 +111,7 @@ describe('checkBase', () => {
       .replace('name: write-component', 'name: component')
       .replace('Use when you', 'When you');
 
-    assert.deepEqual(messages(makeBase({ 'global/skills/angular/write-component/SKILL.md': skill })), [
+    assert.deepEqual(messages(makeBase({ 'project/.agents/skills/write-component/SKILL.md': skill })), [
       'name "component" differs from the folder "write-component"',
       'description must start with "Use when"',
     ]);
@@ -124,7 +121,7 @@ describe('checkBase', () => {
       .replace('## Example', '## Sample')
       .replace('## Final check', '## End');
 
-    assert.deepEqual(messages(makeBase({ 'global/skills/angular/write-component/SKILL.md': skill })), [
+    assert.deepEqual(messages(makeBase({ 'project/.agents/skills/write-component/SKILL.md': skill })), [
       'missing ## Example section',
       'missing ## Final check section',
     ]);
@@ -157,13 +154,16 @@ describe('checkBase', () => {
 
     assert.deepEqual(messages(makeBase({ 'global/docs/angular/signals.md': `${DOCUMENT}${table}` })), ['a row of the "Since" table has no version: | `idKey` | `selectId` |  |']);
   });
-  it('refuses a math section without its pitfall or its source', () => {
-    const text = '# Angles\n\n## 1. Degrees\n\nFormula: rad = deg * pi / 180\n\nExample: `degreesToRadians(180)` gives `Math.PI`.\n\nSources: [S1]\n\n## 2. Normalize\n\nFormula: modulo(a, 360)\n\nExample: -90 gives 270.\n\nPitfall: 360 gives 0.\n\n## Sources\n\n- [S1] MDN.\n';
+  it('refuses skills, a kit or the removed topics in the global base', () => {
+    const changes = {
+      'global/skills/write-component/SKILL.md': SKILL,
+      'global/kit/math/clamp.ts': 'export const clamp = 1;\n',
+      'global/docs/synoptics/index.md': '# Synoptics\n',
+      'global/docs/math/index.md': '# Math\n',
+      'global/docs/practices/index.md': '# Practices\n',
+    };
 
-    assert.deepEqual(checkFormulaSections(text, 'angles.md').map((item) => item.message), [
-      'section "1. Degrees" has no "Pitfall:" line',
-      'section "2. Normalize" cites no source',
-    ]);
+    assert.deepEqual(messages(makeBase(changes)).filter((message) => message.startsWith('the global base holds')).length, 5);
   });
   it('refuses a config whose instructions load no file', () => {
     const config = '{ "instructions": ["/opt/local-ai-base/rules/missing.md"] }';

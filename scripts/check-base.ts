@@ -16,11 +16,6 @@ import {
   resolve,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import {
-  checkCards,
-  checkPropertyNames,
-  unitSuffixes,
-} from './lib/catalog.ts';
 import { parseJsonc } from './lib/jsonc.ts';
 import {
   analyseLines,
@@ -93,13 +88,33 @@ function allMarkdown(path: string, skip: (folder: string) => boolean): string[] 
   });
 }
 
-// The folders that hold skills: per group (global/skills/<group>), and the
-// project kit.
+// The skills live in the project kit only, one folder each (decision 0022).
 export function skillFolders(root: string): string[] {
-  return [
-    ...folders(join(root, 'global', 'skills')).map((group) => join(root, 'global', 'skills', group)),
-    join(root, 'project', '.agents', 'skills'),
-  ].filter((path) => existsSync(path));
+  return [join(root, 'project', '.agents', 'skills')].filter((path) => existsSync(path));
+}
+
+// What the global base must no longer hold: it is documentation and shared code only (decision 0022).
+const REMOVED_FROM_GLOBAL = [
+  'kit',
+  'skills',
+  'docs/synoptics',
+  'docs/placement',
+  'docs/geometry',
+  'docs/math',
+  'docs/practices',
+  'docs/topics.json',
+  'servers/geometry.ts',
+  'servers/skills.ts',
+  'servers/practices.ts',
+];
+
+function checkGlobalScope(root: string): BaseResult {
+  return {
+    findings: REMOVED_FROM_GLOBAL
+      .filter((path) => existsSync(join(root, 'global', path)))
+      .map((path) => finding(join(root, 'global', path), 'the global base holds documentation and shared code only: move skills to the project kit, remove the rest')),
+    files: 0,
+  };
 }
 
 export function checkSkill(folderName: string, text: string, file: string): Finding[] {
@@ -164,39 +179,7 @@ export function checkDocument(text: string, file: string, topic: string): Findin
   return [
     ...findings,
     ...checkSinceColumns(text, file),
-    ...FORMULA_TOPICS.has(topic) ? checkFormulaSections(text, file) : [],
   ];
-}
-
-// The topics where every section is a calculation: its formula, an example, a pitfall, its sources.
-const FORMULA_TOPICS = new Set([
-  'math',
-  'geometry',
-]);
-const FORMULA_PARTS = [
-  'Formula:',
-  'Example:',
-  'Pitfall:',
-];
-
-export function checkFormulaSections(text: string, file: string): Finding[] {
-  const sections = text
-    .split(/^## /m)
-    .slice(1);
-
-  return sections
-    .filter((section) => !section.startsWith('Sources'))
-    .flatMap((section) => {
-      const heading = section.split('\n')[0] ?? '';
-      const missing = FORMULA_PARTS.filter((part) => !new RegExp(`^${part}`, 'm').test(section));
-      // A numbered source of the document, a run [E], or another document of the base.
-      const cites = /\[(?:S\d+|E\d*)\]|`[\w./-]+\.md`/.test(section);
-
-      return [
-        ...missing.map((part) => finding(file, `section "${heading}" has no "${part}" line`)),
-        ...cites ? [] : [finding(file, `section "${heading}" cites no source`)],
-      ];
-    });
 }
 
 function cells(line: string): string[] {
@@ -308,25 +291,6 @@ function checkSkills(root: string): BaseResult & { names: Set<string> } {
   };
 }
 
-// The cards of the symbol catalog, and the property names of every synoptics document.
-function checkCatalog(documents: readonly string[]): Finding[] {
-  const naming = documents.find((path) => basename(path) === 'symbol-property-naming.md');
-  const suffixes = naming === undefined ? [] : unitSuffixes(read(naming));
-  const indexTexts = documents
-    .filter((path) => basename(path).startsWith('index-fr-en'))
-    .map((path) => read(path));
-
-  return documents.flatMap((path) => {
-    const text = read(path);
-    const cards = basename(path).startsWith('catalog-') ? checkCards(text, path, suffixes, indexTexts) : [];
-
-    return [
-      ...cards,
-      ...checkPropertyNames(text, path, suffixes),
-    ].map((item) => finding(item.file, item.message));
-  });
-}
-
 function checkDocs(root: string): BaseResult {
   const docs = join(root, 'global', 'docs');
   const findings: Finding[] = [];
@@ -344,9 +308,6 @@ function checkDocs(root: string): BaseResult {
       findings.push(finding(indexPath, 'missing index.md for this topic'));
     }
     findings.push(...documents.flatMap((path) => checkDocument(read(path), path, topic)));
-    if (topic === 'synoptics') {
-      findings.push(...checkCatalog(documents));
-    }
   }
   return {
     findings,
@@ -466,6 +427,7 @@ export function checkBase(root: string): BaseResult {
   const skills = checkSkills(root);
   const results = [
     skills,
+    checkGlobalScope(root),
     checkDocs(root),
     checkRules(root),
     checkProjectKit(root),

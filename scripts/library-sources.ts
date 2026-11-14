@@ -22,8 +22,6 @@ export interface Source {
   attribution: string;
   flavor: Flavor;
   core: boolean;
-  // The project profiles that search this documentation; every profile when absent.
-  profiles?: string[];
   // Sparse checkout patterns: what git fetches, includes and code samples too.
   paths: string[];
   // Folders whose Markdown files become the library of the tool.

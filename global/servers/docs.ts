@@ -1,7 +1,7 @@
 // MCP server "docs": search the documentation of the global base, then read one section.
 // Run by OpenCode in the project folder: node /opt/local-ai-base/servers/docs.ts
 // It searches the documents written for the AI (docs/) and the official documentation (library/),
-// only the tools the project's profile uses, and never writes a file.
+// and never writes a file.
 import {
   existsSync,
   readdirSync,
@@ -18,11 +18,8 @@ import {
   sections,
 } from '../tools/search.ts';
 import {
-  allowedForProfile,
   baseRoot,
   inside,
-  projectRoot,
-  readProfile,
 } from './lib/base.ts';
 import {
   type Arguments,
@@ -36,10 +33,9 @@ import {
 const cache = new Map<string, IndexEntry[]>();
 const DOCUMENT = /^(?:docs|library)\/[\w./-]+\.md$/;
 
-// The index entries the profile may search, docs/ first. Built once when the index is missing.
-function entries(base: string, project: string): IndexEntry[] {
-  const key = `${base}\n${project}`;
-  const cached = cache.get(key);
+// Every index entry of the base, docs/ first. Built once when the index is missing.
+function entries(base: string): IndexEntry[] {
+  const cached = cache.get(base);
 
   if (cached !== undefined) {
     return cached;
@@ -49,17 +45,12 @@ function entries(base: string, project: string): IndexEntry[] {
   if (!existsSync(folder)) {
     buildIndexes(base);
   }
-  const allowed = allowedForProfile(base, readProfile(project).profile);
   const found = readdirSync(folder)
-    .filter((name) => {
-      const match = /^(docs|library)-(.+)\.idx$/.exec(name);
-
-      return match !== null && allowed(match[1] ?? '', match[2] ?? '');
-    })
+    .filter((name) => /^(?:docs|library)-.+\.idx$/.test(name))
     .sort((a, b) => Number(a.startsWith('library-')) - Number(b.startsWith('library-')) || a.localeCompare(b, 'en'))
     .flatMap((name) => parseIndex(readFileSync(join(folder, name), 'utf8')));
 
-  cache.set(key, found);
+  cache.set(base, found);
   return found;
 }
 
@@ -67,7 +58,7 @@ export function searchDocs(args: Arguments): string {
   const query = requiredText(args, 'query');
   const tool = text(args, 'tool');
   const base = baseRoot();
-  const all = entries(base, projectRoot());
+  const all = entries(base);
   const scope = tool === '' ? all : all.filter((entry) => entry.id.startsWith(`library/${tool}/`) || entry.id.startsWith(`docs/${tool}/`));
   const hits = search(scope, query);
 

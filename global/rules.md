@@ -4,7 +4,7 @@ These rules apply in every project. The project's `AGENTS.md` adds its own rules
 
 ## Where things are
 
-1. The global base is outside the repository, read-only, at `/opt/local-ai-base`. Its documents, skills and tools are not in the project: this is normal, never an error. Never copy them into the project.
+1. The global base is outside the repository, read-only, at `/opt/local-ai-base`. Its documents, servers and tools are not in the project: this is normal, never an error. Never copy them into the project. The skills are in the project, in `.agents/skills/`.
 2. Answer in the language of the user's question. Never mix two languages in one answer. Write code, comments, file content and commit messages in English.
 
 ## Before you write code
@@ -16,12 +16,12 @@ These rules apply in every project. The project's `AGENTS.md` adds its own rules
 7. Look up an API with the `docs` tools: search, then read one section. Trust the documentation more than your memory.
 8. Read code with the `code` tools: the outline of a file, then one function. A whole folder or a file over 2,000 lines wastes tokens.
 9. Open a heavy file (`.xd`, `.pdf`, `.docx`, `.xlsx`, `.pptx`, images, archives) with the `parse` tools: the outline first, then one part. Read raw, it costs thousands of tokens and gives no structure.
-10. Calculate geometry and maths with the `geometry` tools: they are tested, your head is not.
+10. Before a calculation (an angle, a matrix, a rounding), work it out step by step, then check it in a test on one value worked by hand.
 
 ## While you write
 
 11. When the project has the strict lint of the base (a folder `.agents/lint/`), every file you write is formatted at once and the write result lists the lint errors left. Fix every one of them.
-12. When a complex task matches no document and no skill, ask the user how to do it with the question tool. Then save the answer as a project skill with the skill `write-project-skill`.
+12. When a complex task matches no document and no skill, ask the user how to do it with the question tool. Then save the answer as a project skill with the skill `write-skill`.
 
 ## Commands
 

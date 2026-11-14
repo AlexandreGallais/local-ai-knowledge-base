@@ -171,7 +171,7 @@ export function report(lines: string[]): string {
   return [
     ...lines.slice(0, MAX_LINES),
     ...lines.length > MAX_LINES ? [`(${lines.length - MAX_LINES} more)`] : [],
-    `${lines.length} error(s). For a rule you do not know, call the rule tool of the practices server with its id.`,
+    `${lines.length} error(s). For a rule you do not know, search its id with the docs tools.`,
   ].join('\n');
 }
 

@@ -69,13 +69,12 @@ export function projectInfo(): string {
   const versions = declaredVersions(project);
   const packages = profile.profile === undefined ? [] : [
     '',
-    'Packages of the profile:',
+    'Packages of the strict lint:',
     installAdvice(missingPackages(baseRoot(), project)),
   ];
 
   return [
-    profile.profile === undefined ? 'Profile: none. Strict format and lint are optional: see AGENTS.md.' : `Profile: ${profile.profile}`,
-    `Subject: ${profile.subject ?? 'not set'}`,
+    profile.profile === undefined ? 'Strict format and lint: none. They are optional: see AGENTS.md.' : `Strict format and lint: ${profile.profile}`,
     checkBaseVersion(baseRoot(), project).message,
     '',
     'Versions in package.json:',
@@ -109,7 +108,7 @@ export const server: Server = {
     {
       // OpenCode prefixes the server name: the model sees "project_info".
       name: 'info',
-      description: 'The profile of the project, its subject, the versions in package.json, the check commands in order, the packages of the profile still to install, the project skills and the state of the global base.',
+      description: 'The strict lint of the project if any, the versions in package.json, the check commands in order, the packages of the strict lint still to install, the project skills and the state of the global base.',
       properties: {},
       required: [],
       run: projectInfo,

@@ -41,7 +41,7 @@ Sources of the table: [S1] for each pattern, [S2] for the native elements.
 
 - **Toggle button.** With `aria-pressed`, the label stays the same; without it, change the label. [S1]
 - **Select-only list.** `aria-controls` may name the hidden list; `aria-haspopup` only when the layer is
-  not a list; Escape gives back the value before. Template: `skills/angular/write-component/assets/component/`. [S1]
+  not a list; Escape gives back the value before. [S1]
 - **Listbox.** `aria-selected` or `aria-checked`, never both; options not chosen carry `false`; no
   interactive element inside an option; `aria-multiselectable` for a multiple choice. [S1]
 - **Selection follows focus** only when choosing costs nothing: not when it starts a network call. [S1]

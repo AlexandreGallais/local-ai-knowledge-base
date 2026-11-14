@@ -101,10 +101,6 @@
       "attribution": "Google LLC and the Angular contributors",
       "flavor": "angular",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": ["adev/src/content/"],
       "docs": ["adev/src/content"],
       "exclude": [
@@ -137,10 +133,6 @@
       "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": ["docs_app/content/"],
       "docs": ["docs_app/content"],
       "exclude": [
@@ -162,10 +154,6 @@
       "attribution": "Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald and the NgRx contributors",
       "flavor": "mdx",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": [
         "projects/www/src/app/pages/guide/signals/",
         "projects/www/src/app/pages/guide/eslint-plugin/"
@@ -248,10 +236,6 @@
       "attribution": "Microsoft Corporation and the Playwright contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": ["docs/src/"],
       "docs": ["docs/src"],
       "exclude": [
@@ -303,10 +287,6 @@
       "attribution": "James Henry and the angular-eslint contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": [
         "packages/eslint-plugin/docs/rules/",
         "packages/eslint-plugin-template/docs/rules/"
@@ -391,11 +371,6 @@
       "attribution": "Gajus Kuizinas and the eslint-plugin-jsdoc contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": [
-        "angular-lib",
-        "ts-lib",
-        "ts-pure-lib"
-      ],
       "paths": ["docs/rules/"],
       "docs": ["docs/rules"]
     },
@@ -409,7 +384,6 @@
       "attribution": "Jonas Kello and the eslint-plugin-functional contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": ["ts-pure-lib"],
       "paths": ["docs/rules/"],
       "docs": ["docs/rules"]
     },
@@ -436,10 +410,6 @@
       "attribution": "Jason Weinzierl, Nicholas Jamieson and the eslint-plugin-rxjs-x contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": [
-        "angular-app",
-        "angular-lib"
-      ],
       "paths": ["docs/rules/"],
       "docs": ["docs/rules"]
     },

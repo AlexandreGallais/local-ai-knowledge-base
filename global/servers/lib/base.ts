@@ -1,4 +1,4 @@
-// Where the servers find the global base and the project, and what the project's profile allows.
+// Where the servers find the global base and the project.
 import {
   existsSync,
   readFileSync,
@@ -15,7 +15,6 @@ import { ToolError } from './mcp.ts';
 
 export interface Profile {
   profile?: string;
-  subject?: string;
   baseVersion?: string;
   checks?: Record<string, string>;
   copyright?: string;
@@ -55,25 +54,4 @@ export function inside(folder: string, path: string): string {
     throw new ToolError(`"${path}" is outside ${folder}. Give a path inside it.`);
   }
   return full;
-}
-
-// The tools of the library and the topics of docs/ that a profile searches. A source or a topic
-// without a profile list serves every profile.
-export function allowedForProfile(base: string, profile: string | undefined): (kind: string, name: string) => boolean {
-  const sources = readJson<{
-    sources: {
-      tool: string;
-      profiles?: string[];
-    }[];
-  }>(join(base, 'library', 'sources.json'), { sources: [] }).sources;
-  const topics = readJson<Record<string, string[]>>(join(base, 'docs', 'topics.json'), {});
-
-  return (kind, name) => {
-    if (profile === undefined) {
-      return true;
-    }
-    const profiles = kind === 'library' ? sources.find((source) => source.tool === name)?.profiles : topics[name];
-
-    return profiles === undefined || profiles.includes(profile);
-  };
 }

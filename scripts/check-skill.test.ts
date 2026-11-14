@@ -1,6 +1,7 @@
 // The check of a project skill, run by the AI after it saved a procedure of the user.
 import assert from 'node:assert/strict';
 import {
+  existsSync,
   readdirSync,
   readFileSync,
 } from 'node:fs';
@@ -15,7 +16,7 @@ import {
 import { fileURLToPath } from 'node:url';
 import { checkSkillText } from '../global/tools/check-skill.ts';
 
-const COMMON = join(dirname(fileURLToPath(import.meta.url)), '..', 'global', 'skills', 'common');
+const SKILLS = join(dirname(fileURLToPath(import.meta.url)), '..', 'project', '.agents', 'skills');
 const SKILL = `---
 name: number-alarms
 description: Use when you give a number to a new alarm of a synoptic.
@@ -38,10 +39,35 @@ Wrong: alarm 4. Right: alarm 120 after alarm 110.
 `;
 
 describe('the check of a project skill', () => {
-  it('accepts a well-formed skill, and every common skill of the base', () => {
+  it('accepts a well-formed skill, and every skill of the project kit', () => {
     assert.deepEqual(checkSkillText('number-alarms', SKILL), []);
-    for (const name of readdirSync(COMMON)) {
-      assert.deepEqual(checkSkillText(name, readFileSync(join(COMMON, name, 'SKILL.md'), 'utf8')), [], name);
+    for (const entry of readdirSync(SKILLS, { withFileTypes: true }).filter((item) => item.isDirectory())) {
+      assert.deepEqual(checkSkillText(entry.name, readFileSync(join(SKILLS, entry.name, 'SKILL.md'), 'utf8')), [], entry.name);
+    }
+  });
+  it('holds, flat, the skills taken from the 0.1 and the strict lint one', () => {
+    const names = readdirSync(SKILLS, { withFileTypes: true })
+      .filter((item) => item.isDirectory())
+      .map((item) => item.name);
+
+    for (const name of [
+      'write-skill',
+      'write-agents-md',
+      'write-agent',
+      'write-base-document',
+      'write-commit-message',
+      'choose-version',
+      'name-branch',
+      'look-up-api',
+      'explain-code',
+      'code-review',
+      'architecture-review',
+      'apply-strict-lint',
+    ]) {
+      assert.ok(names.includes(name), `${name} is missing`);
+    }
+    for (const name of names) {
+      assert.ok(existsSync(join(SKILLS, name, 'SKILL.md')), `${name}: a skill folder holds its SKILL.md, no group folder`);
     }
   });
   it('refuses another folder name, a description without "Use when", a missing section and French', () => {

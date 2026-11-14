@@ -11,7 +11,7 @@ import {
   resolve,
 } from 'node:path';
 
-const SHEET = 'practices: rule local/';
+const SHEET = 'local rule of the base: ';
 const IDENTIFIER = 'Identifier';
 // Nothing before the first comment but a byte order mark, a shebang line and blanks.
 const BYTE_ORDER_MARK = String.fromCodePoint(0xFE_FF);

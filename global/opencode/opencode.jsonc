@@ -7,12 +7,8 @@
   // Common rules, loaded at every request with the project's AGENTS.md.
   "instructions": ["/opt/local-ai-base/rules.md"],
 
-  // The skills of the base, found by name and description, loaded whole only when a task needs one.
-  "skills": [
-    "/opt/local-ai-base/skills/common",
-    "/opt/local-ai-base/skills/typescript",
-    "/opt/local-ai-base/skills/angular"
-  ],
+  // No skill here: the skills live in each project, in .agents/skills/, which OpenCode reads by itself
+  // (decision 0022).
 
   // After each write, the formatter of the base. It does nothing in a project without the strict lint
   // (no .agents/lint/); the plugin plugins/base-guard then adds the lint errors left to the result.
@@ -32,16 +28,6 @@
         "command": ["node", "/opt/local-ai-base/servers/docs.ts"],
         "codemode": false
       },
-      "practices": {
-        "type": "local",
-        "command": ["node", "/opt/local-ai-base/servers/practices.ts"],
-        "codemode": false
-      },
-      "skills": {
-        "type": "local",
-        "command": ["node", "/opt/local-ai-base/servers/skills.ts"],
-        "codemode": false
-      },
       "project": {
         "type": "local",
         "command": ["node", "/opt/local-ai-base/servers/project.ts"],
@@ -55,11 +41,6 @@
       "parse": {
         "type": "local",
         "command": ["node", "/opt/local-ai-base/servers/parse.ts"],
-        "codemode": false
-      },
-      "geometry": {
-        "type": "local",
-        "command": ["node", "/opt/local-ai-base/servers/geometry.ts"],
         "codemode": false
       }
     }

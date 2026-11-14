@@ -2,7 +2,7 @@
 id: svg-class-tests
 title: Test a TypeScript class that drives SVG
 topic: angular-testing
-summary: Test the classes that animate synoptic symbols, with a simulated DOM, a fake clock, and a real browser for geometry.
+summary: Test the classes that animate SVG drawings, with a simulated DOM, a fake clock, and a real browser for geometry.
 tool: vitest
 version: "5.1"
 checked: 2026-11-13
@@ -60,7 +60,7 @@ describe('ValveSymbol', () => {
 });
 ```
 
-The expected values come from the synoptic rules of the base: the state by a data attribute and a word, the flash at 1 Hz until acknowledged.
+The expected values come from the request, never from a run of the class: here, the state shown by a data attribute, and a flash at 1 Hz until the alarm is acknowledged.
 
 ## Sources
 
