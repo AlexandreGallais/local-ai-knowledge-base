@@ -1,7 +1,8 @@
 # Update a tool to a new version
 
-For the maintainers of the base, on a machine with network access. The workstation never does it:
-it receives the new export.
+For the maintainers of the base, on a machine with network access, from the repository that holds
+this one in `work/` and its build tools in `scripts/`. The workstation never does it: it receives the
+new export.
 
 ## 1. See what is behind
 
@@ -26,7 +27,7 @@ node scripts/fetch-library.ts --tool angular
 node scripts/check-library.ts
 ```
 
-`update-tool.ts` writes the tag and the version in `global/library/sources.json`; `fetch-library.ts`
+`update-tool.ts` writes the tag and the version in `work/global/library/sources.json`; `fetch-library.ts`
 replaces `global/library/angular/` and its notice.
 
 ## 3. Update the documents written for the AI
@@ -37,8 +38,8 @@ replaces `global/library/angular/` and its notice.
    `node global/tools/check-versions.ts <a project at the new version> global`.
 3. In each of them: add the new rows to the "old to new" tables, with their version; fix what the new
    version changes; set `version` and `checked` in the header.
-4. Update the lint and format profiles if a plugin follows the major version of the tool
-   (angular-eslint follows Angular).
+4. Update the lint and format configs of `project/.agents/lint/` if a plugin follows the major version
+   of the tool (angular-eslint follows Angular), and its tested version in `global/packages.md`.
 
 ## 4. Check and deliver
 

@@ -1,15 +1,15 @@
 # Packages of the base
 
-The npm packages a project of the base installs, once, with the user's agreement (decision 0016 of
-the project: known, maintained, needed; version pinned; license noted). The AI never installs a
-package of its own accord.
+The npm packages of the format and lint passes of a project (`.agents/lint/` of the project kit).
+The AI installs them with the user's agreement, at their latest version:
+`node /opt/local-ai-base/tools/missing-packages.ts` gives the command. A plugin that is not installed
+is simply left out: the project lints more or less according to what it installs.
 
 ## Chosen
 
-Versions pinned exactly; every one was installed and run on the four sample projects
-(`samples/package.json`). A profile installs only what it uses.
+The version is the one the base was tested with, on its sample projects.
 
-| Package | Version | License | Profiles | Why |
+| Package | Tested | License | When | Why |
 | --- | --- | --- | --- | --- |
 | eslint | 10.14.0 | MIT | all | The lint and format engine |
 | @eslint/js | 10.0.1 | MIT | all | The recommended core rules |
@@ -22,23 +22,20 @@ Versions pinned exactly; every one was installed and run on the four sample proj
 | eslint-plugin-regexp | 3.3.3 | MIT | all | Regular expressions |
 | eslint-plugin-import-lite | 0.6.0 | MIT | all | Import rules that need no resolver: `no-default-export`, `no-mutable-exports` |
 | @vitest/eslint-plugin | 1.6.28 | MIT | all | Test files |
-| vitest | 5.1.0 | MIT | all | Test runner |
-| eslint-plugin-jsdoc | 65.4.6 | BSD-3-Clause | angular-lib, ts-lib, ts-pure-lib | JSDoc on what a library exports |
-| eslint-plugin-functional | 10.0.1 | MIT | ts-pure-lib | Pure functions: no mutation, no class |
-| angular-eslint | 22.6.0 | MIT | angular-app, angular-lib | Angular code and templates |
-| @ngrx/eslint-plugin | 22.0.1 | MIT | angular-app, angular-lib | NgRx Signals stores |
-| eslint-plugin-rxjs-x | 1.0.6 | MIT | angular-app, angular-lib | RxJS |
-| stylelint | 18.0.0 | MIT | angular-app, angular-lib | CSS and SCSS |
-| @stylistic/stylelint-plugin | 6.0.1 | MIT | angular-app, angular-lib | Format pass: layout of CSS and SCSS |
-| stylelint-order | 8.1.3 | MIT | angular-app, angular-lib | Format pass: order of properties |
-| stylelint-config-standard-scss | 18.0.0 | MIT | angular-app, angular-lib | Lint pass: the standard rules |
-| postcss-scss | 4.0.9 | MIT | angular-app, angular-lib | SCSS syntax |
-| @double-great/stylelint-a11y | 3.8.3 | MIT | angular-app, angular-lib | Accessibility of styles |
-| @angular/build, @angular/cli, @angular/compiler-cli | 22.2.6 | MIT | angular-app, angular-lib | `ng test`: compiles the tests as the build does (signal inputs need it), runs Vitest |
-| @angular/compiler, @angular/platform-browser | 22.2.6 | MIT | angular-app, angular-lib | `TestBed` in the tests |
-| jsdom | 31.0.1 | MIT | angular-app, angular-lib | The DOM of `ng test` by default |
+| angular-eslint | 22.6.0 | MIT | Angular | Angular code and templates |
+| @ngrx/eslint-plugin | 22.0.1 | MIT | Angular | NgRx Signals stores |
+| eslint-plugin-rxjs-x | 1.0.6 | MIT | Angular | RxJS |
+| stylelint | 18.0.0 | MIT | Angular | CSS and SCSS |
+| @stylistic/stylelint-plugin | 6.0.1 | MIT | Angular | Format pass: layout of CSS and SCSS |
+| stylelint-order | 8.1.3 | MIT | Angular | Format pass: order of properties |
+| stylelint-config-standard-scss | 18.0.0 | MIT | Angular | Lint pass: the standard rules |
+| postcss-scss | 4.0.9 | MIT | Angular | SCSS syntax |
+| @double-great/stylelint-a11y | 3.8.3 | MIT | Angular | Accessibility of styles |
+| eslint-plugin-jsdoc | 65.4.6 | BSD-3-Clause | library | JSDoc on what a library exports: install it in a library only |
 
-An Angular project made by `ng new` already has the Angular packages; the base adds none of them.
+"all": every project. "Angular": a project whose `package.json` lists `@angular/core`. "library":
+only when the team wants every export documented. An Angular project made by `ng new` already has the
+Angular packages; the base adds none of them.
 
 ## Vendored in the base
 
@@ -54,5 +51,4 @@ Copied into the global base, so that no project installs it.
 | --- | --- |
 | eslint-plugin-import-x | Depends on `unrs-resolver`, a native binary built per platform: heavy, and one more binary to bring into a closed environment. Its two rules that need a resolver (`no-extraneous-dependencies`, `no-cycle`) are replaced by local rules of the base. |
 | eslint-plugin-n | Rules for Node.js programs, not for front-end code. |
-
-The rest of the list comes with the formatting and lint profiles.
+| eslint-plugin-functional | Its rules forbid classes and mutation everywhere; the base uses classes for objects that live and functions for utilities. |

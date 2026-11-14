@@ -1,8 +1,0 @@
-<ul class="list">
-  @for (item of items(); track item.id) {
-    <li class="item" [title]="item.name" (click)="select(item)"><app-icon [name]="item.icon" />{{ item.name }}</li>
-  }
-  @empty {
-    <li class="item">None</li>
-  }
-</ul>

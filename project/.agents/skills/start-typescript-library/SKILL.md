@@ -17,7 +17,7 @@ description: Use when the user asks for a new TypeScript project without Angular
    all): `"type": "module"`, `"private": true`, scripts `build: tsc -p tsconfig.json` and
    `test: vitest run`.
 2. Write `tsconfig.json`: `strict`, `module: "preserve"`, `moduleResolution: "bundler"`, `noEmit`. For
-   the strict options of the base, extend `/opt/local-ai-base/lint/tsconfig.strict.json`.
+   the strict options of the base, extend `./.agents/lint/tsconfig.strict.json`.
 3. Install: `npm install --save-dev --save-exact typescript@6.0.3 vitest@5.1.0`, plus what the request
    needs (`vite@8.3.8` for a page; the versions of `/opt/local-ai-base/packages.md` when it lists them).
 4. Write the code in `src/`, a test next to each file, and run `npm run build` and `npm test` until

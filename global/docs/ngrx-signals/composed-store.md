@@ -71,7 +71,7 @@ export type CircuitStore = InstanceType<typeof CircuitStore>;
 | D · Several stores | a service coordinates two stores | two sub-domains share no state [S4] |
 
 - Write `<_>` on every feature with an input: two such features in a row may not compile without it
-  (known TypeScript limit). The lint profile accepts it in `*.feature.ts` files. [S2]
+  (known TypeScript limit). The lint of the project accepts it in `*.feature.ts` files. [S2]
 - Never write the type of a store or of a feature by hand: NgRx builds it.
 
 ## 5. Checklist (before saying done)

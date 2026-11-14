@@ -7,7 +7,7 @@ The common rules of the global base are loaded as well; this file only adds what
 
 The base is at `/opt/local-ai-base`, read-only. Use it when your memory is not sure.
 
-- MCP tools:
+- MCP tools, offered, never imposed: call them when they help.
   - `docs`: the documentation, kept locally: find a page, then read one section.
   - `project`: the versions of this project, its check commands and its skills.
   - `code`: the outline of a file, one function, where a name is used, the type errors.
@@ -15,6 +15,11 @@ The base is at `/opt/local-ai-base`, read-only. Use it when your memory is not s
 - Documentation, searched by the `docs` tools:
   - `docs/`: short documents written for the AI: Angular, Angular tests, components, NgRx Signals, TypeScript, TypeScript lint.
   - `library/`: the official documentation: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), Angular, TypeScript, RxJS, NgRx Signals, Node.js, npm, Vite, Vitest, Playwright, ESLint and its plugins, Stylelint.
+
+## Format and lint of this project
+
+`.agents/lint/` holds the configs, for the whole team. Run the lint before you say "done": `npm run lint`,
+or `node /opt/local-ai-base/tools/lint-file.ts --all`. Missing packages: the skill `apply-strict-lint`.
 
 ## Skills of this project
 

@@ -1,45 +1,44 @@
 ---
 name: apply-strict-lint
-description: Use when the user asks for the strict format and lint of the base in this project, and only then - choose its lint profile, apply it, install its packages, then format and lint every file.
+description: Use when the user asks to turn on the format and lint of this project, or when they do not run because packages are missing - install the lint packages at their latest version, add the npm scripts, then format and lint every file.
 ---
 
-# Apply the strict format and lint
+# Turn on the format and lint of the project
 
-The strict format and lint are optional. Never apply them unless the user asks for them.
+The configs are already in `.agents/lint/`, for the whole team. They lint more or less according to
+what the project installs: a plugin that is not installed is left out. Angular rules come with
+`@angular/core`; JSDoc rules come with `eslint-plugin-jsdoc`.
 
 ## Rules
 
-- Choose the lint profile from what the project is, and confirm it with the user:
-
-  | The project | Profile |
-  | --- | --- |
-  | An Angular application | `angular-app` |
-  | An Angular library | `angular-lib` |
-  | A TypeScript library of business code | `ts-lib` |
-  | A TypeScript library of pure functions: no class, no mutation, one function per file | `ts-pure-lib` |
-
-- Copy the copyright line the files of the project already start with, when they have one.
-- Run every command yourself. OpenCode asks the user to approve the install: wait for the answer.
+- Install the latest version of each package: `<name>@latest`. Run the install yourself; OpenCode asks
+  the user to approve it: wait for the answer.
+- Install `eslint-plugin-jsdoc` only for a library whose exports must all be documented. Ask the user.
+- A copyright line or an Angular selector prefix goes in `.agents/profile.json`: `"copyright"`, `"prefix"`.
+- Use a class for an object that lives and keeps its state, a function for a utility. No rule forbids either.
 
 ## Steps
 
-1. Read `package.json` and two source files. Propose the profile and the copyright line with the question tool.
-2. Run `node /opt/local-ai-base/tools/apply-lint.ts --profile <profile> --copyright "<line>"`.
-   Add `--prefix <prefix>` for an Angular project whose selectors start with a prefix.
-3. Run `node /opt/local-ai-base/tools/missing-packages.ts`. It prints one `npm install` command: run it.
-4. Run `node /opt/local-ai-base/tools/format-file.ts --all`, then `node /opt/local-ai-base/tools/lint-file.ts --all`.
-5. Fix every lint error left. Search the id of a rule you do not know with the `docs` tools. Repeat until 0 errors.
-6. Run the build and the tests of the project.
+1. Run `node /opt/local-ai-base/tools/missing-packages.ts`. It prints one `npm install` command: run it.
+2. Ask the user, with the question tool, for the copyright line of the files, if any, and for JSDoc on a library.
+   Write the answers in `.agents/profile.json`; install `eslint-plugin-jsdoc@latest` if asked.
+3. Add the scripts to `package.json`, keeping the ones it has:
+   - `"format": "eslint --config .agents/lint/format.config.mjs --fix ."`
+   - `"lint": "eslint --config .agents/lint/lint.config.mjs ."`
+   - with CSS or SCSS files, add to each: `&& stylelint --config .agents/lint/stylelint-format.mjs --fix "**/*.{css,scss}"`,
+     and `--config .agents/lint/stylelint-lint.mjs` for the lint.
+4. Run `npm run format`, then `npm run lint`. Fix every error left. Search the id of a rule you do not
+   know with the `docs` tools.
+5. Run the build and the tests of the project.
 
 ## Example
 
-Wrong: the user asks for a new function, and you apply the strict lint to the project on your own.
+Wrong: the lint stops on "Cannot find package 'eslint-plugin-unicorn'", and you remove the rule.
 
-Right: the user asks "apply the strict lint"; you propose `ts-lib` with the copyright line of the
-existing files, apply it, install the packages, then format, lint, build and test to 0 errors.
+Right: you run `node /opt/local-ai-base/tools/missing-packages.ts`, then the install command it gives,
+then `npm run lint` again.
 
 ## Final check
 
-- Did the user ask for the strict lint, and confirm the profile?
-- Did you run the install yourself?
-- Do format, lint, build and tests end at 0 errors?
+- Are the packages installed at their latest version, by you, after the user's approval?
+- Do `npm run format`, `npm run lint`, the build and the tests end at 0 errors?

@@ -69,7 +69,7 @@ export function checkBaseVersion(baseFolder: string, projectFolder: string): Ver
   if (expected === undefined) {
     return {
       ok: true,
-      message: `Global base ${installed}. This project uses no strict lint profile: that is fine.`,
+      message: `Global base ${installed}. This project notes no version of the base: that is fine.`,
     };
   }
   if (compareVersions(installed, expected) < 0) {

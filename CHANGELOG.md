@@ -5,6 +5,31 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: a global base of documentation and servers, the kit in the project (decision 0022)
+
+- `global/` holds the documentation, the MCP servers (`docs`, `project`, `code`, `parse`), the tools
+  they run and the common rules, nothing else.
+- Every skill lives in the project kit, flat, in `.agents/skills/<name>/`; `project/AGENTS.md` lists the
+  servers, the documentation and the skills. Eleven skills of 0.1 come back, rewritten for one agent.
+- The format and lint configs live in the project kit, `.agents/lint/`, for the whole team: one config
+  for every project, which lints according to what the project installs (Angular rules with
+  `@angular/core`, JSDoc rules with `eslint-plugin-jsdoc`). No rule forbids a class anymore. The lint
+  packages install at their latest version; the AI runs the lint before "done".
+- `opencode/opencode.jsonc`, beside `global/`, is what the base adds to the user's OpenCode
+  configuration: no right that asks, no `base-guard` plugin. The test dev containers move to
+  `devcontainer/`. Both travel in `setup/` of the export, as plain files.
+- The two import scripts move to `import/`; the build tools and the sample projects leave this
+  repository.
+
+### Removed in this change
+
+- The kit of functions (maths, geometry, symbol types), the synoptics and symbol catalogs, the placement
+  format, the maths documents, the rule sheets (`practices`) and the servers `geometry`, `skills` and
+  `practices`.
+- The lint profiles, `apply-profile.ts`, `apply-lint.ts`, `install-lint.ts`, `detect-project.ts`; the
+  skills `write-component`, `write-store`, `write-service`, `write-library-function`,
+  `write-project-skill`.
+
 ### Removed
 
 - The orchestrator, the brief, the planner, the checker and the specialised agents; the `work` server,

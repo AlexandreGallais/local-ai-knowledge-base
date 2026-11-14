@@ -1,0 +1,29 @@
+{
+  // Your own OpenCode configuration, mounted in both test containers at ~/.config/opencode: the
+  // project with the base and the project without it get the same rights.
+  "$schema": "https://opencode.ai/config.json",
+
+  // Keep OpenCode at 2.2.7: the base is written for this version.
+  "update": "disable",
+
+  // Add here the model you use with OpenCode, as you configure it today: its provider, its name,
+  // its context window (limit.context) and tool calls (capabilities.tools: true). A model served
+  // on the machine itself is reached from a container at host.docker.internal, not localhost.
+
+  // Add here your rights (permissions), as you use them: the base imposes none.
+
+  // No search nor download on the web, in both containers. Each devcontainer.json sets the same lock
+  // again in OPENCODE_CONFIG_CONTENT, above this file.
+  "websearch": false,
+  "share": "disabled",
+  "policies": [
+    { "action": "websearch.use", "resource": "*", "effect": "deny" },
+    { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:wget *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git clone *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git fetch *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" }
+  ]
+}

@@ -5,23 +5,25 @@ production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2
 
 ## Status
 
-- Version 0.2.0: front-end work only, for four kinds of project: Angular application, Angular library,
-  TypeScript business library, library of pure TypeScript functions. Changes: [CHANGELOG.md](CHANGELOG.md).
+- Version 0.2.0: front-end work only: Angular applications and libraries, TypeScript libraries.
+  Changes: [CHANGELOG.md](CHANGELOG.md).
 - Version 0.1 is archived in [`archive/v0.1/`](archive/v0.1/README.md), unchanged, with its history.
 
 ## How it works
 
 Two bases, so that project repositories stay clean:
 
-- **The global base** is installed once per machine, read-only, and shared by every dev container:
-  documentation, MCP servers, common rules, skills with their templates, optional lint and format configs, and
-  the OpenCode configuration.
+- **The global base** is installed once per machine, read-only, and shared by every dev container: the
+  documentation, the MCP servers and the tools they run, and the common rules.
 - **The project kit** is the only thing a project holds: `AGENTS.md`, owned by the team, and the folder
-  `.agents/` (project skills).
+  `.agents/`: the skills (`.agents/skills/`) and the format and lint configs (`.agents/lint/`), for the
+  whole team. The project lints more or less according to the plugins it installs.
+- **The OpenCode keys of the base** (`opencode/opencode.jsonc`) go into your own OpenCode configuration:
+  common rules, MCP servers, formatter, web lock. The base imposes no rights.
 
 In a session, one agent works directly, with no sub-agent and no per-project setup: `AGENTS.md` tells it
-where the documentation, the MCP tools and the skills are. It installs the packages it
-needs itself, after the user approves the command. "Done" comes after build and tests at zero errors.
+where the documentation, the MCP tools and the skills are. It installs the packages it needs itself.
+"Done" comes after lint, build and tests at zero errors.
 
 ## From the export to the first conversation
 
@@ -31,8 +33,8 @@ needs itself, after the user approves the command. "Done" comes after build and 
    empty folder, then run `node <that folder>/import-base.ts` from where you want the base. It lands
    in `./local-ai-base` there.
 3. **Mount it in the dev containers.** Follow [guides/install.md](guides/install.md): the base at
-   `/opt/local-ai-base`, read-only; its OpenCode folder at `/etc/opencode`; OpenCode kept at 2.2.7 with
-   updates off; the context window of the model declared. To try it first on one machine, with a
+   `/opt/local-ai-base`, read-only; the keys of `setup/opencode/opencode.jsonc` added to your OpenCode
+   configuration; OpenCode kept at 2.2.7 with updates off. To try it first on one machine, with a
    project with the base and the same project without it, follow
    [guides/compare-with-and-without.md](guides/compare-with-and-without.md).
 4. **Check the container.** In a recreated dev container, run the commands of `install.md`, part 4.
@@ -49,40 +51,28 @@ Other trials: heavy files
 
 | Folder | Content |
 | --- | --- |
-| `global/` | The global base, copied as is to the machine. |
+| `global/` | The global base, copied as is to the machine: documentation and shared code only. |
 | `global/rules.md` | The common rules, loaded in every session. |
-| `global/opencode/` | Mounted as `/etc/opencode`: `opencode.jsonc` (MCP servers, rights, web lock, formatter) and `plugins/base-guard/`, which adds the lint errors left after a write when a project has the strict lint. |
-| `global/docs/` | Documents written for the AI, by topic, with `topics.json` (topic → profiles). |
+| `global/docs/` | Short documents written for the AI, by topic. |
 | `global/library/` | Official documentation brought from the web, cleaned, one file of 16 KB at most. |
-| `global/skills/` | Skills by group (`common`, `typescript`, `angular`); a skill keeps its tested template in `assets/`. |
 | `global/servers/` | MCP servers, one TypeScript file each, run by `node` without packages. |
-| `global/tools/` | Scripts: format, lint, apply a lint profile on demand, read heavy files. |
-| `global/lint/` | Format and lint configs of the four profiles, copied into a project on demand. |
-| `global/kit/` | The tested functions the `geometry` server runs (maths, geometry), and the types of the symbols. |
-| `global/devcontainer/` | The two test dev containers, with and without the base, and the shared OpenCode config. |
-| `project/` | The project kit: `AGENTS.md` and `.agents/`. |
-| `scripts/` | Build tools of this repository: checks, export, imports, generators, tests. |
+| `global/tools/` | The tools the servers and the formatter run: format, lint, read heavy files, search. |
+| `project/` | The project kit: `AGENTS.md` and `.agents/` (skills, format and lint configs). |
+| `opencode/` | What the base adds to an OpenCode configuration, to copy into yours. |
+| `devcontainer/` | The two test dev containers, with and without the base, and the shared user config. |
+| `import/` | The two import scripts that travel with the export. |
 | `guides/` | Guides for people: install, paste the export, trials. |
 | `notes/` | Notes for maintainers: what the base relies on in OpenCode, measures, review. |
-| `samples/` | Example projects, one per profile, used by the tests. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 
-## Run the checks
-
-From the root of this repository, after `npm install --prefix samples` for the tests that run the real
-format, lint and test passes:
-
-```sh
-node --test 'scripts/*.test.ts'
-node scripts/check-base.ts
-node scripts/export.ts
-```
+The tools that build, check and export this repository, and the sample projects of their tests, are
+kept outside it.
 
 ## License
 
 MIT, see [LICENSE](LICENSE). Third-party documentation in `global/library/` keeps its own license,
 listed in `global/THIRD_PARTY_NOTICES.md` with its copyright; the license files of each source are
-copied unchanged in `global/licenses/<tool>/` by `node scripts/fetch-licenses.ts`. MDN Web Docs
+copied unchanged in `global/licenses/<tool>/`. MDN Web Docs
 content stays under CC BY-SA 2.5 in its own folders. The archive of version 0.1 has the same files in
 `archive/v0.1/`.

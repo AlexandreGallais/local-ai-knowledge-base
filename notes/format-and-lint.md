@@ -1,14 +1,19 @@
 # Format, then lint
 
 How the base formats every file the AI writes, then lints it (decision 0017 of the project). From
-the researches R3 and R4 of the base, tried for real on the four sample projects of `samples/`.
+the researches R3 and R4 of the base, tried for real on four sample projects kept with the build tools.
+
+The configs are in the project kit, `.agents/lint/`, for the whole team: one config for every project.
+It lints more or less according to what the project installs: Angular rules with `@angular/core`, JSDoc
+rules with `eslint-plugin-jsdoc`, and a plugin that is not installed is left out. No rule forbids a
+class: a class for an object that lives, a function for a utility.
 
 ## The two passes
 
 | Pass | When | What it holds | What the AI sees |
 | --- | --- | --- | --- |
-| Format | After every write (the `formatter` setting of OpenCode runs `tools/format-file.ts`) | Only rules that fix themselves, no type information | Nothing |
-| Lint | After the format pass (the `base-guard` plugin runs `tools/lint-file.ts`), and as a check command | No layout rule; only what the format pass cannot fix | One line per error left, 20 at most |
+| Format | After every write (the `formatter` setting of OpenCode runs `tools/format-file.ts`), or `npm run format` | Only rules that fix themselves, no type information | Nothing |
+| Lint | Before "done", as the common rules say: `npm run lint` or `tools/lint-file.ts --all` | No layout rule; only what the format pass cannot fix | One line per error left, 20 at most |
 
 A test proves the separation on every run: no rule is active in both passes, the lint pass has no
 rule of type "layout", and every rule of the format pass fixes itself.

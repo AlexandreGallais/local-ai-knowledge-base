@@ -20,20 +20,20 @@ These rules apply in every project. The project's `AGENTS.md` adds its own rules
 
 ## While you write
 
-11. When the project has the strict lint of the base (a folder `.agents/lint/`), every file you write is formatted at once and the write result lists the lint errors left. Fix every one of them.
+11. The format and lint of the project are in `.agents/lint/`. Each file you write is formatted at once when their packages are installed. Before you say "done", run the lint (`npm run lint`, or `node /opt/local-ai-base/tools/lint-file.ts --all`) and fix every error. Missing packages: the skill `apply-strict-lint`.
 12. When a complex task matches no document and no skill, ask the user how to do it with the question tool. Then save the answer as a project skill with the skill `write-skill`.
 
 ## Commands
 
 13. You may run any command. The tools of the base are better than raw commands for their job: prefer them.
-14. Run every command yourself, installs included: `npm install --save-dev --save-exact <name>@<version>`. Never ask the user to run a command. OpenCode asks the user to approve an install: wait for the answer, then go on.
+14. Run every command yourself, installs included: `npm install --save-dev --save-exact <name>@<version>`. Never ask the user to run a command. When OpenCode asks the user to approve it, wait for the answer, then go on.
 15. A command that cannot be undone (an install, a push, a new branch, `rm -rf`, `git reset --hard`) asks the user first. Say in one line why you need it.
 16. The web is closed: no search, no download besides `npm install`. Find the answer in the `docs` tools and in the installed packages.
 17. Work on the current branch, without a worktree, unless the user asks otherwise.
 
 ## Finish
 
-18. Say "done" only after the build and the tests of the project end with zero errors, and the lint when it has one.
+18. Say "done" only after the lint, the build and the tests of the project end with zero errors.
 19. Stop after 3 failed attempts on the same error. Show the error to the user.
 20. When you are stuck or need a choice of the user, ask with the question tool, with options, rather than guess.
 21. Never write tool-call tags or thinking tags as text. Name them with words.

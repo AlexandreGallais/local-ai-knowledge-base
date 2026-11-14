@@ -1,4 +1,4 @@
-// MCP server "project": what the AI must know of the project before it works: profile, versions,
+// MCP server "project": what the AI must know of the project before it works: lint packages, versions,
 // check commands, project skills, version of the global base. It never writes a file.
 // Run by OpenCode in the project folder: node /opt/local-ai-base/servers/project.ts
 import {
@@ -67,14 +67,10 @@ export function projectInfo(): string {
       command,
     ]) => `- ${name}: \`${command}\``);
   const versions = declaredVersions(project);
-  const packages = profile.profile === undefined ? [] : [
-    '',
-    'Packages of the strict lint:',
-    installAdvice(missingPackages(baseRoot(), project)),
-  ];
+  const hasLint = existsSync(join(project, '.agents', 'lint', 'lint.config.mjs'));
 
   return [
-    profile.profile === undefined ? 'Strict format and lint: none. They are optional: see AGENTS.md.' : `Strict format and lint: ${profile.profile}`,
+    hasLint ? `Format and lint: .agents/lint/. ${installAdvice(missingPackages(baseRoot(), project))}` : 'Format and lint: none in this project (no .agents/lint/).',
     checkBaseVersion(baseRoot(), project).message,
     '',
     'Versions in package.json:',
@@ -82,7 +78,6 @@ export function projectInfo(): string {
     '',
     'Check commands, in this order:',
     ...checks.length === 0 ? ['- none: use the scripts of package.json (build, test, lint)'] : checks,
-    ...packages,
     '',
     `Project skills: ${skills.length === 0 ? 'none' : skills.join(', ')}`,
   ].join('\n');
@@ -108,7 +103,7 @@ export const server: Server = {
     {
       // OpenCode prefixes the server name: the model sees "project_info".
       name: 'info',
-      description: 'The strict lint of the project if any, the versions in package.json, the check commands in order, the packages of the strict lint still to install, the project skills and the state of the global base.',
+      description: 'The lint packages still to install, the versions in package.json, the check commands in order, the project skills and the state of the global base.',
       properties: {},
       required: [],
       run: projectInfo,

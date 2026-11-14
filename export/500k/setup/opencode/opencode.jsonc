@@ -1,0 +1,74 @@
+{
+  // What the base adds to an OpenCode 2.2.7 configuration. Copy these keys into your own
+  // configuration (~/.config/opencode/opencode.jsonc), beside your model and your rights: the base
+  // imposes no rights of its own. The global base is mounted read-only at /opt/local-ai-base.
+  "$schema": "https://opencode.ai/config.json",
+
+  // Common rules, loaded at every request with the project's AGENTS.md.
+  "instructions": ["/opt/local-ai-base/rules.md"],
+
+  // No skill here: the skills live in each project, in .agents/skills/, which OpenCode reads by itself.
+
+  // After each write, the format pass of the project (.agents/lint/). It does nothing when the lint
+  // packages are not installed. The lint itself runs before "done", as the common rules say.
+  "formatter": {
+    "base-format": {
+      "command": ["node", "/opt/local-ai-base/tools/format-file.ts", "$FILE"],
+      "extensions": [".ts", ".html", ".css", ".scss", ".json"]
+    }
+  },
+
+  // MCP servers of the base, run with stdio in the project folder. They are offered, never imposed:
+  // the AI calls them when they help. Tools exposed directly ("codemode": false), as small models
+  // fail to write Code Mode JavaScript.
+  "mcp": {
+    "servers": {
+      "docs": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/docs.ts"],
+        "codemode": false
+      },
+      "project": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/project.ts"],
+        "codemode": false
+      },
+      "code": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/code.ts"],
+        "codemode": false
+      },
+      "parse": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/parse.ts"],
+        "codemode": false
+      }
+    }
+  },
+
+  // The AI may read the global base, outside the project, without asking each time.
+  "permissions": [
+    { "action": "external_directory", "resource": "/opt/local-ai-base/*", "effect": "allow" }
+  ],
+
+  // The web is closed: no search tool (websearch), no page fetched, no download, no session shared
+  // online. The test container without the base has the same lock.
+  "websearch": false,
+  "share": "disabled",
+  "policies": [
+    { "action": "websearch.use", "resource": "*", "effect": "deny" },
+    { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:wget *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git clone *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git fetch *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" }
+  ],
+
+  // One agent, the default agent of OpenCode, with no sub-agent: the built-in sub-agents are off.
+  "agents": {
+    "general": { "disabled": true },
+    "explore": { "disabled": true }
+  }
+}

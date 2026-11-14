@@ -19,13 +19,14 @@ Everything lives in one folder, here `~/ai-test`; take any other.
 ~/ai-test/
   paste/           the pasted parts and the two import scripts
   local-ai-base/   the global base, made by import-base.ts
+  opencode-base/   what the base adds to OpenCode, for the project with the base only
   opencode-user/   your OpenCode configuration: model and rights, shared by both containers
   with-base/       empty project 1: the base is mounted in its container
   without-base/    empty project 2: nothing of the base
 ```
 
-Keep these five folders together: the containers find `local-ai-base/` and `opencode-user/` beside
-their project folder.
+Keep these six folders together: the containers find `local-ai-base/`, `opencode-base/` and
+`opencode-user/` beside their project folder.
 
 ## 1. Paste the export
 
@@ -34,7 +35,8 @@ mkdir -p ~/ai-test/paste
 ```
 
 Paste into `~/ai-test/paste/`, at the size that passes ([paste-export.md](paste-export.md)): every
-`global-NNN.txt`, `project-001.txt`, `import-base.ts` and `import-project.ts`.
+`global-NNN.txt`, `project-001.txt`, `import-base.ts` and `import-project.ts`; then copy the small files
+of `setup/` (`opencode/`, `devcontainer/`) into `~/ai-test/paste/setup/`, keeping their folders.
 
 ## 2. Make the global base
 
@@ -48,17 +50,19 @@ The base lands in `./local-ai-base`. Run it again later to update the base.
 ## 3. Your OpenCode configuration
 
 ```sh
-mkdir opencode-user
-cp local-ai-base/devcontainer/opencode-user/opencode.jsonc opencode-user/
+mkdir opencode-user opencode-base
+cp paste/setup/devcontainer/opencode-user/opencode.jsonc opencode-user/
+cp paste/setup/opencode/opencode.jsonc opencode-base/
 ```
 
-It gives both containers the same rights: every command allowed; an install, a push, a branch or a
-deletion asks you first. Add your model in it.
+`opencode-user/` is yours, shared by both containers: add your model and your rights in it; the base
+imposes none. `opencode-base/` is what the base adds (common rules, MCP servers, formatter); only the
+container with the base sees it.
 
 The key of the model goes in one file beside the two projects, read by both containers at their start:
 
 ```sh
-cp local-ai-base/devcontainer/ai.env .
+cp paste/setup/devcontainer/ai.env .
 ```
 
 Write your key after `ANTHROPIC_API_KEY=` in `~/ai-test/ai.env`. The file sits outside both projects,
@@ -72,8 +76,8 @@ reads above your configuration: no web search tool (`websearch: false`), no `web
 
 ```sh
 mkdir -p with-base/.devcontainer without-base/.devcontainer
-cp local-ai-base/devcontainer/with-base/devcontainer.json with-base/.devcontainer/
-cp local-ai-base/devcontainer/without-base/devcontainer.json without-base/.devcontainer/
+cp paste/setup/devcontainer/with-base/devcontainer.json with-base/.devcontainer/
+cp paste/setup/devcontainer/without-base/devcontainer.json without-base/.devcontainer/
 git -C with-base init -q -b main
 git -C without-base init -q -b main
 ```
@@ -108,8 +112,8 @@ ls /opt/local-ai-base    # with-base: VERSION, rules, tools...   without-base: N
 Run `npx opencode` (or `npm run opencode`) in each container, at the root of the project, and give
 both the same request.
 
-- Packages: each session runs its own installs and OpenCode asks you to approve them. Approve or refuse
-  the same way in both.
+- Packages: each session runs its own installs, as your rights allow. Approve or refuse the same way in
+  both.
 - Give the same answer to the same question; never help one session more than the other.
 
 ## 8. Compare

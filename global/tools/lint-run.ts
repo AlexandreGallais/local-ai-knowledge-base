@@ -1,6 +1,6 @@
 // Runs the two passes of a project (decision 0017) through the ESLint and Stylelint of its
-// node_modules, with the configs of .agents/lint/. Used by format-file.ts, lint-file.ts and the
-// OpenCode plugin of the base. No package of its own; Node 22.18 or later.
+// node_modules, with the configs of the project kit in .agents/lint/. Used by format-file.ts (the
+// formatter of OpenCode) and lint-file.ts. No package of its own; Node 22.18 or later.
 import {
   existsSync,
   readdirSync,
@@ -140,15 +140,16 @@ export function hasStyleFiles(folder: string): boolean {
   });
 }
 
-// A package of the profile is not installed: one clear line, never a stack trace.
-async function orMissing(name: string, pass: () => Promise<string[]>): Promise<string[]> {
+// A lint package is not installed: one clear line for the lint pass, never a stack trace; nothing
+// for the format pass, which runs after every write and must stay silent in a project without lint.
+async function orMissing(name: string, pass: Pass, run: () => Promise<string[]>): Promise<string[]> {
   try {
-    return await pass();
+    return await run();
   } catch (error) {
     if ((error as { code?: string }).code !== 'MODULE_NOT_FOUND') {
       throw error;
     }
-    return [`${name} is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then run the install command it gives (the user approves it).`];
+    return pass === 'format' ? [] : [`${name} is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then run the install command it gives (the user approves it).`];
   }
 }
 
@@ -159,8 +160,8 @@ export async function runPass(project: string, pass: Pass, files: string[] | 'al
   const styles = files === 'all' ? allStyles : files.filter((file) => STYLE_FILES.has(extname(file)));
 
   return [
-    ...scripts.length === 0 ? [] : await orMissing('eslint', async () => await eslintPass(project, pass, scripts)),
-    ...styles.length === 0 ? [] : await orMissing('stylelint', async () => await stylelintPass(project, pass, styles)),
+    ...scripts.length === 0 ? [] : await orMissing('eslint', pass, async () => await eslintPass(project, pass, scripts)),
+    ...styles.length === 0 ? [] : await orMissing('stylelint', pass, async () => await stylelintPass(project, pass, styles)),
   ];
 }
 

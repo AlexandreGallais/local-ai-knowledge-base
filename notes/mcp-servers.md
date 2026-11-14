@@ -30,7 +30,7 @@ model receives at every request.
 
 ## Declared in
 
-`global/opencode/opencode.jsonc`, under `mcp.servers`, each with `"codemode": false`. OpenCode gives
+`opencode/opencode.jsonc`, the keys the user adds to their own OpenCode configuration, under `mcp.servers`, each with `"codemode": false`. OpenCode gives
 each tool the name of its server as a prefix: the model sees `docs_search_docs`, `project_info`.
 
 ## The parse server

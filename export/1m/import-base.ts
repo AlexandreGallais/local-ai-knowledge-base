@@ -261,7 +261,6 @@ function writeMachineConfig(target: string): string {
     '[containers]',
     'volumes = [',
     `  "${target}:/opt/local-ai-base:ro",`,
-    `  "${join(target, 'opencode')}:/etc/opencode:ro",`,
     ']',
     '',
   ].join('\n');
@@ -294,7 +293,7 @@ function buildSearchIndex(target: string): void {
       { encoding: 'utf8' },
     ));
   } catch (error) {
-    console.error(`The base is installed, but its search index was not built: ${(error as Error).message}`);
+    process.stderr.write(`The base is installed, but its search index was not built: ${(error as Error).message}\n`);
   }
 }
 
@@ -310,13 +309,13 @@ function main(): void {
       throw new Error(refused);
     }
     installBase(files, target);
-    console.log(`Global base installed: ${files.length} files in ${target}.`);
+    process.stdout.write(`Global base installed: ${files.length} files in ${target}.\n`);
     buildSearchIndex(target);
     if (process.argv.includes('--machine')) {
-      console.log(`Mount written: ${writeMachineConfig(target)}. Recreate your dev containers.`);
+      process.stdout.write(`Mount written: ${writeMachineConfig(target)}. Recreate your dev containers.\n`);
     }
   } catch (error) {
-    console.error(`Nothing was written. ${(error as Error).message}`);
+    process.stderr.write(`Nothing was written. ${(error as Error).message}\n`);
     process.exitCode = 1;
   }
 }
