@@ -1,0 +1,16 @@
+.status {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-color, #333);
+
+  &.open {
+    color: var(--open-color, #070);
+  }
+}
+
+button:hover,
+button:focus-visible {
+  text-decoration: underline;
+}

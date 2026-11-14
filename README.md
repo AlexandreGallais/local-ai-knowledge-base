@@ -11,22 +11,28 @@ production front-end code (Angular, TypeScript, HTML, CSS) inside OpenCode CLI 2
 
 ## How it works
 
-A project equipped with the base holds these entries, and nothing is installed elsewhere:
+The kit, in [`project/`](project/), is a project of its own: `npm install` then `npm run check` work in
+it as they are. It holds:
 
 | Entry | Content |
 | --- | --- |
+| `package.json` | The scripts of the format and the lint, and their packages. |
+| `.prettierrc.json`, `.editorconfig`, `.prettierignore` | The layout: Prettier with the defaults of an Angular project. |
+| `eslint.format.config.mjs`, `eslint.config.mjs` | The format and the lint of TypeScript, JavaScript and Angular templates; the lint includes the format. |
+| `stylelint.format.config.mjs`, `stylelint.config.mjs` | The same for CSS and SCSS. |
+| `lint/` | The settings (each theme of rules on or off), one file per theme, their README. |
+| `tsconfig.json` | ES2025 and the strictest options of TypeScript and of Angular templates. |
+| `src/` | A little example code that passes the format and the lint: a class, a function, a component, a store. |
 | `AGENTS.md` | The rules of the project, owned by the team. |
 | `opencode.json` | What OpenCode loads: the rules, the format after each write, one local MCP server per brick. |
-| `eslint.config.mjs`, `eslint.format.config.mjs` | The lint and the format of TypeScript, templates and JSON; the lint imports the format. |
-| `stylelint.config.mjs`, `stylelint.format.config.mjs` | The same for CSS and SCSS. |
-| `lint/` | What these configs share: the settings of the project, the local rules, the short output. |
 | `.agents/` | The common rules, the skills, and the bricks in `.agents/mcp/`. |
 
 The format and the lint are those of the project, as in any project: the team and the AI run the same
-scripts, `npm run format`, `npm run lint` and `npm run check`, and the editor reads the same configs.
-Each config starts from the recommended config of its library. They belong to the team: an update of
-the kit never replaces them. [`project/lint/README.md`](project/lint/README.md) says where to change
-what.
+scripts and the editor reads the same configs. The format is Prettier, then what Prettier does not do
+(sorting, blank lines, braces, CSS order); the lint keeps real errors and recognised good practice,
+never a matter of taste. Each theme starts from the recommended config of its library and switches on
+or off in `lint/settings.mjs`. [`project/lint/README.md`](project/lint/README.md) lists the themes and
+the commands.
 
 Each folder of `.agents/mcp/` is a brick: one MCP server with everything it needs. Removing the folder
 removes the server, its documentation and its rules, without breaking the other bricks.
@@ -71,18 +77,21 @@ brick (`js-official-docs-001.txt`...) and the one import script, `import.ts`.
 
 1. In an empty folder, paste `import.ts` and every part of the size you keep: the parts of `kit`, and
    the parts of each documentation brick the project needs.
-2. From the root of the project, run `node <that folder>/import.ts`.
-3. It takes every part of the folder, checks them all, then writes everything at once: `AGENTS.md`,
-   `opencode.json`, the format and lint configs, `.agents/`, each brick with its line in
-   `opencode.json`, and the search index of each documentation brick. It adds to `package.json` the
-   scripts `format`, `lint` and `check` and the lint packages it lacks (the Angular ones for an
-   Angular project).
-4. A damaged or missing part is named, and nothing is written: paste that part again, then run the
+2. Run `node <that folder>/import.ts --target <folder>`. It takes every part, checks them all, then
+   writes everything at once: the kit, each brick with its line in `opencode.json`, and the search
+   index of each documentation brick.
+3. A damaged or missing part is named, and nothing is written: paste that part again, then run the
    command again.
 
-To update a project, or to add a brick later, do the same: what the team wrote is kept (`AGENTS.md`,
-the format and lint configs, `lint/`, the skills already there, the scripts and the versions of
-`package.json`, the settings added to `opencode.json`), and each brick pasted is replaced whole.
+Two ways to use it:
+
+- **In a new, empty folder, beside the project.** The kit is written whole: `npm install` then
+  `npm run check` work at once. Then take into the project what it needs: the configs, `lint/`, the
+  scripts and the `devDependencies` of `package.json`, `AGENTS.md`, `opencode.json`, `.agents/`.
+- **Into a project that exists.** Nothing the team wrote is replaced: `package.json`, the configs,
+  `lint/`, `AGENTS.md` and the skills are written only when missing, the example code (`src/`) stays
+  out, and the import lists every file it left aside, to merge by hand. The bricks pasted are replaced
+  whole; the settings added to `opencode.json` stay.
 
 ### 3. Install the packages
 
@@ -108,7 +117,7 @@ repository. The workstation never does it: it receives the new export.
    `node scripts/fetch-library.ts --brick python-official-docs`, then
    `node scripts/check-library.ts project/.agents/mcp/python-official-docs`.
 3. When a lint plugin follows the major version of the tool (angular-eslint follows Angular), update
-   its version in `project/lint/packages.json`.
+   its version in `project/package.json`.
 4. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in
    `CHANGELOG.md`, and deliver the new export.
 
@@ -116,7 +125,7 @@ repository. The workstation never does it: it receives the new export.
 
 | Folder | Content |
 | --- | --- |
-| `project/` | The project kit: `AGENTS.md`, `opencode.json`, the format and lint configs, `lint/` and `.agents/`, bricks included. |
+| `project/` | The project kit, a project of its own: `package.json`, the format and lint, example code, `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
 | `import.ts` | The one import script, which travels with the export. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |

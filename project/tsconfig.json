@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2022",
+    "target": "es2025",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "lib": [
-      "es2023",
-      "dom"
-    ],
+    "lib": ["es2025", "dom", "dom.iterable"],
     "types": [],
     "noEmit": true,
     "strict": true,
@@ -32,8 +29,7 @@
     "strictInputAccessModifiers": true,
     "strictStandalone": true,
     "typeCheckHostBindings": true,
-    "extendedDiagnostics": {
-      "defaultCategory": "error"
-    }
-  }
+    "extendedDiagnostics": { "defaultCategory": "error" }
+  },
+  "include": ["src/**/*.ts"]
 }

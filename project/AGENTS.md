@@ -6,8 +6,8 @@ are loaded as well; this file only adds what is true for this project.
 
 ## What this project gives you
 
-- Format and lint: `npm run format`, `npm run lint`, `npm run check`. The configs are at the root
-  (`eslint.config.mjs`, `eslint.format.config.mjs`, `stylelint.config.mjs`, `stylelint.format.config.mjs`) and in `lint/`.
+- Format and lint: `npm run format`, `npm run lint`, `npm run check`; `:js` or `:scss` after `format` or `lint` for one kind of file.
+  Prettier, ESLint and Stylelint, configured at the root and in `lint/`; `lint/settings.mjs` switches each theme of rules on or off.
 - MCP servers, in `.agents/mcp/`, one folder each. Their rules tell you what each does and when to call it.
 - Skills, in `.agents/skills/`, one folder each. Load the one that matches your task. Add one with the skill `write-skill`.
 

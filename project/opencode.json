@@ -1,18 +1,9 @@
 {
-  "instructions": [
-    ".agents/rules.md",
-    ".agents/mcp/*/rules.md"
-  ],
+  "instructions": [".agents/rules.md", ".agents/mcp/*/rules.md"],
   "formatter": {
-    "prettier": {
-      "disabled": true
-    },
-    "biome": {
-      "disabled": true
-    },
-    "oxfmt": {
-      "disabled": true
-    },
+    "prettier": { "disabled": true },
+    "biome": { "disabled": true },
+    "oxfmt": { "disabled": true },
     "eslint-format": {
       "command": [
         "npx",
@@ -24,12 +15,11 @@
         "--fix",
         "$FILE"
       ],
-      "extensions": [
-        ".ts",
-        ".mts",
-        ".html",
-        ".json"
-      ]
+      "extensions": [".ts", ".mts", ".js", ".mjs", ".html"]
+    },
+    "prettier-format": {
+      "command": ["npx", "--no", "--", "prettier", "--write", "$FILE"],
+      "extensions": [".ts", ".mts", ".js", ".mjs", ".html", ".json", ".css", ".scss"]
     },
     "stylelint-format": {
       "command": [
@@ -43,60 +33,39 @@
         "--allow-empty-input",
         "$FILE"
       ],
-      "extensions": [
-        ".css",
-        ".scss"
-      ]
+      "extensions": [".css", ".scss"]
     }
   },
   "mcp": {
     "servers": {
       "csharp-official-docs": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/csharp-official-docs/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/csharp-official-docs/server.ts"],
         "codemode": false
       },
       "java-official-docs": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/java-official-docs/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/java-official-docs/server.ts"],
         "codemode": false
       },
       "js-official-docs": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/js-official-docs/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/js-official-docs/server.ts"],
         "codemode": false
       },
       "parse": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/parse/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/parse/server.ts"],
         "codemode": false
       },
       "python-official-docs": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/python-official-docs/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/python-official-docs/server.ts"],
         "codemode": false
       },
       "rust-official-docs": {
         "type": "local",
-        "command": [
-          "node",
-          ".agents/mcp/rust-official-docs/server.ts"
-        ],
+        "command": ["node", ".agents/mcp/rust-official-docs/server.ts"],
         "codemode": false
       }
     }

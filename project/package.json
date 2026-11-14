@@ -1,0 +1,55 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A project equipped with the base: format and lint configs, example code that passes them, and the bricks of .agents/.",
+  "scripts": {
+    "format:js": "eslint --config eslint.format.config.mjs --fix . && prettier --write --log-level warn --no-error-on-unmatched-pattern \"**/*.{ts,mts,js,mjs,html,json}\"",
+    "format:scss": "prettier --write --log-level warn --no-error-on-unmatched-pattern \"**/*.{css,scss}\" && stylelint --config stylelint.format.config.mjs --fix --allow-empty-input \"**/*.{css,scss}\"",
+    "format": "npm run format:js && npm run format:scss",
+    "lint:js": "prettier --check --log-level warn --no-error-on-unmatched-pattern \"**/*.{ts,mts,js,mjs,html,json}\" && eslint --format unix --max-warnings 0 .",
+    "lint:scss": "prettier --check --log-level warn --no-error-on-unmatched-pattern \"**/*.{css,scss}\" && stylelint --formatter unix --allow-empty-input \"**/*.{css,scss}\"",
+    "lint": "npm run lint:js && npm run lint:scss",
+    "check": "npm run format && npm run lint"
+  },
+  "dependencies": {
+    "@angular/common": "22.2.6",
+    "@angular/core": "22.2.6",
+    "@ngrx/signals": "22.0.1",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@double-great/stylelint-a11y": "3.8.3",
+    "@eslint/js": "10.0.1",
+    "@ngrx/eslint-plugin": "22.0.1",
+    "@stylistic/eslint-plugin": "6.0.0",
+    "@vitest/eslint-plugin": "1.6.28",
+    "angular-eslint": "22.6.0",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-formatter-unix": "9.0.1",
+    "eslint-import-resolver-typescript": "4.4.5",
+    "eslint-plugin-headers": "1.3.5",
+    "eslint-plugin-import-x": "4.18.1",
+    "eslint-plugin-jsdoc": "65.4.7",
+    "eslint-plugin-perfectionist": "5.13.0",
+    "eslint-plugin-regexp": "3.3.3",
+    "eslint-plugin-rxjs-x": "1.0.6",
+    "eslint-plugin-unicorn": "79.0.0",
+    "globals": "17.14.0",
+    "postcss-scss": "4.0.9",
+    "prettier": "3.10.1",
+    "stylelint": "18.0.0",
+    "stylelint-config-recess-order": "7.10.0",
+    "stylelint-config-standard-scss": "18.0.0",
+    "stylelint-order": "8.1.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "vitest": "5.1.0"
+  },
+  "overrides": {
+    "stylelint-config-recess-order": {
+      "stylelint": "$stylelint"
+    }
+  }
+}

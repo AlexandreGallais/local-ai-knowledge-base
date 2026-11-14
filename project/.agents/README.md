@@ -11,7 +11,7 @@ OpenCode reads three entries at the root of the project:
 | Entry | What OpenCode does with it |
 | --- | --- |
 | `AGENTS.md` | Loads it at every request: the rules of this project, written by the team. |
-| `opencode.json` | Loads `.agents/rules.md` and the `rules.md` of each brick, runs the format configs of the project after each write, starts the MCP server of each brick. |
+| `opencode.json` | Loads `.agents/rules.md` and the `rules.md` of each brick, formats each file after a write (ESLint, Prettier, Stylelint), starts the MCP server of each brick. |
 | `.agents/skills/` | Lists the skills by their name and description, and loads one when a task matches it. |
 
 ## Usage

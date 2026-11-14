@@ -1,0 +1,5 @@
+# What npm, the Angular build and the tests write: never in Git.
+node_modules/
+dist/
+coverage/
+.angular/

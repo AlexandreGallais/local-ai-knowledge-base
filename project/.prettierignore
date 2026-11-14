@@ -1,0 +1,8 @@
+# What Prettier leaves as it is, besides node_modules/ and the files of .gitignore.
+# The same folders as IGNORES in lint/settings.mjs.
+.agents/
+.angular/
+coverage/
+dist/
+storybook-static/
+package-lock.json

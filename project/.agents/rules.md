@@ -19,11 +19,11 @@ Each brick of `.agents/mcp/` adds the rules of its MCP server.
 
 ## Format and lint
 
-9. Each TypeScript, HTML, JSON, CSS or SCSS file you write is formatted at once by the format configs of the project. A file that changes after you write it is the format, not an error: read it again before you edit it.
+9. Each TypeScript, JavaScript, HTML, JSON, CSS or SCSS file you write is formatted at once, by ESLint, Prettier and Stylelint. A file that changes after you write it is the format, not an error: read it again before you edit it.
 10. After you write code, run `npm run lint` and fix every error it gives. Before you say "done", run `npm run check` until it ends with zero errors.
-11. Fix the code, never the rule: no `eslint-disable` comment, no change to `eslint.config.mjs`, `eslint.format.config.mjs`, the Stylelint configs or `lint/`, unless the user asks for it.
+11. Fix the code, never the rule: no `eslint-disable` comment, no change to the configs, to `lint/` or to `lint/settings.mjs`, unless the user asks for it.
 12. For a rule you do not know, look its id up in the documentation before you change the code.
-13. When `npm run lint` says a package is missing, run `npm install`.
+13. When the lint says a theme is skipped because a package is missing, run `npm install`.
 
 ## Commands
 

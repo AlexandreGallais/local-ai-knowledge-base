@@ -1,52 +1,85 @@
 # Format and lint of this project
 
-Two passes, for the team and for the AI alike. The format fixes the layout by itself; the lint
-reports what is left: bad practice, risk, complexity. The lint config imports the format config, so
-there is one set of rules and no conflict between them.
+Two passes, for the team and for the AI alike.
 
-## Usage
+- **The format** lays out the code by itself, without a word: Prettier first (`.prettierrc.json`,
+  `.editorconfig`, the defaults of an Angular project), then what Prettier does not do: imports and
+  class members sorted, blank lines, braces, CSS properties in order, the copyright line.
+- **The lint** reports what is left: real errors and recognised good practice, one line each with
+  the id of its rule. No rule is a matter of taste: a class for an object that lives, a function for
+  a utility, an `enum` or a bitwise operator when it fits.
+
+## Commands
 
 ```sh
-npm install        # once: the packages the import added to package.json
-npm run format     # fix the layout of every file
-npm run lint       # one line per error left, with the id of its rule
-npm run check      # both, in this order
+npm install            # once
+npm run format         # format:js then format:scss
+npm run format:js      # TypeScript, JavaScript (.mjs, .js), Angular templates, JSON
+npm run format:scss    # CSS and SCSS
+npm run lint           # lint:js then lint:scss
+npm run lint:js        # Prettier check, then ESLint: one line per error
+npm run lint:scss      # Prettier check, then Stylelint: one line per error
+npm run check          # format, then lint
 ```
 
-OpenCode runs the format on each file the AI writes (`formatter` of `opencode.json`). The editor
-reads `eslint.config.mjs` and `stylelint.config.mjs` by itself.
+OpenCode formats each file the AI writes (`formatter` of `opencode.json`): ESLint with the format
+config on scripts and templates, Prettier on every file, then Stylelint with the format config on
+styles. The editor reads `eslint.config.mjs` and `stylelint.config.mjs` by itself.
 
-## Where to change what
+## Switch a group of rules on or off
+
+`lint/settings.mjs` lists every theme of rules, each `true` or `false`. Switch off what blocks the
+team today, without uninstalling its package; switch it on again later. The same file holds the
+copyright line, the Angular selector prefix and the folders left out.
+
+| Theme | Pass | What it checks |
+| --- | --- | --- |
+| `blankLines` | format | blank lines before `return`, after declarations, around blocks |
+| `braces` | format | braces around every body of `if`, `else`, `for`, `while` |
+| `copyright` | format | the copyright line at the top of each file of `src/` |
+| `cssNotation` | format | the notation of the standard Stylelint config: short colors, blank lines... |
+| `cssOrder` | format | CSS properties in the order of Recess, declarations before nested rules |
+| `sort` | format | imports, exports, types and class members sorted |
+| `templateFormat` | format | Angular templates: attributes sorted, self-closing tags |
+| `javascript` | lint | recommended rules of ESLint, core rules that catch bugs |
+| `typescript` | lint | typescript-eslint `strictTypeChecked`, with the types |
+| `imports` | lint | eslint-plugin-import-x: cycles, duplicates, undeclared packages |
+| `complexity` | lint | size of files and functions, branches, nesting, parameters |
+| `regexp` | lint | eslint-plugin-regexp recommended |
+| `unicorn` | lint | the rules of eslint-plugin-unicorn that catch bugs |
+| `tests` | lint | @vitest/eslint-plugin recommended, on `*.spec.ts` and `*.test.ts` |
+| `jsdoc` | lint | JSDoc on what a library exports; off by default |
+| `angular` | lint | angular-eslint recommended, signals, OnPush, file names |
+| `angularTemplates` | lint | angular-eslint template recommended, control flow, bindings |
+| `accessibility` | lint | angular-eslint template accessibility |
+| `rxjs` | lint | eslint-plugin-rxjs-x recommended |
+| `ngrxSignals` | lint | @ngrx/eslint-plugin, Signals rules |
+| `teamChoices` | lint | the choices of the team: NgRx Signals only, no Material nor CDK, a store lists features |
+| `css` | lint | stylelint-config-standard-scss, specificity and nesting |
+| `cssAccessibility` | lint | @double-great/stylelint-a11y: focus, motion |
+
+A theme whose packages are not installed is skipped, and the lint says so in one line.
+
+## Files
 
 | File | What it holds |
 | --- | --- |
-| `eslint.format.config.mjs` | The format of TypeScript, Angular templates and JSON: rules that fix themselves only. |
-| `eslint.config.mjs` | The lint: the format, then one layer per kind of file (TypeScript, Angular, stores, tests, JSDoc). |
-| `stylelint.format.config.mjs` | The format of CSS and SCSS. |
-| `stylelint.config.mjs` | The lint of CSS and SCSS: the standard config, the format, then the quality rules. |
-| `lint/settings.mjs` | The settings of the project: copyright line, Angular selector prefix, folders left out. |
-| `lint/local-rules.mjs` | The local rules, in an ESLint plugin named `local`. |
-| `lint/optional.mjs` | Leaves out the rules of a plugin that is not installed. |
-| `lint/project.mjs` | Reads `package.json` (Angular, JSDoc) and the settings. |
-| `lint/formatter.cjs` | The short output of `npm run lint`. |
-| `lint/packages.json` | The scripts and the packages the import adds to `package.json`, when they are missing. |
-| `lint/tsconfig.strict.json` | The strictest compiler options; a `tsconfig.json` may extend it. |
+| `eslint.format.config.mjs` | The format of scripts and templates: eslint-config-prettier, then the format themes. |
+| `eslint.config.mjs` | The lint of scripts and templates: the format config, then the lint themes. |
+| `stylelint.format.config.mjs` | The format of styles: the format themes. |
+| `stylelint.config.mjs` | The lint of styles: the format config, then the lint themes. |
+| `lint/settings.mjs` | The themes on or off, the copyright line, the selector prefix, the folders left out. |
+| `lint/eslint/<theme>.mjs` | One theme of ESLint: what it checks, its rules, each with a comment. |
+| `lint/stylelint/<theme>.mjs` | One theme of Stylelint, the same way. |
+| `lint/load.mjs` | Loads the themes that are on and installed. |
+| `.prettierrc.json`, `.editorconfig`, `.prettierignore` | The layout of Prettier and of the editor. |
+| `tsconfig.json` | The strictest compiler options, ES2025, the strict template options of Angular. |
 
-A rule changed in one of these files applies to the editor, to `npm run lint` and to the AI at once.
-These files belong to the team: an update of the kit never replaces them.
+These files belong to the team: change a rule here, and it applies to the editor, to `npm run lint`
+and to the AI at once. An update of the kit never replaces them.
 
-## Packages
+## Add a rule, add a theme
 
-Every project: eslint, @eslint/js, typescript, typescript-eslint, @stylistic/eslint-plugin,
-eslint-plugin-perfectionist, eslint-plugin-jsonc, eslint-plugin-unicorn, eslint-plugin-regexp,
-eslint-plugin-import-lite, @vitest/eslint-plugin, stylelint, stylelint-config-standard-scss,
-postcss-scss, @stylistic/stylelint-plugin, stylelint-order, @double-great/stylelint-a11y.
-
-An Angular project (one that lists `@angular/core`): angular-eslint, @ngrx/eslint-plugin,
-eslint-plugin-rxjs-x.
-
-On demand: eslint-plugin-jsdoc, to ask JSDoc on everything a library exports. Install it and its
-rules turn on.
-
-Set aside: eslint-plugin-import-x (a native binary per platform), eslint-plugin-n (Node programs,
-not front-end code), eslint-plugin-functional (forbids classes everywhere).
+- A rule: in the theme it belongs to, with a comment line that says what it catches.
+- A theme: a file of `lint/eslint/` that exports `theme`, `packages` and `configs`, its name in
+  `THEMES` of `lint/settings.mjs`, and its import in the list of `eslint.config.mjs`.

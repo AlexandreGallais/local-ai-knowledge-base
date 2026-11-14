@@ -7,8 +7,8 @@ description: Use when you write or change an exported function of a library - it
 
 ## Rules
 
-- Every exported function has a JSDoc. The lint refuses one without description, `@param`,
-  `@returns`, `@throws` for each error it throws, and `@example`.
+- Every exported function has a JSDoc with a description, `@param`, `@returns`, `@throws` for each
+  error it throws, and `@example`. With the theme `jsdoc` on, the lint refuses one without them.
 - A description says what the function gives, never only its name: "Gives the share of a part in a
   whole, in percent", not "Percent of".
 - Every number of a `@param` or `@returns` says its unit: degrees, user units, milliseconds, bar.

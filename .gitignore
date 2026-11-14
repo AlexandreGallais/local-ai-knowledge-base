@@ -1,34 +1,19 @@
 # Dependencies and builds
 node_modules/
 dist/
-bin/
-obj/
-target/
+.angular/
 
-# Extracts of heavy files, written by the read-heavy-file skill
-.extract/
+# The lock file npm writes when the example project is installed: each project keeps its own.
+/project/package-lock.json
 
-# Clones of the documentation sources, made by scripts/fetch-library.ts
+# Clones of the documentation sources, made by the build tools when they fetch the documentation
 .library-cache/
+
+# Search indexes of the documentation bricks: built on each machine by their build-index.ts
+/project/.agents/mcp/*/index/
 
 # Research reports dropped at the root before they are moved to research/: never in Git
 /t[0-9]*-*/
-
-# Local state of the chat adapter. The export/ folder is kept: it holds the export of the last
-# delivery, built by scripts/export.ts --trial.
-state.local.json
-
-# Search indexes: built on each machine by global/tools/build-index.ts, never in Git
-global/index/
-
-# Lint configs of the samples: copied from global/lint/ by the tests
-samples/*/.agents/lint/
-
-# Cache of the Angular CLI (ng test, ng build)
-.angular/
-
-# Settings of one machine, such as the Node binaries the tests also run
-*.local.txt
 
 # Local secrets
 .env

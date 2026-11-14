@@ -1,0 +1,4 @@
+<p class="status" [class.open]="state() === 'open'">{{ name() }}: {{ state() }}</p>
+@if (state() !== 'open') {
+  <button type="button" (click)="open()">Open</button>
+}
