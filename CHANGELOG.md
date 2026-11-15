@@ -5,6 +5,13 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: no exercise files in math-docs, base64 parts
+
+- `math-docs` leaves out the files and folders made only of exercises, homework, answers or
+  solutions; every file it keeps is still copied as it is. Exercises written inside a chapter stay.
+- The export parts are encoded in base64 rather than Z85: base64 has no `@`, so a part never looks
+  like it holds e-mail addresses. A part holds about 6 % more text. `import.ts` reads both.
+
 ### Changed: a lighter documentation, free only
 
 - Every source of the documentation must have a free license, under the Definition of Free Cultural

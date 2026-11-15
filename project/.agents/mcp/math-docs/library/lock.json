@@ -1,32 +1,32 @@
 {
   "linear-algebra-hefferon": {
     "commit": "369e9709685d5ed74766c8198de32f0cb8552675",
-    "files": 258,
-    "bytes": 4261463,
-    "built": "2026-11-14"
+    "files": 161,
+    "bytes": 3736030,
+    "built": "2026-11-15"
   },
   "understanding-linear-algebra": {
     "commit": "b6ea263ef23703072b7007485bb7a2d89c5f399b",
-    "files": 158,
-    "bytes": 2629496,
-    "built": "2026-11-14"
+    "files": 47,
+    "bytes": 1717249,
+    "built": "2026-11-15"
   },
   "discrete-mathematics": {
     "commit": "a8e4949bc45daf100930c1182983778f56ab689f",
-    "files": 71,
-    "bytes": 1555538,
-    "built": "2026-11-14"
+    "files": 40,
+    "bytes": 909515,
+    "built": "2026-11-15"
   },
   "applied-combinatorics": {
     "commit": "e25b222aabf2f19d32910f5b8a96cdb7f6da97c3",
-    "files": 194,
-    "bytes": 1853582,
-    "built": "2026-11-14"
+    "files": 179,
+    "bytes": 1601611,
+    "built": "2026-11-15"
   },
   "linear-algebra-beezer": {
     "commit": "347f27fe909b54b26970bcc0fcbf69c7e853c766",
     "files": 53,
     "bytes": 2532528,
-    "built": "2026-11-14"
+    "built": "2026-11-15"
   }
 }

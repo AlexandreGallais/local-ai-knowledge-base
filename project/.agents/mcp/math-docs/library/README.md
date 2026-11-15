@@ -19,8 +19,8 @@ node scripts/check-library.ts                 # every file indexed, every licens
 
 | Tool | Documentation | Version | License | Size |
 | --- | --- | --- | --- | --- |
-| [linear-algebra-hefferon](linear-algebra-hefferon.index.md) | Linear Algebra, by Jim Hefferon: the LaTeX source of the book | 2026-11 | CC-BY-SA-2.5 OR GFDL-1.2-or-later | 258 files, 4.3 MB |
-| [understanding-linear-algebra](understanding-linear-algebra.index.md) | Understanding Linear Algebra, by David Austin: the PreTeXt source of the book | 2026-11 | CC-BY-4.0 | 158 files, 2.6 MB |
-| [discrete-mathematics](discrete-mathematics.index.md) | Discrete Mathematics: An Open Introduction, 3rd edition, by Oscar Levin: the PreTeXt source | 3 | CC-BY-SA-4.0 | 71 files, 1.6 MB |
-| [applied-combinatorics](applied-combinatorics.index.md) | Applied Combinatorics, by Mitchel T. Keller and William T. Trotter: the PreTeXt source | 2026-11 | CC-BY-SA-4.0 | 194 files, 1.9 MB |
+| [linear-algebra-hefferon](linear-algebra-hefferon.index.md) | Linear Algebra, by Jim Hefferon: the LaTeX source of the book | 2026-11 | CC-BY-SA-2.5 OR GFDL-1.2-or-later | 161 files, 3.7 MB |
+| [understanding-linear-algebra](understanding-linear-algebra.index.md) | Understanding Linear Algebra, by David Austin: the PreTeXt source of the book | 2026-11 | CC-BY-4.0 | 47 files, 1.7 MB |
+| [discrete-mathematics](discrete-mathematics.index.md) | Discrete Mathematics: An Open Introduction, 3rd edition, by Oscar Levin: the PreTeXt source | 3 | CC-BY-SA-4.0 | 40 files, 0.9 MB |
+| [applied-combinatorics](applied-combinatorics.index.md) | Applied Combinatorics, by Mitchel T. Keller and William T. Trotter: the PreTeXt source | 2026-11 | CC-BY-SA-4.0 | 179 files, 1.6 MB |
 | [linear-algebra-beezer](linear-algebra-beezer.index.md) | A First Course in Linear Algebra, by Robert A. Beezer: the XML source of the book | 2026-11 | GFDL-1.2-or-later | 53 files, 2.5 MB |

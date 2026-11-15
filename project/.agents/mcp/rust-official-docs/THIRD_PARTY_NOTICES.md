@@ -41,7 +41,7 @@ copyright notices, are in `licenses/<tool>/`.
 - Work: The Cargo Book: manifests, workspaces, features, profiles, commands
 - Authors: The Rust Project Developers
 - Copyright: `Copyright (c) 1998-2011 The OpenSSL Project.  All rights reserved.`
-- Copyright: `Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)`
+- Copyright: `Copyright (C) 1995-1998 Eric Young`
 - Copyright: `Copyright (C) 1995-2010 Jean-loup Gailly and Mark Adler`
 - Copyright: `Copyright (C) 2011 by Vicent Marti`
 - Copyright: `Copyright (c) 2004-2007 Sara Golemon`
@@ -50,8 +50,7 @@ copyright notices, are in `licenses/<tool>/`.
 - Copyright: `Copyright (c) 2007 Eli Fant`
 - Copyright: `Copyright (c) 2009 Daniel Stenberg`
 - Copyright: `Copyright (C) 2008, 2009 Simon Josefsson`
-- Copyright: `COPYRIGHT AND PERMISSION NOTICE`
-- Copyright: `Copyright (c) 1996 - 2014, Daniel Stenberg, daniel@haxx.se.`
+- Copyright: `Copyright (c) 1996 - 2014, Daniel Stenberg.`
 - Copyright: `Copyright (c) 2014 Alex Crichton`
 - Copyright: `Copyright (c) 2014 The Rust Project Developers`
 - Copyright: `Copyright (c) 2006-2009 Graydon Hoare`
