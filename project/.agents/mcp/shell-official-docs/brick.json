@@ -1,0 +1,8 @@
+{
+  "name": "shell-official-docs",
+  "instructions": "The official documentation of shell scripting, kept locally: the Bash Reference Manual, the manual page of dash (POSIX sh), the GNU manuals of coreutils, sed, grep and find, ShellCheck, the Google Shell Style Guide, the tldr pages (short examples of each command, Linux and Windows), Bats, shfmt and PowerShell 7.5. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of shell scripting: Bash (syntax, expansions, builtins), POSIX sh (dash), coreutils, sed, grep, find, ShellCheck, the Google Shell Style Guide, tldr examples of commands, Bats tests, shfmt, PowerShell (about_ topics and cmdlets). Returns 10 section ids at most.",
+  "queryExample": "\"getopts\" or \"Get-ChildItem\"",
+  "toolExample": "\"bash\"",
+  "idExample": "library/bash/bashref.texi#bourne-shell-builtins"
+}

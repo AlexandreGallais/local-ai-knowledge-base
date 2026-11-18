@@ -16,6 +16,16 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: shell scripts and PowerShell
+
+- `shell-official-docs`: the Bash Reference Manual 5.3, the manual page of dash 0.5.13 (POSIX sh),
+  the GNU manuals of coreutils 9.12, sed 4.9, grep 3.12 and findutils 4.10 (GNU FDL, no invariant
+  section), ShellCheck 0.11, the Google Shell Style Guide, the tldr pages 2.3 (common, Linux, Windows),
+  Bats 1.14, shfmt 3.14 and PowerShell 7.5 (about_ topics, cmdlets, conceptual documentation).
+- The search reads manual pages in roff (man and mdoc macros), MediaWiki pages, Qt documentation
+  (qdoc) and DocBook manual pages, and cuts a `.txt` file written in Markdown at its headings.
+- A clone of a source is tried again after a wait when its Git server answers 502.
+
 ### Added: every server in Node and in Python
 
 - Each documentation brick holds `server.py`, `search.py`, `build_index.py` and `mcp.py` beside their

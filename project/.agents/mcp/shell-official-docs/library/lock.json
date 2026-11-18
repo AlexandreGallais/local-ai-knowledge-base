@@ -1,0 +1,74 @@
+{
+  "dash": {
+    "commit": "0a896bfccbefdd5e79ae8ef6061f7e17e20c03f4",
+    "files": 1,
+    "bytes": 68686,
+    "built": "2026-11-18"
+  },
+  "shellcheck": {
+    "commit": "aac0823e6b58f8a499e856e93738082691cbf212",
+    "files": 2,
+    "bytes": 34959,
+    "built": "2026-11-18"
+  },
+  "shell-style-guide": {
+    "commit": "20727ab927b3d28013e1c7b67f9a4689bf33d222",
+    "files": 1,
+    "bytes": 42102,
+    "built": "2026-11-18"
+  },
+  "tldr": {
+    "commit": "3b17800dbd75c5e19287e2f955c5886c446d2ec3",
+    "files": 5113,
+    "bytes": 2955010,
+    "built": "2026-11-18"
+  },
+  "bats": {
+    "commit": "eb7f42f8d608ac693d7a4b67474f6714ea68cfc5",
+    "files": 15,
+    "bytes": 81526,
+    "built": "2026-11-18"
+  },
+  "shfmt": {
+    "commit": "a3f0c75d21d918756fa38de8b5d3429efde7948b",
+    "files": 1,
+    "bytes": 8012,
+    "built": "2026-11-18"
+  },
+  "powershell": {
+    "commit": "aedd8efe1fece22f04e478c2521c3fccc17ab03d",
+    "files": 1110,
+    "bytes": 10020908,
+    "built": "2026-11-18"
+  },
+  "bash": {
+    "commit": "b8c60bc9ca365f8261fa97900b6fa939f6ebc303",
+    "files": 1,
+    "bytes": 415804,
+    "built": "2026-11-18"
+  },
+  "coreutils": {
+    "commit": "c0f8514d989184921d9b12a4d103a7b23abc5af8",
+    "files": 1,
+    "bytes": 683185,
+    "built": "2026-11-18"
+  },
+  "grep": {
+    "commit": "3f8c09ec197a2ced82855f9ecd2cbc83874379ab",
+    "files": 1,
+    "bytes": 83169,
+    "built": "2026-11-18"
+  },
+  "sed": {
+    "commit": "7e2e575a36bc88c0f3f3d6d8083c5f5b0ed44009",
+    "files": 1,
+    "bytes": 165399,
+    "built": "2026-11-18"
+  },
+  "findutils": {
+    "commit": "c67264238d9487d5313a131674cd7a01ca299927",
+    "files": 1,
+    "bytes": 233513,
+    "built": "2026-11-18"
+  }
+}

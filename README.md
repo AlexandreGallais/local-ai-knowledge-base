@@ -32,6 +32,7 @@ the folder removes the server, its documentation and its rules, without breaking
 | `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http` (OpenJDK 25, LTS), Gradle and Maven. |
 | `containers-official-docs` | Containers: the Dockerfile reference, the Docker manuals and CLI, Podman, the Compose Specification, the Dev Containers specification, the OCI specifications. |
 | `git-official-docs` | Git: the manual page of every command. |
+| `shell-official-docs` | Shell scripts and PowerShell: the Bash Reference Manual, the manual page of dash (POSIX sh), the GNU manuals of coreutils, sed, grep and find, ShellCheck, the Google Shell Style Guide, the tldr pages (short examples of each command, Linux and Windows), Bats, shfmt, and PowerShell 7.5 (about_ topics, every cmdlet, the conceptual documentation). |
 | `cpp-official-docs` | C and C++: cppreference.com (converted to Markdown), CMake, Clang. |
 | `gitlab-official-docs` | GitLab CI/CD: the folder `doc/ci` of the GitLab documentation (`.gitlab-ci.yml` and every keyword), GitLab Runner and its executors, the Dev Containers CLI to build and run a dev container in a CI job. |
 | `simulation-official-docs` | Simulation: the Modelica language specification, the FMI 3.0 standard (the exchange of models, which Simulink imports and exports as FMU), the SSP 2.0 standard, the GNU Octave manual and the help of each Octave function (a language close to MATLAB). MATLAB, Simulink, Simscape and Stateflow are not there: their documentation is not free. |

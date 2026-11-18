@@ -1,0 +1,190 @@
+{
+  "sources": [
+    {
+      "tool": "bash",
+      "title": "GNU Bash: the Bash Reference Manual (syntax, expansions, redirections, builtins, shell variables, arrays, job control)",
+      "repository": "https://git.savannah.gnu.org/git/bash.git",
+      "ref": "bash-5.3",
+      "version": "5.3",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "Chet Ramey, Case Western Reserve University, and the Free Software Foundation",
+      "paths": ["doc/bashref.texi"],
+      "docs": ["doc"],
+      "files": "bashref\\.texi$",
+      "licenseTexts": { "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt" }
+    },
+    {
+      "tool": "dash",
+      "title": "dash: the manual page of the Debian Almquist shell, a POSIX sh",
+      "repository": "https://git.kernel.org/pub/scm/utils/dash/dash.git",
+      "ref": "v0.5.13.6",
+      "version": "0.5.13",
+      "license": "BSD-3-Clause",
+      "attribution": "The Regents of the University of California, Herbert Xu and the dash contributors",
+      "paths": [
+        "src/dash.1",
+        "COPYING"
+      ],
+      "docs": ["src"],
+      "files": "dash\\.1$"
+    },
+    {
+      "tool": "coreutils",
+      "title": "GNU Coreutils: the manual of the basic file, text and shell utilities (ls, cp, mv, rm, cat, sort, cut, tr, date, test...)",
+      "repository": "https://git.savannah.gnu.org/git/coreutils.git",
+      "ref": "v9.12",
+      "version": "9.12",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "the Free Software Foundation",
+      "paths": ["doc/coreutils.texi"],
+      "docs": ["doc"],
+      "files": "coreutils\\.texi$",
+      "licenseTexts": { "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt" }
+    },
+    {
+      "tool": "sed",
+      "title": "GNU sed: the manual of the stream editor",
+      "repository": "https://git.savannah.gnu.org/git/sed.git",
+      "ref": "v4.9",
+      "version": "4.9",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "the Free Software Foundation",
+      "paths": ["doc/sed.texi"],
+      "docs": ["doc"],
+      "files": "sed\\.texi$",
+      "licenseTexts": { "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt" }
+    },
+    {
+      "tool": "grep",
+      "title": "GNU grep: the manual of grep, its options and regular expressions",
+      "repository": "https://git.savannah.gnu.org/git/grep.git",
+      "ref": "v3.12",
+      "version": "3.12",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "the Free Software Foundation",
+      "paths": ["doc/grep.texi"],
+      "docs": ["doc"],
+      "files": "grep\\.texi$",
+      "licenseTexts": { "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt" }
+    },
+    {
+      "tool": "findutils",
+      "title": "GNU Findutils: the manual of find, xargs and locate",
+      "repository": "https://git.savannah.gnu.org/git/findutils.git",
+      "ref": "v4.10.0",
+      "version": "4.10",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "the Free Software Foundation",
+      "paths": ["doc/find.texi"],
+      "docs": ["doc"],
+      "files": "find\\.texi$",
+      "licenseTexts": { "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt" }
+    },
+    {
+      "tool": "shellcheck",
+      "title": "ShellCheck: its manual page and README (the checks it runs on shell scripts, its options and directives)",
+      "repository": "https://github.com/koalaman/shellcheck.git",
+      "ref": "v0.11.0",
+      "version": "0.11",
+      "license": "GPL-3.0-or-later",
+      "attribution": "Vidar Holen and the ShellCheck contributors",
+      "paths": [
+        "shellcheck.1.md",
+        "README.md",
+        "LICENSE"
+      ],
+      "docs": ["."],
+      "files": "^(?:shellcheck\\.1\\.md|README\\.md)$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "shell-style-guide",
+      "title": "Google Shell Style Guide: how to write maintainable Bash scripts",
+      "repository": "https://github.com/google/styleguide.git",
+      "ref": "gh-pages",
+      "version": "gh-pages",
+      "license": "CC-BY-3.0",
+      "attribution": "Google LLC and the style guide contributors",
+      "paths": [
+        "shellguide.md",
+        "LICENSE"
+      ],
+      "docs": ["."],
+      "files": "^shellguide\\.md$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "tldr",
+      "title": "tldr pages: short practical examples of each command, for every platform, Linux and Windows",
+      "repository": "https://github.com/tldr-pages/tldr.git",
+      "ref": "v2.3",
+      "version": "2.3",
+      "license": "CC-BY-4.0",
+      "attribution": "the tldr-pages contributors",
+      "paths": [
+        "pages/common/",
+        "pages/linux/",
+        "pages/windows/",
+        "LICENSE.md"
+      ],
+      "docs": [
+        "pages/common",
+        "pages/linux",
+        "pages/windows"
+      ]
+    },
+    {
+      "tool": "bats",
+      "title": "Bats: the documentation of the Bash Automated Testing System",
+      "repository": "https://github.com/bats-core/bats-core.git",
+      "ref": "v1.14.0",
+      "version": "1.14",
+      "license": "MIT",
+      "attribution": "Sam Stephenson and the bats-core contributors",
+      "paths": [
+        "docs/source/",
+        "LICENSE.md"
+      ],
+      "docs": ["docs/source"]
+    },
+    {
+      "tool": "shfmt",
+      "title": "shfmt and the sh package of Go: the README of the shell formatter and parser",
+      "repository": "https://github.com/mvdan/sh.git",
+      "ref": "v3.14.1",
+      "version": "3.14",
+      "license": "BSD-3-Clause",
+      "attribution": "Daniel Martí and the sh contributors",
+      "paths": [
+        "README.md",
+        "LICENSE"
+      ],
+      "docs": ["."],
+      "files": "^README\\.md$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "powershell",
+      "title": "PowerShell: the reference of PowerShell 7.5 (about_ topics and every cmdlet) and the conceptual documentation (scripting, modules, install on Linux)",
+      "repository": "https://github.com/MicrosoftDocs/PowerShell-Docs.git",
+      "ref": "main",
+      "version": "7.5",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft Corporation and the PowerShell-Docs contributors",
+      "paths": [
+        "reference/7.5/",
+        "reference/docs-conceptual/",
+        "LICENSE",
+        "LICENSE-CODE"
+      ],
+      "docs": [
+        "reference/7.5",
+        "reference/docs-conceptual"
+      ],
+      "exclude": [
+        "reference/docs-conceptual/media",
+        "**/media"
+      ]
+    }
+  ]
+}

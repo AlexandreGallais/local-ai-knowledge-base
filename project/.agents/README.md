@@ -47,6 +47,7 @@ in Node and in Python, its documentation in `library/`, its licenses, its `rules
 | `cpp-official-docs` | C and C++: cppreference, CMake, Clang. |
 | `containers-official-docs` | Docker, Podman, Compose, Dev Containers and the OCI specifications. |
 | `git-official-docs` | Git: every command. |
+| `shell-official-docs` | Shell scripts and PowerShell: Bash, POSIX sh (dash), the GNU manuals of coreutils, sed, grep and find, ShellCheck, the Google Shell Style Guide, the tldr examples of each command (Linux, Windows), Bats, shfmt, PowerShell 7.5. |
 | `gitlab-official-docs` | GitLab CI/CD: the folder `doc/ci` of the GitLab documentation, GitLab Runner, the Dev Containers CLI. |
 | `simulation-official-docs` | Simulation: the Modelica language, the FMI and SSP standards, the GNU Octave manual and functions. |
 | `math-docs` | Free mathematics textbooks, in LaTeX, PreTeXt and XML: linear algebra, discrete mathematics, combinatorics. |

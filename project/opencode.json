@@ -85,6 +85,14 @@
         ],
         "codemode": false
       },
+      "shell-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/shell-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "simulation-official-docs": {
         "type": "local",
         "command": [
