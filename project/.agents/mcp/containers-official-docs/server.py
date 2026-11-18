@@ -15,7 +15,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # No __pycache__ folder in the project: the brick stays as it was imported.
 sys.dont_write_bytecode = True
 sys.path.insert(0, HERE)
-
 from build_index import build_indexes, read_text  # noqa: E402
 from mcp import Server, Tool, ToolError, inside, required_text, serve, text  # noqa: E402
 from search import IndexEntry, Statistics, js_trim, parse_index, search, sections, statistics, utf16_key  # noqa: E402
@@ -23,10 +22,9 @@ from search import IndexEntry, Statistics, js_trim, parse_index, search, section
 with open(os.path.join(HERE, 'brick.json'), encoding='utf-8') as settings_file:
     # What makes this brick itself: its name, what it holds, the examples of its tools.
     SETTINGS = json.load(settings_file)
-
 # A file of the documentation, in one of the formats the search reads.
 # Its path is the one of the source, spaces and backquotes included; inside() keeps it in the brick.
-DOCUMENT = re.compile(r'library/[^#\\]+\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|ptx|xml|html?|json)(?:\.in)?\Z')
+DOCUMENT = re.compile(r'library/[^#\\]+\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|man|[1-9][a-z]{0,3})(?:\.in)?\Z')
 _entries: dict[str, list[IndexEntry]] = {}
 _statistics: dict[tuple[str, str], Statistics] = {}
 
@@ -62,13 +60,20 @@ def search_docs(args: dict[str, Any]) -> str:
     hits = search(scope, query, stats=_statistics[key])
     if not hits:
         return f'No section matches "{query}". Try other English words, or the name of the API.'
-    return '\n'.join([*(f'{hit.id} | {hit.title}' for hit in hits), 'Read one of them with read_doc and its id.'])
+    return '\n'.join([
+        *(f'{hit.id} | {hit.title}' for hit in hits),
+        'Read one of them with read_doc and its id.',
+    ])
 
 
 def table_of_contents(identifier: str, document: str) -> str:
     parts = sections(identifier, document)
     first = parts[0].title if parts else identifier
-    return '\n'.join([f'{identifier}: {first}', 'Sections:', *(f'- {part.id}' for part in parts if '#' in part.id)])
+    return '\n'.join([
+        f'{identifier}: {first}',
+        'Sections:',
+        *(f'- {part.id}' for part in parts if '#' in part.id),
+    ])
 
 
 def read_doc(args: dict[str, Any]) -> str:
@@ -96,41 +101,35 @@ def read_doc(args: dict[str, Any]) -> str:
     return f'{part.title}\n\n{js_trim(part.text)}'
 
 
-SERVER = Server(
-    name=SETTINGS['name'],
-    version='0.3.0',
-    instructions=SETTINGS['instructions'],
-    tools=[
-        Tool(
-            name='search_docs',
-            description=SETTINGS['search'],
-            properties={
-                'query': {
-                    'type': 'string',
-                    'description': f"English words or an API name, as {SETTINGS['queryExample']}.",
-                },
-                'tool': {
-                    'type': 'string',
-                    'description': f"Optional: search one tool only, as {SETTINGS['toolExample']}.",
-                },
+SERVER = Server(name=SETTINGS['name'], version='0.3.0', instructions=SETTINGS['instructions'], tools=[
+    Tool(
+        name='search_docs',
+        description=SETTINGS['search'],
+        properties={
+            'query': {
+                'type': 'string',
+                'description': f"English words or an API name, as {SETTINGS['queryExample']}.",
             },
-            required=['query'],
-            run=search_docs,
-        ),
-        Tool(
-            name='read_doc',
-            description='Read one section of the documentation by its id. Without "#section", returns the start of the page and its sections.',
-            properties={
-                'id': {
-                    'type': 'string',
-                    'description': f"A section id from search_docs, as \"{SETTINGS['idExample']}\".",
-                },
+            'tool': {
+                'type': 'string',
+                'description': f"Optional: search one tool only, as {SETTINGS['toolExample']}.",
             },
-            required=['id'],
-            run=read_doc,
-        ),
-    ],
-)
-
+        },
+        required=['query'],
+        run=search_docs,
+    ),
+    Tool(
+        name='read_doc',
+        description='Read one section of the documentation by its id. Without "#section", returns the start of the page and its sections.',
+        properties={
+            'id': {
+                'type': 'string',
+                'description': f"A section id from search_docs, as \"{SETTINGS['idExample']}\".",
+            },
+        },
+        required=['id'],
+        run=read_doc,
+    ),
+])
 if __name__ == '__main__':
     serve(SERVER)

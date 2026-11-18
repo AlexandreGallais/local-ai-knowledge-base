@@ -159,9 +159,11 @@ interface Cut {
   heading: string;
 }
 
-// The extensions of the files the search reads, the documentation kept as its authors wrote it.
-export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json)(?:\.in)?$/;
+// The extensions of the files the search reads, the documentation kept as its authors wrote it: the
+// last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
+export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|man|[1-9][a-z]{0,3})(?:\.in)?$/;
 const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
+const MANUAL_PAGE = /\.(?:man|[1-9][a-z]{0,3})(?:\.in)?$/;
 
 // What a format gives of a file: its title, when it names one, and where its sections start.
 interface Outline {
@@ -325,9 +327,9 @@ function memberHeading(line: string): string | undefined {
   return kind === null ? name : intellisenseHeading(kind[1] ?? '', kind[2] ?? '');
 }
 
-// The <title> of a PreTeXt division that starts at a line, as text.
+// The <title> of a division of PreTeXt or DocBook that starts at a line, as text.
 function divisionHeading(lines: string[], index: number): string | undefined {
-  if (!/<(?:chapter|section|subsection|appendix)\b/.test(lines[index] ?? '')) {
+  if (!/<(?:chapter|section|subsection|appendix|refsect[1-3]|sect[1-3])\b/.test(lines[index] ?? '')) {
     return undefined;
   }
   return /<title>(.*?)<\/title>/
@@ -339,15 +341,29 @@ function divisionHeading(lines: string[], index: number): string | undefined {
     .trim();
 }
 
+// The title of a DocBook manual page (systemd...): "<refentrytitle>name</refentrytitle>" and its
+// "<manvolnum>", as "name(5)".
+function refentryTitle(head: string): string | undefined {
+  const match = /<refentrytitle>([^<]+)<\/refentrytitle>(?:\s*<manvolnum>([^<]+)<\/manvolnum>)?/.exec(head);
+
+  if (match === null) {
+    return undefined;
+  }
+  return match[2] === undefined ? decodeXml(match[1] ?? '') : `${decodeXml(match[1] ?? '')}(${match[2]})`;
+}
+
 // XML: the documentation of a .NET API (one <Member> per member of a type, or one
-// <member name="..."> per member of an assembly), or PreTeXt (a <title> per division). The type, or
-// the first division of the file (a chapter, or a section kept in its own file), names it.
+// <member name="..."> per member of an assembly), PreTeXt or DocBook (a <title> per division). The
+// type, the title of a DocBook manual page, or the first division of the file (a chapter, or a section
+// kept in its own file), names it.
 function xmlCuts(lines: string[]): Outline {
   const typeName = /<Type\s[^>]*FullName="([^"]+)"/.exec(lines
     .slice(0, 20)
     .join('\n'))?.[1];
   const cuts: Cut[] = [];
-  let title = typeName === undefined ? undefined : decodeXml(typeName);
+  let title = typeName === undefined ? refentryTitle(lines
+    .slice(0, 40)
+    .join('\n')) : decodeXml(typeName);
 
   lines.forEach((line, index) => {
     const heading = memberHeading(line) ?? divisionHeading(lines, index);
@@ -441,9 +457,107 @@ function htmlCuts(lines: string[]): Outline {
   return outline(title === undefined ? undefined : textOf(title), (second.length > 0 ? second : headings('h3')).filter((cut) => cut.heading !== ''));
 }
 
+// The text of the argument of a roff request: quotes, font changes and escapes removed.
+function roffText(text: string): string {
+  return text
+    .replaceAll(/\\f(?:\[[^\]]*\]|\(..|.)/g, '')
+    .replaceAll('\\-', '-')
+    .replaceAll('\\&', '')
+    .replaceAll('"', '')
+    .trim();
+}
+
+// Manual pages (roff, with the man or the mdoc macros): .TH or .Dt gives the title, "name(section)";
+// each .SH or .SS (.Sh or .Ss in mdoc) starts a section.
+function roffCuts(lines: string[]): Outline {
+  const cuts: Cut[] = [];
+  let title: string | undefined;
+
+  lines.forEach((line, index) => {
+    const header = /^\.(?:TH|Dt)\s+(\S+)\s+(\S+)/.exec(line);
+    const heading = /^\.(?:SH|Sh|SS|Ss)\s+(.+)$/.exec(line)?.[1];
+
+    if (header !== null && title === undefined) {
+      title = `${roffText(header[1] ?? '')}(${roffText(header[2] ?? '')})`;
+    } else if (heading !== undefined && roffText(heading) !== '') {
+      cuts.push({
+        line: index,
+        heading: roffText(heading),
+      });
+    }
+  });
+  return outline(title, cuts);
+}
+
+// MediaWiki pages (wikitext, as Wikipedia and Wikibooks give them): each "== Heading ==" to
+// "==== Heading ====" starts a section; the page has no title line, so its file name gives it.
+function wikiCuts(lines: string[], path: string): Outline {
+  const cuts = lines.flatMap((line, index) => {
+    const match = /^(={2,4})\s*(.+?)\s*\1\s*$/.exec(line);
+
+    return match === null ? [] : [
+      {
+        line: index,
+        heading: (match[2] ?? '').trim(),
+      },
+    ];
+  });
+
+  return outline(
+    path
+      .replace(/^.*\//, '')
+      .replace(/\.wiki(?:\.in)?$/, '')
+      .replaceAll('_', ' '),
+    cuts,
+  );
+}
+
+const QDOC_TYPE = /^\s*\\(?:class|qmltype|namespace|headerfile)\s+(.+)$/;
+const QDOC_HEADING = /^\s*\\(?:section[1-4]|fn|property|enum|typedef|variable|macro|qmlproperty|qmlattachedproperty|qmlmethod|qmlsignal)\s+(.+)$/;
+
+// Qt documentation (qdoc): \title, or else the first \class or \qmltype, gives the title; each
+// \section1 to \section4, each other type and each member (\fn, \property, \enum...) starts a section.
+function qdocCuts(lines: string[]): Outline {
+  let title = lines
+    .map((line) => /^\s*\\title\s+(.+)$/.exec(line)?.[1])
+    .find((value) => value !== undefined)
+    ?.trim();
+  const cuts: Cut[] = [];
+
+  lines.forEach((line, index) => {
+    const type = QDOC_TYPE.exec(line)?.[1];
+    const heading = type ?? QDOC_HEADING.exec(line)?.[1];
+
+    if (heading === undefined) {
+      return;
+    }
+    if (title === undefined && type !== undefined) {
+      title = type.trim();
+      return;
+    }
+    cuts.push({
+      line: index,
+      heading: heading.trim(),
+    });
+  });
+  return outline(title, cuts);
+}
+
 function cutsOf(path: string, lines: string[]): Outline {
   if (/\.(?:rst|txt|adoc)$/.test(path)) {
-    return underlinedCuts(lines);
+    const underlined = underlinedCuts(lines);
+
+    // A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
+    return path.endsWith('.txt') && underlined.title === undefined && underlined.cuts.length === 0 ? markdownCuts(lines) : underlined;
+  }
+  if (MANUAL_PAGE.test(path)) {
+    return roffCuts(lines);
+  }
+  if (/\.wiki(?:\.in)?$/.test(path)) {
+    return wikiCuts(lines, path);
+  }
+  if (/\.qdoc(?:\.in)?$/.test(path)) {
+    return qdocCuts(lines);
   }
   if (path.endsWith('.tex')) {
     return latexCuts(lines);

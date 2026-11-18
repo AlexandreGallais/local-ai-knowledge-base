@@ -238,9 +238,11 @@ class Outline(NamedTuple):
     cuts: list[Cut]
 
 
-# The extensions of the files the search reads, the documentation kept as its authors wrote it.
-DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json)(?:\.in)?\Z')
+# The extensions of the files the search reads, the documentation kept as its authors wrote it: the
+# last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
+DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|man|[1-9][a-z]{0,3})(?:\.in)?\Z')
 MARKDOWN_FILE = re.compile(r'\.(?:md|mdx|markdown)(?:\.in)?\Z')
+MANUAL_PAGE = re.compile(r'\.(?:man|[1-9][a-z]{0,3})(?:\.in)?\Z')
 _FRONT_TITLE = re.compile(f'{LINE_START}title:{S}*["\']?({DOT}*?)["\']?{S}*{LINE_END}')
 
 
@@ -378,14 +380,14 @@ def member_heading(line: str) -> str | None:
     return name if kind is None else intellisense_heading(kind.group(1), kind.group(2))
 
 
-_DIVISION = re.compile(r'<(?:chapter|section|subsection|appendix)\b', re.ASCII)
+_DIVISION = re.compile(r'<(?:chapter|section|subsection|appendix|refsect[1-3]|sect[1-3])\b', re.ASCII)
 _TITLE_TAG = re.compile(f'<title>({DOT}*?)</title>')
 _TAG = re.compile(r'<[^>]+>')
 _SPACES = re.compile(f'{S}+')
 
 
 def division_heading(lines: list[str], index: int) -> str | None:
-    # The <title> of a PreTeXt division that starts at a line, as text.
+    # The <title> of a division of PreTeXt or DocBook that starts at a line, as text.
     if not _DIVISION.search(lines[index] if index < len(lines) else ''):
         return None
     found = _TITLE_TAG.search(' '.join(lines[index : index + 4]))
@@ -396,15 +398,27 @@ def division_heading(lines: list[str], index: int) -> str | None:
 
 _TYPE_NAME = re.compile(f'<Type{S}[^>]*FullName="([^"]+)"')
 _MEMBER_TAG = re.compile(r'<member', re.IGNORECASE)
+_REFENTRY = re.compile(rf'<refentrytitle>([^<]+)</refentrytitle>(?:{S}*<manvolnum>([^<]+)</manvolnum>)?')
+
+
+def refentry_title(head: str) -> str | None:
+    # The title of a DocBook manual page (systemd...): "<refentrytitle>name</refentrytitle>" and its
+    # "<manvolnum>", as "name(5)".
+    found = _REFENTRY.search(head)
+    if found is None:
+        return None
+    name = decode_xml(found.group(1))
+    return name if found.group(2) is None else f'{name}({found.group(2)})'
 
 
 def xml_cuts(lines: list[str]) -> Outline:
     # XML: the documentation of a .NET API (one <Member> per member of a type, or one
-    # <member name="..."> per member of an assembly), or PreTeXt (a <title> per division). The type, or
-    # the first division of the file (a chapter, or a section kept in its own file), names it.
+    # <member name="..."> per member of an assembly), PreTeXt or DocBook (a <title> per division). The
+    # type, the title of a DocBook manual page, or the first division of the file (a chapter, or a
+    # section kept in its own file), names it.
     type_name = _TYPE_NAME.search('\n'.join(lines[:20]))
     cuts: list[Cut] = []
-    title = None if type_name is None else decode_xml(type_name.group(1))
+    title = refentry_title('\n'.join(lines[:40])) if type_name is None else decode_xml(type_name.group(1))
     for index, line in enumerate(lines):
         heading = member_heading(line)
         if heading is None:
@@ -471,11 +485,81 @@ _TEXINFO_FILE = re.compile(r'\.(?:texi|txi)\Z')
 _HTML_FILE = re.compile(r'\.html?\Z')
 _XML_FILE = re.compile(r'\.(?:ptx|xml)\Z')
 _JSON_TITLE = re.compile(f'"title"{S}*:{S}*"([^"]+)"')
+_ROFF_FONT = re.compile(rf'\\f(?:\[[^\]]*\]|\({DOT}{DOT}|{DOT})')
+_ROFF_HEADER = re.compile(rf'\.(?:TH|Dt){S}+({NOT_S}+){S}+({NOT_S}+)')
+_ROFF_HEADING = re.compile(rf'\.(?:SH|Sh|SS|Ss){S}+({DOT}+)\Z')
+
+
+def roff_text(text: str) -> str:
+    # The text of the argument of a roff request: quotes, font changes and escapes removed.
+    return js_trim(_ROFF_FONT.sub('', text).replace('\\-', '-').replace('\\&', '').replace('"', ''))
+
+
+def roff_cuts(lines: list[str]) -> Outline:
+    # Manual pages (roff, with the man or the mdoc macros): .TH or .Dt gives the title, "name(section)";
+    # each .SH or .SS (.Sh or .Ss in mdoc) starts a section.
+    title: str | None = None
+    cuts: list[Cut] = []
+    for index, line in enumerate(lines):
+        header = _ROFF_HEADER.match(line)
+        heading = _ROFF_HEADING.match(line)
+        if header is not None and title is None:
+            title = f'{roff_text(header.group(1))}({roff_text(header.group(2))})'
+        elif heading is not None and roff_text(heading.group(1)) != '':
+            cuts.append(Cut(index, roff_text(heading.group(1))))
+    return Outline(title, cuts)
+
+
+_WIKI_HEADING = re.compile(rf'(={{2,4}}){S}*({DOT}+?){S}*\1{S}*\Z')
+_WIKI_FILE = re.compile(r'\.wiki(?:\.in)?\Z')
+
+
+def wiki_cuts(lines: list[str], path: str) -> Outline:
+    # MediaWiki pages (wikitext, as Wikipedia and Wikibooks give them): each "== Heading ==" to
+    # "==== Heading ====" starts a section; the page has no title line, so its file name gives it.
+    cuts = [Cut(index, js_trim(found.group(2))) for index, found in enumerate(_WIKI_HEADING.match(line) for line in lines) if found is not None]
+    title = _WIKI_FILE.sub('', _FOLDERS.sub('', path, count=1), count=1).replace('_', ' ')
+    return Outline(title, cuts)
+
+
+_QDOC_TITLE = re.compile(rf'{S}*\\title{S}+({DOT}+)\Z')
+_QDOC_TYPE = re.compile(rf'{S}*\\(?:class|qmltype|namespace|headerfile){S}+({DOT}+)\Z')
+_QDOC_HEADING = re.compile(rf'{S}*\\(?:section[1-4]|fn|property|enum|typedef|variable|macro|qmlproperty|qmlattachedproperty|qmlmethod|qmlsignal){S}+({DOT}+)\Z')
+_QDOC_FILE = re.compile(r'\.qdoc(?:\.in)?\Z')
+
+
+def qdoc_cuts(lines: list[str]) -> Outline:
+    # Qt documentation (qdoc): \title, or else the first \class or \qmltype, gives the title; each
+    # \section1 to \section4, each other type and each member (\fn, \property, \enum...) starts a section.
+    titled = next((found.group(1) for found in (_QDOC_TITLE.match(line) for line in lines) if found is not None), None)
+    title = None if titled is None else js_trim(titled)
+    cuts: list[Cut] = []
+    for index, line in enumerate(lines):
+        kind = _QDOC_TYPE.match(line)
+        member = None if kind is not None else _QDOC_HEADING.match(line)
+        found = kind or member
+        if found is None:
+            continue
+        if title is None and kind is not None:
+            title = js_trim(kind.group(1))
+            continue
+        cuts.append(Cut(index, js_trim(found.group(1))))
+    return Outline(title, cuts)
 
 
 def cuts_of(path: str, lines: list[str]) -> Outline:
     if _UNDERLINED_FILE.search(path):
-        return underlined_cuts(lines)
+        underlined = underlined_cuts(lines)
+        # A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
+        if path.endswith('.txt') and underlined.title is None and not underlined.cuts:
+            return markdown_cuts(lines)
+        return underlined
+    if MANUAL_PAGE.search(path):
+        return roff_cuts(lines)
+    if _WIKI_FILE.search(path):
+        return wiki_cuts(lines, path)
+    if _QDOC_FILE.search(path):
+        return qdoc_cuts(lines)
     if path.endswith('.tex'):
         return latex_cuts(lines)
     # Texinfo: .texi, and .txi for the chapters of a manual (Octave).
