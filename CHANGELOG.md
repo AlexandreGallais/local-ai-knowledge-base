@@ -5,6 +5,35 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Removed: everything but the documentation
+
+- The format and the lint of the kit: the folder `lint/`, the configs of ESLint, Stylelint and
+  Prettier, `.editorconfig`, `tsconfig.json`, the `package.json` of the project and the example code
+  `src/`. The kit holds `AGENTS.md`, `opencode.json` and `.agents/` only.
+- In `opencode.json`, the formatters: it holds `instructions` and `mcp` only. An import into a project
+  equipped by an earlier kit removes the formatters that kit declared, and keeps those of the team.
+- The `parse` server, which read heavy files: only the documentation servers stay.
+- The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
+  `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
+
+### Added: every server in Node and in Python
+
+- Each documentation brick holds `server.py`, `search.py`, `build_index.py` and `mcp.py` beside their
+  Node twins: Python 3.9 or later, standard library only. The same sections, the same words, the
+  same index, byte for byte, and the same answers as the Node server.
+- `import.ts --runtime python` and `import.py --runtime python` write the commands of the Python
+  servers in `opencode.json`; without the option, both write the Node commands. `import.py` builds the
+  search index with Python, `import.ts` with Node: the same index.
+- `check_versions.py` beside `check-versions.ts`, and `check_skill.py` beside `check-skill.ts`.
+- The search index is sorted by UTF-16 code units, never by the language of the machine.
+
+### Changed: rules and skills for the documentation
+
+- `.agents/rules.md` sends the AI to the documentation servers when its memory of an API is not sure,
+  and says "done" after the build and the tests of the project.
+- `look-up-api` works for every language: the version from the build files of the project, then the
+  documentation server of the language, then the installed packages.
+
 ### Added: GitLab CI/CD and simulation
 
 - `gitlab-official-docs`: the folder `doc/ci` of the GitLab documentation (CC BY-SA 4.0), the

@@ -1,6 +1,6 @@
 # Third-party notices
 
-The code of this brick (its `.ts` files) is under the MIT License of the base. The folder `library/` holds
+The code of this brick (its `.ts` and `.py` files) is under the MIT License of the base. The folder `library/` holds
 official documentation of other projects, each under its own license, listed below, with the commit
 it was taken at. The license files of each source, copied unchanged at its commit with their
 copyright notices, are in `licenses/<tool>/`.

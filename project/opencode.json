@@ -1,101 +1,96 @@
 {
-  "instructions": [".agents/rules.md", ".agents/mcp/*/rules.md"],
-  "formatter": {
-    "prettier": { "disabled": true },
-    "biome": { "disabled": true },
-    "oxfmt": { "disabled": true },
-    "eslint-format": {
-      "command": [
-        "npx",
-        "--no",
-        "--",
-        "eslint",
-        "--config",
-        "eslint.format.config.mjs",
-        "--fix",
-        "$FILE"
-      ],
-      "extensions": [".ts", ".mts", ".js", ".mjs", ".html"]
-    },
-    "prettier-format": {
-      "command": ["npx", "--no", "--", "prettier", "--write", "$FILE"],
-      "extensions": [".ts", ".mts", ".js", ".mjs", ".html", ".json", ".css", ".scss"]
-    },
-    "stylelint-format": {
-      "command": [
-        "npx",
-        "--no",
-        "--",
-        "stylelint",
-        "--config",
-        "stylelint.format.config.mjs",
-        "--fix",
-        "--allow-empty-input",
-        "$FILE"
-      ],
-      "extensions": [".css", ".scss"]
-    }
-  },
+  "instructions": [
+    ".agents/rules.md",
+    ".agents/mcp/*/rules.md"
+  ],
   "mcp": {
     "servers": {
       "containers-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/containers-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/containers-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "cpp-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/cpp-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/cpp-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "csharp-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/csharp-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/csharp-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "git-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/git-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/git-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "gitlab-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/gitlab-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/gitlab-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "java-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/java-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/java-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "js-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/js-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/js-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "math-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/math-docs/server.ts"],
-        "codemode": false
-      },
-      "parse": {
-        "type": "local",
-        "command": ["node", ".agents/mcp/parse/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/math-docs/server.ts"
+        ],
         "codemode": false
       },
       "python-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/python-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/python-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "rust-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/rust-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/rust-official-docs/server.ts"
+        ],
         "codemode": false
       },
       "simulation-official-docs": {
         "type": "local",
-        "command": ["node", ".agents/mcp/simulation-official-docs/server.ts"],
+        "command": [
+          "node",
+          ".agents/mcp/simulation-official-docs/server.ts"
+        ],
         "codemode": false
       }
     }

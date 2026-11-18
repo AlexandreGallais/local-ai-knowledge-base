@@ -2,18 +2,17 @@
 """The import script of the base, in Python: the same import as import.ts, for a machine without Node.
 
 It takes every part found in its folder (kit-001.txt, js-official-docs-001.txt...), whatever their
-packs, checks them all, then writes everything in the project at once: the kit (a project of its own:
-package.json, the format and lint configs, AGENTS.md, opencode.json, .agents/ and example code) and
-each pasted brick of .agents/mcp/, with its line in opencode.json. One file, the standard library of
-Python 3.9 or later only, no package:
-    python3 import.py [--from <folder of the parts>] [--target <project root>]
-Default: the parts next to this file, the current folder as the project.
+packs, checks them all, then writes everything in the project at once: the kit (AGENTS.md,
+opencode.json and .agents/) and each pasted documentation brick of .agents/mcp/, with its line in
+opencode.json. One file, the standard library of Python 3.9 or later only, no package:
+    python3 import.py [--from <folder of the parts>] [--target <project root>] [--runtime node|python]
+Default: the parts next to this file, the current folder as the project, the servers run by Node, as
+import.ts writes them. --runtime python writes the commands of the Python servers in opencode.json.
 
-A damaged or missing part is named, and nothing is written. In an empty folder, the kit is written
-whole. In a project that already exists, nothing the team wrote is replaced: every file outside
-.agents/ (package.json, configs, AGENTS.md, skills) is written only when missing, the example code of
-the kit (src/) is left aside, and the import lists what it left, to be merged by hand. The bricks of
-.agents/mcp/ are replaced whole, and the settings the team added to opencode.json stay.
+A damaged or missing part is named, and nothing is written. In a project that already exists, nothing
+the team wrote is replaced: AGENTS.md and the skills are written only when missing, and the import
+lists what it left. The bricks of .agents/mcp/ are replaced whole, and the settings the team added to
+opencode.json stay.
 
 Parts compressed with gzip are read by every Python 3; with zstd, by Python 3.14 or later; with
 brotli, by import.ts only, as the standard library of Python has no brotli.
@@ -38,80 +37,30 @@ STREAM_MAGIC = b"LAB2\n"
 PART_NAME = re.compile(r"^(.+)-(\d{3})\.txt$")
 BRICKS = ".agents/mcp"
 BRICK_PATH = re.compile(r"^\.agents/mcp/([^/]+)/")
-# The example code of the kit: written in an empty folder, left aside in a project that exists.
-EXAMPLE = "src/"
 INSTRUCTIONS = [
     ".agents/rules.md",
     ".agents/mcp/*/rules.md",
 ]
-# OpenCode formatters that would run before the format configs of the project on the same files.
-BUILT_IN_FORMATTERS = [
+# How OpenCode starts the server of a brick: by Node or by Python, the same answers.
+RUNTIMES = [
+    "node",
+    "python",
+]
+# The formatters that earlier versions of the kit declared: removed from opencode.json, as the kit no
+# longer brings the configs they run.
+OLD_FORMATTERS = [
+    "agents-format",
+    "eslint-format",
+    "prettier-format",
+    "stylelint-format",
+]
+# The built-in formatters earlier versions of the kit switched off: their entry is removed when it
+# only says "disabled", so that the project finds them as OpenCode ships them.
+SWITCHED_OFF = [
     "prettier",
     "biome",
     "oxfmt",
 ]
-ALL_EXTENSIONS = [
-    ".ts",
-    ".mts",
-    ".js",
-    ".mjs",
-    ".html",
-    ".json",
-    ".css",
-    ".scss",
-]
-# The formatters OpenCode runs after each write, in this order, as import.ts declares them.
-FORMATTERS = [
-    {
-        "name": "eslint-format",
-        "config": "eslint.format.config.mjs",
-        "command": [
-            "npx",
-            "--no",
-            "--",
-            "eslint",
-            "--config",
-            "eslint.format.config.mjs",
-            "--fix",
-            "$FILE",
-        ],
-        "extensions": [extension for extension in ALL_EXTENSIONS if extension not in (".json", ".css", ".scss")],
-    },
-    {
-        "name": "prettier-format",
-        "config": ".prettierrc.json",
-        "command": [
-            "npx",
-            "--no",
-            "--",
-            "prettier",
-            "--write",
-            "$FILE",
-        ],
-        "extensions": ALL_EXTENSIONS,
-    },
-    {
-        "name": "stylelint-format",
-        "config": "stylelint.format.config.mjs",
-        "command": [
-            "npx",
-            "--no",
-            "--",
-            "stylelint",
-            "--config",
-            "stylelint.format.config.mjs",
-            "--fix",
-            "--allow-empty-input",
-            "$FILE",
-        ],
-        "extensions": [
-            ".css",
-            ".scss",
-        ],
-    },
-]
-# Formatters of earlier versions of the kit.
-OLD_FORMATTERS = ["agents-format"]
 
 
 class PartError(Exception):
@@ -275,11 +224,24 @@ def record(value: Any) -> dict[str, Any]:
 
 
 def present_bricks(target: str) -> list[str]:
-    """The bricks present in the project: each folder of .agents/mcp/ that holds a server.ts."""
+    """The bricks present in the project: each folder of .agents/mcp/ that holds a server, in Node or in Python."""
     folder = os.path.join(target, BRICKS)
     if not os.path.isdir(folder):
         return []
-    return sorted(name for name in os.listdir(folder) if os.path.isdir(os.path.join(folder, name)) and os.path.exists(os.path.join(folder, name, "server.ts")))
+    return sorted(name for name in os.listdir(folder) if os.path.isdir(os.path.join(folder, name)) and (os.path.exists(os.path.join(folder, name, "server.ts")) or os.path.exists(os.path.join(folder, name, "server.py"))))
+
+
+def server_command(brick: str, runtime: str) -> list[str]:
+    """The command that starts the server of a brick, by the runtime chosen."""
+    if runtime == "python":
+        return [
+            "python3",
+            f"{BRICKS}/{brick}/server.py",
+        ]
+    return [
+        "node",
+        f"{BRICKS}/{brick}/server.ts",
+    ]
 
 
 def js_string(value: Any) -> str:
@@ -291,7 +253,7 @@ def js_string(value: Any) -> str:
     return json.dumps(value)
 
 
-def sync_servers(current: dict[str, Any], bricks: list[str]) -> dict[str, Any]:
+def sync_servers(current: dict[str, Any], bricks: list[str], runtime: str) -> dict[str, Any]:
     """The servers of the config without those of a brick that is gone, then one per brick present."""
     kept: dict[str, Any] = {}
     for name, entry in current.items():
@@ -305,54 +267,37 @@ def sync_servers(current: dict[str, Any], bricks: list[str]) -> dict[str, Any]:
     for brick in bricks:
         kept[brick] = {
             "type": "local",
-            "command": [
-                "node",
-                f"{BRICKS}/{brick}/server.ts",
-            ],
+            "command": server_command(brick, runtime),
             "codemode": False,
         }
     return kept
 
 
-def sync_formatter(current: dict[str, Any], configs: list[str]) -> dict[str, Any]:
-    """The formatters of the config: one per format config the project holds, and the built-in ones off."""
-    ours = [item for item in FORMATTERS if item["config"] in configs]
-    names = [item["name"] for item in FORMATTERS]
-    kept = {name: value for name, value in current.items() if name not in OLD_FORMATTERS and name not in names}
-    if len(ours) == 0:
-        return kept
-    for name in BUILT_IN_FORMATTERS:
-        kept[name] = {"disabled": True}
-    for item in ours:
-        kept[item["name"]] = {
-            "command": item["command"],
-            "extensions": item["extensions"],
-        }
-    return kept
+def compact(value: Any) -> str:
+    """JSON.stringify(value) of JavaScript."""
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
-def present_format_configs(target: str) -> list[str]:
-    return [item["config"] for item in FORMATTERS if os.path.exists(os.path.join(target, item["config"]))]
+def clean_formatter(current: dict[str, Any]) -> dict[str, Any]:
+    """The formatters of the config without those of earlier versions of the kit."""
+    return {name: value for name, value in current.items() if name not in OLD_FORMATTERS and not (name in SWITCHED_OFF and compact(value) == '{"disabled":true}')}
 
 
-def sync_config(config: dict[str, Any], bricks: list[str], format_configs: list[str]) -> dict[str, Any]:
-    """opencode.json with the instructions of the base, a formatter per format config of the project and
-    one local MCP server per brick present; the other settings of the file are kept as they are."""
+def sync_config(config: dict[str, Any], bricks: list[str], runtime: str = "node") -> dict[str, Any]:
+    """opencode.json with the instructions of the base and one local MCP server per brick present; the
+    other settings of the file are kept as they are, but the formatters of earlier versions of the kit."""
     instructions = config.get("instructions")
     instructions = [item for item in instructions if isinstance(item, str)] if isinstance(instructions, list) else []
-    formatter = sync_formatter(record(config.get("formatter")), format_configs)
+    formatter = clean_formatter(record(config.get("formatter")))
     mcp = record(config.get("mcp"))
-    mcp["servers"] = sync_servers(record(mcp.get("servers")), bricks)
+    mcp["servers"] = sync_servers(record(mcp.get("servers")), bricks, runtime)
     synced = dict(config)
     synced["instructions"] = INSTRUCTIONS + [item for item in instructions if item not in INSTRUCTIONS]
     synced["formatter"] = formatter
     synced["mcp"] = mcp
+    if len(formatter) == 0:
+        del synced["formatter"]
     return synced
-
-
-def compact(value: Any) -> str:
-    """JSON.stringify(value) of JavaScript."""
-    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
 def write(target: str, file: dict[str, Any]) -> None:
@@ -362,7 +307,7 @@ def write(target: str, file: dict[str, Any]) -> None:
         handle.write(file["data"])
 
 
-def install_packs(packs: list[dict[str, Any]], target: str) -> dict[str, Any]:
+def install_packs(packs: list[dict[str, Any]], target: str, runtime: str = "node") -> dict[str, Any]:
     """Writes the packs into the project. The packs are already checked: nothing here can fail on them."""
     files = [file for pack in packs for file in pack["files"]]
     for brick in bricks_of(files):
@@ -370,7 +315,7 @@ def install_packs(packs: list[dict[str, Any]], target: str) -> dict[str, Any]:
     config_file = next((file for file in files if file["path"] == "opencode.json"), None)
     config = read_json(os.path.join(target, "opencode.json"))
     written, kept = write_files(files, target)
-    servers = write_config(target, config, config_file)
+    servers = write_config(target, config, config_file, runtime)
     return {
         "packs": [pack["name"] for pack in packs],
         "written": written + 1,
@@ -382,14 +327,12 @@ def install_packs(packs: list[dict[str, Any]], target: str) -> dict[str, Any]:
 def write_files(files: list[dict[str, Any]], target: str) -> tuple[int, list[str]]:
     """Writes every file of the packs but opencode.json; returns how many, and the paths left aside."""
     kept: list[str] = []
-    # A project that exists already has its own package.json: the example code of the kit stays out.
-    existing = os.path.exists(os.path.join(target, "package.json"))
     written = 0
     for file in files:
         path = file["path"]
         if path == "opencode.json":
             continue
-        if (owned_by_team(path) and os.path.exists(os.path.join(target, path))) or (existing and path.startswith(EXAMPLE)):
+        if owned_by_team(path) and os.path.exists(os.path.join(target, path)):
             kept.append(path)
             continue
         write(target, file)
@@ -397,7 +340,7 @@ def write_files(files: list[dict[str, Any]], target: str) -> tuple[int, list[str
     return written, kept
 
 
-def write_config(target: str, config: dict[str, Any], config_file: dict[str, Any] | None) -> list[str]:
+def write_config(target: str, config: dict[str, Any], config_file: dict[str, Any] | None, runtime: str) -> list[str]:
     """Writes opencode.json synced with the bricks present; returns them."""
     fresh = len(config) == 0
     if fresh:
@@ -407,7 +350,7 @@ def write_config(target: str, config: dict[str, Any], config_file: dict[str, Any
             original = handle.read()
     servers = present_bricks(target)
     base = json.loads(original) if fresh and original is not None else config
-    synced = sync_config(base, servers, present_format_configs(target))
+    synced = sync_config(base, servers, runtime)
     # The file keeps its own layout when its content does not change.
     os.makedirs(target, exist_ok=True)
     with open(os.path.join(target, "opencode.json"), "w", encoding="utf-8", newline="") as handle:
@@ -419,18 +362,15 @@ def write_config(target: str, config: dict[str, Any], config_file: dict[str, Any
 
 
 def build_indexes(target: str, bricks: list[str]) -> None:
-    """The search index of each documentation brick is built on the machine: it never travels."""
-    node = shutil.which("node")
+    """The search index of each documentation brick is built on the machine: it never travels. Node and
+    Python write the same index, so the import builds it with the runtime it runs on."""
     for brick in bricks:
-        script = os.path.join(target, BRICKS, brick, "build-index.ts")
+        script = os.path.join(target, BRICKS, brick, "build_index.py")
         if not os.path.exists(script):
-            continue
-        if node is None:
-            sys.stderr.write(f"{brick} is installed, but its search index was not built: node was not found\n")
             continue
         result = subprocess.run(
             [
-                node,
+                sys.executable,
                 script,
             ],
             capture_output=True,
@@ -453,24 +393,32 @@ def option(name: str) -> str | None:
     return None
 
 
+def report(result: dict[str, Any], target: str, runtime: str) -> None:
+    print(f"Installed in {target}: {', '.join(result['packs'])}. "
+        f"{result['written']} file(s) written, {len(result['kept'])} left aside.")
+    print(f"MCP servers in opencode.json, run by {runtime}: {', '.join(result['servers']) or 'none'}.")
+    if len(result["kept"]) > 0:
+        print("Left aside, because the project already has them: merge them by hand from the kit if needed.")
+    for path in result["kept"]:
+        print(f"left aside: {path}")
+    print("Then: open OpenCode in the project; /mcps lists the servers.")
+    sys.stdout.flush()
+
+
 def main() -> int:
     source = os.path.abspath(option("from") or os.path.dirname(os.path.realpath(__file__)))
     target = os.path.abspath(option("target") or ".")
+    runtime = option("runtime") or "node"
+    if runtime not in RUNTIMES:
+        sys.stderr.write(f'Nothing was written. --runtime must be node or python, not "{runtime}".\n')
+        return 2
     try:
         packs = read_packs(source)
     except (PartError, ValueError, OSError) as error:
         sys.stderr.write(f"Nothing was written. {error}\n")
         return 1
-    result = install_packs(packs, target)
-    print(f"Installed in {target}: {', '.join(result['packs'])}. "
-        f"{result['written']} file(s) written, {len(result['kept'])} left aside.")
-    print(f"MCP servers in opencode.json: {', '.join(result['servers']) or 'none'}.")
-    if len(result["kept"]) > 0:
-        print("Left aside, because the project already has them or its own code: merge them by hand from the kit if needed.")
-    for path in result["kept"]:
-        print(f"left aside: {path}")
-    print("Then: npm install, and npm run check.")
-    sys.stdout.flush()
+    result = install_packs(packs, target, runtime)
+    report(result, target, runtime)
     build_indexes(target, bricks_of([file for pack in packs for file in pack["files"]]))
     return 0
 

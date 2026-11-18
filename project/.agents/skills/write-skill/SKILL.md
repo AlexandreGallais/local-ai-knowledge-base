@@ -1,6 +1,6 @@
 ---
 name: write-skill
-description: Use when the user asks to create, update or review a skill of the project - one SKILL.md in .agents/skills/<name>/, in the Agent Skills format, listed in AGENTS.md.
+description: Use when the user asks to create, update or review a skill of the project - one SKILL.md in .agents/skills/<name>/, in the Agent Skills format, that OpenCode finds by itself.
 ---
 
 # Write a skill
@@ -22,8 +22,9 @@ description: Use when the user asks to create, update or review a skill of the p
 1. Ask the user for: the task, one example input, the expected output, the mistakes seen so far.
 2. Choose the `name`: 2 to 4 words, a verb first: `add-alarm-row`.
 3. Write `.agents/skills/<name>/SKILL.md` with the template below.
-4. Leave `AGENTS.md` as it is: OpenCode lists the skills of `.agents/skills/` by itself.
-5. Run `node .agents/skills/write-skill/scripts/check-skill.ts .agents/skills/<name>`. Fix every finding.
+4. Leave `AGENTS.md` as it is: OpenCode lists the skills of `.agents/skills/` by itself. Add one line to the table of `.agents/skills/README.md`.
+5. Run `node .agents/skills/write-skill/scripts/check-skill.ts .agents/skills/<name>`, or without Node
+   `python3 .agents/skills/write-skill/scripts/check_skill.py .agents/skills/<name>`. Fix every finding.
 6. Give three test prompts: two that must use the skill and one that must not.
 
 ## Template

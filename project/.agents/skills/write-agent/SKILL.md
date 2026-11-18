@@ -19,7 +19,8 @@ description: Use when the user asks to create, update or review an agent - a rol
 1. Ask the user for: the role, what the agent may change, one test question, the expected answer.
 2. Write `.agents/skills/<agent-name>/SKILL.md` with the template below.
 3. Leave `AGENTS.md` as it is: OpenCode lists the skills of `.agents/skills/` by itself.
-4. Run `node .agents/skills/write-skill/scripts/check-skill.ts .agents/skills/<agent-name>`. Fix every finding.
+4. Run `node .agents/skills/write-skill/scripts/check-skill.ts .agents/skills/<agent-name>`, or without Node
+   `python3 .agents/skills/write-skill/scripts/check_skill.py .agents/skills/<agent-name>`. Fix every finding.
 5. Give the test question, the expected answer, and the sentence to start it: "Load the skill `<agent-name>`. Follow it exactly."
 
 ## Template

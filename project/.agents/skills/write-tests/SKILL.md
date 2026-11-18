@@ -27,7 +27,7 @@ description: Use when the user asks for tests, when a test fails, or after you c
 7. Run them with the test command of the project (`ng test --watch=false`, or `vitest run <file>`).
 8. A test fails: decide from the request whether the code or the test is wrong. Fix the code; fix a
    test only when it contradicts the request.
-9. Run all the tests once, then the other check commands.
+9. Run all the tests once, then the build of the project.
 
 ## Example
 

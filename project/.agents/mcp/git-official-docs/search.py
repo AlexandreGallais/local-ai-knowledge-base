@@ -51,16 +51,24 @@ def _ranges_text(found: list[tuple[int, int]]) -> str:
 def _unicode_classes() -> tuple[str, str, str, str]:
     # The contents of four character classes, as "\p{L}", "\p{N}", "\p{Lu}" and "\p{Ll}" of
     # JavaScript: every code point of the general categories, in one pass over Unicode.
-    tests = (
-        lambda kind: kind[0] == 'L',
-        lambda kind: kind[0] == 'N',
-        lambda kind: kind == 'Lu',
-        lambda kind: kind == 'Ll',
-    )
-    ranges: list[list[tuple[int, int]]] = [[], [], [], []]
-    starts: list[int | None] = [None, None, None, None]
-    for code in range(sys.maxunicode + 2):
-        category = unicodedata.category(chr(code)) if code <= sys.maxunicode else ''
+    tests = (lambda kind: kind[0] == 'L', lambda kind: kind[0] == 'N', lambda kind: kind == 'Lu', lambda kind: kind == 'Ll',)
+    ranges: list[list[tuple[int, int]]] = [
+        [],
+        [],
+        [],
+        [],
+    ]
+    starts: list[int | None] = [
+        None,
+        None,
+        None,
+        None,
+    ]
+    # No letter and no number lies beyond plane 3: planes 4 to 13 are empty, plane 14 holds format
+    # characters, planes 15 and 16 private use. Stopping there spares three quarters of the work.
+    last = min(sys.maxunicode, 0x3FFFF)
+    for code in range(last + 2):
+        category = unicodedata.category(chr(code)) if code <= last else ''
         for which, test in enumerate(tests):
             inside = category != '' and test(category)
             start = starts[which]
@@ -102,10 +110,52 @@ class Hit(NamedTuple):
 
 
 STOP_WORDS = {
-    'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'can', 'do', 'does', 'for', 'from', 'how',
-    'i', 'if', 'in', 'into', 'is', 'it', 'its', 'of', 'on', 'or', 'so', 'that', 'the', 'their',
-    'then', 'there', 'these', 'this', 'to', 'use', 'was', 'what', 'when', 'where', 'which',
-    'while', 'who', 'why', 'will', 'with', 'you', 'your',
+    'a',
+    'an',
+    'and',
+    'are',
+    'as',
+    'at',
+    'be',
+    'by',
+    'can',
+    'do',
+    'does',
+    'for',
+    'from',
+    'how',
+    'i',
+    'if',
+    'in',
+    'into',
+    'is',
+    'it',
+    'its',
+    'of',
+    'on',
+    'or',
+    'so',
+    'that',
+    'the',
+    'their',
+    'then',
+    'there',
+    'these',
+    'this',
+    'to',
+    'use',
+    'was',
+    'what',
+    'when',
+    'where',
+    'which',
+    'while',
+    'who',
+    'why',
+    'will',
+    'with',
+    'you',
+    'your',
 }
 CHUNK = re.compile(rf'[{_LETTER}{_NUMBER}_$\-]+')
 K1 = 1.2
@@ -117,7 +167,6 @@ EXACT_WEIGHT = 40
 PREFIX_WEIGHT = 15
 CASE_WEIGHT = 10
 MAX_HITS = 10
-
 _ASCII_WORD = re.compile(r'[a-z]+')
 _NOT_S_END = re.compile(r'[^s]s\Z')
 _EDGE = re.compile(r'\A[\-_$]+|[\-_$]+\Z')
@@ -150,7 +199,12 @@ def split_name(chunk: str) -> list[str]:
     parts = _JOINERS.split(whole)
     coarse = [piece for part in parts for piece in _COARSE.split(part)]
     fine = [piece for part in coarse for piece in _FINE.split(part)]
-    words = dict.fromkeys(word.lower() for word in [whole, *parts, *coarse, *fine])
+    words = dict.fromkeys(word.lower() for word in [
+        whole,
+        *parts,
+        *coarse,
+        *fine,
+    ])
     return [word for word in words if utf16_length(word) >= 2]
 
 
@@ -187,7 +241,6 @@ class Outline(NamedTuple):
 # The extensions of the files the search reads, the documentation kept as its authors wrote it.
 DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json)(?:\.in)?\Z')
 MARKDOWN_FILE = re.compile(r'\.(?:md|mdx|markdown)(?:\.in)?\Z')
-
 _FRONT_TITLE = re.compile(f'{LINE_START}title:{S}*["\']?({DOT}*?)["\']?{S}*{LINE_END}')
 
 
@@ -198,7 +251,7 @@ def front_matter(text: str) -> tuple[str, str | None]:
     end = text.find('\n---', 4)
     block = '' if end < 0 else text[4:end]
     found = _FRONT_TITLE.search(block)
-    body = text if end < 0 else text[end + 4:]
+    body = text if end < 0 else text[end + 4 :]
     return body, None if found is None else found.group(1)
 
 
@@ -268,11 +321,7 @@ def underlined_cuts(lines: list[str]) -> Outline:
     second = styles[1] if len(styles) > 1 else None
     section_style = first if second is None else second
     title = next((heading.text for heading in headings if heading.style == first), None)
-    cuts = [
-        Cut(heading.line, heading.text)
-        for position, heading in enumerate(headings)
-        if heading.style == section_style and (second is not None or position > 0)
-    ]
+    cuts = [Cut(heading.line, heading.text) for position, heading in enumerate(headings) if heading.style == section_style and (second is not None or position > 0)]
     return Outline(title, cuts)
 
 
@@ -306,7 +355,10 @@ _GENERIC = re.compile(r'`[0-9]+')
 def intellisense_heading(kind: str, name: str) -> str:
     without_parameters = _PARAMETERS.sub('', name, count=1)
     parts = without_parameters.split('.')
-    short = parts[-1] if kind in {'T', 'N'} else '.'.join(parts[-2:])
+    short = parts[-1] if kind in {
+        'T',
+        'N',
+    } else '.'.join(parts[-2:])
     shown = _GENERIC.sub('<T>', short).replace('.#ctor', ' constructor', 1)
     return f'{shown} ({KINDS_OF_MEMBERS.get(kind, kind)}: {without_parameters})'
 
@@ -336,7 +388,7 @@ def division_heading(lines: list[str], index: int) -> str | None:
     # The <title> of a PreTeXt division that starts at a line, as text.
     if not _DIVISION.search(lines[index] if index < len(lines) else ''):
         return None
-    found = _TITLE_TAG.search(' '.join(lines[index:index + 4]))
+    found = _TITLE_TAG.search(' '.join(lines[index : index + 4]))
     if found is None:
         return None
     return js_trim(_SPACES.sub(' ', _TAG.sub('', found.group(1))))
@@ -374,7 +426,11 @@ def _is_section(name: str) -> bool:
 
 
 def _is_chapter(name: str) -> bool:
-    return name in {'chapter', 'unnumbered', 'appendix'}
+    return name in {
+        'chapter',
+        'unnumbered',
+        'appendix',
+    }
 
 
 def texinfo_cuts(lines: list[str]) -> Outline:
@@ -393,10 +449,7 @@ def text_of(html: str) -> str:
 
 _HTML_TITLE = re.compile(r'<title>(.*?)</title>', re.IGNORECASE | re.DOTALL)
 _HTML_H1 = re.compile(r'<h1\b[^>]*>(.*?)</h1>', re.IGNORECASE | re.DOTALL | re.ASCII)
-_HTML_HEADINGS = {
-    tag: re.compile(rf'<{tag}\b[^>]*>({DOT}*?)(?:</{tag}>|\Z)', re.IGNORECASE | re.ASCII)
-    for tag in ('h2', 'h3')
-}
+_HTML_HEADINGS = {tag: re.compile(rf'<{tag}\b[^>]*>({DOT}*?)(?:</{tag}>|\Z)', re.IGNORECASE | re.ASCII) for tag in ('h2', 'h3')}
 
 
 def _html_headings(lines: list[str], tag: str) -> list[Cut]:
@@ -464,11 +517,17 @@ def sections(path: str, text: str) -> list[Section]:
     found = cuts_of(path, lines)
     file_title = _file_title(path, header_title, found)
     seen: dict[str, int] = {}
-    starts = [Cut(0, ''), *found.cuts]
-    ends = [*(cut.line for cut in found.cuts), len(lines)]
+    starts = [
+        Cut(0, ''),
+        *found.cuts,
+    ]
+    ends = [
+        *(cut.line for cut in found.cuts),
+        len(lines),
+    ]
     result = []
     for position, cut in enumerate(starts):
-        part = '\n'.join(lines[cut.line:max(ends[position], cut.line)])
+        part = '\n'.join(lines[cut.line : max(ends[position], cut.line)])
         if cut.heading == '':
             section = Section(path, file_title, part)
         else:
@@ -485,7 +544,13 @@ def _index_line(section: Section) -> str:
         counts[word] = counts.get(word, 0) + 1
     body = ' '.join(f'{term}:{count}' for term, count in sorted(counts.items(), key=lambda pair: utf16_key(pair[0])))
     title = ' '.join(sorted(set(tokenize(section.title)), key=utf16_key))
-    return '\t'.join([section.id, section.title.replace('\t', ' '), str(len(words)), body, title])
+    return '\t'.join([
+        section.id,
+        section.title.replace('\t', ' '),
+        str(len(words)),
+        body,
+        title,
+    ])
 
 
 def index_text(entries: list[Section]) -> str:
@@ -503,7 +568,7 @@ def _body_terms(field: str) -> dict[str, int]:
     for pair in field.split(' '):
         if pair != '':
             colon = pair.rfind(':')
-            body[pair[:colon]] = int(pair[colon + 1:])
+            body[pair[:colon]] = int(pair[colon + 1 :])
     return body
 
 
@@ -514,13 +579,7 @@ def parse_index(text: str) -> list[IndexEntry]:
             continue
         fields = line.split('\t')
         fields += [''] * (5 - len(fields))
-        entries.append(IndexEntry(
-            fields[0],
-            fields[1],
-            int(fields[2] or '0'),
-            _body_terms(fields[3]),
-            {term for term in fields[4].split(' ') if term != ''},
-        ))
+        entries.append(IndexEntry(fields[0], fields[1], int(fields[2] or '0'), _body_terms(fields[3]), {term for term in fields[4].split(' ') if term != ''}))
     return entries
 
 
@@ -546,11 +605,7 @@ _PASCAL_NAME = re.compile(f'{LU}{LL}+{LU}')
 def api_names(query: str) -> list[str]:
     # Names written as in code (an upper case inside, a digit, _ or -) are API names: an exact match
     # of the whole name in a title counts more.
-    return [
-        chunk.lower()
-        for chunk in (found.group(0) for found in CHUNK.finditer(query))
-        if _API_NAME.search(chunk) or _PASCAL_NAME.match(chunk)
-    ]
+    return [chunk.lower() for chunk in (found.group(0) for found in CHUNK.finditer(query)) if _API_NAME.search(chunk) or _PASCAL_NAME.match(chunk)]
 
 
 # The kinds that titles add to a name ("List<T> class", "struct Vec"), and the notes in brackets.
@@ -567,7 +622,10 @@ def exact_names(query: str) -> list[str]:
     words = [word for word in _SPACES.split(js_trim(query).lower()) if word != '']
     if len(words) == 1:
         return words
-    return [f'{words[0]}.{words[1]}', f'{words[0]}::{words[1]}'] if len(words) == 2 else []
+    return [
+        f'{words[0]}.{words[1]}',
+        f'{words[0]}::{words[1]}',
+    ] if len(words) == 2 else []
 
 
 def name_bonus(title: str, names: list[str], query: str) -> float:
@@ -595,7 +653,10 @@ def search(entries: list[IndexEntry], query: str, limit: int = MAX_HITS, stats: 
         count = known.frequencies.get(word, 0)
         return math.log(1 + ((known.count - count + 0.5) / (count + 0.5)))
 
-    name_weight = max([*(idf(name) for name in names), 1])
+    name_weight = max([
+        *(idf(name) for name in names),
+        1,
+    ])
     hits = []
     for entry in entries:
         score = 0.0
@@ -611,4 +672,4 @@ def search(entries: list[IndexEntry], query: str, limit: int = MAX_HITS, stats: 
             hits.append(Hit(entry.id, entry.title, score))
     hits.sort(key=lambda hit: utf16_key(hit.id))
     hits.sort(key=lambda hit: hit.score, reverse=True)
-    return hits[:min(limit, MAX_HITS)]
+    return hits[: min(limit, MAX_HITS)]

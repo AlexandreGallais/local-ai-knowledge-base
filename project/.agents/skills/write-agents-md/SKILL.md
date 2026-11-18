@@ -9,10 +9,10 @@ description: Use when the user asks to create, update, shorten or review the AGE
 
 - `AGENTS.md` belongs to the team. Keep its sections: what this project gives you, this project, project rules.
 - Keep the file under 60 lines. Every line is loaded at every request.
-- Write only what the model cannot find in the code, `package.json`, `.agents/rules.md` or the rules of the MCP servers.
+- Write only what the model cannot find in the code, the build files, `.agents/rules.md` or the rules of the MCP servers.
 - Write in English. One rule per line. Start each rule with a verb.
 - Say what to do. Use "never" only for a real danger.
-- Give the exact command of each check: format, lint, build, test.
+- Give the exact command of each check the project has: build, test, and its own lint or format if it has one.
 - Never write a project overview, a folder tree, a history, internal names or real data.
 - Never send the model to a URL: write what it needs in the file or in a skill.
 
@@ -20,7 +20,7 @@ description: Use when the user asks to create, update, shorten or review the AGE
 
 1. Ask the user what is missing: the subject in one line, rules that differ from common practice, mistakes seen so far.
 2. Read `AGENTS.md`. Keep the rules that are still true.
-3. Read the `scripts` of `package.json`. Copy the exact check commands from them.
+3. Read the build files of the project (`package.json`, `*.csproj`, `Cargo.toml`, `pom.xml`, `Makefile`...). Copy the exact check commands from them.
 4. Write the subject on the line "Subject:", and one line per rule under "Project rules".
 5. Count the lines. At 60 or more, move the rules of one task to a skill with the skill `write-skill`.
 6. Give three test tasks. Each one must fail if the model ignores one rule of the file.
@@ -39,12 +39,12 @@ Right:
 ```markdown
 - Subject: the alarm panel of the operator console.
 - Name alarm ids `ALM-<three digits>`.
-- Check with `npm run lint`, then `npm run build`, then `npm test`.
+- Check with `npm run build`, then `npm test`.
 ```
 
 ## Pitfalls
 
-- A rule that the lint already checks: delete it, keep the command.
+- A rule that a tool of the project already checks: delete it, keep the command.
 - A rule copied from the README: delete it.
 - A rule for one task only: move it to a skill.
 
