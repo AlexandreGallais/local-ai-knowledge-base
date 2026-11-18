@@ -19,6 +19,7 @@ import {
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  compareText,
   DOCUMENT_FILE,
   indexText,
   type Section,
@@ -62,7 +63,7 @@ export function buildIndexes(brick: string): string[] {
   }
   for (const entry of readdirSync(library, { withFileTypes: true })
     .filter((item) => item.isDirectory())
-    .sort((a, b) => a.name.localeCompare(b.name, 'en'))) {
+    .sort((a, b) => compareText(a.name, b.name))) {
     const name = `${entry.name}.idx`;
 
     writeFileSync(join(output, name), indexText(folderSections(brick, join(library, entry.name))));

@@ -87,6 +87,15 @@ const CASE_WEIGHT = 10;
 
 export const MAX_HITS = 10;
 
+// The order of the index: by UTF-16 code units, the order of "<" in JavaScript, never by the
+// language of the machine; the Python server sorts the same way, so both write the same index.
+export function compareText(a: string, b: string): number {
+  if (a < b) {
+    return -1;
+  }
+  return a > b ? 1 : 0;
+}
+
 // A light English stemmer: plural and verb endings, enough to match "signals" with "signal".
 export function stem(word: string): string {
   if (word.length <= 4 || !/^[a-z]+$/.test(word)) {
@@ -515,18 +524,18 @@ function counts(words: string[]): Map<string, number> {
 // Sections and terms are sorted, so the same documents always give the same text.
 export function indexText(entries: Section[]): string {
   const lines = [...entries]
-    .sort((a, b) => a.id.localeCompare(b.id, 'en'))
+    .sort((a, b) => compareText(a.id, b.id))
     .map((section) => {
       const words = tokenize(`${section.title}\n${section.text}`);
       const body = [...counts(words)]
-        .sort(([a], [b]) => a.localeCompare(b, 'en'))
+        .sort(([a], [b]) => compareText(a, b))
         .map(([
           term,
           count,
         ]) => `${term}:${count}`)
         .join(' ');
       const title = [...new Set(tokenize(section.title))]
-        .sort((a, b) => a.localeCompare(b, 'en'))
+        .sort((a, b) => compareText(a, b))
         .join(' ');
 
       return [
@@ -682,6 +691,6 @@ export function search(entries: IndexEntry[], query: string, limit = MAX_HITS): 
       };
     })
     .filter((hit) => hit.score > 0)
-    .sort((a, b) => b.score - a.score || a.id.localeCompare(b.id, 'en'))
+    .sort((a, b) => b.score - a.score || compareText(a.id, b.id))
     .slice(0, Math.min(limit, MAX_HITS));
 }

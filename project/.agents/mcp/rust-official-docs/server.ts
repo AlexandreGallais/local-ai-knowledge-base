@@ -21,6 +21,7 @@ import {
   ToolError,
 } from './mcp.ts';
 import {
+  compareText,
   type IndexEntry,
   parseIndex,
   search,
@@ -63,7 +64,7 @@ function entries(brick: string): IndexEntry[] {
   }
   const found = readdirSync(folder)
     .filter((name) => name.endsWith('.idx'))
-    .sort((a, b) => a.localeCompare(b, 'en'))
+    .sort((a, b) => compareText(a, b))
     .flatMap((name) => parseIndex(readFileSync(join(folder, name), 'utf8')));
 
   cache.set(brick, found);
