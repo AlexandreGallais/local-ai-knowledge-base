@@ -1,0 +1,50 @@
+# Brick `simulation-official-docs`
+
+The official documentation of simulation standards and tools: the Modelica language specification, the FMI 3.0 standard (the exchange of models between tools, which Simulink imports and exports as FMU), the SSP 2.0 standard (a system of several FMU), the GNU Octave manual and the help of each Octave function (a language close to MATLAB, to read `.m` code).
+
+Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
+LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
+comments of the source code is taken from those comments, unchanged. The MCP server searches the
+documentation and returns one section at a time.
+
+## What it holds
+
+| File | Role |
+| --- | --- |
+| `server.ts` | The MCP server: `search_docs`, then `read_doc` on one section. The same code in every documentation brick. |
+| `brick.json` | The name of the server and the words of its tools. |
+| `search.ts` | The local search: each file cut into sections by its format, BM25 ranking, exact API names first, 10 hits at most. |
+| `build-index.ts` | Builds `index/`, one plain-text file per tool. The server runs it when `index/` is missing. |
+| `library/` | The documentation, one folder per tool; `<tool>.index.md` lists its files; `README.md` lists the tools, their version, license and size; `lock.json` the commit of each. |
+| `licenses/`, `THIRD_PARTY_NOTICES.md` | The license of each source, its copyright and its attribution. |
+| `mcp.ts` | The small MCP core, the same copy in every brick. |
+| `rules.md` | The rules the AI reads at every request. |
+
+`library/` and `index/` stay out of the project's Git (`.gitignore` of this folder): the import of
+the brick brings `library/` back and builds `index/`.
+
+## Usage
+
+From the project root, after a change of `library/`:
+
+```sh
+node .agents/mcp/simulation-official-docs/build-index.ts
+```
+
+## Set aside
+
+- MATLAB, Simulink, Simscape and Stateflow: their documentation is not free; read it in the help of MATLAB on the workstation.
+- Dymola, Simcenter Amesim, SCADE, LabVIEW: not free.
+- The Modelica Standard Library, OpenModelica, Scilab: not asked for.
+- The C headers and XML schemas of FMI and SSP: code, which the standards describe.
+
+## Licenses
+
+The Modelica specification and the FMI and SSP standards are under CC BY-SA 4.0. The Octave manual is under the GNU permission notice of its file `octave.texi` (copy, change and translate it, under the same notice), kept in `licenses/octave-manual/NOTICE`; the help of the Octave functions is under the GNU GPL version 3 or later. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+holds the text of each license. The code of this brick (its `.ts` files) is under the MIT License of
+the base.
+
+## Remove it
+
+Delete this folder, then remove the line `simulation-official-docs` from `opencode.json` (the next import of the kit
+removes it too). The other bricks do not use it.

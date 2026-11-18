@@ -1,0 +1,42 @@
+# housh
+
+```octave
+function [housv, beta, zer] = housh (x, j, z)
+```
+
+@deftypefn {} {[@var{housv}, @var{beta}, @var{zer}] =} housh (@var{x}, @var{j}, @var{z})
+Compute Householder reflection vector @var{housv} to reflect @var{x} to be
+the j-th column of identity, i.e.,
+
+@example
+@group
+(I - beta*housv*housv')x =  norm (x)*e(j) if x(j) < 0,
+(I - beta*housv*housv')x = -norm (x)*e(j) if x(j) >= 0
+@end group
+@end example
+
+@noindent
+Inputs
+
+@table @var
+@item x
+vector
+
+@item j
+index into vector
+
+@item z
+threshold for zero  (usually should be the number 0)
+@end table
+
+@noindent
+Outputs (see @nospell{Golub and Van Loan}):
+
+@table @var
+@item beta
+If beta = 0, then no reflection need be applied (@nospell{zer} set to 0)
+
+@item housv
+householder vector
+@end table
+@end deftypefn

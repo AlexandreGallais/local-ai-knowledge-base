@@ -1,0 +1,8 @@
+{
+  "name": "gitlab-official-docs",
+  "instructions": "The official documentation of GitLab CI/CD, kept locally: the folder doc/ci of the GitLab documentation (.gitlab-ci.yml and the reference of every keyword), GitLab Runner and the Dev Containers CLI. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of GitLab CI/CD: .gitlab-ci.yml and its keywords, variables, cache, artifacts, rules, pipelines, GitLab Runner and its executors, the Dev Containers CLI. Returns 10 section ids at most.",
+  "queryExample": "\"rules\" or \"artifacts expire_in\"",
+  "toolExample": "\"gitlab-ci\"",
+  "idExample": "library/gitlab-ci/yaml/_index.md#rules"
+}

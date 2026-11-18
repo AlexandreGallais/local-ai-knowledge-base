@@ -1,0 +1,32 @@
+{
+  "modelica-spec": {
+    "commit": "b7361fab8cad41971d2fe55e329f09c951d3a090",
+    "files": 27,
+    "bytes": 1185277,
+    "built": "2026-11-18"
+  },
+  "fmi": {
+    "commit": "b8778deaf5b746ba4a2f6c155d53f8a33eebbd33",
+    "files": 27,
+    "bytes": 401031,
+    "built": "2026-11-18"
+  },
+  "ssp": {
+    "commit": "800e899004fa15deab2f1e9f42645faac5386d8f",
+    "files": 11,
+    "bytes": 148983,
+    "built": "2026-11-18"
+  },
+  "octave-manual": {
+    "commit": "202176d9904657257bc03922f2edb51beac6aaa5",
+    "files": 51,
+    "bytes": 942292,
+    "built": "2026-11-18"
+  },
+  "octave-functions": {
+    "commit": "202176d9904657257bc03922f2edb51beac6aaa5",
+    "files": 889,
+    "bytes": 1265575,
+    "built": "2026-11-18"
+  }
+}

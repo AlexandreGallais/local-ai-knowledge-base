@@ -151,7 +151,7 @@ interface Cut {
 }
 
 // The extensions of the files the search reads, the documentation kept as its authors wrote it.
-export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|ptx|xml|html?|json)(?:\.in)?$/;
+export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json)(?:\.in)?$/;
 const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
 
 // What a format gives of a file: its title, when it names one, and where its sections start.
@@ -239,7 +239,8 @@ function headingAt(lines: string[], index: number): StyledHeading | undefined {
   if (atx !== null) {
     return {
       line: index,
-      text: atx[2] ?? '',
+      // An AsciiDoc anchor after the title ("== Step Mode [[StepMode]]") is not part of it.
+      text: (atx[2] ?? '').replace(/\s*\[\[[^\]]*\]\]\s*$/, ''),
       style: atx[1] ?? '',
     };
   }
@@ -438,7 +439,8 @@ function cutsOf(path: string, lines: string[]): Outline {
   if (path.endsWith('.tex')) {
     return latexCuts(lines);
   }
-  if (path.endsWith('.texi')) {
+  // Texinfo: .texi, and .txi for the chapters of a manual (Octave).
+  if (/\.(?:texi|txi)$/.test(path)) {
     return texinfoCuts(lines);
   }
   if (/\.html?$/.test(path)) {

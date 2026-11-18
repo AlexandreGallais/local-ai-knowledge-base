@@ -1,0 +1,20 @@
+{
+  "gitlab-ci": {
+    "commit": "c21b8167ccfd5e3b9af01cbeddcd812cac9d3275",
+    "files": 176,
+    "bytes": 2172177,
+    "built": "2026-11-18"
+  },
+  "gitlab-runner": {
+    "commit": "33227fd48c5b411d0b49a74e129d187728abcc3b",
+    "files": 66,
+    "bytes": 1132229,
+    "built": "2026-11-18"
+  },
+  "devcontainers-cli": {
+    "commit": "5dc7533314b5ba7ec3875c30143dfe1aec644870",
+    "files": 3,
+    "bytes": 16402,
+    "built": "2026-11-18"
+  }
+}

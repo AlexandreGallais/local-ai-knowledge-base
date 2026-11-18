@@ -1,0 +1,257 @@
+@c Copyright (C) 1996-2026 The Octave Project Developers
+@c
+@c This file is part of Octave.
+@c
+@c Octave is free software: you can redistribute it and/or modify it
+@c under the terms of the GNU General Public License as published by
+@c the Free Software Foundation, either version 3 of the License, or
+@c (at your option) any later version.
+@c
+@c Octave is distributed in the hope that it will be useful, but
+@c WITHOUT ANY WARRANTY; without even the implied warranty of
+@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@c GNU General Public License for more details.
+@c
+@c You should have received a copy of the GNU General Public License
+@c along with Octave; see the file COPYING.  If not, see
+@c <https://www.gnu.org/licenses/>.
+
+@node Grammar and Parser
+@appendix Grammar and Parser
+@cindex grammar rules
+@cindex language definition
+
+This appendix will eventually contain a semi-formal description of Octave's
+language.
+
+@menu
+* Keywords::
+* Parser::
+@end menu
+
+@node Keywords
+@section Keywords
+@cindex keywords
+
+The function @code{iskeyword} can be used to check whether an identifier is
+reserved by Octave.
+
+@DOCSTRING(iskeyword)
+
+@subsubheading Keyword Categories
+
+@ref{XREFkwcategoryVariableDeclaration,,@w{Variable Declaration}}@: |
+@ref{XREFkwcategoryFunctionDefinition,,@w{Function Definition}}@: |
+@ref{XREFkwcategoryControlStructures,,@w{Control Statements}}@: |
+@ref{XREFkwcategoryIteratingStructures,,@w{Iterating Structures}}@: |
+@ref{XREFkwcategoryClassdefStructures,,@w{Classdef Structures}}@: |
+@ref{XREFkwcategoryExecutionEnvironment,,@w{Execution Environment}}@:
+
+@subsubheading Alphabetical Keyword Listing
+
+The identifiers below are keywords, and may not be used as variable or function
+names.
+
+@noindent
+@ref{XREF__FILE__,,__FILE__}@: |
+@ref{XREF__LINE__,,__LINE__}@: |
+@ref{XREFarguments,,arguments}@: |
+@ref{XREFbreak,,break}@: |
+@ref{XREFcase,,case}@: |
+@ref{XREFcatch,,catch}@: |
+@ref{XREFclassdef,,classdef}@: |
+@ref{XREFcontinue,,continue}@: |
+@ref{XREFdo,,do}@: |
+@ref{XREFelse,,else}@: |
+@ref{XREFelseif,,elseif}@: |
+@ref{XREFend,,end}@: |
+@ref{XREFend_try_catch,,end_try_catch}@: |
+@ref{XREFend_unwind_protect,,end_unwind_protect}@: |
+@ref{XREFendarguments,,endarguments}@: |
+@ref{XREFendclassdef,,endclassdef}@: |
+@ref{XREFendenumeration,,endenumeration}@: |
+@ref{XREFendevents,,endevents}@: |
+@ref{XREFendfor,,endfor}@: |
+@ref{XREFendfunction,,endfunction}@: |
+@ref{XREFendif,,endif}@: |
+@ref{XREFendmethods,,endmethods}@: |
+@ref{XREFendparfor,,endparfor}@: |
+@ref{XREFendproperties,,endproperties}@: |
+@ref{XREFendswitch,,endswitch}@: |
+@ref{XREFendwhile,,endwhile}@: |
+@ref{XREFenumeration,,enumeration}@: |
+@ref{XREFevents,,events}@: |
+@ref{XREFfor,,for}@: |
+@ref{XREFfunction,,function}@: |
+@ref{XREFglobal,,global}@: |
+@ref{XREFif,,if}@: |
+@ref{XREFkwpropertymethods,,methods}@: |
+@ref{XREFotherwise,,otherwise}@: |
+@ref{XREFparfor,,parfor}@: |
+@ref{XREFpersistent,,persistent}@: |
+@ref{XREFkwpropertyproperties,,properties}@: |
+@ref{XREFreturn,,return}@: |
+@ref{XREFswitch,,switch}@: |
+@ref{XREFtry,,try}@: |
+@ref{XREFuntil,,until}@: |
+@ref{XREFunwind_protect,,unwind_protect}@: |
+@ref{XREFunwind_protect_cleanup,,unwind_protect_cleanup}@: |
+@ref{XREFwhile,,while}@:
+
+
+@anchor{XREFkwcategoryVariableDeclaration}
+@subheading Variable Declaration
+
+@DOCSTRING(global)
+
+@DOCSTRING(persistent)
+
+@anchor{XREFkwcategoryFunctionDefinition}
+@subheading Function Definition
+
+@DOCSTRING(function)
+
+@DOCSTRING(endfunction)
+
+@DOCSTRING(end)
+
+@DOCSTRING(return)
+
+@DOCSTRING(arguments)
+
+@DOCSTRING(endarguments)
+
+@anchor{XREFkwcategoryControlStructures}
+@subheading Control Statements
+
+@DOCSTRING(if)
+
+@DOCSTRING(else)
+
+@DOCSTRING(elseif)
+
+@DOCSTRING(endif)
+
+@DOCSTRING(switch)
+
+@DOCSTRING(case)
+
+@DOCSTRING(otherwise)
+
+@DOCSTRING(endswitch)
+
+@DOCSTRING(try)
+
+@DOCSTRING(catch)
+
+@DOCSTRING(end_try_catch)
+
+@DOCSTRING(unwind_protect)
+
+@DOCSTRING(unwind_protect_cleanup)
+
+@DOCSTRING(end_unwind_protect)
+
+@anchor{XREFkwcategoryIteratingStructures}
+@subheading Iterating Structures
+
+@DOCSTRING(for)
+
+@DOCSTRING(endfor)
+
+@DOCSTRING(while)
+
+@DOCSTRING(endwhile)
+
+@DOCSTRING(do)
+
+@DOCSTRING(until)
+
+@DOCSTRING(parfor)
+
+@DOCSTRING(endparfor)
+
+@DOCSTRING(break)
+
+@DOCSTRING(continue)
+
+@anchor{XREFkwcategoryClassdefStructures}
+@subheading Classdef Structures
+
+@DOCSTRING(classdef)
+
+@DOCSTRING(endclassdef)
+
+@c properties definition must be manually created to avoid
+@c collision with function of the same name.
+@anchor{XREFkwpropertyproperties}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+@deftypefn {} {} properties
+Mark the beginning of a block of properties in a classdef definition.
+
+Note that the @ref{XREFproperties,,function @qcode{"properties"}} is not a
+keyword, but rather an ordinary function that lists the properties of a classdef
+class or object.
+@seealso{@ref{XREFendproperties,,endproperties}}
+@end deftypefn
+
+@DOCSTRING(endproperties)
+
+@c methods definition must be manually created to avoid
+@c collision with function of the same name.
+@anchor{XREFkwpropertymethods}
+@html
+<span style="display:block; margin-top:-4.5ex;">&nbsp;</span>
+@end html
+
+@deftypefn {} {} methods
+Mark the beginning of a block of methods in a classdef definition.
+
+Note that the @ref{XREFmethods,,function @qcode{"methods"}} is not a keyword,
+but rather an ordinary function that lists the methods of a class or object.
+@seealso{@ref{XREFendmethods,,endmethods}}
+@end deftypefn
+
+@DOCSTRING(endmethods)
+
+@DOCSTRING(events)
+
+@DOCSTRING(endevents)
+
+@DOCSTRING(enumeration)
+
+@DOCSTRING(endenumeration)
+
+@anchor{XREFkwcategoryExecutionEnvironment}
+@subheading Execution Environment
+
+@DOCSTRING(__FILE__)
+
+@DOCSTRING(__LINE__)
+
+@node Parser
+@section Parser
+@cindex parser
+
+The parser has a number of variables that affect its internal operation.
+These variables are generally documented in the manual alongside the code that
+they affect.
+
+In addition, there are three non-specific parser customization functions.
+@w{@code{add_input_event_hook}} can be used to schedule a user function for
+periodic evaluation.  @w{@code{remove_input_event_hook}} will stop a user
+function from being evaluated periodically.
+
+@DOCSTRING(add_input_event_hook)
+
+@DOCSTRING(remove_input_event_hook)
+
+Finally, when the parser cannot identify an input token it calls a particular
+function to handle this.  By default, this is the internal function
+@qcode{"__unimplemented__"} which makes suggestions about possible Octave
+substitutes for @sc{matlab} functions.
+
+@DOCSTRING(missing_function_hook)

@@ -1,0 +1,272 @@
+---
+stage: Verify
+group: Runner Core
+info: To determine the technical writer assigned to the Stage/Group associated with this page, see <https://handbook.gitlab.com/handbook/product/ux/technical-writing/#assignments>
+title: Speed up job execution
+---
+
+{{< details >}}
+
+- Tier: Free, Premium, Ultimate
+- Offering: GitLab.com, GitLab Self-Managed, GitLab Dedicated
+
+{{< /details >}}
+
+You can improve performance of your jobs by caching your images and dependencies.
+
+## Use a proxy for containers
+
+You can speed up the time it takes to download Docker images by using:
+
+- The GitLab Dependency Proxy or
+- A mirror of the DockerHub Registry
+- Other open source solutions
+
+### GitLab Dependency Proxy
+
+To more quickly access container images, you can
+[use the Dependency Proxy](https://docs.gitlab.com/user/packages/dependency_proxy/)
+to proxy container images.
+
+### Docker Hub Registry mirror
+
+You can also speed up the time it takes for your jobs to access container images by mirroring Docker Hub.
+This results in the [Registry as a pull through cache](https://docs.docker.com/docker-hub/image-library/mirror/).
+In addition to speeding up job execution, a mirror can make your infrastructure
+more resilient to Docker Hub outages and Docker Hub rate limits.
+
+When the Docker daemon is [configured to use the mirror](https://docs.docker.com/docker-hub/image-library/mirror/#configure-the-docker-daemon)
+it automatically checks for the image on your running instance of the mirror. If it's not available, it
+pulls the image from the public Docker registry and stores it locally before handing it back to you.
+
+The next request for the same image pulls from your local registry.
+
+For more information on how it works, see
+[Docker daemon configuration documentation](https://docs.docker.com/docker-hub/image-library/mirror/#configure-the-docker-daemon).
+
+#### Use a Docker Hub Registry mirror
+
+To create a Docker Hub Registry mirror:
+
+1. Log in to a dedicated machine where the proxy container registry will run.
+1. Make sure that [Docker Engine](https://docs.docker.com/get-started/get-docker/) is installed
+   on that machine.
+1. Create a new container registry:
+
+   ```shell
+   docker run -d -p 6000:5000 \
+       -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \
+       --restart always \
+       --name registry registry:2
+   ```
+
+   You can modify the port number (`6000`) to expose the registry on a
+   different port. This will start the server with `http`. If you want
+   to turn on TLS (`https`) follow the
+   [official documentation](https://distribution.github.io/distribution/about/configuration/#tls).
+
+1. Check the IP address of the server:
+
+   ```shell
+   hostname --ip-address
+   ```
+
+   You should choose the private network IP address. The private
+   network is usually the fastest solution for internal communication
+   between machines on a single provider, like DigitalOcean, AWS, or Azure.
+   Usually, data transferred on a private network is not applied against
+   your monthly bandwidth limit.
+
+The Docker Hub registry is accessible under `MY_REGISTRY_IP:6000`.
+
+You can now [configure `config.toml`](autoscale.md#distributed-container-registry-mirroring)
+to use the new registry server.
+
+### Other open source solutions
+
+- [`rpardini/docker-registry-proxy`](https://github.com/rpardini/docker-registry-proxy) can proxy most container registries locally, including the GitLab Container Registry.
+
+## Use a distributed cache
+
+You can speed up the time it takes to download language dependencies by
+using a distributed [cache](https://docs.gitlab.com/ci/yaml/#cache).
+
+To specify a distributed cache, you set up the cache server and then
+[configure runner to use that cache server](advanced-configuration.md#the-runnerscache-section).
+
+If you are using autoscaling, learn more about the distributed runners
+[cache feature](autoscale.md#distributed-runners-caching).
+
+The following cache servers are supported:
+
+- [AWS S3](#use-aws-s3)
+- [MinIO](#use-minio) or other S3-compatible cache server
+- [Google Cloud Storage](#use-google-cloud-storage)
+- [Azure Blob storage](#use-azure-blob-storage)
+
+Learn more about GitLab CI/CD [cache dependencies and best practices](https://docs.gitlab.com/ci/caching/).
+
+### Use AWS S3
+
+To use AWS S3 as a distributed cache,
+[edit runner's `config.toml` file](advanced-configuration.md#the-runnerscaches3-section) to point
+to the S3 location and provide credentials for connecting.
+Make sure the runner has a network path to the S3 endpoint.
+
+If you use a private subnet with a NAT gateway, to save cost on data transfers you can enable an S3 VPC endpoint.
+
+### Use MinIO
+
+Instead of using AWS S3, you can create your own cache storage.
+
+1. Log in to a dedicated machine where the cache server will run.
+1. Make sure that [Docker Engine](https://docs.docker.com/get-started/get-docker/) is installed
+   on that machine.
+1. Start [MinIO](https://www.min.io), a simple S3-compatible server written in Go:
+
+   ```shell
+   docker run -d --restart always -p 9005:9000 \
+           -v /.minio:/root/.minio -v /export:/export \
+           -e "MINIO_ROOT_USER=<minio_root_username>" \
+           -e "MINIO_ROOT_PASSWORD=<minio_root_password>" \
+           --name minio \
+           minio/minio:latest server /export
+   ```
+
+   You can modify the port `9005` to expose the cache server on a
+   different port.
+
+1. Check the IP address of the server:
+
+   ```shell
+   hostname --ip-address
+   ```
+
+1. Your cache server will be available at `MY_CACHE_IP:9005`.
+1. Create a bucket that will be used by the runner:
+
+   ```shell
+   sudo mkdir /export/runner
+   ```
+
+   `runner` is the name of the bucket in that case. If you choose a different
+   bucket, then it will be different. All caches will be stored in the
+   `/export` directory.
+
+1. Use the `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` values (from above) as your
+   Access and Secret Keys when configuring your runner.
+
+You can now
+[configure `config.toml`](autoscale.md#distributed-runners-caching)
+to use the new cache server.
+
+### Use Google Cloud Storage
+
+To use Google Cloud Platform as a distributed cache,
+[edit runner's `config.toml` file](advanced-configuration.md#the-runnerscachegcs-section) to point
+to the GCP location and provide credentials for connecting.
+Make sure the runner has a network path to the GCS endpoint.
+
+### Use Azure Blob storage
+
+To use Azure Blob storage as a distributed cache,
+[edit runner's `config.toml` file](advanced-configuration.md#the-runnerscacheazure-section) to point
+to the Azure location and provide credentials for connecting.
+Make sure the runner has a network path to the Azure endpoint.
+
+### Speed up cache and artifact transfers
+
+You can improve cache and artifact upload and download performance with the following options.
+
+#### Backend-specific runner config
+
+Each cache backend has its own `config.toml` section. Optimize for your backend:
+
+- [S3 configuration](advanced-configuration.md#the-runnerscaches3-section): Set `BucketLocation` to the same region as your runners.
+  Use `RoleARN` for archives larger than 5 GB to [enable multipart uploads](advanced-configuration.md#enable-multipart-transfers-with-rolearn).
+  Use the default S3 v2 adapter (do not set `FF_USE_LEGACY_S3_CACHE_ADAPTER=true`). Optionally enable `Accelerate = true` for
+  [AWS S3 Transfer Acceleration](https://docs.aws.amazon.com/AmazonS3/latest/userguide/transfer-acceleration.html) when runners are far
+  from the bucket region. An [S3 VPC endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html)
+  in the same region can reduce latency and cost.
+- [Google Cloud Storage configuration](advanced-configuration.md#the-runnerscachegcs-section): Use a bucket in the same or nearest region to your runners.
+- [Azure Blob configuration](advanced-configuration.md#the-runnerscacheazure-section): Use a storage account in the same or nearest region to your runners.
+
+#### Cache compression
+
+Use faster compression to speed up cache archiving and download. This creates larger archives.
+Set compression options in your job or in [CI/CD variables](https://docs.gitlab.com/ci/variables/):
+
+| Variable | Recommended for speed | Description |
+|----------|------------------------|-------------|
+| `CACHE_COMPRESSION_LEVEL` | `fastest` or `fast` | Less CPU and faster upload or download. Archives are larger. Default is `default`. |
+| `CACHE_COMPRESSION_FORMAT` | `zip` (small caches) or `zipzstd` (large caches, multi-core) | `zipzstd` compresses in parallel and is faster than `zip` on multi-core runners with large caches. However, Zstandard overhead can make it slower on single-core runners or small caches. Parallel `zipzstd` extraction is the default (compression is always parallel). If you disable the `FF_USE_FASTZIP` feature flag, extraction is single-threaded. `tarzstd` gives the best compression ratio but can be slower. |
+
+Example configuration in `.gitlab-ci.yml`:
+
+```yaml
+variables:
+  CACHE_COMPRESSION_LEVEL: fastest
+  CACHE_COMPRESSION_FORMAT: zip
+```
+
+#### Cache request timeout
+
+If large caches hit timeouts, increase the limit (in minutes) with the `CACHE_REQUEST_TIMEOUT`
+[CI/CD variable](https://docs.gitlab.com/ci/variables/). Default is `10`. This setting does
+not speed up transfers but prevents failures on slow or large uploads and downloads.
+
+#### Cache transfer buffer size (throughput)
+
+Cache download and upload use a single streaming buffer. A larger buffer reduces system calls and often increases throughput,
+especially if you see transfers cap around 20 to 30 MB/s.
+
+Set `CACHE_TRANSFER_BUFFER_SIZE` (in bytes) in the job environment or in [CI/CD variables](https://docs.gitlab.com/ci/variables/).
+Default is 4 MiB (4194304).
+
+Example configuration for 8 MiB:
+
+```yaml
+variables:
+  CACHE_TRANSFER_BUFFER_SIZE: "8388608"
+```
+
+#### Cache chunk size and concurrency
+
+Chunk size is the size in bytes of each part or chunk for parallel upload (GoCloud) or parallel download (presigned or GoCloud).
+Concurrency is how many chunks run in parallel. Memory use is approximately chunk size x concurrency.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `CACHE_CHUNK_SIZE` | Chunk size in bytes. For upload (GoCloud backends): limits are backend-dependent (for example, 5 MiB to 5 GiB per part, max 10,000 parts for S3; Azure and GCS have their own limits). For download: 0 = legacy sequential; when concurrency > 1, 16 MiB is used if unset. | Upload: 16 MiB (16777216). Download: 0 (legacy) |
+| `CACHE_CONCURRENCY` | Number of concurrent chunks. Upload: GoCloud backends only (S3 with RoleARN, Azure, GCS). Download: 0 or 1 = legacy sequential mode; values greater than 1 = parallel mode (presigned or GoCloud). | Upload: 16. Download: 0 (legacy) |
+
+Example configuration for custom tuning (for example, 32 MiB chunks, 32 concurrent):
+
+```yaml
+variables:
+  CACHE_CHUNK_SIZE: "33554432"
+  CACHE_CONCURRENCY: "32"
+```
+
+#### Artifact uploads to GitLab
+
+GitLab sends artifacts to the GitLab coordinator, which might store them in object storage. To speed up the upload from the runner:
+
+| Variable | Recommended for speed | Description |
+|----------|------------------------|-------------|
+| `ARTIFACT_COMPRESSION_LEVEL` | `fastest` or `fast` | Reduces CPU and time spent compressing before upload. |
+
+Set compression options in your job or in CI/CD variables, for example:
+
+```yaml
+variables:
+  ARTIFACT_COMPRESSION_LEVEL: fastest
+```
+
+#### Artifact downloads from object storage
+
+Because `FF_USE_DIRECT_DOWNLOAD` defaults to `true`, runners with default feature flag settings request direct mode on the first artifact download attempt. GitLab honors the request only when an administrator allows direct mode. The `allowed_download_modes` setting applies to the whole instance. For more information, see [Allow client override for proxy download](https://docs.gitlab.com/administration/object_storage/#allow-client-override-for-proxy-download).
+
+When the coordinator redirects artifact downloads to object storage (`direct_download`), you can enable parallel range downloads
+with the `FF_USE_PARALLEL_ARTIFACT_TRANSFER` [feature flag](feature-flags.md). This is separate from parallel cache transfers
+(`FF_USE_PARALLEL_CACHE_TRANSFER`). See [Parallel artifact downloads (direct download)](advanced-configuration.md#parallel-artifact-downloads-direct-download).

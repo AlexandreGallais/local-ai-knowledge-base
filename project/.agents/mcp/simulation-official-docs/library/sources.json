@@ -1,0 +1,94 @@
+{
+  "sources": [
+    {
+      "tool": "modelica-spec",
+      "title": "Modelica Language Specification: the LaTeX source of each chapter",
+      "repository": "https://github.com/modelica/ModelicaSpecification.git",
+      "ref": "v3.7",
+      "version": "3.7",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Modelica Association",
+      "paths": [
+        "chapters/"
+      ],
+      "docs": [
+        "chapters"
+      ],
+      "files": "\\.tex$",
+      "exclude": [
+        "chapters/titlepage.tex"
+      ]
+    },
+    {
+      "tool": "fmi",
+      "title": "Functional Mock-up Interface (FMI) 3.0: the AsciiDoc source of the standard (model exchange, co-simulation, scheduled execution)",
+      "repository": "https://github.com/modelica/fmi-standard.git",
+      "ref": "v3.0.2",
+      "version": "3.0.2",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Modelica Association Project \"FMI\"",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "ssp",
+      "title": "System Structure and Parameterization (SSP) 2.0: the AsciiDoc source of the standard",
+      "repository": "https://github.com/modelica/ssp-standard.git",
+      "ref": "v2.0.1",
+      "version": "2.0.1",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Modelica Association Project \"SSP\"",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "octave-manual",
+      "title": "GNU Octave manual: the Texinfo source of each chapter",
+      "repository": "https://github.com/gnu-octave/octave.git",
+      "ref": "release-11-3-0",
+      "version": "11.3",
+      "license": "LicenseRef-GNU-permission-notice",
+      "attribution": "The Octave Project Developers",
+      "paths": [
+        "doc/interpreter/"
+      ],
+      "docs": [
+        "doc/interpreter"
+      ],
+      "files": "\\.(?:txi|texi)$",
+      "licenseNotice": "doc/interpreter/octave.texi"
+    },
+    {
+      "tool": "octave-functions",
+      "title": "GNU Octave functions: the Texinfo help of each function file, which the manual calls with @DOCSTRING",
+      "repository": "https://github.com/gnu-octave/octave.git",
+      "ref": "release-11-3-0",
+      "version": "11.3",
+      "license": "GPL-3.0-or-later",
+      "attribution": "The Octave Project Developers",
+      "paths": [
+        "scripts/"
+      ],
+      "docs": [
+        "scripts"
+      ],
+      "extract": "octave-texinfo",
+      "exclude": [
+        "scripts/**/private",
+        "scripts/testfun",
+        "scripts/deprecated",
+        "scripts/legacy"
+      ]
+    }
+  ]
+}

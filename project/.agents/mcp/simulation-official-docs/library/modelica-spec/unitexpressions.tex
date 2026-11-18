@@ -1,0 +1,239 @@
+\chapter{Unit Expressions}\label{unit-expressions}
+
+Unless otherwise stated, the syntax and semantics of unit expressions in Modelica (for example, \cref{real-type} or \cref{axis-properties}) conform with the international standards \emph{International System of Units (SI)} by BIPM superseding parts of ISO 31/0-1992 \emph{General principles concerning quantities, units and symbols} and ISO 1000-1992 \emph{SI units and recommendations for the use of their multiples and of certain other units}.
+Unfortunately, these standards do not define a formal syntax for unit expressions.
+There are recommendations and Modelica exploits them.
+
+Note that this document uses the American spelling \emph{meter}, whereas the SI specification from BIPM uses the British spelling \emph{metre}.
+
+Examples for the syntax of unit expressions used in Modelica: \lstinline!"N.m"!, \lstinline!"kg.m/s2"!, \lstinline!"kg.m.s-2"!, \lstinline!"1/rad"!, \lstinline!"mm/s"!.
+
+\section{The Syntax of Unit Expressions}\label{the-syntax-of-unit-expressions}
+
+The Modelica unit string syntax allows neither comments nor white-space, and a unit string shall match the \productionref{unit-expression} rule:
+
+\begin{production}{unit-expression}
+\begin{lstlisting}
+unit-numerator [ "/" unit-denominator ]
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-numerator}
+\begin{lstlisting}
+"1" | unit-factors | "(" unit-expression ")"
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-denominator}
+\begin{lstlisting}
+unit-factor | "(" unit-expression ")"
+\end{lstlisting}
+\end{production}
+
+The unit of measure of a dimension free quantity is denoted by \lstinline!"1"!.
+The SI standard does not define any precedence between multiplications and divisions.
+The SI standard does not allow multiple units to the right of the division-symbol (\lstinline!/!) since the result is ambiguous; either the divisor shall be enclosed in parentheses, or negative exponents used instead of division, for example, \lstinline!"J/(kg.K)"! may be written as \lstinline!"J.kg-1.K-1"!.
+
+\begin{production}{unit-factors}
+\begin{lstlisting}
+unit-factor [ "." unit-factors ]
+\end{lstlisting}
+\end{production}
+
+The SI standard specifies that a multiplication operator symbol is written as space or as a dot.
+The SI standard requires that this \emph{dot} is a bit above the base line: `·', which is not part of ASCII.
+The ISO standard also prefers `·', but Modelica supports the ISO alternative `.', which is an ordinary \emph{dot} on the base line.
+
+For example, Modelica does not support \lstinline!"Nm"! for newton-meter, but requires it to be written as \lstinline!"N.m"!.
+
+\begin{production}{unit-factor}
+\begin{lstlisting}
+unit-operand [ unit-exponent ]
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-exponent}
+\begin{lstlisting}
+[ "+" | "-" ] ( UNSIGNED-INTEGER | "(" UNSIGNED-INTEGER "/" UNSIGNED-INTEGER ")" )
+\end{lstlisting}
+\end{production}
+
+The SI standard uses super-script for the exponentation, and does thus not define any operator symbol for exponentiation.
+A \productionref{unit-factor} consists of a \productionref{unit-operand} possibly suffixed by a possibly signed integer or rational number, which is interpreted as an exponent.
+There must be no spacing between the \productionref{unit-operand} and a possible \productionref{unit-exponent}.
+It is recommended to use the simplest representation of exponents, meaning that the explicit \lstinline!+! sign should be avoided, that leading zeros should be avoided, that rational exponents are reduced to not have common factors in the numerator and denominator, that rational exponents with denominator 1 should be avoided in favor of plain integer exponents, that the exponent 1 is omitted, and that entire factors with exponent 0 are omitted.
+
+\begin{production}{unit-operand}
+\begin{lstlisting}
+unit-symbol | unit-prefix unit-symbol
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-prefix}
+\begin{lstlisting}
+"Q" | "R" | "Y" | "Z" | "E" | "P" | "T" | "G" | "M" | "k" | "h" | "da"
+| "d" | "c" | "m" | "u" | "n" | "p" | "f" | "a" | "z" | "y" | "r" | "q"
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-symbol}
+\begin{lstlisting}
+unit-char { unit-char }
+\end{lstlisting}
+\end{production}
+
+\begin{production}{unit-char}
+\begin{lstlisting}
+NON-DIGIT
+\end{lstlisting}
+\end{production}
+
+The units required to be recognized are the basic and derived units of the SI system, as well as some units compatible with the SI system listed below, but tools are allowed to additionally support user-defined unit symbols.
+The required unit symbols do not make use of Greek letters, but a unit such as $\Omega$ is spelled out as \lstinline!"Ohm"!.
+Similarly degree is spelled out as \lstinline!"deg"!, both on its own (for angles) and as part of \lstinline!"degC"!, \lstinline!"degF"! and \lstinline!"degRk"! for temperatures (Celsius, Fahrenheit and Rankine).
+
+It is recommended that non-SI units are only used for the \lstinline!displayUnit!-attribute in order to reduce impact of unrecognized unit symbols when using another Modelica tool.
+
+The following are the units required to be recognized in addition to the SI system:
+\begin{itemize}
+\item minute \lstinline!"min"! (1 minute = 60 s)
+\item hour \lstinline!"h"! (1 hour = 3600 s)
+\item day \lstinline!"d"! (1 day = 86400 s)
+\item liter \lstinline!"l"! and \lstinline!"L"! (1 liter = 1 $\text{dm}^{3}$)
+\item electronvolt \lstinline!"eV"! (1 electronvolt = 1.602176634e-19 J)
+\item degree \lstinline!"deg"! (1 degree = $\pi/180$ rad)
+\item debye \lstinline!"debye"! (1 debye = 1e-21 / 299792458 Cm)
+\end{itemize}
+The first 7 are listed in the SI standard as non-SI units that are acceptable to use with the SI system.
+
+A \productionref{unit-operand} should first be interpreted as a \productionref{unit-symbol} and only if not successful the second alternative assuming a prefixed operand should be exploited.
+There must be no spacing between the \productionref{unit-symbol} and a possible \productionref{unit-prefix}.
+The values of the prefixes are according to the ISO standard.
+The letter \lstinline!u! is used as a symbol for the prefix \emph{micro}.
+
+\begin{nonnormative}
+A tool may present \lstinline!"Ohm"! as $\Omega$ and the prefix \lstinline!"u"! as $\mu$.
+Exponents such as \lstinline!"m2"! may be presented as m\textsuperscript{2}.
+Degrees may be presented as $^{\circ}$, both for \lstinline!"deg"! on its own (for angles) and for temperatures -- e.g., \lstinline!"degC"! can be presented as $^{\circ}$C.
+Note that BIPM have specific recommendations for formatting using these symbols.
+\end{nonnormative}
+
+\begin{example}
+The unit expression \lstinline!"m"! means meter and not milli (10\textsuperscript{-3}), since prefixes cannot be used in isolation.
+For millimeter use \lstinline!"mm"! and for square meter, m\textsuperscript{2}, write \lstinline!"m2"!.
+
+The expression \lstinline!"mm2"! means (10\textsuperscript{-3}m)\textsuperscript{2} = 10\textsuperscript{-6}m\textsuperscript{2}.
+Note that exponentiation includes the prefix.
+
+The unit expression \lstinline!"T"! means tesla, but note that the letter \lstinline!T! is also the symbol for the prefix tera which has a multiplier value of 10\textsuperscript{12}.
+\end{example}
+
+
+\section{Unitful Literals}\label{unitful-literals}
+
+The \productionref{unsigned-number} in the grammar allows a unit to be attached to a numeric value.
+In this case, the unit is given as a \lexicalunitref{Q-IDENT} rather than a string, since the use of a string could be ambiguously interpreted as \productionref{description-string} in some contexts.
+
+\begin{example}
+An acceleration of 9.8~meters per square second can be expressed as \lstinline!9.8'm/s2'!.
+\end{example}
+
+When the modified component of a binding equation has a \lstinline!unit!-attribute, a binding equation consisting of a unitful literal or a negated unitful literal is implicitly converted to the component's unit.
+
+\begin{nonnormative}
+A unit system is \firstuse[---]{coherent} when every derived unit can be built from the base units purely by multiplying and dividing powers of them, with no numerical factor other than 1 anywhere in the construction.
+A coherent unit system ensures that the equations between the numerical values of quantities take exactly the same form as the equations between the quantities themselves.
+In the context of a coherent unit system, \firstuse[---]{coherent unit} refers to a unit belonging to the unit system, while \firstuse[---]{non-coherent unit} refers to any other unit.
+
+Within the SI unit system, the \firstuse[---]{set of coherent SI units} form a coherent unit system.
+Prefixed SI units such as the centimeter are not coherent, since they are derived units where the scaling relative to the base units is not 1.
+The exception is mass where the SI base unit is kilogram, meaning that the kilogram (prefixed) is coherent, while the gram (not prefixed) is not.
+Other examples of non-coherent units include the minute (accepted for use with SI) and the inch (not accepted for use with SI).
+
+The predominant use of coherent SI units in \lstinline!unit!-attributes in libraries (as this is a good way to avoid unit inconsistency without tool assistance to verify unit consistency) should be kept in mind when using unitful literals where there is no implicit unit conversion.
+That is, using non-coherent units for those unitful literals is likely to be a mistake.
+The mistake can be detected by tools that perform (tool-dependent) analysis of unit consistency, while tools that don't analyze unit consistency are likely to just drop the unit and produce incorrect results, see example below.
+\end{nonnormative}
+
+\begin{example}
+Implicit unit conversion in binding equations:
+\begin{lstlisting}[language=modelica]
+// Implicit unit conversion resolves inconsistent units:
+Real x(unit = "m") = -5'cm';        // OK, same as -0.05'm'
+// No implicit unit conversion since not (signed) literal:
+Real y(unit = "m") = 0'cm' - 5'cm'; // Unit conflict
+// No implicit unit conversion since not (signed) literal:
+Real z(unit = "cm") = x;            // Unit conflict
+// No implicit unit conversion since w has no unit-attribute:
+Real w = 5'cm';                     // Not recommended, but accepted
+\end{lstlisting}
+
+There is no implicit unit conversion in equations:
+\begin{lstlisting}[language=modelica]
+  Real x(unit = "m");
+  Real y(unit = "m");
+equation
+  x = 5'cm'    // Unit conflict
+  y = 0.05'm'  // OK
+\end{lstlisting}
+A tool which does not detect the unit conflict might give the unexpected result of \lstinline!x! being 5~meters.
+\end{example}
+
+A unitful literal may represent either an absolute or a relative quantity, depending on context.
+If an implicit unit conversion would be different for absolute and relative quantities (due to unit offsets), the implicit unit conversion is only allowed if the modified component (or its type) has an \lstinline!absoluteValue! annotation (\cref{modelica:absoluteValue}).
+
+\begin{example}
+Meanings of the unitful literal \lstinline!20'degC'!.
+Some valid uses in binding equations:
+\begin{lstlisting}[language=modelica]
+// Absolute temperature literal, will display as 293.15 K:
+Real tCAbs(unit = "degC", displayUnit = "K") = 20'degC'
+  annotation(absoluteValue = true);
+// Relative temperature literal, will display as 20 K:
+Real tCRel(unit = "degC", displayUnit = "K") = 20'degC'
+  annotation(absoluteValue = false);
+// Unclear temperature literal, but no need for conversion:
+Real tC(unit = "degC") = 20'degC'; // OK, same as unitless literal "20"
+// Implicit unit conversion with offset, will display as 293.15 K:
+Real tKAbs(unit = "K", displayUnit = "K") = 20'degC'
+  annotation(absoluteValue = true);
+// Implicit unit conversion without offset, will display as 20 K:
+Real tKRel(unit = "K", displayUnit = "K") = 20'degC'
+  annotation(absoluteValue = false);
+\end{lstlisting}
+
+Absence of \lstinline!absoluteValue! annotation can prevent use of a unitful literal:
+\begin{lstlisting}[language=modelica]
+// No implicit conversion since no absoluteValue annotation:
+Real tK(unit = "K") = 20'degC'; // Unit conflict
+\end{lstlisting}
+
+Adding a unitful temperature literal to a relative temperature leads to the same ambiguity as when adding a temperature variable without \lstinline!absoluteValue! annotation.
+That is, since \lstinline!20'degC'! could be either absolute or relative, a tool cannot infer the \lstinline!absoluteValue! status of the sum (compare \cref{modelica:absoluteValue}):
+\begin{lstlisting}[language=modelica]
+// Two variants with disallowed displayUnit conversion:
+Real x(unit = "degC", displayUnit = "K") = tCRel + tC;
+Real y(unit = "degC", displayUnit = "K") = tCRel + 20'degC';
+\end{lstlisting}
+\end{example}
+
+\begin{example}
+Adding 2~centimeters to a length.
+A user has set \lstinline!x! to 10~centimeters with the use of \lstinline!displayUnit!, and intends to make \lstinline!y! 2~centimeters bigger than \lstinline!x!:
+\begin{lstlisting}[language=modelica]
+  parameter Real x(unit = "m", displayUnit = "cm") = 0.1;
+equation
+  y = x + 2; // Intention: Add 2 centimeters to x.
+\end{lstlisting}
+The result is that 2~meters instead of 2~centimeters is being added to \lstinline!x!.
+
+Using a unitful literal makes the intention clear:
+\begin{lstlisting}[language=modelica]
+  y = x + 2'cm'; // Unit conflict
+\end{lstlisting}
+Since implicit unit conversion is not allowed in equations, there is a unit inconsistency in the addition that tools can detect and report.
+The unit inconsistency can then be resolved by using a unit compatible with the unit of \lstinline!x!:
+\begin{lstlisting}[language=modelica]
+  y = x + 0.02'm';
+\end{lstlisting}
+\end{example}

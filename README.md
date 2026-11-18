@@ -48,6 +48,8 @@ removes the server, its documentation and its rules, without breaking the other 
 | `containers-official-docs` | Containers: the Dockerfile reference, the Docker manuals and CLI, Podman, the Compose Specification, the Dev Containers specification, the OCI specifications. |
 | `git-official-docs` | Git: the manual page of every command. |
 | `cpp-official-docs` | C and C++: cppreference.com (converted to Markdown), CMake, Clang. |
+| `gitlab-official-docs` | GitLab CI/CD: the folder `doc/ci` of the GitLab documentation (`.gitlab-ci.yml` and every keyword), GitLab Runner and its executors, the Dev Containers CLI to build and run a dev container in a CI job. |
+| `simulation-official-docs` | Simulation: the Modelica language specification, the FMI 3.0 standard (the exchange of models, which Simulink imports and exports as FMU), the SSP 2.0 standard, the GNU Octave manual and the help of each Octave function (a language close to MATLAB). MATLAB, Simulink, Simscape and Stateflow are not there: their documentation is not free. |
 | `math-docs` | Mathematics: free textbooks of linear algebra, discrete mathematics and combinatorics, in LaTeX and PreTeXt. |
 
 Each documentation brick searches its own documentation only, then gives one section at a time. Only
@@ -68,7 +70,10 @@ itself, after your approval. "Done" comes after lint, build and tests at zero er
 
 The export is in `export/`, in five part sizes, one folder each: `500k`, `1m`, `2m`, `5m`, `10m`. They
 hold the same content. Each folder has one pack `kit` (`kit-001.txt`...), one pack per documentation
-brick (`js-official-docs-001.txt`...) and the one import script, `import.ts`.
+brick (`js-official-docs-001.txt`...) and the two import scripts, `import.ts` (Node 22.18 or later) and
+`import.py` (Python 3, its standard library only): the same import, whichever the machine has. Python
+reads parts compressed with gzip in every version, with zstd from 3.14, and not with brotli: for parts
+in brotli, use `import.ts`. The first lines of a part name its compression.
 
 ### 1. Find the largest size that pastes
 
@@ -84,7 +89,8 @@ brick (`js-official-docs-001.txt`...) and the one import script, `import.ts`.
 
 1. In an empty folder, paste `import.ts` and every part of the size you keep: the parts of `kit`, and
    the parts of each documentation brick the project needs.
-2. Run `node <that folder>/import.ts --target <folder>`. It takes every part, checks them all, then
+2. Run `node <that folder>/import.ts --target <folder>`, or `python3 <that folder>/import.py --target
+   <folder>`. It takes every part, checks them all, then
    writes everything at once: the kit, each brick with its line in `opencode.json`, and the search
    index of each documentation brick.
 3. A damaged or missing part is named, and nothing is written: paste that part again, then run the
@@ -135,7 +141,7 @@ repository. The workstation never does it: it receives the new export.
 | Folder | Content |
 | --- | --- |
 | `project/` | The project kit, a project of its own: `package.json`, the format and lint, example code, `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
-| `import.ts` | The one import script, which travels with the export. |
+| `import.ts`, `import.py` | The import, in Node and in Python: the same work, the same messages. Both travel with the export. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 

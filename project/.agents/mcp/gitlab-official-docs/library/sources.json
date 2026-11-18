@@ -1,0 +1,66 @@
+{
+  "sources": [
+    {
+      "tool": "gitlab-ci",
+      "title": "GitLab CI/CD: the folder doc/ci of the GitLab documentation (.gitlab-ci.yml, the reference of every keyword, variables, cache, artifacts, rules, pipelines)",
+      "repository": "https://gitlab.com/gitlab-org/gitlab.git",
+      "ref": "v19.5.6-ee",
+      "version": "19.5",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "GitLab Inc. and the GitLab contributors",
+      "paths": [
+        "doc/ci/"
+      ],
+      "docs": [
+        "doc/ci"
+      ],
+      "files": "\\.md$",
+      "licenseTexts": {
+        "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt"
+      }
+    },
+    {
+      "tool": "gitlab-runner",
+      "title": "GitLab Runner: its documentation (install, register, executors Docker and Kubernetes, config.toml, services)",
+      "repository": "https://gitlab.com/gitlab-org/gitlab-runner.git",
+      "ref": "v19.5.3",
+      "version": "19.5",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "GitLab Inc. and the GitLab Runner contributors",
+      "licenseTexts": {
+        "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt"
+      },
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
+      "files": "\\.md$",
+      "exclude": [
+        "docs/AGENTS.md",
+        "docs/CLAUDE.md"
+      ]
+    },
+    {
+      "tool": "devcontainers-cli",
+      "title": "Dev Containers CLI: its README and its examples of use, as building and running a dev container in CI",
+      "repository": "https://github.com/devcontainers/cli.git",
+      "ref": "v0.89.0",
+      "version": "0.89",
+      "license": "MIT",
+      "attribution": "Microsoft Corporation and the Dev Containers contributors",
+      "paths": [
+        "README.md",
+        "example-usage/"
+      ],
+      "docs": [
+        "."
+      ],
+      "files": "\\.(?:md|json)$",
+      "exclude": [
+        ".git"
+      ]
+    }
+  ]
+}

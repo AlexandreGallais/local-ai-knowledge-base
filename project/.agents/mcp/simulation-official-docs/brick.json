@@ -1,0 +1,8 @@
+{
+  "name": "simulation-official-docs",
+  "instructions": "The official documentation of simulation standards and tools, kept locally: the Modelica language specification, the FMI and SSP standards, and the GNU Octave manual with the help of each Octave function (a language close to MATLAB). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of simulation: the Modelica language (classes, connectors, equations), the FMI standard (FMU, co-simulation, fmi3DoStep), the SSP standard, and GNU Octave (manual and functions, as ode45). Returns 10 section ids at most.",
+  "queryExample": "\"fmi3DoStep\" or \"connector\" or \"ode45\"",
+  "toolExample": "\"fmi\"",
+  "idExample": "library/fmi/4_2_co-simulation_api.adoc#state-step-mode"
+}

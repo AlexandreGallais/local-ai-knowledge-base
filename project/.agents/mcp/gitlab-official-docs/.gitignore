@@ -1,0 +1,4 @@
+# The documentation is large and comes back with the import: kept out of the project's Git.
+# The search index is built on each machine, when the server first needs it.
+library/
+index/

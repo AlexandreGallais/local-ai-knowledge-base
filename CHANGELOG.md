@@ -5,6 +5,23 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added: GitLab CI/CD and simulation
+
+- `gitlab-official-docs`: the folder `doc/ci` of the GitLab documentation (CC BY-SA 4.0), the
+  documentation of GitLab Runner (CC BY-SA 4.0) and the README and examples of the Dev Containers CLI
+  (MIT).
+- `simulation-official-docs`: the Modelica language specification 3.7, the FMI 3.0.2 and SSP 2.0.1
+  standards (CC BY-SA 4.0), the GNU Octave 11.3 manual (GNU permission notice) and the Texinfo help
+  of each Octave function (GPL 3.0 or later). MATLAB, Simulink, Simscape and Stateflow stay out:
+  their documentation is not free.
+- The GNU permission notice of a manual counts as a free license, as `LicenseRef-GNU-permission-notice`,
+  when its text is kept in `licenses/<tool>/NOTICE`.
+- The search reads Texinfo chapters in `.txi` files, and drops the anchor of an AsciiDoc heading
+  from its title.
+- `import.py`: the same import as `import.ts`, in Python 3 with its standard library only, for a
+  machine without Node. It writes the same files and says the same messages. It reads parts in gzip,
+  and in zstd from Python 3.14; parts in brotli need `import.ts`.
+
 ### Changed: no exercise files in math-docs, base64 parts
 
 - `math-docs` leaves out the files and folders made only of exercises, homework, answers or
