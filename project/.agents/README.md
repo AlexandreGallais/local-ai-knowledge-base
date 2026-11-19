@@ -53,6 +53,7 @@ in Node and in Python, its documentation in `library/`, its licenses, its `rules
 | `markdown-official-docs` | Markdown and diagrams: Mermaid, CommonMark, GFM, Pandoc, markdownlint, KaTeX, Vega-Lite, Graphviz, D2. |
 | `gitlab-official-docs` | GitLab CI/CD: the folder `doc/ci` of the GitLab documentation, GitLab Runner, the Dev Containers CLI, glab. |
 | `simulation-official-docs` | Simulation: the Modelica language and Standard Library, OpenModelica, the FMI and SSP standards, FMPy, Octave, Scilab and Xcos, python-control, SciPy, SimPy. |
+| `physics-docs` | Engineering physics: Wikipedia (naval, sonar, fluids, heat, electricity, control, nomograms), Wikibooks, fluids, ht, thermo, CoolProp, Cantera, PyNomo. |
 | `math-docs` | Free mathematics textbooks, in LaTeX, PreTeXt and XML: linear algebra, discrete mathematics, combinatorics. |
 
 Each file of the documentation is the official file, unchanged, in its own format. Keep only the

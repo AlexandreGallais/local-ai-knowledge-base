@@ -16,6 +16,16 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: engineering physics for the simulation of ships and submarines
+
+- `physics-docs`: 175 Wikipedia articles in six lists (ships and submarines, underwater acoustics and
+  sonar, fluid mechanics, thermodynamics and heat transfer, electricity and on-board power, control,
+  numerical methods and nomograms); seven Wikibooks books (601 pages); the documented functions of
+  fluids 1.3, ht 1.2 and thermo 1.0, taken from their docstrings; CoolProp 8.0; Cantera 3.2; PyNomo.
+- A source can be a list of pages of a MediaWiki wiki (Wikipedia, Wikibooks), each taken as wikitext
+  at its latest revision; a book is taken with all its subpages.
+- A download is tried again when a server answers 429 (too many requests).
+
 ### Added: the free tools that do the work of MATLAB, Simulink and Simscape
 
 - `simulation-official-docs`: the Modelica Standard Library 4.1, its documentation taken from the

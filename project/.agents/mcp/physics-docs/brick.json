@@ -1,0 +1,8 @@
+{
+  "name": "physics-docs",
+  "instructions": "Free documentation of engineering physics for the simulation of ships and submarines, kept locally: Wikipedia articles (naval architecture and submarines, underwater acoustics and sonar, fluid mechanics, thermodynamics and heat transfer, electricity and on-board power, control and numerical methods, nomograms), the Wikibooks books of fluid mechanics, thermodynamics, acoustics, circuits, electronics, control and signals, and the documented functions of fluids, ht, thermo, CoolProp, Cantera and PyNomo. Search with search_docs, then read one section with read_doc. Look an equation up rather than recall it.",
+  "search": "Search engineering physics: sonar equation, transmission loss, sound speed in seawater, buoyancy and Archimedes' principle, ship stability, Colebrook equation and Moody chart, Darcy–Weisbach, pumps and valves, Rankine and Brayton cycles, heat exchangers (LMTD, NTU), seawater properties, three-phase power, motors and generators, PID, Kalman filter, Runge–Kutta, nomograms. Returns 10 section ids at most.",
+  "queryExample": "\"sonar equation\" or \"Colebrook\"",
+  "toolExample": "\"wikipedia-acoustics\", \"wikibooks\" or \"fluids\"",
+  "idExample": "library/wikipedia-acoustics/Sonar.wiki#sonar-equation"
+}

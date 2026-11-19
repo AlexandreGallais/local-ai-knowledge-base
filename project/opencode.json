@@ -93,6 +93,14 @@
         ],
         "codemode": false
       },
+      "physics-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/physics-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "python-official-docs": {
         "type": "local",
         "command": [
