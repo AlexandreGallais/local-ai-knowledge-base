@@ -72,6 +72,9 @@ brick (`js-official-docs-001.txt`...) and the two import scripts, `import.ts` (N
 reads parts compressed with gzip in every version, with zstd from 3.14, and not with brotli: for parts
 in brotli, use `import.ts`. The first lines of a part name its compression.
 
+The export of this repository is compressed with brotli, the smallest: paste it on a machine with Node.
+Each size folder also holds `export.py`, to make parts for a machine with Python only (see step 4).
+
 ### 1. Find the largest size that pastes
 
 1. On the workstation, create an empty folder, for example `~/paste-test`.
@@ -105,6 +108,19 @@ there are removed.
 Open OpenCode CLI 2.2.7 at the root of the project and describe what you want. Check that it sees the
 servers: `/mcps` lists each documentation brick pasted.
 
+### 4. Make parts for a machine with Python only
+
+On a machine where the base is installed, `export.py` (Python 3, its standard library only) cuts it
+again into parts compressed with gzip, which `import.py` reads in every version of Python:
+
+1. Paste `export.py` beside the import script, then, from the root of the equipped project, run
+   `python3 <that folder>/export.py`. The parts go into `export-gzip/`, in the five sizes; each size
+   folder gets `import.py` and `import.ts` beside them.
+2. `--sizes 500k,1m` keeps only some sizes; `--packs kit,js-official-docs` only some packs; `--source`
+   and `--out` name another project or another folder.
+3. On the machine with Python only, paste one size folder and run `python3 import.py` there, as in
+   step 2. The gzip parts are larger than the brotli ones: there are more of them to paste.
+
 ## Update the documentation of a tool
 
 For the maintainers, on a machine with network access, with the build tools kept beside this
@@ -130,6 +146,7 @@ repository. The workstation never does it: it receives the new export.
 | --- | --- |
 | `project/` | The project kit: `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
 | `import.ts`, `import.py` | The import, in Node and in Python: the same work, the same messages. Both travel with the export. |
+| `export.py` | The export in Python, gzip: cuts an equipped project into parts again. Travels with the export. |
 | `export/` | The export of the last delivery, in five part sizes. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 

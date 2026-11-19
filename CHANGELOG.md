@@ -5,6 +5,13 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added: the export in Python
+
+- `export.py` (Python 3, its standard library only): cuts a project where the base is installed into
+  parts compressed with gzip, in the five sizes, which `import.py` reads in every version of Python.
+  It travels in each size folder of the export, beside the two import scripts.
+- The export of this repository stays in brotli, the smallest, read by `import.ts`.
+
 ### Added: the skills of the catalogue
 
 - The 261 skills of the skill catalogue of the team, in 25 categories and five waves (V0 to V4),
