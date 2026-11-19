@@ -16,5 +16,77 @@
     "files": 130,
     "bytes": 3640259,
     "built": "2026-11-14"
+  },
+  "qt-guides": {
+    "commit": "025bdad181de241e81bf853c8a2d7bf3d19261a9",
+    "files": 249,
+    "bytes": 2486260,
+    "built": "2026-11-19"
+  },
+  "qt-quick-guides": {
+    "commit": "4332fbbb4c340463dc8cee36dda0c85d932122d8",
+    "files": 274,
+    "bytes": 1728592,
+    "built": "2026-11-19"
+  },
+  "qt-api": {
+    "commit": "025bdad181de241e81bf853c8a2d7bf3d19261a9",
+    "files": 724,
+    "bytes": 9923248,
+    "built": "2026-11-19"
+  },
+  "qt-quick-api": {
+    "commit": "4332fbbb4c340463dc8cee36dda0c85d932122d8",
+    "files": 216,
+    "bytes": 1991453,
+    "built": "2026-11-19"
+  },
+  "googletest": {
+    "commit": "063de7e9578f82b369302001269680b4b1553359",
+    "files": 19,
+    "bytes": 482663,
+    "built": "2026-11-19"
+  },
+  "catch2": {
+    "commit": "08092139210881f01a34e60c5f2fd6afa0ea4024",
+    "files": 35,
+    "bytes": 371462,
+    "built": "2026-11-19"
+  },
+  "fmt": {
+    "commit": "208219daff58f2a7438f6931cc2ddc358acf33ef",
+    "files": 5,
+    "bytes": 174839,
+    "built": "2026-11-19"
+  },
+  "nlohmann-json": {
+    "commit": "55f93686c01528224f448c19128836e7df245f72",
+    "files": 235,
+    "bytes": 797741,
+    "built": "2026-11-19"
+  },
+  "conan": {
+    "commit": "7091aea3ecf242713f36a3c2754b7d169b098358",
+    "files": 316,
+    "bytes": 2439874,
+    "built": "2026-11-19"
+  },
+  "vcpkg": {
+    "commit": "eda2ef268351fb5e18ebc5defa16ecfbffaa651f",
+    "files": 207,
+    "bytes": 944248,
+    "built": "2026-11-19"
+  },
+  "meson": {
+    "commit": "70598bb7825f0f804fb31ec2795de5e79e7692a0",
+    "files": 161,
+    "bytes": 1070228,
+    "built": "2026-11-19"
+  },
+  "eigen": {
+    "commit": "bc3b39870ecb690a623a3f49149a358b95c5781d",
+    "files": 58,
+    "bytes": 410147,
+    "built": "2026-11-19"
   }
 }

@@ -16,6 +16,13 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: Qt and the main libraries of C++
+
+- `cpp-official-docs`: Qt 6.12 (the guides of Qt Base, QML and Qt Quick in qdoc, and the reference of
+  every class and QML type, taken from the `/*! ... */` comments of its code), GoogleTest 1.18, Catch2
+  3.16, {fmt} 12.2, nlohmann/json 3.12, Eigen 5.0, Conan 2, vcpkg and Meson 1.12.
+- Free licenses added to the check: the GNU FDL 1.3 with no invariant sections, LGPL 3.0 only.
+
 ### Added: engineering physics for the simulation of ships and submarines
 
 - `physics-docs`: 175 Wikipedia articles in six lists (ships and submarines, underwater acoustics and

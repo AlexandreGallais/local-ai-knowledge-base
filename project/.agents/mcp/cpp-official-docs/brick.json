@@ -1,8 +1,8 @@
 {
   "name": "cpp-official-docs",
-  "instructions": "The official documentation of C and C++, kept locally: cppreference.com (the C and C++ languages and standard libraries), CMake and Clang. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
-  "search": "Search the official documentation of C and C++: cppreference.com (the C and C++ languages and standard libraries), CMake and Clang. Returns 10 section ids at most.",
-  "queryExample": "\"std::unique_ptr\" or \"add_executable\"",
-  "toolExample": "\"cppreference\", \"cmake\" or \"clang\"",
+  "instructions": "The official documentation of C and C++, kept locally: cppreference.com (the C and C++ languages and standard libraries), CMake, Clang, Qt 6 (guides and the reference of every class, QML and Qt Quick), GoogleTest, Catch2, {fmt}, nlohmann/json, Eigen, Conan, vcpkg and Meson. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of C and C++: the standard library (std::unique_ptr...), CMake commands, Clang, Qt classes and functions (QWidget, QObject::connect, QTimer::singleShot), Qt guides (signals and slots, model/view), QML types, GoogleTest and Catch2 assertions, {fmt}, nlohmann/json, Eigen, Conan, vcpkg, Meson. Returns 10 section ids at most.",
+  "queryExample": "\"std::unique_ptr\" or \"QWidget\" or \"EXPECT_EQ\"",
+  "toolExample": "\"cppreference\", \"cmake\", \"qt-api\" or \"googletest\"",
   "idExample": "library/cppreference/cpp/memory/unique_ptr.md#member-functions"
 }

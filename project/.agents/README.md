@@ -44,7 +44,7 @@ in Node and in Python, its documentation in `library/`, its licenses, its `rules
 | `python-official-docs` | Python, and the `inkex` API of the Inkscape extensions. |
 | `rust-official-docs` | Rust: the book, the reference, Rust by Example, Cargo and the standard library. |
 | `java-official-docs` | The Java SE API (`java.base`, `java.net.http`), Gradle and Maven. |
-| `cpp-official-docs` | C and C++: cppreference, CMake, Clang. |
+| `cpp-official-docs` | C and C++: cppreference, CMake, Clang, Qt 6, GoogleTest, Catch2, {fmt}, nlohmann/json, Eigen, Conan, vcpkg, Meson. |
 | `containers-official-docs` | Docker, Podman and its configuration files, Buildah, Skopeo, Podman Desktop, Compose, dev containers (specification, VS Code, features, images), the display and sound of the host in a container (x11docker, Distrobox, Toolbx), the OCI specifications. |
 | `git-official-docs` | Git: every command, and Git LFS. |
 | `linux-official-docs` | Linux, Fedora, GNOME and Wayland: Fedora Quick Docs, DNF5, RPM, the Linux man-pages, systemd, util-linux, the kernel admin guide, GNOME, GTK 4, GLib, GJS, Wayland and its protocols, PipeWire, Flatpak, SELinux. |

@@ -1,11 +1,16 @@
 # Brick `cpp-official-docs`
 
-The official documentation of C and C++: cppreference.com (the languages and their standard libraries), CMake and Clang.
+The official documentation of C and C++: cppreference.com (the languages and their standard
+libraries), CMake and Clang; Qt 6 (the guides of Qt Base, QML and Qt Quick, and the reference of
+every class and QML type); GoogleTest and Catch2; {fmt}; nlohmann/json; Eigen; the package managers
+Conan and vcpkg; Meson.
 
-Each file is the official file, unchanged, in its own format (reStructuredText), at a noted
-version. One exception: the pages of cppreference.com, published as HTML, are converted to Markdown
-(text, headings, lists, tables and code kept; the site navigation left out). The MCP server searches
-the documentation and returns one section at a time.
+Each file is the official file, unchanged, in its own format (reStructuredText, Markdown, qdoc,
+Doxygen), at a noted version. The reference of Qt lives in the `/*! ... */` comments of its C++ code:
+each comment is taken as it is, in a `.qdoc` page per source file. One exception: the pages of
+cppreference.com, published as HTML, are converted to Markdown (text, headings, lists, tables and code
+kept; the site navigation left out). The MCP server searches the documentation and returns one section
+at a time.
 
 ## What it holds
 
@@ -37,12 +42,18 @@ python3 .agents/mcp/cpp-official-docs/build_index.py   # the same, without Node
 - The C++ Core Guidelines: their license allows personal or internal business use only, not publication.
 - The GCC and GNU Make manuals: under the GNU FDL with invariant sections or cover texts, which
   no one may change or remove; that is not free under the Definition of Free Cultural Works.
+- The Ninja manual: written in a format the search does not read (`.asciidoc`); Meson and CMake
+  cover the build.
 
 ## Licenses
 
-cppreference.com is under CC BY-SA 3.0 or the GNU FDL; CMake under BSD 3-Clause; Clang under Apache 2.0 with the LLVM exception. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
-holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
-the base.
+cppreference.com is under CC BY-SA 3.0 or the GNU FDL; CMake under BSD 3-Clause; Clang under Apache
+2.0 with the LLVM exception. The guides of Qt are under the GNU FDL 1.3 with no invariant sections; the
+reference of Qt, taken from its code, under LGPL 3.0, GPL 2.0 or GPL 3.0. GoogleTest is under BSD
+3-Clause; Catch2 under the Boost Software License; {fmt}, nlohmann/json, Conan and vcpkg under MIT;
+Eigen under MPL 2.0; Meson under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its
+attribution, and `licenses/` holds the text of each license. The code of this brick (its `.ts` and
+`.py` files) is under the MIT License of the base.
 
 ## Remove it
 

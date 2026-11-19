@@ -9,12 +9,8 @@
       "version": "2025-02",
       "license": "CC-BY-SA-3.0 OR GFDL-1.3-or-later",
       "attribution": "The cppreference.com contributors",
-      "paths": [
-        "reference/en/"
-      ],
-      "docs": [
-        "reference/en"
-      ],
+      "paths": ["reference/en/"],
+      "docs": ["reference/en"],
       "extract": "cppreference-html",
       "licenseTexts": {
         "LICENSE-CC-BY-SA-3.0": "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt",
@@ -29,15 +25,9 @@
       "version": "4.5",
       "license": "BSD-3-Clause",
       "attribution": "Kitware, Inc. and the CMake contributors",
-      "paths": [
-        "Help/"
-      ],
-      "docs": [
-        "Help"
-      ],
-      "exclude": [
-        "Help/release/dev"
-      ]
+      "paths": ["Help/"],
+      "docs": ["Help"],
+      "exclude": ["Help/release/dev"]
     },
     {
       "tool": "clang",
@@ -47,18 +37,231 @@
       "version": "23.1",
       "license": "Apache-2.0 WITH LLVM-exception",
       "attribution": "The LLVM Project contributors",
-      "paths": [
-        "clang/docs/"
-      ],
-      "docs": [
-        "clang/docs"
-      ],
+      "paths": ["clang/docs/"],
+      "docs": ["clang/docs"],
+      "exclude": ["clang/docs/analyzer/developer-docs"],
+      "licenseTexts": { "LICENSE": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-23.1.5/clang/LICENSE.TXT" }
+    },
+    {
+      "tool": "qt-guides",
+      "title": "Qt 6 (Qt Base): the guides and overviews of each module, written in qdoc (signals and slots, the object model, containers, threads, events, painting, model/view, layouts, style sheets, network, SQL, Qt Test)",
+      "repository": "https://github.com/qt/qtbase.git",
+      "ref": "v6.12.0",
+      "version": "6.12",
+      "license": "GFDL-1.3-no-invariants-only",
+      "attribution": "The Qt Company Ltd. and other contributors",
+      "paths": ["src/**/*.qdoc"],
+      "docs": ["src"],
+      "files": "\\.qdoc$",
       "exclude": [
-        "clang/docs/analyzer/developer-docs"
+        "src/**/snippets",
+        "src/3rdparty"
+      ],
+      "licenseTexts": { "LICENSE-GFDL-1.3-no-invariants-only.txt": "https://raw.githubusercontent.com/qt/qtbase/v6.12.0/LICENSES/GFDL-1.3-no-invariants-only.txt" }
+    },
+    {
+      "tool": "qt-api",
+      "title": "Qt 6 (Qt Base): the reference of every class and function of Qt Core, Qt GUI, Qt Widgets, Qt Network, Qt Concurrent, Qt Test, Qt SQL, Qt XML, Qt D-Bus, Qt Print Support and Qt OpenGL, taken from the qdoc comments of the code",
+      "repository": "https://github.com/qt/qtbase.git",
+      "ref": "v6.12.0",
+      "version": "6.12",
+      "license": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only",
+      "attribution": "The Qt Company Ltd. and other contributors",
+      "paths": [
+        "src/corelib/**/*.cpp",
+        "src/gui/**/*.cpp",
+        "src/widgets/**/*.cpp",
+        "src/network/**/*.cpp",
+        "src/concurrent/**/*.cpp",
+        "src/testlib/**/*.cpp",
+        "src/sql/**/*.cpp",
+        "src/xml/**/*.cpp",
+        "src/dbus/**/*.cpp",
+        "src/printsupport/**/*.cpp",
+        "src/opengl/**/*.cpp"
+      ],
+      "docs": ["src"],
+      "extract": "qdoc-comments",
+      "exclude": [
+        "src/**/snippets",
+        "src/**/doc",
+        "src/3rdparty"
       ],
       "licenseTexts": {
-        "LICENSE": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-23.1.5/clang/LICENSE.TXT"
+        "LICENSE-LGPL-3.0-only.txt": "https://raw.githubusercontent.com/qt/qtbase/v6.12.0/LICENSES/LGPL-3.0-only.txt",
+        "LICENSE-GPL-2.0-only.txt": "https://raw.githubusercontent.com/qt/qtbase/v6.12.0/LICENSES/GPL-2.0-only.txt",
+        "LICENSE-GPL-3.0-only.txt": "https://raw.githubusercontent.com/qt/qtbase/v6.12.0/LICENSES/GPL-3.0-only.txt"
       }
+    },
+    {
+      "tool": "qt-quick-guides",
+      "title": "Qt 6 (Qt Declarative): the guides of QML and Qt Quick, written in qdoc (the QML language, property bindings, signals, JavaScript in QML, C++ integration, Qt Quick items, positioners, animations, states, models and views)",
+      "repository": "https://github.com/qt/qtdeclarative.git",
+      "ref": "v6.12.0",
+      "version": "6.12",
+      "license": "GFDL-1.3-no-invariants-only",
+      "attribution": "The Qt Company Ltd. and other contributors",
+      "paths": [
+        "src/qml/**/*.qdoc",
+        "src/quick/**/*.qdoc",
+        "src/quickcontrols/**/*.qdoc"
+      ],
+      "docs": ["src"],
+      "files": "\\.qdoc$",
+      "exclude": ["src/**/snippets"],
+      "licenseTexts": { "LICENSE-GFDL-1.3-no-invariants-only.txt": "https://raw.githubusercontent.com/qt/qtdeclarative/v6.12.0/LICENSES/GFDL-1.3-no-invariants-only.txt" }
+    },
+    {
+      "tool": "qt-quick-api",
+      "title": "Qt 6 (Qt Declarative): the reference of the QML types and C++ classes of Qt QML, Qt Quick and Qt Quick Controls, taken from the qdoc comments of the code",
+      "repository": "https://github.com/qt/qtdeclarative.git",
+      "ref": "v6.12.0",
+      "version": "6.12",
+      "license": "LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only",
+      "attribution": "The Qt Company Ltd. and other contributors",
+      "paths": [
+        "src/qml/**/*.cpp",
+        "src/quick/**/*.cpp",
+        "src/quickcontrols/**/*.cpp"
+      ],
+      "docs": ["src"],
+      "extract": "qdoc-comments",
+      "exclude": [
+        "src/**/snippets",
+        "src/**/doc",
+        "src/3rdparty"
+      ],
+      "licenseTexts": {
+        "LICENSE-LGPL-3.0-only.txt": "https://raw.githubusercontent.com/qt/qtdeclarative/v6.12.0/LICENSES/LGPL-3.0-only.txt",
+        "LICENSE-GPL-2.0-only.txt": "https://raw.githubusercontent.com/qt/qtdeclarative/v6.12.0/LICENSES/GPL-2.0-only.txt",
+        "LICENSE-GPL-3.0-only.txt": "https://raw.githubusercontent.com/qt/qtdeclarative/v6.12.0/LICENSES/GPL-3.0-only.txt"
+      }
+    },
+    {
+      "tool": "googletest",
+      "title": "GoogleTest and GoogleMock: the primer, the assertions (EXPECT_EQ, ASSERT_THAT...), test fixtures, parameterized tests, matchers and mocks",
+      "repository": "https://github.com/google/googletest.git",
+      "ref": "v1.18.0",
+      "version": "1.18",
+      "license": "BSD-3-Clause",
+      "attribution": "Google Inc.",
+      "paths": [
+        "docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "catch2",
+      "title": "Catch2: test cases, sections, assertions, matchers, generators, benchmarks and its command line",
+      "repository": "https://github.com/catchorg/Catch2.git",
+      "ref": "v3.16.1",
+      "version": "3.16",
+      "license": "BSL-1.0",
+      "attribution": "The Catch2 authors",
+      "paths": [
+        "docs/",
+        "LICENSE.txt"
+      ],
+      "docs": ["docs"]
+    },
+    {
+      "tool": "fmt",
+      "title": "{fmt}: the format string syntax, the API (fmt::format, fmt::print) and std::format compatibility",
+      "repository": "https://github.com/fmtlib/fmt.git",
+      "ref": "12.2.1",
+      "version": "12.2",
+      "license": "MIT",
+      "attribution": "Victor Zverovich and the {fmt} contributors",
+      "paths": [
+        "doc/",
+        "LICENSE"
+      ],
+      "docs": ["doc"]
+    },
+    {
+      "tool": "nlohmann-json",
+      "title": "JSON for Modern C++ (nlohmann/json): the API of basic_json, parsing, serialization, arbitrary type conversions, JSON Pointer and Patch, binary formats",
+      "repository": "https://github.com/nlohmann/json.git",
+      "ref": "v3.12.0",
+      "version": "3.12",
+      "license": "MIT",
+      "attribution": "Niels Lohmann",
+      "paths": [
+        "docs/mkdocs/docs/",
+        "LICENSE.MIT"
+      ],
+      "docs": ["docs/mkdocs/docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "conan",
+      "title": "Conan 2: the C and C++ package manager (conanfile.py and conanfile.txt, profiles, generators for CMake, the commands, creating and uploading packages, CI)",
+      "repository": "https://github.com/conan-io/docs.git",
+      "ref": "master",
+      "version": "2",
+      "license": "MIT",
+      "attribution": "JFrog Ltd. and the Conan documentation contributors",
+      "paths": [
+        "*.rst",
+        "**/*.rst",
+        "LICENSE"
+      ],
+      "docs": ["."],
+      "files": "\\.rst$",
+      "exclude": [
+        ".git",
+        "_themes",
+        "_templates",
+        "_ext"
+      ]
+    },
+    {
+      "tool": "vcpkg",
+      "title": "vcpkg: the C and C++ package manager of Microsoft (manifest mode, triplets for Windows, Linux and cross-compiling, CMake integration, binary caching, registries)",
+      "repository": "https://github.com/MicrosoftDocs/vcpkg-docs.git",
+      "ref": "main",
+      "version": "main",
+      "license": "MIT",
+      "attribution": "Microsoft Corporation and the vcpkg-docs contributors",
+      "paths": [
+        "vcpkg/",
+        "LICENSE",
+        "LICENSE-CODE"
+      ],
+      "docs": ["vcpkg"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "meson",
+      "title": "Meson: the build system (meson.build syntax, reference of every function, dependencies, cross-compilation files, subprojects)",
+      "repository": "https://github.com/mesonbuild/meson.git",
+      "ref": "1.12.1",
+      "version": "1.12",
+      "license": "Apache-2.0",
+      "attribution": "The Meson development team",
+      "paths": [
+        "docs/markdown/",
+        "COPYING"
+      ],
+      "docs": ["docs/markdown"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "eigen",
+      "title": "Eigen: linear algebra in C++ (matrices and vectors, arithmetic, block operations, decompositions and linear solvers, geometry and rotations, sparse matrices)",
+      "repository": "https://gitlab.com/libeigen/eigen.git",
+      "ref": "5.0.1",
+      "version": "5.0",
+      "license": "MPL-2.0",
+      "attribution": "The Eigen contributors",
+      "paths": [
+        "doc/",
+        "COPYING.MPL2"
+      ],
+      "docs": ["doc"],
+      "files": "\\.dox$"
     }
   ]
 }
