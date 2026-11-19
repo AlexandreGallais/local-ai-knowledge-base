@@ -16,5 +16,59 @@
     "files": 284,
     "bytes": 2056306,
     "built": "2026-11-14"
+  },
+  "junit": {
+    "commit": "f59f60d2cebdf2224235d81f781b1f310cbc8138",
+    "files": 75,
+    "bytes": 409516,
+    "built": "2026-11-19"
+  },
+  "mockito": {
+    "commit": "5a2f0f81cdafc9b34ddb4520db7f8866c787dac0",
+    "files": 107,
+    "bytes": 438183,
+    "built": "2026-11-19"
+  },
+  "spring-framework": {
+    "commit": "33a85b0bec67adb759aa898e3b80d603786be082",
+    "files": 470,
+    "bytes": 3071243,
+    "built": "2026-11-19"
+  },
+  "spring-boot": {
+    "commit": "634e6fd6bc2e475d745c0bdceb8e775864f7f2ec",
+    "files": 191,
+    "bytes": 1613382,
+    "built": "2026-11-19"
+  },
+  "hibernate": {
+    "commit": "701bb334a8796bb7236029b11e4ba4ac0a3ede8e",
+    "files": 108,
+    "bytes": 1705867,
+    "built": "2026-11-19"
+  },
+  "log4j": {
+    "commit": "dd0f9d255e24e6bcc13bd2641407a409c0524803",
+    "files": 141,
+    "bytes": 1153462,
+    "built": "2026-11-19"
+  },
+  "picocli": {
+    "commit": "5fcd4415a2cf834a12b4cb1e262a007beaa6b4af",
+    "files": 3,
+    "bytes": 580324,
+    "built": "2026-11-19"
+  },
+  "quarkus": {
+    "commit": "6ce99878508d792f3c2a2a7f9520b086a1c32cab",
+    "files": 319,
+    "bytes": 6373753,
+    "built": "2026-11-19"
+  },
+  "javafx": {
+    "commit": "e77ca96ebc30a05356082cd56e19bcadccf7dcae",
+    "files": 701,
+    "bytes": 3338433,
+    "built": "2026-11-19"
   }
 }

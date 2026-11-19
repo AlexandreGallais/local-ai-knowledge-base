@@ -22,6 +22,8 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
   every class and QML type, taken from the `/*! ... */` comments of its code), GoogleTest 1.18, Catch2
   3.16, {fmt} 12.2, nlohmann/json 3.12, Eigen 5.0, Conan 2, vcpkg and Meson 1.12.
 - Free licenses added to the check: the GNU FDL 1.3 with no invariant sections, LGPL 3.0 only.
+- `java-official-docs`: JavaFX 27 and Mockito 5.24, from their Javadoc; JUnit 6.1; Spring Framework
+  7.0; Spring Boot 4.1; Hibernate ORM 7.4; Log4j 2.26; picocli 4.7; Quarkus 3.40.
 
 ### Added: engineering physics for the simulation of ships and submarines
 

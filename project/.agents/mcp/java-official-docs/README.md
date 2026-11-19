@@ -1,6 +1,6 @@
 # Brick `java-official-docs`
 
-The official documentation of Java: the Java SE API of `java.base` and `java.net.http`, taken from the Javadoc comments of OpenJDK 25 (LTS), the Gradle user manual and the Maven documentation.
+The official documentation of Java: the Java SE API of `java.base` and `java.net.http`, taken from the Javadoc comments of OpenJDK 25 (LTS); the API of JavaFX 27 (`javafx.base`, `javafx.graphics`, `javafx.controls`, `javafx.fxml`), taken from the Javadoc of OpenJFX; the JUnit 6 user guide; Mockito, from its Javadoc; the reference of Spring Framework 7 and Spring Boot 4; the documentation of Hibernate ORM 7; Log4j 2; the picocli user manual; the Quarkus guides; the Gradle user manual and the Maven documentation.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -38,7 +38,7 @@ python3 .agents/mcp/java-official-docs/build_index.py   # the same, without Node
 
 ## Licenses
 
-The OpenJDK source code, and so its Javadoc, is under the GNU GPL version 2 with the Classpath exception; Gradle and Maven under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+The OpenJDK and OpenJFX source code, and so its Javadoc, is under the GNU GPL version 2 with the Classpath exception; JUnit under the Eclipse Public License 2.0; Mockito under MIT; Spring, Hibernate, Log4j, picocli, Quarkus, Gradle and Maven under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

@@ -1,8 +1,8 @@
 {
   "name": "java-official-docs",
-  "instructions": "The official documentation of the Java API, kept locally: the classes of the java.base module (java.lang, java.util, java.io, java.nio, java.time, java.net...) and of java.net.http, from the Javadoc of OpenJDK. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
-  "search": "Search the Java API documentation of OpenJDK: the java.base module (java.lang, java.util, java.io, java.nio, java.time, java.math, java.net, java.text, java.security) and java.net.http. Returns 10 section ids at most.",
-  "queryExample": "\"HashMap put\" or \"CompletableFuture thenApply\"",
-  "toolExample": "\"java-se\" (the only tool)",
+  "instructions": "The official documentation of Java, kept locally: the Java SE API of java.base and java.net.http (OpenJDK 25), JavaFX 27, JUnit 6, Mockito, Spring Framework 7, Spring Boot 4, Hibernate ORM 7, Log4j 2, picocli, Quarkus, Gradle and Maven. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
+  "search": "Search the documentation of Java: the classes of java.base and java.net.http, JavaFX controls and scene graph, JUnit annotations (@Test, @ParameterizedTest), Mockito (when, verify), Spring (@Transactional, beans, MVC), Spring Boot (properties, actuator), Hibernate (entities, HQL), Log4j, picocli, Quarkus guides, Gradle and Maven. Returns 10 section ids at most.",
+  "queryExample": "\"HashMap put\" or \"@ParameterizedTest\"",
+  "toolExample": "\"java-se\", \"junit\", \"spring-framework\" or \"javafx\"",
   "idExample": "library/java-se/java.base/share/classes/java/util/HashMap.md#hashmaphashmap"
 }

@@ -26,12 +26,8 @@
       "version": "9.9",
       "license": "Apache-2.0",
       "attribution": "Gradle Inc. and the Gradle contributors",
-      "paths": [
-        "platforms/documentation/docs/src/docs/userguide/"
-      ],
-      "docs": [
-        "platforms/documentation/docs/src/docs/userguide"
-      ]
+      "paths": ["platforms/documentation/docs/src/docs/userguide/"],
+      "docs": ["platforms/documentation/docs/src/docs/userguide"]
     },
     {
       "tool": "maven",
@@ -41,15 +37,159 @@
       "version": "2026-11",
       "license": "Apache-2.0",
       "attribution": "The Apache Software Foundation",
+      "paths": ["content/markdown/"],
+      "docs": ["content/markdown"],
+      "licenseTexts": { "LICENSE": "https://www.apache.org/licenses/LICENSE-2.0.txt" }
+    },
+    {
+      "tool": "junit",
+      "title": "JUnit 6 User Guide: writing tests with JUnit Jupiter (annotations, assertions, assumptions, @ParameterizedTest, @Nested, extensions), running them, migrating from JUnit 4",
+      "repository": "https://github.com/junit-team/junit-framework.git",
+      "ref": "r6.1.3",
+      "version": "6.1",
+      "license": "EPL-2.0",
+      "attribution": "The JUnit Team",
       "paths": [
-        "content/markdown/"
+        "documentation/modules/ROOT/",
+        "LICENSE.md"
+      ],
+      "docs": ["documentation/modules/ROOT"],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "mockito",
+      "title": "Mockito: mocking in Java tests (mock, when, verify, argument matchers, spies, captors, BDD style), from the Javadoc of its main classes",
+      "repository": "https://github.com/mockito/mockito.git",
+      "ref": "v5.24.0",
+      "version": "5.24",
+      "license": "MIT",
+      "attribution": "The Mockito contributors",
+      "paths": [
+        "mockito-core/src/main/java/org/mockito/",
+        "LICENSE"
+      ],
+      "docs": ["mockito-core/src/main/java/org/mockito"],
+      "extract": "javadoc",
+      "exclude": ["mockito-core/src/main/java/org/mockito/internal"]
+    },
+    {
+      "tool": "spring-framework",
+      "title": "Spring Framework 7 reference: the IoC container and dependency injection, AOP, data access and transactions, Spring MVC and WebFlux, testing, integration",
+      "repository": "https://github.com/spring-projects/spring-framework.git",
+      "ref": "v7.0.10",
+      "version": "7.0",
+      "license": "Apache-2.0",
+      "attribution": "Broadcom Inc. and the Spring Framework contributors",
+      "paths": [
+        "framework-docs/modules/",
+        "LICENSE.txt"
+      ],
+      "docs": ["framework-docs/modules"],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "spring-boot",
+      "title": "Spring Boot 4 reference: auto-configuration, externalized configuration and properties, profiles, logging, web, data, messaging, actuator, packaging and containers",
+      "repository": "https://github.com/spring-projects/spring-boot.git",
+      "ref": "v4.1.2",
+      "version": "4.1",
+      "license": "Apache-2.0",
+      "attribution": "Broadcom Inc. and the Spring Boot contributors",
+      "paths": [
+        "documentation/spring-boot-docs/src/docs/",
+        "documentation/spring-boot-actuator-docs/src/docs/",
+        "LICENSE.txt"
+      ],
+      "docs": ["documentation"],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "hibernate",
+      "title": "Hibernate ORM 7: the introduction, the user guide, the query language (HQL), the integration guide and the dialects",
+      "repository": "https://github.com/hibernate/hibernate-orm.git",
+      "ref": "7.4.16",
+      "version": "7.4",
+      "license": "Apache-2.0",
+      "attribution": "Red Hat, Inc. and the Hibernate contributors",
+      "paths": [
+        "documentation/src/main/asciidoc/",
+        "LICENSE.txt"
+      ],
+      "docs": ["documentation/src/main/asciidoc"],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "log4j",
+      "title": "Apache Log4j 2: the API, configuration files, appenders, layouts, filters, lookups, performance and the migration from Log4j 1",
+      "repository": "https://github.com/apache/logging-log4j2.git",
+      "ref": "rel/2.26.1",
+      "version": "2.26",
+      "license": "Apache-2.0",
+      "attribution": "The Apache Software Foundation",
+      "paths": [
+        "src/site/antora/modules/ROOT/",
+        "LICENSE.txt"
+      ],
+      "docs": ["src/site/antora/modules/ROOT"],
+      "files": "\\.adoc$"
+    },
+    {
+      "tool": "picocli",
+      "title": "picocli: command-line applications in Java (options, parameters, subcommands, help, completion, GraalVM native images), its user manual",
+      "repository": "https://github.com/remkop/picocli.git",
+      "ref": "v4.7.7",
+      "version": "4.7",
+      "license": "Apache-2.0",
+      "attribution": "Remko Popma and the picocli contributors",
+      "paths": [
+        "docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs"],
+      "files": "^docs/(?:index|autocomplete|A-Whirlwind-Tour-of-Picocli)\\.adoc$"
+    },
+    {
+      "tool": "quarkus",
+      "title": "Quarkus 3: the guides (REST, CDI, configuration, Hibernate, messaging, security, testing, native executables, containers and Kubernetes)",
+      "repository": "https://github.com/quarkusio/quarkus.git",
+      "ref": "3.40.1",
+      "version": "3.40",
+      "license": "Apache-2.0",
+      "attribution": "Red Hat, Inc. and the Quarkus contributors",
+      "paths": [
+        "docs/src/main/asciidoc/",
+        "LICENSE"
+      ],
+      "docs": ["docs/src/main/asciidoc"],
+      "files": "\\.adoc$",
+      "exclude": [
+        "docs/src/main/asciidoc/_attributes.adoc",
+        "docs/src/main/asciidoc/_attributes-local.adoc",
+        "docs/src/main/asciidoc/_examples"
+      ]
+    },
+    {
+      "tool": "javafx",
+      "title": "JavaFX 27 API: the javafx.base, javafx.graphics, javafx.controls and javafx.fxml modules (scene graph, controls, layouts, properties and bindings, animation, CSS), from the Javadoc of OpenJFX",
+      "repository": "https://github.com/openjdk/jfx.git",
+      "ref": "27-ga",
+      "version": "27",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "attribution": "Oracle and/or its affiliates, and the OpenJFX contributors",
+      "paths": [
+        "modules/javafx.base/src/main/java/javafx/",
+        "modules/javafx.graphics/src/main/java/javafx/",
+        "modules/javafx.controls/src/main/java/javafx/",
+        "modules/javafx.fxml/src/main/java/javafx/",
+        "LICENSE"
       ],
       "docs": [
-        "content/markdown"
+        "modules/javafx.base/src/main/java/javafx",
+        "modules/javafx.graphics/src/main/java/javafx",
+        "modules/javafx.controls/src/main/java/javafx",
+        "modules/javafx.fxml/src/main/java/javafx"
       ],
-      "licenseTexts": {
-        "LICENSE": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-      }
+      "extract": "javadoc"
     }
   ]
 }
