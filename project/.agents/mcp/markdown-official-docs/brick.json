@@ -1,0 +1,8 @@
+{
+  "name": "markdown-official-docs",
+  "instructions": "The official documentation of Markdown and of diagrams as text, kept locally: Mermaid (every type of diagram, configuration, themes), the CommonMark and GitHub Flavored Markdown specifications, the Pandoc User's Guide, the markdownlint rules, KaTeX, Vega-Lite, Graphviz (DOT) and D2. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of Markdown and diagrams: Mermaid syntax (flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt...), CommonMark and GFM rules (lists, tables, code blocks, links), Pandoc options and Markdown extensions, markdownlint rules (MD001...), KaTeX functions, Vega-Lite marks and encodings, Graphviz DOT attributes, D2 shapes. Returns 10 section ids at most.",
+  "queryExample": "\"sequenceDiagram\" or \"MD013\"",
+  "toolExample": "\"mermaid\"",
+  "idExample": "library/mermaid/syntax/sequenceDiagram.md#messages"
+}

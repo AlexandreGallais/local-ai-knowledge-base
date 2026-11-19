@@ -244,13 +244,16 @@ DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|
 MARKDOWN_FILE = re.compile(r'\.(?:md|mdx|markdown)(?:\.in)?\Z')
 MANUAL_PAGE = re.compile(r'\.(?:man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 _FRONT_TITLE = re.compile(f'{LINE_START}title:{S}*["\']?({DOT}*?)["\']?{S}*{LINE_END}')
+_FRONT_END = re.compile(r'\n(?:---|\.\.\.)')
 
 
 def front_matter(text: str) -> tuple[str, str | None]:
-    # The YAML header of a Markdown file (MDN, Vite...), and the title it may give.
+    # The YAML header of a Markdown file (MDN, Vite...) or of a specification written in Markdown
+    # (CommonMark), closed by "---" or "...", and the title it may give.
     if not text.startswith('---\n'):
         return text, None
-    end = text.find('\n---', 4)
+    close = _FRONT_END.search(text, 4)
+    end = -1 if close is None else close.start()
     block = '' if end < 0 else text[4:end]
     found = _FRONT_TITLE.search(block)
     body = text if end < 0 else text[end + 4 :]
@@ -261,25 +264,40 @@ def decode_xml(text: str) -> str:
     return text.replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"').replace('&apos;', "'").replace('&amp;', '&')
 
 
-_FENCE = re.compile(f'{S}*(?:```|~~~)')
-_MARKDOWN_HEADING = re.compile(r'#{2,4} ')
+_MARKDOWN_HEADING = re.compile(r'#{1,4} ')
 _HASHES = re.compile(r'\A#+ ')
+# The fence that opens or closes a Markdown code block: three backticks or tildes, or more.
+_MARKDOWN_FENCE = re.compile(f'{S}*(`{{3,}}|~{{3,}})')
+
+
+def fence_after(open_fence: str | None, line: str) -> str | None:
+    # The fence still open after a line: a fence opens a block; only a fence of the same character, at
+    # least as long, closes it, so a specification can show "```" inside a longer fence.
+    found = _MARKDOWN_FENCE.match(line)
+    if found is None:
+        return open_fence
+    mark = found.group(1)
+    if open_fence is None:
+        return mark
+    return None if mark.startswith(open_fence[0]) and len(mark) >= len(open_fence) else open_fence
 
 
 def markdown_cuts(lines: list[str]) -> Outline:
-    # Markdown: "# " gives the title, each "##", "###" or "####" outside a code block a section.
+    # Markdown: the first "# " gives the title; each other heading of levels 1 to 4 outside a code block
+    # starts a section.
     cuts: list[Cut] = []
     title: str | None = None
-    fence = False
+    fence: str | None = None
     for index, line in enumerate(lines):
-        fence = (not fence) if _FENCE.match(line) else fence
-        if fence:
+        inside = fence is not None
+        fence = fence_after(fence, line)
+        if inside or fence is not None:
             continue
         # "# Title", or "% title" on the first line of a manual page written for pandoc (Podman).
         if title is None and (line.startswith('# ') or (index == 0 and line.startswith('% '))):
             title = js_trim(line[2:])
         elif _MARKDOWN_HEADING.match(line):
-            # Levels 2 to 4: a long reference page (the options of a command) gives one section per entry.
+            # Levels 1 to 4: the chapters of a long specification, the entries of a reference page.
             cuts.append(Cut(index, js_trim(_HASHES.sub('', line, count=1))))
     return Outline(title, cuts)
 
@@ -640,11 +658,15 @@ def halibut_cuts(lines: list[str]) -> Outline:
 
 
 def _text_cuts(path: str, lines: list[str]) -> Outline:
+    if not path.endswith('.txt'):
+        return underlined_cuts(lines)
+    # A text file written in Markdown (a specification, the Pandoc manual) is cut at its "#" headings,
+    # even when its examples show underlined ones; any other text file at its underlined headings.
+    markdown = markdown_cuts(lines)
+    if markdown.cuts:
+        return markdown
     underlined = underlined_cuts(lines)
-    # A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
-    if path.endswith('.txt') and underlined.title is None and not underlined.cuts:
-        return markdown_cuts(lines)
-    return underlined
+    return markdown if underlined.title is None and not underlined.cuts else underlined
 
 
 def _json_cuts(lines: list[str]) -> Outline:
@@ -685,7 +707,7 @@ def _file_title(path: str, header_title: str | None, found: Outline) -> str:
 def sections(path: str, text: str) -> list[Section]:
     # The sections of a documentation file, by its format; the text before the first section belongs
     # to the title of the file.
-    body, header_title = front_matter(text) if MARKDOWN_FILE.search(path) else (text, None)
+    body, header_title = front_matter(text) if MARKDOWN_FILE.search(path) or path.endswith('.txt') else (text, None)
     lines = body.split('\n')
     found = cuts_of(path, lines)
     file_title = _file_title(path, header_title, found)

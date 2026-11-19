@@ -171,7 +171,8 @@ interface Outline {
   cuts: Cut[];
 }
 
-// The YAML header of a Markdown file (MDN, Vite...), and the title it may give.
+// The YAML header of a Markdown file (MDN, Vite...) or of a specification written in Markdown
+// (CommonMark), closed by "---" or "...", and the title it may give.
 function frontMatter(text: string): {
   body: string;
   title?: string;
@@ -179,7 +180,10 @@ function frontMatter(text: string): {
   if (!text.startsWith('---\n')) {
     return { body: text };
   }
-  const end = text.indexOf('\n---', 4);
+  const close = text
+    .slice(4)
+    .search(/\n(?:---|\.\.\.)/);
+  const end = close < 0 ? -1 : close + 4;
   const block = end < 0 ? '' : text.slice(4, end);
   const title = /^title:\s*["']?(.*?)["']?\s*$/m.exec(block)?.[1];
   const body = end < 0 ? text : text.slice(end + 4);
@@ -204,16 +208,35 @@ const decodeXml = (text: string): string => text
   .replaceAll('&quot;', '"')
   .replaceAll('&apos;', "'")
   .replaceAll('&amp;', '&');
+// The fence that opens or closes a Markdown code block: three backticks or tildes, or more.
+const FENCE = /^\s*(`{3,}|~{3,})/;
 
-// Markdown: "# " gives the title, each "##", "###" or "####" outside a code block a section.
+// The fence still open after a line: a fence opens a block; only a fence of the same character, at
+// least as long, closes it, so a specification can show "```" inside a longer fence.
+function fenceAfter(open: string | undefined, line: string): string | undefined {
+  const mark = FENCE.exec(line)?.[1];
+
+  if (mark === undefined) {
+    return open;
+  }
+  if (open === undefined) {
+    return mark;
+  }
+  return mark.startsWith(open.charAt(0)) && mark.length >= open.length ? undefined : open;
+}
+
+// Markdown: the first "# " gives the title; each other heading of levels 1 to 4 outside a code block
+// starts a section.
 function markdownCuts(lines: string[]): Outline {
   const cuts: Cut[] = [];
   let title: string | undefined;
-  let fence = false;
+  let fence: string | undefined;
 
   lines.forEach((line, index) => {
-    fence = /^\s*(?:```|~~~)/.test(line) ? !fence : fence;
-    if (fence) {
+    const inside = fence !== undefined;
+
+    fence = fenceAfter(fence, line);
+    if (inside || fence !== undefined) {
       return;
     }
     // "# Title", or "% title" on the first line of a manual page written for pandoc (Podman).
@@ -221,8 +244,8 @@ function markdownCuts(lines: string[]): Outline {
       title = line
         .slice(2)
         .trim();
-    } else if (/^#{2,4} /.test(line)) {
-      // Levels 2 to 4: a long reference page (the options of a command) gives one section per entry.
+    } else if (/^#{1,4} /.test(line)) {
+      // Levels 1 to 4: the chapters of a long specification, the entries of a reference page.
       cuts.push({
         line: index,
         heading: line
@@ -627,10 +650,19 @@ function halibutCuts(lines: string[]): Outline {
 }
 
 function textCuts(path: string, lines: string[]): Outline {
+  if (!path.endsWith('.txt')) {
+    return underlinedCuts(lines);
+  }
+  // A text file written in Markdown (a specification, the Pandoc manual) is cut at its "#" headings,
+  // even when its examples show underlined ones; any other text file at its underlined headings.
+  const markdown = markdownCuts(lines);
+
+  if (markdown.cuts.length > 0) {
+    return markdown;
+  }
   const underlined = underlinedCuts(lines);
 
-  // A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
-  return path.endsWith('.txt') && underlined.title === undefined && underlined.cuts.length === 0 ? markdownCuts(lines) : underlined;
+  return underlined.title === undefined && underlined.cuts.length === 0 ? markdown : underlined;
 }
 
 // A JSON schema (the options of an Angular schematic): one section, titled by its "title".
@@ -678,7 +710,7 @@ function uniqueAnchor(seen: Map<string, number>, heading: string): string {
 // The sections of a documentation file, by its format; the text before the first section belongs
 // to the title of the file.
 export function sections(path: string, text: string): Section[] {
-  const header = MARKDOWN_FILE.test(path) ? frontMatter(text) : { body: text };
+  const header = MARKDOWN_FILE.test(path) || path.endsWith('.txt') ? frontMatter(text) : { body: text };
   const lines = header.body.split('\n');
   const found = cutsOf(path, lines);
   const fileTitle = header.title ?? found.title ?? path.replace(/^.*\//, '');

@@ -77,6 +77,14 @@
         ],
         "codemode": false
       },
+      "markdown-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/markdown-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "math-docs": {
         "type": "local",
         "command": [

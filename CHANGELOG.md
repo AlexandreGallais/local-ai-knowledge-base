@@ -16,6 +16,18 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: Markdown and diagrams
+
+- `markdown-official-docs`: Mermaid 12.3, the CommonMark 0.31.2 and GitHub Flavored Markdown 0.29
+  specifications, the Pandoc 3.14 User's Guide and its Lua filters, markdownlint 0.42, KaTeX 0.19,
+  Vega-Lite 6.5, Graphviz (DOT, attributes, layout engines) and D2.
+- The search reads a Markdown code block to its matching fence, so an example of a specification
+  that shows a shorter fence or an underlined heading stays inside it.
+- A Markdown page is cut at every heading of levels 1 to 4 after its title: the chapters of a long
+  specification become sections too.
+- A `.txt` file written in Markdown is cut at its `#` headings and titled by its front matter, closed
+  by `---` or `...`.
+
 ### Added: desktop applications, up to Windows
 
 - `desktop-official-docs`: Electron 45.4 (guides, tutorials, every API), electron-builder 26.18,
