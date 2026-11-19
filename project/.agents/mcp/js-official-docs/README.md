@@ -1,6 +1,6 @@
 # Brick `js-official-docs`
 
-The official documentation of the JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig reference), RxJS and NgRx Signals (guides and API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and their main plugins.
+The official documentation of the JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig reference), RxJS and NgRx Signals (guides and API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and their main plugins; D3, Chart.js, Apache ECharts and three.js, to draw charts and scenes; Zod. Socket.IO is left out: its documentation repository states no license.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -48,7 +48,7 @@ python3 .agents/mcp/js-official-docs/check_versions.py   # the same, without Nod
 
 ## Licenses
 
-MDN is under CC BY-SA 2.5, TypeScript under CC BY 4.0, Angular under MIT, the ARIA Authoring Practices Guide under the W3C Software and Document License, most tools under MIT, RxJS and Playwright under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+MDN is under CC BY-SA 2.5, TypeScript under CC BY 4.0, Angular under MIT, the ARIA Authoring Practices Guide under the W3C Software and Document License, most tools under MIT, RxJS, Playwright and Apache ECharts under Apache 2.0, D3 under ISC. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

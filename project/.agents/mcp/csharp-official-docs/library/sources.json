@@ -12,12 +12,8 @@
         "docs/csharp/",
         "includes/"
       ],
-      "docs": [
-        "docs/csharp"
-      ],
-      "exclude": [
-        "docs/csharp/**/snippets"
-      ]
+      "docs": ["docs/csharp"],
+      "exclude": ["docs/csharp/**/snippets"]
     },
     {
       "tool": "dotnet-core",
@@ -31,12 +27,8 @@
         "docs/core/",
         "includes/"
       ],
-      "docs": [
-        "docs/core"
-      ],
-      "exclude": [
-        "docs/core/**/snippets"
-      ]
+      "docs": ["docs/core"],
+      "exclude": ["docs/core/**/snippets"]
     },
     {
       "tool": "dotnet-standard",
@@ -51,12 +43,8 @@
         "samples/snippets/csharp/",
         "includes/"
       ],
-      "docs": [
-        "docs/standard"
-      ],
-      "exclude": [
-        "docs/standard/**/snippets"
-      ]
+      "docs": ["docs/standard"],
+      "exclude": ["docs/standard/**/snippets"]
     },
     {
       "tool": "aspnetcore",
@@ -66,12 +54,8 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the ASP.NET Core docs contributors",
-      "paths": [
-        "aspnetcore/"
-      ],
-      "docs": [
-        "aspnetcore"
-      ],
+      "paths": ["aspnetcore/"],
+      "docs": ["aspnetcore"],
       "exclude": [
         "aspnetcore/**/samples",
         "aspnetcore/**/samples_snapshot",
@@ -91,9 +75,7 @@
         "entity-framework/",
         "samples/"
       ],
-      "docs": [
-        "entity-framework"
-      ]
+      "docs": ["entity-framework"]
     },
     {
       "tool": "dotnet-fundamentals",
@@ -103,12 +85,8 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET documentation contributors",
-      "paths": [
-        "docs/fundamentals/"
-      ],
-      "docs": [
-        "docs/fundamentals"
-      ],
+      "paths": ["docs/fundamentals/"],
+      "docs": ["docs/fundamentals"],
       "exclude": [
         "docs/fundamentals/**/snippets",
         "docs/fundamentals/**/media"
@@ -122,15 +100,9 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET documentation contributors",
-      "paths": [
-        "docs/architecture/"
-      ],
-      "docs": [
-        "docs/architecture"
-      ],
-      "exclude": [
-        "docs/architecture/**/media"
-      ]
+      "paths": ["docs/architecture/"],
+      "docs": ["docs/architecture"],
+      "exclude": ["docs/architecture/**/media"]
     },
     {
       "tool": "aspire",
@@ -140,12 +112,8 @@
       "version": "13",
       "license": "MIT",
       "attribution": "Microsoft and the .NET Aspire documentation contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "exclude": [
         "docs/**/snippets",
         "docs/**/media"
@@ -160,15 +128,9 @@
       "version": "11.0",
       "license": "MIT",
       "attribution": ".NET Foundation and Contributors",
-      "paths": [
-        "ref/net11.0/"
-      ],
-      "docs": [
-        "ref/net11.0"
-      ],
-      "licenseTexts": {
-        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/aspnetcore/main/LICENSE.txt"
-      }
+      "paths": ["ref/net11.0/"],
+      "docs": ["ref/net11.0"],
+      "licenseTexts": { "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/aspnetcore/main/LICENSE.txt" }
     },
     {
       "tool": "efcore-api",
@@ -179,15 +141,9 @@
       "version": "11.0",
       "license": "MIT",
       "attribution": ".NET Foundation and Contributors",
-      "paths": [
-        "lib/net11.0/"
-      ],
-      "docs": [
-        "lib/net11.0"
-      ],
-      "licenseTexts": {
-        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt"
-      }
+      "paths": ["lib/net11.0/"],
+      "docs": ["lib/net11.0"],
+      "licenseTexts": { "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt" }
     },
     {
       "tool": "efcore-relational-api",
@@ -198,15 +154,86 @@
       "version": "11.0",
       "license": "MIT",
       "attribution": ".NET Foundation and Contributors",
+      "paths": ["lib/net11.0/"],
+      "docs": ["lib/net11.0"],
+      "licenseTexts": { "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt" }
+    },
+    {
+      "tool": "dotnet-desktop",
+      "title": "Windows desktop apps in .NET: WPF (XAML, controls, layout, data binding, styles and templates, commands, graphics and animation) and Windows Forms",
+      "repository": "https://github.com/dotnet/docs-desktop.git",
+      "ref": "main",
+      "version": "main",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft Corporation and the docs-desktop contributors",
       "paths": [
-        "lib/net11.0/"
+        "dotnet-desktop-guide/**/*.md",
+        "LICENSE",
+        "LICENSE-CODE"
       ],
-      "docs": [
-        "lib/net11.0"
+      "docs": ["dotnet-desktop-guide"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "maui",
+      "title": ".NET MAUI: cross-platform apps for Windows, Android, iOS and macOS (XAML, controls, layouts, data binding, MVVM, platform integration, deployment)",
+      "repository": "https://github.com/dotnet/docs-maui.git",
+      "ref": "main",
+      "version": "main",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft Corporation and the docs-maui contributors",
+      "paths": [
+        "docs/**/*.md",
+        "LICENSE",
+        "LICENSE-CODE"
       ],
-      "licenseTexts": {
-        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt"
-      }
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "xunit",
+      "title": "xUnit.net: writing and running tests in .NET (facts, theories, fixtures, shared context, v3 and Microsoft Testing Platform, analyzers)",
+      "repository": "https://github.com/xunit/xunit.net.git",
+      "ref": "main",
+      "version": "v3",
+      "license": "Apache-2.0",
+      "attribution": ".NET Foundation and the xUnit.net contributors",
+      "paths": [
+        "site/**/*.md",
+        "LICENSE.txt"
+      ],
+      "docs": ["site"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "nunit",
+      "title": "NUnit: writing tests in .NET (attributes, assertions and constraints, the runners, the analyzers)",
+      "repository": "https://github.com/nunit/docs.git",
+      "ref": "master",
+      "version": "4",
+      "license": "MIT",
+      "attribution": "NUnit.org",
+      "paths": [
+        "docs/**/*.md",
+        "LICENSE.md"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "polly",
+      "title": "Polly 8: resilience in .NET (retry, circuit breaker, timeout, fallback, hedging, rate limiter, resilience pipelines)",
+      "repository": "https://github.com/App-vNext/Polly.git",
+      "ref": "8.9.1",
+      "version": "8.9",
+      "license": "BSD-3-Clause",
+      "attribution": "App vNext and the Polly contributors",
+      "paths": [
+        "docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$"
     }
   ]
 }

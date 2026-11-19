@@ -12,9 +12,7 @@
         "src/",
         "listings/"
       ],
-      "docs": [
-        "src"
-      ]
+      "docs": ["src"]
     },
     {
       "tool": "rust-reference",
@@ -24,12 +22,8 @@
       "version": "2026-11",
       "license": "MIT OR Apache-2.0",
       "attribution": "The Rust Project Developers",
-      "paths": [
-        "src/"
-      ],
-      "docs": [
-        "src"
-      ]
+      "paths": ["src/"],
+      "docs": ["src"]
     },
     {
       "tool": "rust-std",
@@ -59,12 +53,8 @@
       "version": "1.100",
       "license": "MIT OR Apache-2.0",
       "attribution": "The Rust Project Developers",
-      "paths": [
-        "doc/book/src/"
-      ],
-      "docs": [
-        "doc/book/src"
-      ]
+      "paths": ["doc/book/src/"],
+      "docs": ["doc/book/src"]
     },
     {
       "tool": "rust-by-example",
@@ -74,12 +64,39 @@
       "version": "2026-11",
       "license": "MIT OR Apache-2.0",
       "attribution": "The Rust Project Developers",
+      "paths": ["src/"],
+      "docs": ["src"]
+    },
+    {
+      "tool": "tokio",
+      "title": "Tokio: asynchronous Rust (the tutorial: spawning, shared state, channels, I/O, framing, async in depth, select, streams; topics: graceful shutdown, tracing, bridging with sync code)",
+      "repository": "https://github.com/tokio-rs/website.git",
+      "ref": "master",
+      "version": "1",
+      "license": "MIT",
+      "attribution": "Carl Lerche and the Tokio website contributors",
       "paths": [
-        "src/"
+        "content/",
+        "LICENSE"
       ],
-      "docs": [
-        "src"
-      ]
+      "docs": ["content"],
+      "files": "\\.md$",
+      "exclude": ["content/blog"]
+    },
+    {
+      "tool": "serde",
+      "title": "Serde: serializing and deserializing Rust data structures (derive, attributes, custom serialization, data formats)",
+      "repository": "https://github.com/serde-rs/serde-rs.github.io.git",
+      "ref": "master",
+      "version": "1",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "The Serde contributors",
+      "paths": [
+        "_src/",
+        "LICENSE-CC-BY-SA"
+      ],
+      "docs": ["_src"],
+      "files": "\\.md$"
     }
   ]
 }

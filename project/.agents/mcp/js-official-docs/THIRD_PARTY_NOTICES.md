@@ -448,3 +448,53 @@ copyright notices, are in `licenses/<tool>/`.
 - License: W3C-20150513
 - License text: [licenses/aria-practices/LICENSE.md](licenses/aria-practices/LICENSE.md)
 - Changes: none; the files are copied as they are in the source, at the commit above.
+
+## d3
+
+- Work: D3 7: the API of every module (selections, scales such as d3.scaleLinear, axes, shapes, transitions, zoom, drag, force, hierarchies, geographies, time, colors)
+- Authors: Mike Bostock and the D3 contributors
+- Copyright: `Copyright 2010-2026 Mike Bostock`
+- Source: <https://github.com/d3/d3>, v7.9.2, commit db118c93a429e82b83f091dbaa18fd0a82c06130
+- License: ISC
+- License text: [licenses/d3/LICENSE](licenses/d3/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## chartjs
+
+- Work: Chart.js 4: chart types, axes, configuration, plugins, animations, developers' API
+- Authors: The Chart.js contributors
+- Copyright: `Copyright (c) 2014-2024 Chart.js Contributors`
+- Source: <https://github.com/chartjs/Chart.js>, v4.6.1, commit 76d8cf895a7485dc838c90ef37e2bc9d9e388fcb
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/chartjs/LICENSE.md](licenses/chartjs/LICENSE.md)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## echarts
+
+- Work: Apache ECharts: the configuration of every option (series, axes, tooltip, visual map, data zoom) and the API of the chart instance
+- Authors: The Apache Software Foundation
+- Copyright: as stated in the license text, by The Apache Software Foundation
+- Source: <https://github.com/apache/echarts-doc>, master, commit 2e15d7c7321dce0c62fda00b8d2426c171bd8b0a
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/echarts/LICENSE](licenses/echarts/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## threejs
+
+- Work: three.js: the reference of every class (scenes, cameras, geometries, materials, lights, loaders, controls, renderers, nodes)
+- Authors: The three.js authors
+- Copyright: `Copyright © 2010-2026 three.js authors`
+- Source: <https://github.com/mrdoob/three.js>, r187, commit 7e89746a687bb88271253698fa108b1dd59825d0
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/threejs/LICENSE](licenses/threejs/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## zod
+
+- Work: Zod 4: TypeScript-first schema validation (schemas, parsing, errors, JSON Schema, Zod Mini)
+- Authors: Colin McDonnell and the Zod contributors
+- Copyright: `Copyright (c) 2025 Colin McDonnell`
+- Source: <https://github.com/colinhacks/zod>, v4.6.7, commit b500a2ee95134f81d74da7911d7378dd2853d042
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/zod/LICENSE](licenses/zod/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.

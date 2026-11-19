@@ -24,3 +24,5 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [rust-std](rust-std.index.md) | The Rust standard library: core, alloc and std, from their documentation comments | 1.100 | MIT OR Apache-2.0 | 649 files, 3.1 MB |
 | [cargo](cargo.index.md) | The Cargo Book: manifests, workspaces, features, profiles, commands | 1.100 | MIT OR Apache-2.0 | 99 files, 1.7 MB |
 | [rust-by-example](rust-by-example.index.md) | Rust by Example | 2026-11 | MIT OR Apache-2.0 | 198 files, 0.4 MB |
+| [tokio](tokio.index.md) | Tokio: asynchronous Rust (the tutorial: spawning, shared state, channels, I/O, framing, async in depth, select, streams; topics: graceful shutdown, tracing, bridging with sync code) | 1 | MIT | 19 files, 0.2 MB |
+| [serde](serde.index.md) | Serde: serializing and deserializing Rust data structures (derive, attributes, custom serialization, data formats) | 1 | CC-BY-SA-4.0 | 39 files, 0.2 MB |

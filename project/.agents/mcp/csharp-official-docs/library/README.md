@@ -30,3 +30,8 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [aspnetcore-api](aspnetcore-api.index.md) | ASP.NET Core API reference: the XML documentation of the shared framework Microsoft.AspNetCore.App | 11.0 | MIT | 249 files, 44.2 MB |
 | [efcore-api](efcore-api.index.md) | Entity Framework Core API reference: the XML documentation of Microsoft.EntityFrameworkCore | 11.0 | MIT | 1 files, 8.7 MB |
 | [efcore-relational-api](efcore-relational-api.index.md) | Entity Framework Core relational API reference: the XML documentation of Microsoft.EntityFrameworkCore.Relational | 11.0 | MIT | 1 files, 4.9 MB |
+| [dotnet-desktop](dotnet-desktop.index.md) | Windows desktop apps in .NET: WPF (XAML, controls, layout, data binding, styles and templates, commands, graphics and animation) and Windows Forms | main | CC-BY-4.0 | 1620 files, 8.7 MB |
+| [maui](maui.index.md) | .NET MAUI: cross-platform apps for Windows, Android, iOS and macOS (XAML, controls, layouts, data binding, MVVM, platform integration, deployment) | main | CC-BY-4.0 | 473 files, 5.1 MB |
+| [xunit](xunit.index.md) | xUnit.net: writing and running tests in .NET (facts, theories, fixtures, shared context, v3 and Microsoft Testing Platform, analyzers) | v3 | Apache-2.0 | 402 files, 1.2 MB |
+| [nunit](nunit.index.md) | NUnit: writing tests in .NET (attributes, assertions and constraints, the runners, the analyzers) | 4 | MIT | 420 files, 1.9 MB |
+| [polly](polly.index.md) | Polly 8: resilience in .NET (retry, circuit breaker, timeout, fallback, hedging, rate limiter, resilience pipelines) | 8.9 | BSD-3-Clause | 35 files, 0.4 MB |

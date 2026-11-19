@@ -28,5 +28,17 @@
     "files": 198,
     "bytes": 392408,
     "built": "2026-11-15"
+  },
+  "tokio": {
+    "commit": "71cdb3858fbb943843e8cf0e8baf547fe22180f7",
+    "files": 19,
+    "bytes": 212097,
+    "built": "2026-11-19"
+  },
+  "serde": {
+    "commit": "c4a897bc01fb358075ddd1f6235ed54081e88b84",
+    "files": 39,
+    "bytes": 170371,
+    "built": "2026-11-19"
   }
 }

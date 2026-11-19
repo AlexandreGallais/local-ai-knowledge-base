@@ -25,10 +25,10 @@ the folder removes the server, its documentation and its rules, without breaking
 
 | Brick | What the AI gets |
 | --- | --- |
-| `js-official-docs` | The JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig options), RxJS and NgRx Signals (guides, API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and their plugins. |
-| `csharp-official-docs` | C# and .NET: the language, the guides and fundamentals, the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference of ASP.NET Core and EF Core. |
+| `js-official-docs` | The JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig options), RxJS and NgRx Signals (guides, API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and their plugins; D3, Chart.js, Apache ECharts, three.js, Zod. |
+| `csharp-official-docs` | C# and .NET: the language, the guides and fundamentals, the architecture guides, ASP.NET Core, EF Core, .NET Aspire, the API reference of ASP.NET Core and EF Core, WPF and Windows Forms, .NET MAUI, xUnit.net, NUnit, Polly. |
 | `python-official-docs` | Python: language reference, standard library, tutorial, how-to guides, what is new; NumPy (user guide and API), pandas, Matplotlib, pytest, Pydantic, FastAPI; the `inkex` API of the Inkscape extensions and their guides. |
-| `rust-official-docs` | Rust: the book, the reference, Rust by Example, the Cargo book and the standard library (`core`, `alloc`, `std`). |
+| `rust-official-docs` | Rust: the book, the reference, Rust by Example, the Cargo book and the standard library (`core`, `alloc`, `std`), Tokio, Serde. |
 | `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http` (OpenJDK 25, LTS), JavaFX 27, JUnit 6, Mockito, Spring Framework 7, Spring Boot 4, Hibernate ORM 7, Log4j 2, picocli, Quarkus, Gradle and Maven. |
 | `containers-official-docs` | Containers: the Dockerfile reference, the Docker manuals and CLI, Podman and its configuration files (`containers.conf`, `registries.conf`, `storage.conf`), Buildah, Skopeo, Podman Desktop, the Compose Specification, dev containers (the specification, containers.dev, VS Code, the reference features and images), the display and the sound of the host in a container (x11docker, Distrobox, Toolbx), the OCI specifications. |
 | `git-official-docs` | Git: the manual page of every command, and Git LFS. |

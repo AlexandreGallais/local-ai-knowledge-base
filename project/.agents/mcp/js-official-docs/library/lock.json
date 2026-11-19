@@ -256,5 +256,35 @@
     "files": 107,
     "bytes": 1659940,
     "built": "2026-11-14"
+  },
+  "d3": {
+    "commit": "db118c93a429e82b83f091dbaa18fd0a82c06130",
+    "files": 116,
+    "bytes": 969337,
+    "built": "2026-11-19"
+  },
+  "chartjs": {
+    "commit": "76d8cf895a7485dc838c90ef37e2bc9d9e388fcb",
+    "files": 138,
+    "bytes": 507391,
+    "built": "2026-11-19"
+  },
+  "echarts": {
+    "commit": "2e15d7c7321dce0c62fda00b8d2426c171bd8b0a",
+    "files": 208,
+    "bytes": 1419087,
+    "built": "2026-11-19"
+  },
+  "threejs": {
+    "commit": "7e89746a687bb88271253698fa108b1dd59825d0",
+    "files": 836,
+    "bytes": 2284073,
+    "built": "2026-11-19"
+  },
+  "zod": {
+    "commit": "b500a2ee95134f81d74da7911d7378dd2853d042",
+    "files": 17,
+    "bytes": 279551,
+    "built": "2026-11-19"
   }
 }

@@ -62,3 +62,8 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [sass](sass.index.md) | Sass documentation: syntax, variables, at-rules, modules, built-in functions, breaking changes | 2026-11 | MIT | 86 files, 0.5 MB |
 | [storybook](storybook.index.md) | Storybook documentation: stories, args, controls, addons, testing, configuration | 10.6 | MIT | 184 files, 1.4 MB |
 | [aria-practices](aria-practices.index.md) | ARIA Authoring Practices Guide (APG): the patterns of accessible components and their examples | 2026-11 | W3C-20150513 | 107 files, 1.7 MB |
+| [d3](d3.index.md) | D3 7: the API of every module (selections, scales such as d3.scaleLinear, axes, shapes, transitions, zoom, drag, force, hierarchies, geographies, time, colors) | 7.9 | ISC | 116 files, 1.0 MB |
+| [chartjs](chartjs.index.md) | Chart.js 4: chart types, axes, configuration, plugins, animations, developers' API | 4.6 | MIT | 138 files, 0.5 MB |
+| [echarts](echarts.index.md) | Apache ECharts: the configuration of every option (series, axes, tooltip, visual map, data zoom) and the API of the chart instance | 6 | Apache-2.0 | 208 files, 1.4 MB |
+| [threejs](threejs.index.md) | three.js: the reference of every class (scenes, cameras, geometries, materials, lights, loaders, controls, renderers, nodes) | r187 | MIT | 836 files, 2.3 MB |
+| [zod](zod.index.md) | Zod 4: TypeScript-first schema validation (schemas, parsing, errors, JSON Schema, Zod Mini) | 4.6 | MIT | 17 files, 0.3 MB |

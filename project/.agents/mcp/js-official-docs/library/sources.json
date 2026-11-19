@@ -8,12 +8,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/javascript/"
-      ],
-      "docs": [
-        "files/en-us/web/javascript"
-      ]
+      "paths": ["files/en-us/web/javascript/"],
+      "docs": ["files/en-us/web/javascript"]
     },
     {
       "tool": "mdn-html",
@@ -23,12 +19,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/html/"
-      ],
-      "docs": [
-        "files/en-us/web/html"
-      ]
+      "paths": ["files/en-us/web/html/"],
+      "docs": ["files/en-us/web/html"]
     },
     {
       "tool": "mdn-css",
@@ -38,12 +30,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/css/"
-      ],
-      "docs": [
-        "files/en-us/web/css"
-      ]
+      "paths": ["files/en-us/web/css/"],
+      "docs": ["files/en-us/web/css"]
     },
     {
       "tool": "mdn-api",
@@ -53,12 +41,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/api/"
-      ],
-      "docs": [
-        "files/en-us/web/api"
-      ]
+      "paths": ["files/en-us/web/api/"],
+      "docs": ["files/en-us/web/api"]
     },
     {
       "tool": "mdn-http",
@@ -68,12 +52,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/http/"
-      ],
-      "docs": [
-        "files/en-us/web/http"
-      ]
+      "paths": ["files/en-us/web/http/"],
+      "docs": ["files/en-us/web/http"]
     },
     {
       "tool": "mdn-svg",
@@ -83,12 +63,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/svg/"
-      ],
-      "docs": [
-        "files/en-us/web/svg"
-      ]
+      "paths": ["files/en-us/web/svg/"],
+      "docs": ["files/en-us/web/svg"]
     },
     {
       "tool": "mdn-accessibility",
@@ -98,12 +74,8 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "paths": [
-        "files/en-us/web/accessibility/"
-      ],
-      "docs": [
-        "files/en-us/web/accessibility"
-      ]
+      "paths": ["files/en-us/web/accessibility/"],
+      "docs": ["files/en-us/web/accessibility"]
     },
     {
       "tool": "angular",
@@ -113,12 +85,8 @@
       "version": "22.2",
       "license": "MIT",
       "attribution": "Google LLC and the Angular contributors",
-      "paths": [
-        "adev/src/content/"
-      ],
-      "docs": [
-        "adev/src/content"
-      ],
+      "paths": ["adev/src/content/"],
+      "docs": ["adev/src/content"],
       "exclude": [
         "adev/src/content/examples",
         "adev/src/content/tutorials",
@@ -134,12 +102,8 @@
       "version": "6.0",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the TypeScript Website contributors",
-      "paths": [
-        "packages/documentation/copy/en/"
-      ],
-      "docs": [
-        "packages/documentation/copy/en"
-      ]
+      "paths": ["packages/documentation/copy/en/"],
+      "docs": ["packages/documentation/copy/en"]
     },
     {
       "tool": "rxjs",
@@ -149,12 +113,8 @@
       "version": "7.8",
       "license": "Apache-2.0",
       "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
-      "paths": [
-        "docs_app/content/"
-      ],
-      "docs": [
-        "docs_app/content"
-      ],
+      "paths": ["docs_app/content/"],
+      "docs": ["docs_app/content"],
       "exclude": [
         "docs_app/content/marketing",
         "docs_app/content/images",
@@ -189,12 +149,8 @@
       "version": "26.13",
       "license": "MIT",
       "attribution": "Node.js contributors",
-      "paths": [
-        "doc/api/"
-      ],
-      "docs": [
-        "doc/api"
-      ]
+      "paths": ["doc/api/"],
+      "docs": ["doc/api"]
     },
     {
       "tool": "npm",
@@ -204,12 +160,8 @@
       "version": "12.2",
       "license": "Artistic-2.0",
       "attribution": "GitHub Inc. and the npm contributors",
-      "paths": [
-        "docs/lib/content/"
-      ],
-      "docs": [
-        "docs/lib/content"
-      ]
+      "paths": ["docs/lib/content/"],
+      "docs": ["docs/lib/content"]
     },
     {
       "tool": "vite",
@@ -219,12 +171,8 @@
       "version": "8.3",
       "license": "MIT",
       "attribution": "VoidZero Inc. and Vite contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -240,12 +188,8 @@
       "version": "5.1",
       "license": "MIT",
       "attribution": "VoidZero Inc. and Vitest contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -260,12 +204,8 @@
       "version": "1.65",
       "license": "Apache-2.0",
       "attribution": "Microsoft Corporation and the Playwright contributors",
-      "paths": [
-        "docs/src/"
-      ],
-      "docs": [
-        "docs/src"
-      ],
+      "paths": ["docs/src/"],
+      "docs": ["docs/src"],
       "exclude": [
         "docs/src/*-python.md",
         "docs/src/*-java.md",
@@ -298,12 +238,8 @@
       "version": "8.72",
       "license": "MIT",
       "attribution": "typescript-eslint and other contributors",
-      "paths": [
-        "packages/eslint-plugin/docs/rules/"
-      ],
-      "docs": [
-        "packages/eslint-plugin/docs/rules"
-      ]
+      "paths": ["packages/eslint-plugin/docs/rules/"],
+      "docs": ["packages/eslint-plugin/docs/rules"]
     },
     {
       "tool": "angular-eslint",
@@ -330,12 +266,8 @@
       "version": "5.10",
       "license": "MIT",
       "attribution": "Anthony Fu and the ESLint Stylistic contributors",
-      "paths": [
-        "packages/eslint-plugin/rules/"
-      ],
-      "docs": [
-        "packages/eslint-plugin/rules"
-      ]
+      "paths": ["packages/eslint-plugin/rules/"],
+      "docs": ["packages/eslint-plugin/rules"]
     },
     {
       "tool": "perfectionist",
@@ -345,12 +277,8 @@
       "version": "5.13",
       "license": "MIT",
       "attribution": "Azat S. and the perfectionist contributors",
-      "paths": [
-        "docs/content/rules/"
-      ],
-      "docs": [
-        "docs/content/rules"
-      ]
+      "paths": ["docs/content/rules/"],
+      "docs": ["docs/content/rules"]
     },
     {
       "tool": "unicorn",
@@ -360,12 +288,8 @@
       "version": "79.0",
       "license": "MIT",
       "attribution": "Sindre Sorhus and the unicorn contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "eslint-regexp",
@@ -375,12 +299,8 @@
       "version": "3.3",
       "license": "MIT",
       "attribution": "Yosuke Ota and the eslint-plugin-regexp contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "eslint-jsdoc",
@@ -390,12 +310,8 @@
       "version": "65.4",
       "license": "BSD-3-Clause",
       "attribution": "Gajus Kuizinas and the eslint-plugin-jsdoc contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "eslint-vitest",
@@ -405,12 +321,8 @@
       "version": "1.6",
       "license": "MIT",
       "attribution": "Verité Mugabo Makuza and the eslint-plugin-vitest contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "rxjs-x",
@@ -420,12 +332,8 @@
       "version": "1.0",
       "license": "MIT",
       "attribution": "Jason Weinzierl, Nicholas Jamieson and the eslint-plugin-rxjs-x contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "stylelint",
@@ -452,12 +360,8 @@
       "version": "8.1",
       "license": "MIT",
       "attribution": "Aleks Hudochenkov and the stylelint-order contributors",
-      "paths": [
-        "rules/*/README.md"
-      ],
-      "docs": [
-        "rules"
-      ]
+      "paths": ["rules/*/README.md"],
+      "docs": ["rules"]
     },
     {
       "tool": "angular-api",
@@ -520,9 +424,7 @@
         "packages/schematics/angular"
       ],
       "files": "(?:long-description\\.md|schema\\.json)$",
-      "exclude": [
-        "packages/schematics/angular/**/files"
-      ]
+      "exclude": ["packages/schematics/angular/**/files"]
     },
     {
       "tool": "rxjs-api",
@@ -532,12 +434,8 @@
       "version": "7.8",
       "license": "Apache-2.0",
       "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
-      "paths": [
-        "src/internal/"
-      ],
-      "docs": [
-        "src/internal"
-      ],
+      "paths": ["src/internal/"],
+      "docs": ["src/internal"],
       "extract": "tsdoc"
     },
     {
@@ -572,12 +470,8 @@
       "version": "6.0",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the TypeScript Website contributors",
-      "paths": [
-        "packages/tsconfig-reference/copy/en/"
-      ],
-      "docs": [
-        "packages/tsconfig-reference/copy/en"
-      ]
+      "paths": ["packages/tsconfig-reference/copy/en/"],
+      "docs": ["packages/tsconfig-reference/copy/en"]
     },
     {
       "tool": "typescript-eslint-guides",
@@ -587,12 +481,8 @@
       "version": "8.72",
       "license": "MIT",
       "attribution": "typescript-eslint and other contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ]
+      "paths": ["docs/"],
+      "docs": ["docs"]
     },
     {
       "tool": "prettier",
@@ -602,12 +492,8 @@
       "version": "3.10",
       "license": "MIT",
       "attribution": "James Long and contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ]
+      "paths": ["docs/"],
+      "docs": ["docs"]
     },
     {
       "tool": "editorconfig",
@@ -617,16 +503,10 @@
       "version": "0.17",
       "license": "BSD-2-Clause",
       "attribution": "EditorConfig Team",
-      "paths": [
-        "*.rst"
-      ],
-      "docs": [
-        ""
-      ],
+      "paths": ["*.rst"],
+      "docs": [""],
       "files": "\\.rst$",
-      "exclude": [
-        ".git"
-      ]
+      "exclude": [".git"]
     },
     {
       "tool": "import-x",
@@ -636,12 +516,8 @@
       "version": "4.18",
       "license": "MIT",
       "attribution": "Ben Mosher, JounQin and the eslint-plugin-import-x contributors",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "eslint-config-prettier",
@@ -651,15 +527,9 @@
       "version": "10.1",
       "license": "MIT",
       "attribution": "Simon Lydell and the eslint-config-prettier contributors",
-      "paths": [
-        "README.md"
-      ],
-      "docs": [
-        ""
-      ],
-      "exclude": [
-        ".git"
-      ]
+      "paths": ["README.md"],
+      "docs": [""],
+      "exclude": [".git"]
     },
     {
       "tool": "stylelint-recess-order",
@@ -669,15 +539,9 @@
       "version": "7.10",
       "license": "ISC",
       "attribution": "Jeff Nelson and the stylelint-config-recess-order contributors",
-      "paths": [
-        "README.md"
-      ],
-      "docs": [
-        ""
-      ],
-      "exclude": [
-        ".git"
-      ]
+      "paths": ["README.md"],
+      "docs": [""],
+      "exclude": [".git"]
     },
     {
       "tool": "eslint-headers",
@@ -687,12 +551,8 @@
       "version": "1.3",
       "license": "ISC",
       "attribution": "Rob Misasi",
-      "paths": [
-        "docs/rules/"
-      ],
-      "docs": [
-        "docs/rules"
-      ]
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
     },
     {
       "tool": "sass",
@@ -702,12 +562,8 @@
       "version": "2026-11",
       "license": "MIT",
       "attribution": "Hampton Lintorn-Catlin, Natalie Weizenbaum, Chris Eppstein, Jina Anne and the Sass contributors",
-      "paths": [
-        "source/documentation/"
-      ],
-      "docs": [
-        "source/documentation"
-      ]
+      "paths": ["source/documentation/"],
+      "docs": ["source/documentation"]
     },
     {
       "tool": "storybook",
@@ -717,12 +573,8 @@
       "version": "10.6",
       "license": "MIT",
       "attribution": "Storybook contributors",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "exclude": [
         "docs/_snippets",
         "docs/_assets",
@@ -737,12 +589,84 @@
       "version": "2026-11",
       "license": "W3C-20150513",
       "attribution": "W3C (MIT, ERCIM, Keio, Beihang) and the APG contributors",
+      "paths": ["content/patterns/"],
+      "docs": ["content/patterns"]
+    },
+    {
+      "tool": "d3",
+      "title": "D3 7: the API of every module (selections, scales such as d3.scaleLinear, axes, shapes, transitions, zoom, drag, force, hierarchies, geographies, time, colors)",
+      "repository": "https://github.com/d3/d3.git",
+      "ref": "v7.9.2",
+      "version": "7.9",
+      "license": "ISC",
+      "attribution": "Mike Bostock and the D3 contributors",
       "paths": [
-        "content/patterns/"
+        "docs/",
+        "LICENSE"
       ],
-      "docs": [
-        "content/patterns"
-      ]
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "chartjs",
+      "title": "Chart.js 4: chart types, axes, configuration, plugins, animations, developers' API",
+      "repository": "https://github.com/chartjs/Chart.js.git",
+      "ref": "v4.6.1",
+      "version": "4.6",
+      "license": "MIT",
+      "attribution": "The Chart.js contributors",
+      "paths": [
+        "docs/",
+        "LICENSE.md"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "echarts",
+      "title": "Apache ECharts: the configuration of every option (series, axes, tooltip, visual map, data zoom) and the API of the chart instance",
+      "repository": "https://github.com/apache/echarts-doc.git",
+      "ref": "master",
+      "version": "6",
+      "license": "Apache-2.0",
+      "attribution": "The Apache Software Foundation",
+      "paths": [
+        "en/",
+        "LICENSE"
+      ],
+      "docs": ["en"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "threejs",
+      "title": "three.js: the reference of every class (scenes, cameras, geometries, materials, lights, loaders, controls, renderers, nodes)",
+      "repository": "https://github.com/mrdoob/three.js.git",
+      "ref": "r187",
+      "version": "r187",
+      "license": "MIT",
+      "attribution": "The three.js authors",
+      "paths": [
+        "docs/pages/",
+        "LICENSE"
+      ],
+      "docs": ["docs/pages"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "zod",
+      "title": "Zod 4: TypeScript-first schema validation (schemas, parsing, errors, JSON Schema, Zod Mini)",
+      "repository": "https://github.com/colinhacks/zod.git",
+      "ref": "v4.6.7",
+      "version": "4.6",
+      "license": "MIT",
+      "attribution": "Colin McDonnell and the Zod contributors",
+      "paths": [
+        "packages/docs/content/",
+        "LICENSE"
+      ],
+      "docs": ["packages/docs/content"],
+      "files": "\\.mdx?$",
+      "exclude": ["packages/docs/content/blog"]
     }
   ]
 }

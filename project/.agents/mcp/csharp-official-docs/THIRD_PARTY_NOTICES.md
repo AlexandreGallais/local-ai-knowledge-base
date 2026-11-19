@@ -115,3 +115,53 @@ copyright notices, are in `licenses/<tool>/`.
 - License: MIT, <https://opensource.org/license/mit>
 - License text: [licenses/efcore-relational-api/LICENSE.txt](licenses/efcore-relational-api/LICENSE.txt)
 - Changes: none; the files are copied as they are in the source, at the commit above.
+
+## dotnet-desktop
+
+- Work: Windows desktop apps in .NET: WPF (XAML, controls, layout, data binding, styles and templates, commands, graphics and animation) and Windows Forms
+- Authors: Microsoft Corporation and the docs-desktop contributors
+- Copyright: `Copyright (c) Microsoft Corporation`
+- Source: <https://github.com/dotnet/docs-desktop>, main, commit 36a2dc00c1f2076388c757ec215ff006b0a7e7a4
+- License: CC-BY-4.0, <https://creativecommons.org/licenses/by/4.0/>
+- License text: [licenses/dotnet-desktop/LICENSE](licenses/dotnet-desktop/LICENSE), [licenses/dotnet-desktop/LICENSE-CODE](licenses/dotnet-desktop/LICENSE-CODE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## maui
+
+- Work: .NET MAUI: cross-platform apps for Windows, Android, iOS and macOS (XAML, controls, layouts, data binding, MVVM, platform integration, deployment)
+- Authors: Microsoft Corporation and the docs-maui contributors
+- Copyright: `Copyright (c) Microsoft Corporation`
+- Source: <https://github.com/dotnet/docs-maui>, main, commit b863cc25fd3bf7d937e18e6ed5228d6ae003840b
+- License: CC-BY-4.0, <https://creativecommons.org/licenses/by/4.0/>
+- License text: [licenses/maui/LICENSE](licenses/maui/LICENSE), [licenses/maui/LICENSE-CODE](licenses/maui/LICENSE-CODE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## xunit
+
+- Work: xUnit.net: writing and running tests in .NET (facts, theories, fixtures, shared context, v3 and Microsoft Testing Platform, analyzers)
+- Authors: .NET Foundation and the xUnit.net contributors
+- Copyright: `Copyright (c) .NET Foundation and Contributors`
+- Source: <https://github.com/xunit/xunit.net>, main, commit 7101d170582b391dad779a841737acf31876b809
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/xunit/LICENSE.txt](licenses/xunit/LICENSE.txt)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## nunit
+
+- Work: NUnit: writing tests in .NET (attributes, assertions and constraints, the runners, the analyzers)
+- Authors: NUnit.org
+- Copyright: `Copyright (c) 2021 NUnit.org`
+- Source: <https://github.com/nunit/docs>, master, commit 354815147bf7bc0ef371eb8afe76d0b1da8e50a8
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/nunit/LICENSE.md](licenses/nunit/LICENSE.md)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## polly
+
+- Work: Polly 8: resilience in .NET (retry, circuit breaker, timeout, fallback, hedging, rate limiter, resilience pipelines)
+- Authors: App vNext and the Polly contributors
+- Copyright: `Copyright (c) 2015-2025, App vNext`
+- Source: <https://github.com/App-vNext/Polly>, 8.9.1, commit 8c62032728ca06347daea183d1b45792cbf47216
+- License: BSD-3-Clause, <https://opensource.org/license/bsd-3-clause>
+- License text: [licenses/polly/LICENSE](licenses/polly/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.

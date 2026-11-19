@@ -71,3 +71,25 @@ copyright notices, are in `licenses/<tool>/`.
 - License: MIT OR Apache-2.0, <https://opensource.org/license/mit> or <https://www.apache.org/licenses/LICENSE-2.0>
 - License text: [licenses/rust-by-example/LICENSE-APACHE](licenses/rust-by-example/LICENSE-APACHE), [licenses/rust-by-example/LICENSE-MIT](licenses/rust-by-example/LICENSE-MIT)
 - Changes: none; the files are copied as they are in the source, at the commit above.
+
+## tokio
+
+- Work: Tokio: asynchronous Rust (the tutorial: spawning, shared state, channels, I/O, framing, async in depth, select, streams; topics: graceful shutdown, tracing, bridging with sync code)
+- Authors: Carl Lerche and the Tokio website contributors
+- Copyright: `Copyright (c) 2020 Carl Lerche`
+- Copyright: `Copyright (c) 2020 Tokio website contributors`
+- Source: <https://github.com/tokio-rs/website>, master, commit 71cdb3858fbb943843e8cf0e8baf547fe22180f7
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/tokio/LICENSE](licenses/tokio/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## serde
+
+- Work: Serde: serializing and deserializing Rust data structures (derive, attributes, custom serialization, data formats)
+- Authors: The Serde contributors
+- Copyright: as stated in the license text, by The Serde contributors
+- Source: <https://github.com/serde-rs/serde-rs.github.io>, master, commit c4a897bc01fb358075ddd1f6235ed54081e88b84
+- License: CC-BY-SA-4.0, <https://creativecommons.org/licenses/by-sa/4.0/>
+- License text: [licenses/serde/LICENSE-CC-BY-SA](licenses/serde/LICENSE-CC-BY-SA)
+- Terms: Share-alike: these files, and any work adapted from them, stay under CC BY-SA 4.0.
+- Changes: none; the files are copied as they are in the source, at the commit above.

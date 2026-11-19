@@ -1,6 +1,6 @@
 # Brick `rust-official-docs`
 
-The official documentation of Rust: the book, the reference, Rust by Example, the Cargo book and the standard library (`core`, `alloc`, `std`, taken from its documentation comments).
+The official documentation of Rust: the book, the reference, Rust by Example, the Cargo book and the standard library (`core`, `alloc`, `std`, taken from its documentation comments); the Tokio tutorial and topics (asynchronous Rust); Serde.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -39,7 +39,7 @@ python3 .agents/mcp/rust-official-docs/build_index.py   # the same, without Node
 
 ## Licenses
 
-The Rust documentation is under MIT or Apache 2.0, at the choice of whoever uses it. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+The Rust documentation is under MIT or Apache 2.0, at the choice of whoever uses it; the Tokio website under MIT; the Serde website under CC BY-SA 4.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

@@ -64,5 +64,35 @@
     "files": 1,
     "bytes": 4946588,
     "built": "2026-11-14"
+  },
+  "dotnet-desktop": {
+    "commit": "36a2dc00c1f2076388c757ec215ff006b0a7e7a4",
+    "files": 1620,
+    "bytes": 8725029,
+    "built": "2026-11-19"
+  },
+  "maui": {
+    "commit": "b863cc25fd3bf7d937e18e6ed5228d6ae003840b",
+    "files": 473,
+    "bytes": 5050927,
+    "built": "2026-11-19"
+  },
+  "xunit": {
+    "commit": "7101d170582b391dad779a841737acf31876b809",
+    "files": 402,
+    "bytes": 1175579,
+    "built": "2026-11-19"
+  },
+  "nunit": {
+    "commit": "354815147bf7bc0ef371eb8afe76d0b1da8e50a8",
+    "files": 420,
+    "bytes": 1937463,
+    "built": "2026-11-19"
+  },
+  "polly": {
+    "commit": "8c62032728ca06347daea183d1b45792cbf47216",
+    "files": 35,
+    "bytes": 384849,
+    "built": "2026-11-19"
   }
 }

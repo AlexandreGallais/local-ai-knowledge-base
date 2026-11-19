@@ -1,8 +1,8 @@
 {
   "name": "rust-official-docs",
-  "instructions": "The official documentation of Rust, kept locally: the book, the language reference and the standard library (core, alloc, std). Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
-  "search": "Search the official documentation of Rust: The Rust Programming Language (the book), The Rust Reference and the standard library (core, alloc, std). Returns 10 section ids at most.",
-  "queryExample": "\"Vec push\" or \"HashMap entry\"",
-  "toolExample": "\"rust-std\" or \"rust-book\"",
+  "instructions": "The official documentation of Rust, kept locally: the book, the language reference, Rust by Example, the Cargo book, the standard library (core, alloc, std), Tokio and Serde. Search with search_docs, then read one section with read_doc. Look an API up rather than guess it.",
+  "search": "Search the official documentation of Rust: The Rust Programming Language (the book), The Rust Reference, Rust by Example, the Cargo book, the standard library (core, alloc, std), the Tokio tutorial and Serde (derive, attributes). Returns 10 section ids at most.",
+  "queryExample": "\"Vec push\" or \"tokio spawn\"",
+  "toolExample": "\"rust-std\", \"rust-book\" or \"tokio\"",
   "idExample": "library/rust-std/alloc/src/vec/mod.md#struct-vec"
 }

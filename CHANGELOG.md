@@ -28,6 +28,10 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
   docstrings), pandas 3.1, Matplotlib 3.11, pytest 9.2, Pydantic 2.14, FastAPI 0.165.
 - Free license added to the check: the license of Matplotlib (the PSF License Agreement with its
   names).
+- `csharp-official-docs`: the desktop guides of .NET (WPF and Windows Forms), .NET MAUI, xUnit.net
+  v3, NUnit 4 and Polly 8.9.
+- `js-official-docs`: D3 7.9, Chart.js 4.6, Apache ECharts, three.js r187 and Zod 4.6.
+- `rust-official-docs`: the Tokio tutorial and topics, and Serde.
 
 ### Added: engineering physics for the simulation of ships and submarines
 

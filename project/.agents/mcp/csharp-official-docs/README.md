@@ -1,6 +1,6 @@
 # Brick `csharp-official-docs`
 
-The official documentation of C# and .NET: the language, the .NET guides and fundamentals (dependency injection, configuration, logging, the CA and IDE analysis rules), the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference: the XML documentation of the ASP.NET Core shared framework (the base class library included) and of EF Core, from their NuGet packages.
+The official documentation of C# and .NET: the language, the .NET guides and fundamentals (dependency injection, configuration, logging, the CA and IDE analysis rules), the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference: the XML documentation of the ASP.NET Core shared framework (the base class library included) and of EF Core, from their NuGet packages. Also the desktop guides of .NET (WPF and Windows Forms), .NET MAUI, xUnit.net, NUnit and Polly.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -41,7 +41,7 @@ python3 .agents/mcp/csharp-official-docs/build_index.py   # the same, without No
 
 ## Licenses
 
-The .NET guides are under CC BY 4.0; .NET Aspire, ASP.NET Core and EF Core under MIT. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+The .NET guides, the desktop guides and .NET MAUI are under CC BY 4.0; .NET Aspire, ASP.NET Core, EF Core and NUnit under MIT; xUnit.net under Apache 2.0; Polly under BSD 3-Clause. The documentation of Avalonia is left out: its repository states no license. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 
