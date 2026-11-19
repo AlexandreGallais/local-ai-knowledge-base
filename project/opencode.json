@@ -61,6 +61,14 @@
         ],
         "codemode": false
       },
+      "linux-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/linux-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "math-docs": {
         "type": "local",
         "command": [

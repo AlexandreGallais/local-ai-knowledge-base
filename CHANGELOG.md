@@ -16,6 +16,18 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: Linux, Fedora, GNOME and Wayland
+
+- `linux-official-docs`: Fedora Quick Docs and release notes, DNF5 5.4, RPM 6.1, the Linux man-pages
+  6.20 (sections 2 to 7), systemd 262, util-linux 2.42, the kernel 7.3 administration guide and
+  userspace API, the GNOME developer documentation, GTK 4.24, GLib 2.88, GJS 1.88, Wayland 1.26,
+  wayland-protocols 1.49, _The Wayland Protocol_, PipeWire 1.6, Flatpak and the SELinux Notebook.
+- The search reads Wayland protocols (one section per interface), Doxygen pages and scdoc pages.
+- Free licenses added to the check: the permission notices of the Linux man-pages, BSD 4-Clause
+  (University of California), GPL 1.0 or later, LGPL 2.0 and 3.0 or later, the GNU FDL 1.1 with no
+  invariant sections, MPL 2.0, EPL 2.0, BSL 1.0.
+- A license text is downloaded again after a wait when its server answers 502, 503 or 504.
+
 ### Added: shell scripts and PowerShell
 
 - `shell-official-docs`: the Bash Reference Manual 5.3, the manual page of dash 0.5.13 (POSIX sh),

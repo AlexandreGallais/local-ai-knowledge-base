@@ -161,9 +161,9 @@ interface Cut {
 
 // The extensions of the files the search reads, the documentation kept as its authors wrote it: the
 // last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
-export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|man|[1-9][a-z]{0,3})(?:\.in)?$/;
+export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|man|[1-9][a-z]{0,6})(?:\.in)?$/;
 const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
-const MANUAL_PAGE = /\.(?:man|[1-9][a-z]{0,3})(?:\.in)?$/;
+const MANUAL_PAGE = /\.(?:man|[1-9][a-z]{0,6})(?:\.in)?$/;
 
 // What a format gives of a file: its title, when it names one, and where its sections start.
 interface Outline {
@@ -357,16 +357,19 @@ function refentryTitle(head: string): string | undefined {
 // type, the title of a DocBook manual page, or the first division of the file (a chapter, or a section
 // kept in its own file), names it.
 function xmlCuts(lines: string[]): Outline {
+  const head = lines
+    .slice(0, 40)
+    .join('\n');
   const typeName = /<Type\s[^>]*FullName="([^"]+)"/.exec(lines
     .slice(0, 20)
     .join('\n'))?.[1];
+  // A Wayland protocol: <protocol name="..."> names it, each <interface name="..."> is a section.
+  const protocol = /<protocol\s+name="([^"]+)"/.exec(head)?.[1];
   const cuts: Cut[] = [];
-  let title = typeName === undefined ? refentryTitle(lines
-    .slice(0, 40)
-    .join('\n')) : decodeXml(typeName);
+  let title = typeName === undefined ? protocol ?? refentryTitle(head) : decodeXml(typeName);
 
   lines.forEach((line, index) => {
-    const heading = memberHeading(line) ?? divisionHeading(lines, index);
+    const heading = memberHeading(line) ?? divisionHeading(lines, index) ?? (protocol === undefined ? undefined : /<interface\s+name="([^"]+)"/.exec(line)?.[1]);
 
     if (heading === undefined) {
       return;
@@ -543,6 +546,53 @@ function qdocCuts(lines: string[]): Outline {
   return outline(title, cuts);
 }
 
+// Doxygen pages (PipeWire): "\page <id> <title>" gives the title; each "\section <id> <title>",
+// "\subsection" or Markdown heading outside a code block starts a section.
+function doxygenCuts(lines: string[]): Outline {
+  const cuts: Cut[] = [];
+  let title: string | undefined;
+  let code = false;
+
+  lines.forEach((line, index) => {
+    code = /^\s*(?:```|~~~|[\\@](?:code|endcode)\b)/.test(line) ? !code : code;
+    if (code) {
+      return;
+    }
+    const page = /^\s*(?:\/\*\*\s*)?[\\@]page\s+\S+\s+(.+)$/.exec(line)?.[1];
+    const heading = /^\s*[\\@](?:section|subsection|subsubsection)\s+\S+\s+(.+)$/.exec(line)?.[1] ?? /^#{1,4}\s+(.+)$/.exec(line)?.[1];
+
+    if (page !== undefined && title === undefined) {
+      title = page.trim();
+    } else if (heading !== undefined) {
+      cuts.push({
+        line: index,
+        heading: heading.trim(),
+      });
+    }
+  });
+  return outline(title, cuts);
+}
+
+// scdoc manual pages (RPM): the first line "NAME(section)" gives the title; each "#" to "###"
+// heading outside a code block starts a section.
+function scdocCuts(lines: string[]): Outline {
+  const cuts: Cut[] = [];
+  let code = false;
+
+  lines.forEach((line, index) => {
+    code = /^\s*```/.test(line) ? !code : code;
+    const heading = code ? undefined : /^#{1,3}\s+(.+)$/.exec(line)?.[1];
+
+    if (heading !== undefined) {
+      cuts.push({
+        line: index,
+        heading: heading.trim(),
+      });
+    }
+  });
+  return outline(/^(\S+\(\d[a-z]*\))\s*$/.exec(lines[0] ?? '')?.[1], cuts);
+}
+
 function cutsOf(path: string, lines: string[]): Outline {
   if (/\.(?:rst|txt|adoc)$/.test(path)) {
     const underlined = underlinedCuts(lines);
@@ -558,6 +608,12 @@ function cutsOf(path: string, lines: string[]): Outline {
   }
   if (/\.qdoc(?:\.in)?$/.test(path)) {
     return qdocCuts(lines);
+  }
+  if (/\.dox(?:\.in)?$/.test(path)) {
+    return doxygenCuts(lines);
+  }
+  if (/\.scd(?:\.in)?$/.test(path)) {
+    return scdocCuts(lines);
   }
   if (path.endsWith('.tex')) {
     return latexCuts(lines);

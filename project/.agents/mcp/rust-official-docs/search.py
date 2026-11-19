@@ -240,9 +240,9 @@ class Outline(NamedTuple):
 
 # The extensions of the files the search reads, the documentation kept as its authors wrote it: the
 # last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
-DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|man|[1-9][a-z]{0,3})(?:\.in)?\Z')
+DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 MARKDOWN_FILE = re.compile(r'\.(?:md|mdx|markdown)(?:\.in)?\Z')
-MANUAL_PAGE = re.compile(r'\.(?:man|[1-9][a-z]{0,3})(?:\.in)?\Z')
+MANUAL_PAGE = re.compile(r'\.(?:man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 _FRONT_TITLE = re.compile(f'{LINE_START}title:{S}*["\']?({DOT}*?)["\']?{S}*{LINE_END}')
 
 
@@ -398,6 +398,8 @@ def division_heading(lines: list[str], index: int) -> str | None:
 
 _TYPE_NAME = re.compile(f'<Type{S}[^>]*FullName="([^"]+)"')
 _MEMBER_TAG = re.compile(r'<member', re.IGNORECASE)
+_PROTOCOL = re.compile(rf'<protocol{S}+name="([^"]+)"')
+_INTERFACE = re.compile(rf'<interface{S}+name="([^"]+)"')
 _REFENTRY = re.compile(rf'<refentrytitle>([^<]+)</refentrytitle>(?:{S}*<manvolnum>([^<]+)</manvolnum>)?')
 
 
@@ -411,18 +413,37 @@ def refentry_title(head: str) -> str | None:
     return name if found.group(2) is None else f'{name}({found.group(2)})'
 
 
+def _xml_title(lines: list[str], protocol: str | None) -> str | None:
+    # The type of a .NET documentation, else the Wayland protocol, else the DocBook manual page.
+    type_name = _TYPE_NAME.search('\n'.join(lines[:20]))
+    if type_name is not None:
+        return decode_xml(type_name.group(1))
+    return protocol if protocol is not None else refentry_title('\n'.join(lines[:40]))
+
+
+def _xml_heading(lines: list[str], index: int, protocol: str | None) -> str | None:
+    # The heading a line of XML starts: a .NET member, a division, or an interface of a protocol.
+    heading = member_heading(lines[index])
+    if heading is None:
+        heading = division_heading(lines, index)
+    if heading is None and protocol is not None:
+        interface = _INTERFACE.search(lines[index])
+        heading = None if interface is None else interface.group(1)
+    return heading
+
+
 def xml_cuts(lines: list[str]) -> Outline:
     # XML: the documentation of a .NET API (one <Member> per member of a type, or one
     # <member name="..."> per member of an assembly), PreTeXt or DocBook (a <title> per division). The
     # type, the title of a DocBook manual page, or the first division of the file (a chapter, or a
     # section kept in its own file), names it.
-    type_name = _TYPE_NAME.search('\n'.join(lines[:20]))
+    # A Wayland protocol: <protocol name="..."> names it, each <interface name="..."> is a section.
+    protocol_match = _PROTOCOL.search('\n'.join(lines[:40]))
+    protocol = None if protocol_match is None else protocol_match.group(1)
     cuts: list[Cut] = []
-    title = refentry_title('\n'.join(lines[:40])) if type_name is None else decode_xml(type_name.group(1))
+    title = _xml_title(lines, protocol)
     for index, line in enumerate(lines):
-        heading = member_heading(line)
-        if heading is None:
-            heading = division_heading(lines, index)
+        heading = _xml_heading(lines, index, protocol)
         if heading is None:
             continue
         if title is None and not cuts and not _MEMBER_TAG.search(line):
@@ -547,31 +568,74 @@ def qdoc_cuts(lines: list[str]) -> Outline:
     return Outline(title, cuts)
 
 
+_DOX_CODE = re.compile(rf'{S}*(?:```|~~~|[\\@](?:code|endcode)\b)', re.ASCII)
+_DOX_PAGE = re.compile(rf'{S}*(?:/\*\*{S}*)?[\\@]page{S}+{NOT_S}+{S}+({DOT}+)\Z')
+_DOX_SECTION = re.compile(rf'{S}*[\\@](?:section|subsection|subsubsection){S}+{NOT_S}+{S}+({DOT}+)\Z')
+_DOX_HEADING = re.compile(rf'#{{1,4}}{S}+({DOT}+)\Z')
+_DOX_FILE = re.compile(r'\.dox(?:\.in)?\Z')
+
+
+def doxygen_cuts(lines: list[str]) -> Outline:
+    # Doxygen pages (PipeWire): "\page <id> <title>" gives the title; each "\section <id> <title>",
+    # "\subsection" or Markdown heading outside a code block starts a section.
+    title: str | None = None
+    code = False
+    cuts: list[Cut] = []
+    for index, line in enumerate(lines):
+        code = (not code) if _DOX_CODE.match(line) else code
+        if code:
+            continue
+        page = _DOX_PAGE.match(line)
+        heading = _DOX_SECTION.match(line) or _DOX_HEADING.match(line)
+        if page is not None and title is None:
+            title = js_trim(page.group(1))
+        elif heading is not None:
+            cuts.append(Cut(index, js_trim(heading.group(1))))
+    return Outline(title, cuts)
+
+
+_SCD_FENCE = re.compile(rf'{S}*```')
+_SCD_HEADING = re.compile(rf'#{{1,3}}{S}+({DOT}+)\Z')
+_SCD_TITLE = re.compile(rf'({NOT_S}+\([0-9][a-z]*\)){S}*\Z')
+_SCD_FILE = re.compile(r'\.scd(?:\.in)?\Z')
+
+
+def scdoc_cuts(lines: list[str]) -> Outline:
+    # scdoc manual pages (RPM): the first line "NAME(section)" gives the title; each "#" to "###"
+    # heading outside a code block starts a section.
+    code = False
+    cuts: list[Cut] = []
+    for index, line in enumerate(lines):
+        code = (not code) if _SCD_FENCE.match(line) else code
+        heading = None if code else _SCD_HEADING.match(line)
+        if heading is not None:
+            cuts.append(Cut(index, js_trim(heading.group(1))))
+    title = _SCD_TITLE.match(lines[0] if lines else '')
+    return Outline(None if title is None else title.group(1), cuts)
+
+
+def _text_cuts(path: str, lines: list[str]) -> Outline:
+    underlined = underlined_cuts(lines)
+    # A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
+    if path.endswith('.txt') and underlined.title is None and not underlined.cuts:
+        return markdown_cuts(lines)
+    return underlined
+
+
+def _json_cuts(lines: list[str]) -> Outline:
+    # A JSON schema (the options of an Angular schematic): one section, titled by its "title".
+    found = _JSON_TITLE.search('\n'.join(lines[:40]))
+    return Outline(None if found is None else found.group(1), [])
+
+
+# Each format by the extension of its file, in the order search.ts tries them; Markdown otherwise.
+# Texinfo: .texi, and .txi for the chapters of a manual (Octave).
+_FORMATS = ((_UNDERLINED_FILE, _text_cuts), (MANUAL_PAGE, lambda path, lines: roff_cuts(lines)), (_WIKI_FILE, lambda path, lines: wiki_cuts(lines, path)), (_QDOC_FILE, lambda path, lines: qdoc_cuts(lines)), (_DOX_FILE, lambda path, lines: doxygen_cuts(lines)), (_SCD_FILE, lambda path, lines: scdoc_cuts(lines)), (re.compile(r'\.tex\Z'), lambda path, lines: latex_cuts(lines)), (_TEXINFO_FILE, lambda path, lines: texinfo_cuts(lines)), (_HTML_FILE, lambda path, lines: html_cuts(lines)), (re.compile(r'\.json\Z'), lambda path, lines: _json_cuts(lines)), (_XML_FILE, lambda path, lines: xml_cuts(lines)),)
+
+
 def cuts_of(path: str, lines: list[str]) -> Outline:
-    if _UNDERLINED_FILE.search(path):
-        underlined = underlined_cuts(lines)
-        # A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
-        if path.endswith('.txt') and underlined.title is None and not underlined.cuts:
-            return markdown_cuts(lines)
-        return underlined
-    if MANUAL_PAGE.search(path):
-        return roff_cuts(lines)
-    if _WIKI_FILE.search(path):
-        return wiki_cuts(lines, path)
-    if _QDOC_FILE.search(path):
-        return qdoc_cuts(lines)
-    if path.endswith('.tex'):
-        return latex_cuts(lines)
-    # Texinfo: .texi, and .txi for the chapters of a manual (Octave).
-    if _TEXINFO_FILE.search(path):
-        return texinfo_cuts(lines)
-    if _HTML_FILE.search(path):
-        return html_cuts(lines)
-    if path.endswith('.json'):
-        # A JSON schema (the options of an Angular schematic): one section, titled by its "title".
-        found = _JSON_TITLE.search('\n'.join(lines[:40]))
-        return Outline(None if found is None else found.group(1), [])
-    return xml_cuts(lines) if _XML_FILE.search(path) else markdown_cuts(lines)
+    cut = next((cut for pattern, cut in _FORMATS if pattern.search(path)), None)
+    return markdown_cuts(lines) if cut is None else cut(path, lines)
 
 
 def unique_anchor(seen: dict[str, int], heading: str) -> str:
