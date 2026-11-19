@@ -8,16 +8,10 @@
       "version": "19.5",
       "license": "CC-BY-SA-4.0",
       "attribution": "GitLab Inc. and the GitLab contributors",
-      "paths": [
-        "doc/ci/"
-      ],
-      "docs": [
-        "doc/ci"
-      ],
+      "paths": ["doc/ci/"],
+      "docs": ["doc/ci"],
       "files": "\\.md$",
-      "licenseTexts": {
-        "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt"
-      }
+      "licenseTexts": { "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt" }
     },
     {
       "tool": "gitlab-runner",
@@ -27,15 +21,9 @@
       "version": "19.5",
       "license": "CC-BY-SA-4.0",
       "attribution": "GitLab Inc. and the GitLab Runner contributors",
-      "licenseTexts": {
-        "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt"
-      },
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "licenseTexts": { "LICENSE-CC-BY-SA-4.0": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt" },
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "files": "\\.md$",
       "exclude": [
         "docs/AGENTS.md",
@@ -54,13 +42,23 @@
         "README.md",
         "example-usage/"
       ],
-      "docs": [
-        "."
-      ],
+      "docs": ["."],
       "files": "\\.(?:md|json)$",
-      "exclude": [
-        ".git"
-      ]
+      "exclude": [".git"]
+    },
+    {
+      "tool": "glab",
+      "title": "glab, the GitLab CLI: every command (ci, mr, issue, repo, release, variable, runner, schedule...) and its options, authentication and configuration",
+      "repository": "https://gitlab.com/gitlab-org/cli.git",
+      "ref": "v1.131.0",
+      "version": "1.131",
+      "license": "MIT",
+      "attribution": "GitLab Inc. and the glab contributors",
+      "paths": [
+        "docs/source/",
+        "LICENSE"
+      ],
+      "docs": ["docs/source"]
     }
   ]
 }

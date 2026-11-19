@@ -1,6 +1,6 @@
 # Brick `git-official-docs`
 
-The official documentation of Git: the manual page of every git command and the guides of the Git documentation.
+The official documentation of Git: the manual page of every git command and the guides of the Git documentation; Git LFS, the manual page of every `git lfs` command and its specification.
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -38,7 +38,7 @@ python3 .agents/mcp/git-official-docs/build_index.py   # the same, without Node
 
 ## Licenses
 
-The Git documentation is under the GNU GPL version 2. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+The Git documentation is under the GNU GPL version 2; Git LFS under the MIT License. _Pro Git_ is left out: its license forbids commercial use. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

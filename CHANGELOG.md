@@ -16,6 +16,18 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: dev containers with Podman, the display and the sound of the host, Git LFS and glab
+
+- `containers-official-docs`: the configuration files of Podman (`containers.conf`,
+  `containers-mounts.conf`, `registries.conf`, `policy.json`, `storage.conf`), Buildah 1.46, Skopeo
+  1.25, Podman Desktop 1.31, Toolbx 0.3, Distrobox 1.8, x11docker 7.8 (display, sound and GPU of the
+  host in a container), the dev container pages of VS Code, the guides of containers.dev, and the
+  reference features (desktop-lite among them) and images of dev containers.
+- `git-official-docs`: Git LFS 3.8, every `git lfs` command.
+- `gitlab-official-docs`: glab 1.131, the GitLab CLI, every command.
+- A source whose repository keeps files in Git LFS is cloned without git-lfs.
+- Free license added to the check: CC BY 3.0 US.
+
 ### Added: Markdown and diagrams
 
 - `markdown-official-docs`: Mermaid 12.3, the CommonMark 0.31.2 and GitHub Flavored Markdown 0.29

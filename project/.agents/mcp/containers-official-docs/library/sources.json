@@ -8,12 +8,8 @@
       "version": "0.35",
       "license": "Apache-2.0",
       "attribution": "Docker, Inc. and the BuildKit contributors",
-      "paths": [
-        "frontend/dockerfile/docs/"
-      ],
-      "docs": [
-        "frontend/dockerfile/docs"
-      ]
+      "paths": ["frontend/dockerfile/docs/"],
+      "docs": ["frontend/dockerfile/docs"]
     },
     {
       "tool": "docker-manuals",
@@ -42,12 +38,8 @@
       "version": "29.9",
       "license": "Apache-2.0",
       "attribution": "Docker, Inc. and the Docker CLI contributors",
-      "paths": [
-        "docs/reference/"
-      ],
-      "docs": [
-        "docs/reference"
-      ]
+      "paths": ["docs/reference/"],
+      "docs": ["docs/reference"]
     },
     {
       "tool": "podman",
@@ -57,12 +49,207 @@
       "version": "6.2",
       "license": "Apache-2.0",
       "attribution": "The Podman contributors",
+      "paths": ["docs/source/markdown/"],
+      "docs": ["docs/source/markdown"]
+    },
+    {
+      "tool": "containers-common",
+      "title": "The configuration files of Podman, Buildah and Skopeo: containers.conf (engine, network, mounts, environment of every container), containers-mounts.conf, Containerfile and .containerignore",
+      "repository": "https://github.com/containers/container-libs.git",
+      "ref": "common/v0.70.0",
+      "version": "0.70",
+      "license": "Apache-2.0",
+      "attribution": "The containers/common contributors",
       "paths": [
-        "docs/source/markdown/"
+        "common/docs/",
+        "LICENSE"
+      ],
+      "docs": ["common/docs"]
+    },
+    {
+      "tool": "containers-image",
+      "title": "The image configuration of Podman, Buildah and Skopeo: registries.conf (mirrors, search registries, insecure registries), policy.json, signatures, auth.json, certificates",
+      "repository": "https://github.com/containers/container-libs.git",
+      "ref": "image/v5.42.1",
+      "version": "5.42",
+      "license": "Apache-2.0",
+      "attribution": "The containers/image contributors",
+      "paths": [
+        "image/docs/",
+        "LICENSE"
+      ],
+      "docs": ["image/docs"]
+    },
+    {
+      "tool": "containers-storage",
+      "title": "The storage of Podman, Buildah and Skopeo: storage.conf (drivers, rootless storage, additional image stores) and the containers-storage commands",
+      "repository": "https://github.com/containers/container-libs.git",
+      "ref": "storage/v1.65.1",
+      "version": "1.65",
+      "license": "Apache-2.0",
+      "attribution": "The containers/storage contributors",
+      "paths": [
+        "storage/docs/",
+        "LICENSE"
+      ],
+      "docs": ["storage/docs"]
+    },
+    {
+      "tool": "buildah",
+      "title": "Buildah: building OCI images without a daemon, every buildah command (bud, from, run, commit, push...) and its options",
+      "repository": "https://github.com/containers/buildah.git",
+      "ref": "v1.46.1",
+      "version": "1.46",
+      "license": "Apache-2.0",
+      "attribution": "The Buildah contributors",
+      "paths": [
+        "docs/",
+        "troubleshooting.md",
+        "LICENSE"
+      ],
+      "docs": ["."],
+      "files": "^(?:docs/[^/]+\\.md|troubleshooting\\.md)$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "skopeo",
+      "title": "Skopeo: inspecting, copying and syncing images between registries without pulling them, every skopeo command",
+      "repository": "https://github.com/containers/skopeo.git",
+      "ref": "v1.25.2",
+      "version": "1.25",
+      "license": "Apache-2.0",
+      "attribution": "The Skopeo contributors",
+      "paths": [
+        "docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs"]
+    },
+    {
+      "tool": "podman-desktop",
+      "title": "Podman Desktop: installing and using it on Linux, Windows and macOS, Podman machines, Kubernetes, extensions, troubleshooting",
+      "repository": "https://github.com/containers/podman-desktop.git",
+      "ref": "v1.31.0",
+      "version": "1.31",
+      "license": "Apache-2.0",
+      "attribution": "The Podman Desktop contributors",
+      "paths": [
+        "website/docs/",
+        "LICENSE"
+      ],
+      "docs": ["website/docs"]
+    },
+    {
+      "tool": "toolbx",
+      "title": "Toolbx: development containers that share the user's home, display, sound and devices with the host, on Fedora and others (its manual pages)",
+      "repository": "https://github.com/containers/toolbox.git",
+      "ref": "0.3",
+      "version": "0.3",
+      "license": "Apache-2.0",
+      "attribution": "The Toolbx contributors",
+      "paths": [
+        "doc/",
+        "COPYING"
+      ],
+      "docs": ["doc"]
+    },
+    {
+      "tool": "distrobox",
+      "title": "Distrobox: any Linux distribution in a container that shares the home, the display (X11, Wayland), the sound and the devices of the host; usage, compatibility and tips",
+      "repository": "https://github.com/89luca89/distrobox.git",
+      "ref": "1.8.2.5",
+      "version": "1.8",
+      "license": "GPL-3.0-only",
+      "attribution": "Luca Di Maio and the Distrobox contributors",
+      "paths": [
+        "docs/",
+        "COPYING.md"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$",
+      "exclude": [
+        "docs/404.md",
+        "docs/featured_articles.md"
+      ]
+    },
+    {
+      "tool": "x11docker",
+      "title": "x11docker: running graphical applications in containers with the display (X11 or Wayland), the sound (PulseAudio, ALSA), the GPU and the clipboard of the host, safely",
+      "repository": "https://github.com/mviereck/x11docker.git",
+      "ref": "v7.8.0",
+      "version": "7.8",
+      "license": "MIT",
+      "attribution": "Martin Viereck",
+      "paths": [
+        "README.md",
+        "x11docker.man",
+        "LICENSE.txt"
+      ],
+      "docs": ["."],
+      "files": "^(?:README\\.md|x11docker\\.man)$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "vscode-devcontainers",
+      "title": "Dev containers in VS Code: creating a dev container, devcontainer.json reference, advanced containers (Podman, rootless, mounts, environment), the devcontainer CLI, tips and FAQ",
+      "repository": "https://github.com/microsoft/vscode-docs.git",
+      "ref": "main",
+      "version": "main",
+      "license": "CC-BY-3.0-US",
+      "attribution": "Microsoft Corporation and the vscode-docs contributors",
+      "paths": [
+        "docs/devcontainers/",
+        "LICENSE.md"
+      ],
+      "docs": ["docs/devcontainers"]
+    },
+    {
+      "tool": "devcontainers-site",
+      "title": "containers.dev: the implementors' guide of the Development Containers specification (features, templates, distribution, JSON reference) and its guides (Dockerfile, GitLab CI, prebuilds)",
+      "repository": "https://github.com/devcontainers/devcontainers.github.io.git",
+      "ref": "gh-pages",
+      "version": "gh-pages",
+      "license": "MIT",
+      "attribution": "Microsoft Corporation and the Development Containers contributors",
+      "paths": [
+        "_implementors/",
+        "_posts/",
+        "LICENSE"
       ],
       "docs": [
-        "docs/source/markdown"
+        "_implementors",
+        "_posts"
       ]
+    },
+    {
+      "tool": "devcontainers-features",
+      "title": "The reference features of dev containers (desktop-lite, docker-in-docker, docker-outside-of-docker, node, rust, dotnet, java, python, powershell, git-lfs...): what each installs and its options",
+      "repository": "https://github.com/devcontainers/features.git",
+      "ref": "main",
+      "version": "main",
+      "license": "MIT",
+      "attribution": "Microsoft Corporation and the Development Containers contributors",
+      "paths": [
+        "src/",
+        "LICENSE"
+      ],
+      "docs": ["src"],
+      "files": "^src/[^/]+/(?:README|NOTES)\\.md$"
+    },
+    {
+      "tool": "devcontainers-images",
+      "title": "The reference images of dev containers (base, universal, javascript-node, typescript-node, rust, dotnet, java, python, cpp...): what each holds and how to use it",
+      "repository": "https://github.com/devcontainers/images.git",
+      "ref": "main",
+      "version": "main",
+      "license": "MIT",
+      "attribution": "Microsoft Corporation and the Development Containers contributors",
+      "paths": [
+        "src/",
+        "LICENSE"
+      ],
+      "docs": ["src"],
+      "files": "^src/[^/]+/README\\.md$"
     },
     {
       "tool": "compose-spec",
@@ -72,12 +259,8 @@
       "version": "2026-11",
       "license": "Apache-2.0",
       "attribution": "The Compose Specification authors",
-      "paths": [
-        "*.md"
-      ],
-      "docs": [
-        ""
-      ],
+      "paths": ["*.md"],
+      "docs": [""],
       "exclude": [
         ".git",
         ".github",
@@ -97,12 +280,8 @@
       "version": "2026-11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the Development Containers contributors",
-      "paths": [
-        "docs/specs/"
-      ],
-      "docs": [
-        "docs/specs"
-      ]
+      "paths": ["docs/specs/"],
+      "docs": ["docs/specs"]
     },
     {
       "tool": "oci-image-spec",
@@ -112,12 +291,8 @@
       "version": "1.1",
       "license": "Apache-2.0",
       "attribution": "The Linux Foundation and the OCI contributors",
-      "paths": [
-        "*.md"
-      ],
-      "docs": [
-        ""
-      ],
+      "paths": ["*.md"],
+      "docs": [""],
       "exclude": [
         ".git",
         ".github",
@@ -136,12 +311,8 @@
       "version": "1.3",
       "license": "Apache-2.0",
       "attribution": "The Linux Foundation and the OCI contributors",
-      "paths": [
-        "*.md"
-      ],
-      "docs": [
-        ""
-      ],
+      "paths": ["*.md"],
+      "docs": [""],
       "exclude": [
         ".git",
         ".github",
@@ -158,12 +329,8 @@
       "version": "1.1",
       "license": "Apache-2.0",
       "attribution": "The Linux Foundation and the OCI contributors",
-      "paths": [
-        "*.md"
-      ],
-      "docs": [
-        ""
-      ],
+      "paths": ["*.md"],
+      "docs": [""],
       "exclude": [
         ".git",
         ".github",

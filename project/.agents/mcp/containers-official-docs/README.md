@@ -1,11 +1,15 @@
 # Brick `containers-official-docs`
 
-The official documentation of containers: the Dockerfile reference (BuildKit), the Docker manuals (Engine, Build, Compose), the reference of every docker command, Podman (every podman command, pods, Quadlet), the Compose Specification, the Development Containers specification and the OCI specifications (image, runtime, distribution).
+The official documentation of containers: the Dockerfile reference (BuildKit), the Docker manuals
+(Engine, Build, Compose), the reference of every docker command, Podman (every podman command, pods,
+Quadlet) and its configuration files (`containers.conf`, `containers-mounts.conf`, `registries.conf`,
+`policy.json`, `storage.conf`), Buildah, Skopeo, Podman Desktop, the Compose Specification, dev
+containers (the Development Containers specification, the containers.dev guides, the VS Code pages,
+the reference features and images), graphical applications and sound in a container (x11docker,
+Distrobox, Toolbx) and the OCI specifications (image, runtime, distribution).
 
-Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
-LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
-comments of the source code is taken from those comments, unchanged. The MCP server searches the
-documentation and returns one section at a time.
+Each file is the official file, unchanged, in its own format (Markdown, MDX, roff), at a noted
+version. The MCP server searches the documentation and returns one section at a time.
 
 ## What it holds
 
@@ -36,12 +40,16 @@ python3 .agents/mcp/containers-official-docs/build_index.py   # the same, withou
 
 - Kubernetes, Helm and Kustomize: the team does not use them today.
 - The pages of Docker Desktop, Docker Hub and Docker Scout: services, not tools of a project.
+- The wiki of x11docker: it states no license; its README and its manual page are under MIT.
 
 ## Licenses
 
-Docker, Podman, Compose and the OCI specifications are under Apache 2.0; the Development Containers specification under CC BY 4.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
-holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
-the base.
+Docker, Podman, its configuration files, Buildah, Skopeo, Podman Desktop, Toolbx, Compose and the OCI
+specifications are under Apache 2.0; the Development Containers specification under CC BY 4.0; the VS
+Code pages under CC BY 3.0 US; containers.dev, the reference features and images and x11docker under
+MIT; Distrobox under GPL 3.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and
+`licenses/` holds the text of each license. The code of this brick (its `.ts` and `.py` files) is
+under the MIT License of the base.
 
 ## Remove it
 

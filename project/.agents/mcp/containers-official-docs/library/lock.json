@@ -52,5 +52,83 @@
     "files": 7,
     "bytes": 77305,
     "built": "2026-11-14"
+  },
+  "vscode-devcontainers": {
+    "commit": "2d06388cbc2ad65a1a276cbe0cea668eca74c51d",
+    "files": 9,
+    "bytes": 154743,
+    "built": "2026-11-19"
+  },
+  "devcontainers-site": {
+    "commit": "0778f35686d362a165105c9d117b4ae4b33f9e6d",
+    "files": 15,
+    "bytes": 210149,
+    "built": "2026-11-19"
+  },
+  "devcontainers-features": {
+    "commit": "44ebeeaeb5bbeac4c1fab3277acce6db86cbf8f3",
+    "files": 56,
+    "bytes": 104353,
+    "built": "2026-11-19"
+  },
+  "devcontainers-images": {
+    "commit": "66193258c8ebb3d180c2c98a1ea7091e618512f7",
+    "files": 18,
+    "bytes": 85284,
+    "built": "2026-11-19"
+  },
+  "containers-common": {
+    "commit": "aeae833eac4f040283ef7ab507e88048c10f86db",
+    "files": 5,
+    "bytes": 80793,
+    "built": "2026-11-19"
+  },
+  "containers-image": {
+    "commit": "b84f98ed7c960897cec6c0746175f0bd1250ce55",
+    "files": 10,
+    "bytes": 95240,
+    "built": "2026-11-19"
+  },
+  "containers-storage": {
+    "commit": "9307f9cb7701117bf9093bc777bfb5970d3ab52a",
+    "files": 62,
+    "bytes": 70482,
+    "built": "2026-11-19"
+  },
+  "buildah": {
+    "commit": "2560f6018472520e26e5bc0cdb8170845927b01b",
+    "files": 41,
+    "bytes": 285821,
+    "built": "2026-11-19"
+  },
+  "skopeo": {
+    "commit": "bd981d14098835b559d02e7ca46d2a9696490e12",
+    "files": 12,
+    "bytes": 58675,
+    "built": "2026-11-19"
+  },
+  "podman-desktop": {
+    "commit": "e51f8664ca3591c87d01cb2cc4aedf0169ddf607",
+    "files": 125,
+    "bytes": 444130,
+    "built": "2026-11-19"
+  },
+  "toolbx": {
+    "commit": "c66ddd12d9b7dd4b0ea16c2696ea6ed506180959",
+    "files": 10,
+    "bytes": 23108,
+    "built": "2026-11-19"
+  },
+  "distrobox": {
+    "commit": "40c3cd724faa434aeb0a23e28776665b92de68bd",
+    "files": 28,
+    "bytes": 153759,
+    "built": "2026-11-19"
+  },
+  "x11docker": {
+    "commit": "2ad4ce70ad482b5d27cd6036b0f36ab8b7a806fe",
+    "files": 2,
+    "bytes": 72873,
+    "built": "2026-11-19"
   }
 }

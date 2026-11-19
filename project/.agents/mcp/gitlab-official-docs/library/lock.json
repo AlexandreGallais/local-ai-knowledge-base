@@ -16,5 +16,11 @@
     "files": 3,
     "bytes": 16402,
     "built": "2026-11-18"
+  },
+  "glab": {
+    "commit": "206ebab4fc3fa590b720d2885ac890c195c46650",
+    "files": 339,
+    "bytes": 688314,
+    "built": "2026-11-19"
   }
 }

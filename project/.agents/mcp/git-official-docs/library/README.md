@@ -20,3 +20,4 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | Tool | Documentation | Version | License | Size |
 | --- | --- | --- | --- | --- |
 | [git](git.index.md) | Git reference: the manual page of every git command, and the guides of the Git documentation | 2.56 | GPL-2.0-only | 255 files, 2.7 MB |
+| [git-lfs](git-lfs.index.md) | Git LFS: storing large files outside the repository, the manual page of every git lfs command (track, install, migrate, fetch, pull, lock...) and the specification | 3.8 | MIT | 46 files, 0.2 MB |

@@ -37,3 +37,14 @@ copyright notices, are in `licenses/<tool>/`.
 - License: MIT, <https://opensource.org/license/mit>
 - License text: [licenses/devcontainers-cli/LICENSE.txt](licenses/devcontainers-cli/LICENSE.txt)
 - Changes: none; the files are copied as they are in the source, at the commit above.
+
+## glab
+
+- Work: glab, the GitLab CLI: every command (ci, mr, issue, repo, release, variable, runner, schedule...) and its options, authentication and configuration
+- Authors: GitLab Inc. and the glab contributors
+- Copyright: `Copyright (c) 2022-present GitLab Inc.`
+- Copyright: `Copyright (c) 2019 GitHub Inc.`
+- Source: <https://gitlab.com/gitlab-org/cli>, v1.131.0, commit 206ebab4fc3fa590b720d2885ac890c195c46650
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/glab/LICENSE](licenses/glab/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.

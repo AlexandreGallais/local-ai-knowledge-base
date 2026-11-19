@@ -1,6 +1,6 @@
 # Brick `gitlab-official-docs`
 
-The official documentation of GitLab CI/CD: the folder `doc/ci` of the GitLab documentation, the documentation of GitLab Runner, and the README and examples of the Dev Containers CLI, to build and run a dev container in a CI job.
+The official documentation of GitLab CI/CD: the folder `doc/ci` of the GitLab documentation, the documentation of GitLab Runner, the README and examples of the Dev Containers CLI, to build and run a dev container in a CI job, and glab, the GitLab CLI (every command).
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -40,7 +40,7 @@ python3 .agents/mcp/gitlab-official-docs/build_index.py   # the same, without No
 
 ## Licenses
 
-The documentation of GitLab (`doc/`) and of GitLab Runner (`docs/`) is under CC BY-SA 4.0; the Dev Containers CLI is under the MIT License. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+The documentation of GitLab (`doc/`) and of GitLab Runner (`docs/`) is under CC BY-SA 4.0; the Dev Containers CLI and glab are under the MIT License. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

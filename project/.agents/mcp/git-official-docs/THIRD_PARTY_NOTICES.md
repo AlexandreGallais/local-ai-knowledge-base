@@ -15,3 +15,14 @@ copyright notices, are in `licenses/<tool>/`.
 - License text: [licenses/git/COPYING](licenses/git/COPYING)
 - Terms: Copyleft: these files stay under the GNU General Public License version 2, apart from the MIT License of the rest of the base.
 - Changes: none; the files are copied as they are in the source, at the commit above.
+
+## git-lfs
+
+- Work: Git LFS: storing large files outside the repository, the manual page of every git lfs command (track, install, migrate, fetch, pull, lock...) and the specification
+- Authors: GitHub, Inc. and the Git LFS contributors
+- Copyright: `Copyright (c) 2014- GitHub, Inc. and Git LFS contributors`
+- Copyright: `Copyright (c) 2009,2010 The Go Authors. All rights reserved.`
+- Source: <https://github.com/git-lfs/git-lfs>, v3.8.1, commit a662a6dbfedf706cfa9fc7a5b7bcc7ba2e2c8a65
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/git-lfs/LICENSE.md](licenses/git-lfs/LICENSE.md)
+- Changes: none; the files are copied as they are in the source, at the commit above.

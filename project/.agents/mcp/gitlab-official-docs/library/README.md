@@ -22,3 +22,4 @@ node scripts/check-library.ts                 # every file indexed, every licens
 | [gitlab-ci](gitlab-ci.index.md) | GitLab CI/CD: the folder doc/ci of the GitLab documentation (.gitlab-ci.yml, the reference of every keyword, variables, cache, artifacts, rules, pipelines) | 19.5 | CC-BY-SA-4.0 | 176 files, 2.2 MB |
 | [gitlab-runner](gitlab-runner.index.md) | GitLab Runner: its documentation (install, register, executors Docker and Kubernetes, config.toml, services) | 19.5 | CC-BY-SA-4.0 | 66 files, 1.1 MB |
 | [devcontainers-cli](devcontainers-cli.index.md) | Dev Containers CLI: its README and its examples of use, as building and running a dev container in CI | 0.89 | MIT | 3 files, 0.0 MB |
+| [glab](glab.index.md) | glab, the GitLab CLI: every command (ci, mr, issue, repo, release, variable, runner, schedule...) and its options, authentication and configuration | 1.131 | MIT | 339 files, 0.7 MB |

@@ -1,8 +1,8 @@
 {
   "name": "containers-official-docs",
-  "instructions": "The official documentation of containers, kept locally: Docker (the Dockerfile reference, the manuals of Docker Engine, Build and Compose, the reference of every docker command), Podman (every podman command, Containerfile, pods, Quadlet), the Compose Specification, the Development Containers specification and the OCI specifications (image, runtime, distribution). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
-  "search": "Search the official documentation of containers: Docker (the Dockerfile reference, the manuals of Docker Engine, Build and Compose, the reference of every docker command), Podman (every podman command, Containerfile, pods, Quadlet), the Compose Specification, the Development Containers specification and the OCI specifications (image, runtime, distribution). Returns 10 section ids at most.",
-  "queryExample": "\"HEALTHCHECK\" or \"podman run publish port\"",
-  "toolExample": "\"dockerfile\", \"podman\" or \"devcontainers-spec\"",
+  "instructions": "The official documentation of containers, kept locally: Docker (the Dockerfile reference, the manuals of Docker Engine, Build and Compose, every docker command), Podman (every podman command, Containerfile, pods, Quadlet, containers.conf, registries.conf, storage.conf), Buildah, Skopeo, Podman Desktop, the Compose Specification, dev containers (the specification, VS Code, the reference features and images), graphical applications and sound in a container (x11docker, Distrobox, Toolbx) and the OCI specifications. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of containers: Dockerfile instructions, docker and podman commands, Quadlet, containers.conf, registries.conf, storage.conf, buildah and skopeo commands, Podman Desktop, the Compose Specification, devcontainer.json, dev container features (desktop-lite, docker-in-docker...) and images, the display (X11, Wayland), the sound and the GPU of the host in a container (x11docker, Distrobox, Toolbx), the OCI specifications. Returns 10 section ids at most.",
+  "queryExample": "\"HEALTHCHECK\" or \"WAYLAND_DISPLAY\"",
+  "toolExample": "\"dockerfile\", \"podman\", \"x11docker\" or \"devcontainers-spec\"",
   "idExample": "library/dockerfile/reference.md#healthcheck"
 }

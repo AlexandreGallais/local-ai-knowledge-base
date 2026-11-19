@@ -1,8 +1,8 @@
 {
   "name": "git-official-docs",
-  "instructions": "The official documentation of Git, kept locally: the manual page of every git command and the guides of the Git documentation. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
-  "search": "Search the official documentation of Git: the manual page of every git command and the guides of the Git documentation. Returns 10 section ids at most.",
-  "queryExample": "\"git rebase\" or \"git worktree\"",
-  "toolExample": "\"git\"",
+  "instructions": "The official documentation of Git, kept locally: the manual page of every git command, the guides of the Git documentation, and Git LFS (every git lfs command). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of Git: the manual page of every git command, the guides of the Git documentation, and every git lfs command. Returns 10 section ids at most.",
+  "queryExample": "\"git rebase\" or \"git lfs track\"",
+  "toolExample": "\"git\" or \"git-lfs\"",
   "idExample": "library/git/git-rebase.adoc#description"
 }

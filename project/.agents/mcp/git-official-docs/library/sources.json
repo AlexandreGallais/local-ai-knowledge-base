@@ -8,12 +8,8 @@
       "version": "2.56",
       "license": "GPL-2.0-only",
       "attribution": "Linus Torvalds, Junio C Hamano and the Git contributors",
-      "paths": [
-        "Documentation/"
-      ],
-      "docs": [
-        "Documentation"
-      ],
+      "paths": ["Documentation/"],
+      "docs": ["Documentation"],
       "exclude": [
         "Documentation/RelNotes",
         "Documentation/howto",
@@ -21,6 +17,25 @@
         "Documentation/config"
       ],
       "files": "\\.(?:adoc|txt)$"
+    },
+    {
+      "tool": "git-lfs",
+      "title": "Git LFS: storing large files outside the repository, the manual page of every git lfs command (track, install, migrate, fetch, pull, lock...) and the specification",
+      "repository": "https://github.com/git-lfs/git-lfs.git",
+      "ref": "v3.8.1",
+      "version": "3.8",
+      "license": "MIT",
+      "attribution": "GitHub, Inc. and the Git LFS contributors",
+      "paths": [
+        "docs/",
+        "LICENSE.md"
+      ],
+      "docs": ["docs"],
+      "exclude": [
+        "docs/howto",
+        "docs/proposals",
+        "docs/l10n.md"
+      ]
     }
   ]
 }

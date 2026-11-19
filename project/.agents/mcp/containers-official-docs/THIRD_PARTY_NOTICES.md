@@ -46,6 +46,647 @@ copyright notices, are in `licenses/<tool>/`.
 - License text: [licenses/podman/LICENSE](licenses/podman/LICENSE)
 - Changes: none; the files are copied as they are in the source, at the commit above.
 
+## containers-common
+
+- Work: The configuration files of Podman, Buildah and Skopeo: containers.conf (engine, network, mounts, environment of every container), containers-mounts.conf, Containerfile and .containerignore
+- Authors: The containers/common contributors
+- Copyright: as stated in the license text, by The containers/common contributors
+- Source: <https://github.com/containers/container-libs>, common/v0.70.0, commit aeae833eac4f040283ef7ab507e88048c10f86db
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/containers-common/LICENSE](licenses/containers-common/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## containers-image
+
+- Work: The image configuration of Podman, Buildah and Skopeo: registries.conf (mirrors, search registries, insecure registries), policy.json, signatures, auth.json, certificates
+- Authors: The containers/image contributors
+- Copyright: as stated in the license text, by The containers/image contributors
+- Source: <https://github.com/containers/container-libs>, image/v5.42.1, commit b84f98ed7c960897cec6c0746175f0bd1250ce55
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/containers-image/LICENSE](licenses/containers-image/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## containers-storage
+
+- Work: The storage of Podman, Buildah and Skopeo: storage.conf (drivers, rootless storage, additional image stores) and the containers-storage commands
+- Authors: The containers/storage contributors
+- Copyright: as stated in the license text, by The containers/storage contributors
+- Source: <https://github.com/containers/container-libs>, storage/v1.65.1, commit 9307f9cb7701117bf9093bc777bfb5970d3ab52a
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/containers-storage/LICENSE](licenses/containers-storage/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## buildah
+
+- Work: Buildah: building OCI images without a daemon, every buildah command (bud, from, run, commit, push...) and its options
+- Authors: The Buildah contributors
+- Copyright: as stated in the license text, by The Buildah contributors
+- Source: <https://github.com/containers/buildah>, v1.46.1, commit 2560f6018472520e26e5bc0cdb8170845927b01b
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/buildah/LICENSE](licenses/buildah/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## skopeo
+
+- Work: Skopeo: inspecting, copying and syncing images between registries without pulling them, every skopeo command
+- Authors: The Skopeo contributors
+- Copyright: as stated in the license text, by The Skopeo contributors
+- Source: <https://github.com/containers/skopeo>, v1.25.2, commit bd981d14098835b559d02e7ca46d2a9696490e12
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/skopeo/LICENSE](licenses/skopeo/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## podman-desktop
+
+- Work: Podman Desktop: installing and using it on Linux, Windows and macOS, Podman machines, Kubernetes, extensions, troubleshooting
+- Authors: The Podman Desktop contributors
+- Copyright: as stated in the license text, by The Podman Desktop contributors
+- Source: <https://github.com/containers/podman-desktop>, v1.31.0, commit e51f8664ca3591c87d01cb2cc4aedf0169ddf607
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/podman-desktop/LICENSE](licenses/podman-desktop/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## toolbx
+
+- Work: Toolbx: development containers that share the user's home, display, sound and devices with the host, on Fedora and others (its manual pages)
+- Authors: The Toolbx contributors
+- Copyright: as stated in the license text, by The Toolbx contributors
+- Source: <https://github.com/containers/toolbox>, 0.3, commit c66ddd12d9b7dd4b0ea16c2696ea6ed506180959
+- License: Apache-2.0, <https://www.apache.org/licenses/LICENSE-2.0>
+- License text: [licenses/toolbx/COPYING](licenses/toolbx/COPYING)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## distrobox
+
+- Work: Distrobox: any Linux distribution in a container that shares the home, the display (X11, Wayland), the sound and the devices of the host; usage, compatibility and tips
+- Authors: Luca Di Maio and the Distrobox contributors
+- Copyright: as stated in the license text, by Luca Di Maio and the Distrobox contributors
+- Source: <https://github.com/89luca89/distrobox>, 1.8.2.5, commit 40c3cd724faa434aeb0a23e28776665b92de68bd
+- License: GPL-3.0-only
+- License text: [licenses/distrobox/COPYING.md](licenses/distrobox/COPYING.md)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## x11docker
+
+- Work: x11docker: running graphical applications in containers with the display (X11 or Wayland), the sound (PulseAudio, ALSA), the GPU and the clipboard of the host, safely
+- Authors: Martin Viereck
+- Copyright: `Copyright (c) 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022 Martin Viereck`
+- Source: <https://github.com/mviereck/x11docker>, v7.8.0, commit 2ad4ce70ad482b5d27cd6036b0f36ab8b7a806fe
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/x11docker/LICENSE.txt](licenses/x11docker/LICENSE.txt)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## vscode-devcontainers
+
+- Work: Dev containers in VS Code: creating a dev container, devcontainer.json reference, advanced containers (Podman, rootless, mounts, environment), the devcontainer CLI, tips and FAQ
+- Authors: Microsoft Corporation and the vscode-docs contributors
+- Copyright: `Copyright (c) Microsoft Corporation. All rights reserved. Distributed under the following terms:`
+- Source: <https://github.com/microsoft/vscode-docs>, main, commit 2d06388cbc2ad65a1a276cbe0cea668eca74c51d
+- License: CC-BY-3.0-US
+- License text: [licenses/vscode-devcontainers/LICENSE.md](licenses/vscode-devcontainers/LICENSE.md)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## devcontainers-site
+
+- Work: containers.dev: the implementors' guide of the Development Containers specification (features, templates, distribution, JSON reference) and its guides (Dockerfile, GitLab CI, prebuilds)
+- Authors: Microsoft Corporation and the Development Containers contributors
+- Copyright: `Copyright (c) Microsoft Corporation.`
+- Source: <https://github.com/devcontainers/devcontainers.github.io>, gh-pages, commit 0778f35686d362a165105c9d117b4ae4b33f9e6d
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/devcontainers-site/LICENSE](licenses/devcontainers-site/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## devcontainers-features
+
+- Work: The reference features of dev containers (desktop-lite, docker-in-docker, docker-outside-of-docker, node, rust, dotnet, java, python, powershell, git-lfs...): what each installs and its options
+- Authors: Microsoft Corporation and the Development Containers contributors
+- Copyright: `Copyright (c) 2022 Microsoft Corporation.`
+- Source: <https://github.com/devcontainers/features>, main, commit 44ebeeaeb5bbeac4c1fab3277acce6db86cbf8f3
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/devcontainers-features/LICENSE](licenses/devcontainers-features/LICENSE)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
+## devcontainers-images
+
+- Work: The reference images of dev containers (base, universal, javascript-node, typescript-node, rust, dotnet, java, python, cpp...): what each holds and how to use it
+- Authors: Microsoft Corporation and the Development Containers contributors
+- Copyright: `Copyright (c) Microsoft Corporation. All rights reserved.`
+- Copyright: `Copyright (c) 2009`
+- Copyright: `Copyright 2018 Jon Mosco`
+- Copyright: `Copyright (c) 2011 Github`
+- Copyright: `Copyright (c) 2012 Github`
+- Copyright: `Copyright (c) 2014 Github`
+- Copyright: `Copyright (c) 2015 Github`
+- Copyright: `Copyright (c) 2013 Yonchu.`
+- Copyright: `Copyright (c) 2014 Jim Hester`
+- Copyright: `Copyright (c) 2014 by Jan Kosco`
+- Copyright: `Copyright (c) 2011 Sorin Ionescu`
+- Copyright: `Copyright (c) 2013, Felix Riedel`
+- Copyright: `Copyright 2009 P.C. Shyamshankar`
+- Copyright: `Copyright (c) 2011 Vincent Guerci`
+- Copyright: `Copyright (c) 2016, Zsolt Lengyel`
+- Copyright: `Copyright (c) 2011 Guido van Steen`
+- Copyright: `Copyright (c) 2009 Peter Stephenson`
+- Copyright: `Copyright (c) 2014 Markus Faerevaag`
+- Copyright: `Copyright (c) 2008 by Daniel Friesel`
+- Copyright: `Copyright (c) 2011 Suraj N. Kurapati`
+- Copyright: `Copyright 2010 - 2016 Johannes Schlatow`
+- Copyright: `Copyright (c) 2011, 2012, 2014 Akinori MUSHA`
+- Copyright: `Copyright (c) 2014 Andre Konig`
+- Copyright: `Copyright (c) 2006-2008, Ian Macdonald`
+- Copyright: `Copyright (c) 2010-2011 zsh-syntax-highlighting contributors`
+- Copyright: `Copyright (c) 2006,2007 Shawn O. Pearce`
+- Copyright: `Copyright (c) 2012 2019 Harish Narayanan`
+- Copyright: `Copyright (c) 2012-2013 Felipe Contreras`
+- Copyright: `Copyright (c) 2012-2019 Harish Narayanan (https://harishnarayanan.org/).`
+- Copyright: `Copyright (c) 2012 - 2014 Johan Venant Brian Mattern`
+- Copyright: `Copyright (c) 2009-2019 Robby Russell and contributors (https://github.com/robbyrussell/oh-my-zsh/contributors)`
+- Copyright: `Copyright (c) 2006,2007 Shawn O. Pearce Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).`
+- Copyright: `Copyright (c) 2014 Markus Færevaag`
+- Copyright: `Copyright (c) 2010 Tim Caswell`
+- Copyright: `Copyright (c) 2014 Jordan Harband`
+- Copyright: `Copyright (c) 2010 Tim Caswell and Jordan Harband`
+- Copyright: `Copyright (c) 2003-2018 Derick Rethans. All rights reserved.`
+- Copyright: `Copyright 2015 IBM Corp.`
+- Copyright: `Copyright 2016 IBM Corp.`
+- Copyright: `Copyright 2015 Nebula, Inc.`
+- Copyright: `Copyright 2015 Red Hat Inc.`
+- Copyright: `Copyright 2018 Victor Torre`
+- Copyright: `Copyright 2015 Red Hat, Inc.`
+- Copyright: `Copyright (c) 2015 VMware, Inc.`
+- Copyright: `Copyright (c) 2017 VMware, Inc.`
+- Copyright: `Copyright (c) 2018 VMware, Inc.`
+- Copyright: `Copyright (c) 2015 Rackspace, Inc.`
+- Copyright: `Copyright (c) 2016 Rackspace, Inc.`
+- Copyright: `Copyright 2015 Hewlett-Packard Enterprise`
+- Copyright: `Copyright 2016 Hewlett-Packard Enterprise`
+- Copyright: `Copyright (c) 2015 Hewlett Packard Enterprise`
+- Copyright: `Copyright (c) 2017 Hewlett Packard Enterprise`
+- Copyright: `Copyright 2014 Hewlett-Packard Development Company, L.P.`
+- Copyright: `Copyright 2015 Hewlett-Packard Development Company, L.P.`
+- Copyright: `Copyright 2016 Hewlett-Packard Development Company, L.P.`
+- Copyright: `Copyright (c) 2018 Victor Torre (https://github.com/ehooo)`
+- Copyright: `Copyright (c) 2013 Hewlett-Packard Development Company, L.P.`
+- Copyright: `Copyright (c) 2016 Hewlett-Packard Development Company, L.P.`
+- Copyright: `Copyright (c) 2009-2011 Wayne E. Seguin`
+- Copyright: `Copyright (c) 2011-2020 Michal Papis`
+- Copyright: `Copyright (c) 2016-2020 Piotr Kuczynski`
+- Copyright: `Copyright (c) Jim Weirich`
+- Copyright: `Copyright (c) 2007-2008, debug-commons team`
+- Copyright: `Copyright (C) 2005  Kent Sibilev`
+- Copyright: `Copyright (c) 2013`
+- Copyright: `Copyright (c) 2014`
+- Copyright: `Copyright (c) 2016`
+- Copyright: `Copyright (c) 2017`
+- Copyright: `Copyright (c) 2018`
+- Copyright: `Copyright (c) 2019`
+- Copyright: `Copyright (c) 2014 LCD`
+- Copyright: `Copyright (c) 2017-2018`
+- Copyright: `Copyright (c) 2017-2019`
+- Copyright: `Copyright (c) 2017, 2019`
+- Copyright: `Copyright (c) 2009 Vincent`
+- Copyright: `Copyright (c) 2010 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2012 Google, Inc.`
+- Copyright: `Copyright (c) 2013 Google, Inc.`
+- Copyright: `Copyright (c) 2014 Google, Inc.`
+- Copyright: `Copyright (c) 2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2015 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2015 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2016 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2008-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2010-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2011-2014 Google, Inc.`
+- Copyright: `Copyright (c) 2012-2014 Google, Inc.`
+- Copyright: `Copyright (c) 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2012-2015 Google, Inc.`
+- Copyright: `Copyright (c) 2013-2014 Google, Inc.`
+- Copyright: `Copyright (c) 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2013-2015 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2008, 2012 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2012, 2014 Google, Inc.`
+- Copyright: `Copyright (c) 2006, 2008-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006, 2009-2013 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2008-2010, 2013 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2009-2011, 2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2011-2014, 2017 Google, Inc.`
+- Copyright: `Copyright (c) 2008, 2010, 2013 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2009, 2012, 2014 Google, Inc.`
+- Copyright: `Copyright (c) 2010, 2012, 2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2015 Harut`
+- Copyright: `Copyright (c) 2012 JT Olds`
+- Copyright: `Copyright (c) 2016 Jurgen Hermann`
+- Copyright: `Copyright (c) 2017 Antonio Ossa`
+- Copyright: `Copyright (c) 2019 PHeanEX`
+- Copyright: `Copyright (c) 2006-2007, 2009-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2007, 2010-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2010, 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2010, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2011, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2008-2010, 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2008-2010, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2009-2010, 2012-2013 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2009-2011, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2012 Tim Hatch`
+- Copyright: `Copyright (c) 2016 Jakub Wilk`
+- Copyright: `Copyright (c) 2018 Jakub Wilk`
+- Copyright: `Copyright (c) 2019 Svet`
+- Copyright: `Copyright (c) 2006, 2010, 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006-2008, 2010, 2013 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2014 David Shea`
+- Copyright: `Copyright (c) 2015 Pavel Roskin`
+- Copyright: `Copyright (c) 2015 Rene Zhang`
+- Copyright: `Copyright (c) 2007, 2010, 2013, 2015 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2014 Arun Persaud`
+- Copyright: `Copyright (c) 2015 Aru Sahni`
+- Copyright: `Copyright (c) 2015 Simu Toni`
+- Copyright: `Copyright (c) 2016 Brian C. Lane`
+- Copyright: `Copyright (c) 2016 Erik`
+- Copyright: `Copyright (c) 2016 Petr Pulc`
+- Copyright: `Copyright (c) 2017 Lukasz Sznuk`
+- Copyright: `Copyright (c) 2017 Mitar`
+- Copyright: `Copyright (c) 2017 Roman Ivanov`
+- Copyright: `Copyright (c) 2018 Fureigh`
+- Copyright: `Copyright (c) 2018 Konstantin`
+- Copyright: `Copyright (c) 2018 Mark Miller`
+- Copyright: `Copyright (c) 2014 Brett Cannon`
+- Copyright: `Copyright (c) 2014 Calin Don`
+- Copyright: `Copyright (c) 2015 Anentropic`
+- Copyright: `Copyright (c) 2015 Radu Ciorba`
+- Copyright: `Copyright (c) 2017 Jacques Kvam`
+- Copyright: `Copyright (c) 2012 Ry4an Brase`
+- Copyright: `Copyright (c) 2015 Cezar`
+- Copyright: `Copyright (c) 2015 Chris Rebert`
+- Copyright: `Copyright (c) 2015 Dmitry Pribysh`
+- Copyright: `Copyright (c) 2016 Glenn Matthews`
+- Copyright: `Copyright (c) 2017 Thomas Hisch`
+- Copyright: `Copyright (c) 2018 Ben Green`
+- Copyright: `Copyright (c) 2018 Justin Li`
+- Copyright: `Copyright (c) 2018 Mr. Senko`
+- Copyright: `Copyright (c) 2019 Julien Palard`
+- Copyright: `Copyright (c) 2019 Kylian`
+- Copyright: `Copyright (c) 2019 Mr. Senko`
+- Copyright: `Copyright (c) 2019 Thomas Hisch`
+- Copyright: `Copyright (c) 2014 Steven Myint`
+- Copyright: `Copyright (c) 2015 Fabio Natali`
+- Copyright: `Copyright (c) 2015 Steven Myint`
+- Copyright: `Copyright (c) 2015 Viorel Stirbu`
+- Copyright: `Copyright (c) 2016 Maik Roder`
+- Copyright: `Copyright (c) 2016 Roy Williams`
+- Copyright: `Copyright (c) 2018 Alan Chan`
+- Copyright: `Copyright (c) 2018 Hornwitser`
+- Copyright: `Copyright (c) 2018 Mike Frysinger`
+- Copyright: `Copyright (c) 2018 Yury Gribov`
+- Copyright: `Copyright (c) 2019 Fantix King`
+- Copyright: `Copyright (c) 2019 Hugues`
+- Copyright: `Copyright (c) 2019 Nikita Sobolev`
+- Copyright: `Copyright (c) 2019 Niko Wenselowski`
+- Copyright: `Copyright (c) 2019 Wes Turner`
+- Copyright: `Copyright (c) 2006, 2008-2010, 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006, 2008-2010, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006, 2008-2011, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006, 2009-2010, 2012-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2006, 2009-2010, 2012-2015 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2012 FELD Boris`
+- Copyright: `Copyright (c) 2012 Mike Bryant`
+- Copyright: `Copyright (c) 2013 John McGehee`
+- Copyright: `Copyright (c) 2013 T.Rzepka`
+- Copyright: `Copyright (c) 2014 Cosmin Poieana`
+- Copyright: `Copyright (c) 2014 Pedro Algarvio`
+- Copyright: `Copyright (c) 2014 Vlad Temian`
+- Copyright: `Copyright (c) 2015 Cosmin Poieana`
+- Copyright: `Copyright (c) 2015 John Kirkham`
+- Copyright: `Copyright (c) 2015 Michael Kefeder`
+- Copyright: `Copyright (c) 2015 Mike Frysinger`
+- Copyright: `Copyright (c) 2016 Alex Jurkiewicz`
+- Copyright: `Copyright (c) 2016 Luis Escobar`
+- Copyright: `Copyright (c) 2016, 2018 Jakub Wilk`
+- Copyright: `Copyright (c) 2017 Craig Citro`
+- Copyright: `Copyright (c) 2017 Pedro Algarvio`
+- Copyright: `Copyright (c) 2017 Ville Skytta`
+- Copyright: `Copyright (c) 2018 Caio Carrara`
+- Copyright: `Copyright (c) 2018 Ville Skytta`
+- Copyright: `Copyright (c) 2019 Djailla`
+- Copyright: `Copyright (c) 2019 Nathan Marrow`
+- Copyright: `Copyright (c) 2019 Taewon D. Kim`
+- Copyright: `Copyright (c) 2019 Ville Skytta`
+- Copyright: `Copyright (c) 2006, 2008, 2010, 2013-2014 LOGILAB S.A.`
+- Copyright: `Copyright (c) 2009 Mads Kiilerich`
+- Copyright: `Copyright (c) 2009, 2010 Ian Eure`
+- Copyright: `Copyright (c) 2010 Daniel Harding`
+- Copyright: `Copyright (c) 2015 Nick Bastin`
+- Copyright: `Copyright (c) 2016 Alexander Todorov`
+- Copyright: `Copyright (c) 2016 Jared Garst`
+- Copyright: `Copyright (c) 2016 Moises Lopez`
+- Copyright: `Copyright (c) 2017 Alex Hearn`
+- Copyright: `Copyright (c) 2017 Chris Lamb`
+- Copyright: `Copyright (c) 2017 Dan Garrette`
+- Copyright: `Copyright (c) 2017 Daniel Miller`
+- Copyright: `Copyright (c) 2017 Mikhail Fesenko`
+- Copyright: `Copyright (c) 2017 Renat Galimov`
+- Copyright: `Copyright (c) 2018 Alexander Todorov`
+- Copyright: `Copyright (c) 2018 Carey Metcalfe`
+- Copyright: `Copyright (c) 2018 Chris Lamb`
+- Copyright: `Copyright (c) 2018 Jason Owen`
+- Copyright: `Copyright (c) 2018 Lucas Cimon`
+- Copyright: `Copyright (c) 2018 Marcus Naslund`
+- Copyright: `Copyright (c) 2018 Pablo Galindo`
+- Copyright: `Copyright (c) 2018 Randall Leeds`
+- Copyright: `Copyright (c) 2018 Ryan McGuire`
+- Copyright: `Copyright (c) 2019 Enji Cooper`
+- Copyright: `Copyright (c) 2019 Trevor Bekolay`
+- Copyright: `Copyright (c) 2014-2015 Brett Cannon`
+- Copyright: `Copyright (c) 2015 Florian Bruhin`
+- Copyright: `Copyright (c) 2015 Stephane Wirtel`
+- Copyright: `Copyright (c) 2016 Derek Gustafson`
+- Copyright: `Copyright (c) 2016 Florian Bruhin`
+- Copyright: `Copyright (c) 2017 Derek Gustafson`
+- Copyright: `Copyright (c) 2018 Adam Dangoor`
+- Copyright: `Copyright (c) 2018 Anthony Sottile`
+- Copyright: `Copyright (c) 2018 Nick Drozd`
+- Copyright: `Copyright (c) 2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2019 Nick Drozd`
+- Copyright: `Copyright (c) 2014 Damien Nozay`
+- Copyright: `Copyright (c) 2014 Michal Nowikowski`
+- Copyright: `Copyright (c) 2015 Mihai Balint`
+- Copyright: `Copyright (c) 2016 Chris Murray`
+- Copyright: `Copyright (c) 2017 Erik Wright`
+- Copyright: `Copyright (c) 2017 Martin von Gagern`
+- Copyright: `Copyright (c) 2018 Mariatta Wijaya`
+- Copyright: `Copyright (c) 2019 Peter Kolbus`
+- Copyright: `Copyright (c) 2014 Holger Peters`
+- Copyright: `Copyright (c) 2014 Jakob Normark`
+- Copyright: `Copyright (c) 2016 Ashley Whetter`
+- Copyright: `Copyright (c) 2016 Peter Dawyndt`
+- Copyright: `Copyright (c) 2016 Yuri Bochkarev`
+- Copyright: `Copyright (c) 2017 Hugo`
+- Copyright: `Copyright (c) 2017 Michka Popoff`
+- Copyright: `Copyright (c) 2017 Ned Batchelder`
+- Copyright: `Copyright (c) 2017, 2019 Thomas Hisch`
+- Copyright: `Copyright (c) 2018 Adrian Chirieac`
+- Copyright: `Copyright (c) 2018 Ashley Whetter`
+- Copyright: `Copyright (c) 2018 Ben James`
+- Copyright: `Copyright (c) 2018 Gary Tyler McLeod`
+- Copyright: `Copyright (c) 2018 Jace Browning`
+- Copyright: `Copyright (c) 2019 Andrzej Klajnert`
+- Copyright: `Copyright (c) 2019 Ashley Whetter`
+- Copyright: `Copyright (c) 2019 Federico Bond`
+- Copyright: `Copyright (c) 2019 Paul Renvoise`
+- Copyright: `Copyright (c) 2009 James Lingard`
+- Copyright: `Copyright (c) 2014 Daniel Harding`
+- Copyright: `Copyright (c) 2015 Noam Yorav-Raphael`
+- Copyright: `Copyright (c) 2016 Lukasz Rogalski`
+- Copyright: `Copyright (c) 2016-2017 Pedro Algarvio`
+- Copyright: `Copyright (c) 2017 Krzysztof Czapla`
+- Copyright: `Copyright (c) 2017 Lukasz Rogalski`
+- Copyright: `Copyright (c) 2017-2018 Ville Skytta`
+- Copyright: `Copyright (c) 2017-2019 Ville Skytta`
+- Copyright: `Copyright (c) 2018 Ioana Tagirta`
+- Copyright: `Copyright (c) 2018 Konstantin Manna`
+- Copyright: `Copyright (c) 2018 Matej Marusak`
+- Copyright: `Copyright (c) 2018-2019 Ville Skytta`
+- Copyright: `Copyright (c) 2014 Alexandru Coman`
+- Copyright: `Copyright (c) 2014 Derek Harland`
+- Copyright: `Copyright (c) 2015-2016 Moises Lopez`
+- Copyright: `Copyright (c) 2016 Elias Dorneles`
+- Copyright: `Copyright (c) 2016 Grant Welch`
+- Copyright: `Copyright (c) 2016-2017 Moises Lopez`
+- Copyright: `Copyright (c) 2017 Daniela Plascencia`
+- Copyright: `Copyright (c) 2017 James M. Allen`
+- Copyright: `Copyright (c) 2017, 2019 Ville Skytta`
+- Copyright: `Copyright (c) 2018-2019 Lucas Cimon`
+- Copyright: `Copyright (c) 2019 Danny Hermes`
+- Copyright: `Copyright (c) 2019 Hugues Bruant`
+- Copyright: `Copyright (c) 2012 Kevin Jing Qiu`
+- Copyright: `Copyright (c) 2013-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2014 Manuel Vazquez Acosta`
+- Copyright: `Copyright (c) 2014-2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2014-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2015-2016 Florian Bruhin`
+- Copyright: `Copyright (c) 2015-2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2015-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2016-2017 Derek Gustafson`
+- Copyright: `Copyright (c) 2016-2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2016-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2017-2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2018 Jim Robertson`
+- Copyright: `Copyright (c) 2018 Mitchell T.H. Young`
+- Copyright: `Copyright (c) 2018 Tomer Chachamu`
+- Copyright: `Copyright (c) 2018 Yuval Langer`
+- Copyright: `Copyright (c) 2018-2019 Nick Drozd`
+- Copyright: `Copyright (c) 2019 Michael Scott Cuthbert`
+- Copyright: `Copyright (c) 2019 Nicolas Dickreuter`
+- Copyright: `Copyright (c) 2009 Charles Hebert`
+- Copyright: `Copyright (c) 2014 Dan Goldsmith`
+- Copyright: `Copyright (c) 2014-2015 Michal Nowikowski`
+- Copyright: `Copyright (c) 2015 Ionel Cristian Maries`
+- Copyright: `Copyright (c) 2016 Yannack`
+- Copyright: `Copyright (c) 2016, 2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2017 Bryce Guinta`
+- Copyright: `Copyright (c) 2017 Pierre Sassoulas`
+- Copyright: `Copyright (c) 2017, 2020 Anthony Sottile`
+- Copyright: `Copyright (c) 2018 Bryce Guinta`
+- Copyright: `Copyright (c) 2018 Scott Worley`
+- Copyright: `Copyright (c) 2018, 2020 Anthony Sottile`
+- Copyright: `Copyright (c) 2019 Remi Cardona`
+- Copyright: `Copyright (c) 2019 Robert Schweizer`
+- Copyright: `Copyright (c) 2019 Santiago Castro`
+- Copyright: `Copyright (c) 2010 Maarten ter Huurne`
+- Copyright: `Copyright (c) 2015 James Morgensen`
+- Copyright: `Copyright (c) 2016-2019 Ashley Whetter`
+- Copyright: `Copyright (c) 2017-2018 Hugo`
+- Copyright: `Copyright (c) 2018 Reverb C`
+- Copyright: `Copyright (c) 2018 SergeyKosarchuk`
+- Copyright: `Copyright (c) 2018-2019 Ashley Whetter`
+- Copyright: `Copyright (c) 2019 Grygorii Iermolenko`
+- Copyright: `Copyright (c) 2010 Julien Jehannet`
+- Copyright: `Copyright (c) 2016 Alan Evangelista`
+- Copyright: `Copyright (c) 2016 Alexander Pervakov`
+- Copyright: `Copyright (c) 2016 Filipe Brandenburger`
+- Copyright: `Copyright (c) 2016, 2019 Ashley Whetter`
+- Copyright: `Copyright (c) 2016-2017 Lukasz Rogalski`
+- Copyright: `Copyright (c) 2017 John Paraskevopoulos`
+- Copyright: `Copyright (c) 2017 Kari Tristan Helgason`
+- Copyright: `Copyright (c) 2018 Drew`
+- Copyright: `Copyright (c) 2018 Rogalski, Lukasz`
+- Copyright: `Copyright (c) 2018 Steven M. Vascellaro`
+- Copyright: `Copyright (c) 2014 David Pursehouse`
+- Copyright: `Copyright (c) 2017 Martin`
+- Copyright: `Copyright (c) 2019 Pierre Sassoulas`
+- Copyright: `Copyright (c) 2008 Fabrice Douchant`
+- Copyright: `Copyright (c) 2016-2017 Roy Williams`
+- Copyright: `Copyright (c) 2018 Pierre Sassoulas`
+- Copyright: `Copyright (c) 2018-2019 Jim Robertson`
+- Copyright: `Copyright (c) 2019 Andres Perez Hortal`
+- Copyright: `Copyright (c) 2019 Gabriel R Sezefredo`
+- Copyright: `Copyright (c) 2013-2018, 2020 Claudiu Popa`
+- Copyright: `Copyright (c) 2014 Ricardo Gemignani`
+- Copyright: `Copyright (c) 2014, 2016-2020 Claudiu Popa`
+- Copyright: `Copyright (c) 2014-2018, 2020 Claudiu Popa`
+- Copyright: `Copyright (c) 2015-2016, 2018 Claudiu Popa`
+- Copyright: `Copyright (c) 2015-2018, 2020 Claudiu Popa`
+- Copyright: `Copyright (c) 2017-2018 Bryce Guinta`
+- Copyright: `Copyright (c) 2017-2018, 2020 Anthony Sottile`
+- Copyright: `Copyright (c) 2018 Brian Shaginaw`
+- Copyright: `Copyright (c) 2018 Marianna Polatoglou`
+- Copyright: `Copyright (c) 2018 Matus Valo`
+- Copyright: `Copyright (c) 2018 Mike Miller`
+- Copyright: `Copyright (c) 2019 Janne Ronkko`
+- Copyright: `Copyright (c) 2019 Martin Vielsmaier`
+- Copyright: `Copyright (c) 2014-2015 Bruno Daniel`
+- Copyright: `Copyright (c) 2019 Pascal Corpet`
+- Copyright: `Copyright (c) 2008`
+- Copyright: `Copyright (c) 2016 Anthony Foglia`
+- Copyright: `Copyright (c) 2016, 2018-2019 Ashley Whetter`
+- Copyright: `Copyright (c) 2016, 2019-2020 Ashley Whetter`
+- Copyright: `Copyright (c) 2019 Oisin Moran`
+- Copyright: `Copyright (c) 2012 David Pursehouse`
+- Copyright: `Copyright (c) 2013 Benedikt Morbach`
+- Copyright: `Copyright (c) 2018 Andreas Freimuth`
+- Copyright: `Copyright (c) 2018-2019 Pierre Sassoulas`
+- Copyright: `Copyright (c) 2018 Michael Hudson-Doyle`
+- Copyright: `Copyright (c) 2019 Bruno P. Kinoshita`
+- Copyright: `Copyright (c) 2019 Hugo van Kemenade`
+- Copyright: `Copyright (c) 2019 Nick Smith`
+- Copyright: `Copyright (c) 2012 Anthony VEREZ`
+- Copyright: `Copyright (c) 2013-2014, 2016-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2015-2016, 2018-2019 Claudiu Popa`
+- Copyright: `Copyright (c) 2018 Radostin Stoyanov`
+- Copyright: `Copyright (c) 2018 Aivar Annamaa`
+- Copyright: `Copyright (c) 2018 Banjamin Freeman`
+- Copyright: `Copyright (c) 2017 Christopher Zurcher`
+- Copyright: `Copyright (c) 2003-2010 LOGILAB S.A. (Paris, FRANCE). http://www.logilab.fr`
+- Copyright: `Copyright (c) 2019 Daniel Draper`
+- Copyright: `Copyright (c) 2018 Sushobhit`
+- Copyright: `Copyright (c) 2019 Dan Hemberger`
+- Copyright: `Copyright (c) 2019 Zeb Nicholls`
+- Copyright: `Copyright (c) 2018 Sergei Lebedev`
+- Copyright: `Copyright (c) 2018-2019 Sushobhit`
+- Copyright: `Copyright (c) 2019 Matthijs Blom`
+- Copyright: `Copyright (c) 2019 Andy Palmer`
+- Copyright: `Copyright (c) 2018 Natalie Serebryakova`
+- Copyright: `Copyright (c) 2011-2013 Tarek Ziade`
+- Copyright: `Copyright (c) 2012-2016 Ian Cordasco`
+- Copyright: `Copyright (C) 2011-2013 Tarek Ziade`
+- Copyright: `Copyright (C) 2012-2016 Ian Cordasco`
+- Copyright: `Copyright (c) 2010-2011 Hideo Hattori`
+- Copyright: `Copyright (c) 2011-2013 Hideo Hattori, Steven Myint`
+- Copyright: `Copyright (c) 2013-2016 Hideo Hattori, Steven Myint, Bill Wendling`
+- Copyright: `Copyright (C) 2010-2011 Hideo Hattori`
+- Copyright: `Copyright (C) 2011-2013 Hideo Hattori, Steven Myint`
+- Copyright: `Copyright (C) 2013-2016 Hideo Hattori, Steven Myint, Bill Wendling`
+- Copyright: `Copyright 2006 Google, Inc.`
+- Copyright: `Copyright (c) 2018 Lukasz Langa`
+- Copyright: `Copyright 2004-2005 Elemental Security, Inc.`
+- Copyright: `Copyright (c) 1991 - 1995, Stichting Mathematisch Centrum Amsterdam`
+- Copyright: `Copyright (c) 1995-2001 Corporation for National Research Initiatives`
+- Copyright: `Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006 Python Software Foundation.`
+- Copyright: `Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 Python Software Foundation`
+- Copyright: `Copyright (c) 2018 Łukasz Langa`
+- Copyright: `Copyright (c) 1991 - 1995, Stichting Mathematisch Centrum Amsterdam,`
+- Copyright: `Copyright 2015 Google Inc.`
+- Copyright: `Copyright 2016 Google Inc.`
+- Copyright: `Copyright 2017 Google Inc.`
+- Copyright: `Copyright 2018 Google Inc.`
+- Copyright: `Copyright 2003 Google Inc.`
+- Copyright: `Copyright 2008 Google Inc.`
+- Copyright: `Copyright 2009 Google Inc.`
+- Copyright: `Copyright 2005, Google Inc.`
+- Copyright: `Copyright 2006, Google Inc.`
+- Copyright: `Copyright 2007, Google Inc.`
+- Copyright: `Copyright 2008, Google Inc.`
+- Copyright: `Copyright 2015, Google Inc.`
+- Copyright: `Copyright (c) 1999-2001 Gregory P. Ward.`
+- Copyright: `Copyright (c) 2003 Python Software Foundation`
+- Copyright: `Copyright (c) 2002, 2003 Python Software Foundation.`
+- Copyright: `Copyright (c) 2015-2019 Jukka Lehtosalo and contributors`
+- Copyright: `Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Python Software Foundation`
+- Copyright: `Copyright (c) 2012 GreenSteam, <http://greensteam.dk/>`
+- Copyright: `Copyright (c) 2014-2017 Amir Rachum, <http://amir.rachum.com/>`
+- Copyright: `Copyright (c) 2014-2016 Ian Lee`
+- Copyright: `Copyright (c) 2006-2009 Johann C. Rocholl`
+- Copyright: `Copyright (c) 2009-2014 Florent Xicluna`
+- Copyright: `Copyright © 2006-2009 Johann C. Rocholl`
+- Copyright: `Copyright © 2009-2014 Florent Xicluna`
+- Copyright: `Copyright © 2014-2020 Ian Lee`
+- Copyright: `Copyright (c) 2020-202x The virtualenv developers`
+- Copyright: `Copyright (c) 2018 Chad Smith`
+- Copyright: `Copyright (c) 2014 by Armin Ronacher.`
+- Copyright: `Copyright (c) 2003-2013 University of Illinois at`
+- Copyright: `Copyright (c) 2009-2014 by the contributors listed in`
+- Copyright: `Copyright (C) 2008-2010 Tachyon Technologies.`
+- Copyright: `Copyright 2014-2020 The Rust Project Developers`
+- Copyright: `Copyright (c) 2009 The Go Authors. All rights reserved.`
+- Copyright: `Copyright (c) 2016 Dominik Honnef`
+- Copyright: `Copyright (C) 2010 nsf`
+- Copyright: `Copyright (c) 2016 haya14busa`
+- Copyright: `Copyright (c) 2014 Sourcegraph Inc. All rights reserved.`
+- Copyright: `Copyright (c) 2013 The Go Authors. All rights reserved.`
+- Copyright: `Copyright (c) 2014 Josh Bleecher Snyder`
+- Copyright: `Copyright (c) 2017 David R. Jenni. All rights reserved.`
+- Copyright: `Copyright (c) 2017 Nuruddin Ashr`
+- Copyright: `Copyright (c) Microsoft Corporation`
+- Copyright: `Copyright (c) 2015 Matthew Newhook`
+- Copyright: `Copyright Auburn University and others.  All rights reserved.`
+- Copyright: `Copyright © 2014, Roger Peppe`
+- Copyright: `Copyright (c) 2016, Zac Bergquist`
+- Copyright: `Copyright (c) 2017, Fatih Arslan`
+- Copyright: `Copyright (c) 2018 Minko Gechev`
+- Copyright: `Copyright (c) 2014 Derek Parker`
+- Copyright: `Copyright (c) 2016-present, Yarn Contributors.`
+- Copyright: `Copyright JS Foundation and other contributors, https://js.foundation`
+- Copyright: `Copyright (c) 2019 GitHub Inc.`
+- Copyright: `Copyright (c) 2014-2020 GitHub, Inc. and Git LFS contributors`
+- Copyright: `Copyright 2016 The Kubernetes Authors All Rights Reserved`
+- Copyright: `Copyright (c) 2000-2015 www.hamcrest.org`
+- Copyright: `Copyright (c) 2008-2018, Nathan Sweet All rights reserved.`
+- Copyright: `Copyright (c) 2000-2011 INRIA, France Telecom`
+- Copyright: `Copyright (C) 2016 Daniel Dreibrodt`
+- Copyright: `Copyright (c) 2000 - 2019 The Legion of the Bouncy Castle Inc. (https://www.bouncycastle.org)`
+- Copyright: `Copyright (c) 2004-2017 QOS.ch`
+- Copyright: `Copyright (c) 2001, Eric D. Friedman All Rights Reserved. This library is free software; you can redistribute it and/or modify it under`
+- Copyright: `Copyright (c) 1999 CERN - European Organization for Nuclear Research. Permission to use, copy, modify, distribute and sell this software`
+- Copyright: `Copyright (c) 2000-2011 ymnk, JCraft,Inc. All rights reserved.`
+- Copyright: `Copyright (c) Nils Adermann, Jordi Boggiano`
+- Copyright: `Copyright (c) 2019 - Present, Microsoft Corporation,`
+- Copyright: `Copyright 2013-2018 Docker, Inc.`
+- Copyright: `Copyright 2017-2020 Toan Nguyen and contributors (https://github.com/ohmybash/oh-my-bash/graphs/contributors)`
+- Copyright: `Copyright (c) 2012-2013 Sam Stephenson`
+- Copyright: `Copyright (c) 2013 Sam Stephenson`
+- Copyright: `Copyright (c) 2008-present Tom Preston-Werner and Jekyll contributors`
+- Copyright: `Copyright (c) 2015-2022 Project Jupyter Contributors`
+- Copyright: `Copyright (c) 2005-2022, NumPy Developers.`
+- Copyright: `Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team`
+- Copyright: `Copyright (c) 2011-2022, Open source contributors.`
+- Copyright: `Copyright (c) 2001-2002 Enthought, Inc. 2003-2022, SciPy Developers.`
+- Copyright: `Copyright (c) 2012-2021, Michael L. Waskom`
+- Copyright: `Copyright (c) 2007-2021 The scikit-learn developers.`
+- Copyright: `COPYRIGHT`
+- Copyright: `Copyright (c) 2014, The Regents of the University of California (Regents)`
+- Copyright: `Copyright (c) 2014, the respective contributors`
+- Copyright: `Copyright (c) 2016-     Facebook, Inc            (Adam Paszke)`
+- Copyright: `Copyright (c) 2014-     Facebook, Inc            (Soumith Chintala)`
+- Copyright: `Copyright (c) 2011-2014 Idiap Research Institute (Ronan Collobert)`
+- Copyright: `Copyright (c) 2012-2014 Deepmind Technologies    (Koray Kavukcuoglu)`
+- Copyright: `Copyright (c) 2011-2012 NEC Laboratories America (Koray Kavukcuoglu)`
+- Copyright: `Copyright (c) 2011-2013 NYU                      (Clement Farabet)`
+- Copyright: `Copyright (c) 2006-2010 NEC Laboratories America (Ronan Collobert, Leon Bottou, Iain Melvin, Jason Weston)`
+- Copyright: `Copyright (c) 2006      Idiap Research Institute (Samy Bengio)`
+- Copyright: `Copyright (c) 2001-2004 Idiap Research Institute (Ronan Collobert, Samy Bengio, Johnny Mariethoz)`
+- Copyright: `Copyright (c) 2016-present, Facebook Inc. All rights reserved.`
+- Copyright: `Copyright (c) 2016 Facebook Inc.`
+- Copyright: `Copyright (c) 2015 Google Inc.`
+- Copyright: `Copyright (c) 2015 Yangqing Jia`
+- Copyright: `Copyright 2019-2020 Kakao Brain`
+- Copyright: `Copyright (c) 2022 Cruise LLC.`
+- Copyright: `Copyright(c) 2013, 2014, 2015, the respective contributors`
+- Copyright: `Copyright(c) 2015, 2016 the respective contributors`
+- Copyright: `Copyright (c) 2021 Plotly, Inc`
+- Source: <https://github.com/devcontainers/images>, main, commit 66193258c8ebb3d180c2c98a1ea7091e618512f7
+- License: MIT, <https://opensource.org/license/mit>
+- License text: [licenses/devcontainers-images/LICENSE](licenses/devcontainers-images/LICENSE), [licenses/devcontainers-images/NOTICE.txt](licenses/devcontainers-images/NOTICE.txt)
+- Changes: none; the files are copied as they are in the source, at the commit above.
+
 ## compose-spec
 
 - Work: The Compose Specification: services, networks, volumes, configs, secrets, interpolation, merge
