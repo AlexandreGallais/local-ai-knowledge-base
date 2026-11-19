@@ -1,16 +1,15 @@
-// The one import script of the base. It takes every part found in its folder (kit-001.txt,
-// js-official-docs-001.txt...), whatever their packs, checks them all, then writes everything in the
-// project at once: the kit (a project of its own: package.json, the format and lint configs,
-// AGENTS.md, opencode.json, .agents/ and example code) and each pasted brick of .agents/mcp/, with
-// its line in opencode.json. One file, no package, no build step: Node 22.18 or later.
-//   node import.ts [--from <folder of the parts>] [--target <project root>]
-// Default: the parts next to this file, the current folder as the project.
-// A damaged or missing part is named, and nothing is written. In an empty folder, the kit is written
-// whole: `npm install` then `npm run check` work at once. In a project that already exists, nothing
-// the team wrote is replaced: every file outside .agents/ (package.json, configs, AGENTS.md, skills)
-// is written only when missing, the example code of the kit (src/) is left aside, and the import
-// lists what it left, to be merged by hand. The bricks of .agents/mcp/ are replaced whole, and the
-// settings the team added to opencode.json stay.
+// The import script of the base, in Node; import.py is the same import in Python. It takes every
+// part found in its folder (kit-001.txt, js-official-docs-001.txt...), whatever their packs, checks
+// them all, then writes everything in the project at once: the kit (AGENTS.md, opencode.json and
+// .agents/) and each pasted documentation brick of .agents/mcp/, with its line in opencode.json.
+// One file, no package, no build step: Node 22.18 or later.
+//   node import.ts [--from <folder of the parts>] [--target <project root>] [--runtime node|python]
+// Default: the parts next to this file, the current folder as the project, the servers run by Node.
+// --runtime python writes the commands of the Python servers in opencode.json instead.
+// A damaged or missing part is named, and nothing is written. In a project that already exists,
+// nothing the team wrote is replaced: AGENTS.md and the skills are written only when missing, and the
+// import lists what it left. The bricks of .agents/mcp/ are replaced whole, and the settings the team
+// added to opencode.json stay.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
@@ -71,87 +70,34 @@ const Z85 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=
 const STREAM_MAGIC = 'LAB2\n';
 const PART_NAME = /^(.+)-(\d{3})\.txt$/;
 const BRICKS = '.agents/mcp';
-// The example code of the kit: written in an empty folder, left aside in a project that exists.
-const EXAMPLE = 'src/';
 const INSTRUCTIONS = [
   '.agents/rules.md',
   '.agents/mcp/*/rules.md',
 ];
-// OpenCode formatters that would run before the format configs of the project on the same files.
-const BUILT_IN_FORMATTERS = [
+
+// How OpenCode starts the server of a brick: by Node or by Python, the same answers.
+export type Runtime = 'node' | 'python';
+
+export const RUNTIMES: Runtime[] = [
+  'node',
+  'python',
+];
+
+// The formatters that earlier versions of the kit declared: removed from opencode.json, as the kit no
+// longer brings the configs they run.
+const OLD_FORMATTERS = [
+  'agents-format',
+  'eslint-format',
+  'prettier-format',
+  'stylelint-format',
+];
+// The built-in formatters earlier versions of the kit switched off: their entry is removed when it
+// only says "disabled", so that the project finds them as OpenCode ships them.
+const SWITCHED_OFF = [
   'prettier',
   'biome',
   'oxfmt',
 ];
-const ALL_EXTENSIONS = [
-  '.ts',
-  '.mts',
-  '.js',
-  '.mjs',
-  '.html',
-  '.json',
-  '.css',
-  '.scss',
-];
-// The formatters OpenCode runs after each write, in this order: ESLint with the format config on
-// scripts and templates, Prettier on every file, then Stylelint with the format config on styles,
-// whose fixes keep the layout of Prettier. Each one is declared when the file it needs is in the
-// project.
-const FORMATTERS = [
-  {
-    name: 'eslint-format',
-    config: 'eslint.format.config.mjs',
-    command: [
-      'npx',
-      '--no',
-      '--',
-      'eslint',
-      '--config',
-      'eslint.format.config.mjs',
-      '--fix',
-      '$FILE',
-    ],
-    extensions: ALL_EXTENSIONS.filter((extension) => ![
-      '.json',
-      '.css',
-      '.scss',
-    ].includes(extension)),
-  },
-  {
-    name: 'prettier-format',
-    config: '.prettierrc.json',
-    command: [
-      'npx',
-      '--no',
-      '--',
-      'prettier',
-      '--write',
-      '$FILE',
-    ],
-    extensions: ALL_EXTENSIONS,
-  },
-  {
-    name: 'stylelint-format',
-    config: 'stylelint.format.config.mjs',
-    command: [
-      'npx',
-      '--no',
-      '--',
-      'stylelint',
-      '--config',
-      'stylelint.format.config.mjs',
-      '--fix',
-      '--allow-empty-input',
-      '$FILE',
-    ],
-    extensions: [
-      '.css',
-      '.scss',
-    ],
-  },
-];
-// Formatters of earlier versions of the kit.
-const OLD_FORMATTERS = ['agents-format'];
 
 function sha256(data: Buffer | string): string {
   return createHash('sha256')
@@ -343,7 +289,8 @@ function record(value: unknown): Json {
   return typeof value === 'object' && value !== null && !Array.isArray(value) ? { ...value as Json } : {};
 }
 
-// The bricks present in the project: each folder of .agents/mcp/ that holds a server.ts.
+// The bricks present in the project: each folder of .agents/mcp/ that holds a server, in Node or in
+// Python.
 export function presentBricks(target: string): string[] {
   const folder = join(target, BRICKS);
 
@@ -351,13 +298,24 @@ export function presentBricks(target: string): string[] {
     return [];
   }
   return readdirSync(folder, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(join(folder, entry.name, 'server.ts')))
+    .filter((entry) => entry.isDirectory() && (existsSync(join(folder, entry.name, 'server.ts')) || existsSync(join(folder, entry.name, 'server.py'))))
     .map((entry) => entry.name)
     .sort();
 }
 
+// The command that starts the server of a brick, by the runtime chosen.
+export function serverCommand(brick: string, runtime: Runtime): string[] {
+  return runtime === 'python' ? [
+    'python3',
+    `${BRICKS}/${brick}/server.py`,
+  ] : [
+    'node',
+    `${BRICKS}/${brick}/server.ts`,
+  ];
+}
+
 // The servers of the config without those of a brick that is gone, then one per brick present.
-function syncServers(current: Json, bricks: string[]): Json {
+function syncServers(current: Json, bricks: string[], runtime: Runtime): Json {
   const kept = Object
     .entries(current)
     .filter(([, entry]) => {
@@ -373,58 +331,30 @@ function syncServers(current: Json, bricks: string[]): Json {
       brick,
       {
         type: 'local',
-        command: [
-          'node',
-          `${BRICKS}/${brick}/server.ts`,
-        ],
+        command: serverCommand(brick, runtime),
         codemode: false,
       },
     ])),
   };
 }
 
-// The formatters of the config: one per format config the project holds, and the built-in ones off.
-function syncFormatter(current: Json, configs: string[]): Json {
-  const ours = FORMATTERS.filter((item) => configs.includes(item.config));
-  const kept = Object.fromEntries(Object
+// The formatters of the config without those of earlier versions of the kit.
+function cleanFormatter(current: Json): Json {
+  return Object.fromEntries(Object
     .entries(current)
-    .filter(([name]) => !OLD_FORMATTERS.includes(name) && !FORMATTERS.some((item) => item.name === name)));
-
-  if (ours.length === 0) {
-    return kept;
-  }
-  return {
-    ...kept,
-    ...Object.fromEntries(BUILT_IN_FORMATTERS.map((name) => [
+    .filter(([
       name,
-      { disabled: true },
-    ])),
-    ...Object.fromEntries(ours.map((item) => [
-      item.name,
-      {
-        command: item.command,
-        extensions: item.extensions,
-      },
-    ])),
-  };
+      value,
+    ]) => !OLD_FORMATTERS.includes(name) && !(SWITCHED_OFF.includes(name) && JSON.stringify(value) === '{"disabled":true}')));
 }
 
-// The format configs present in the project.
-export function presentFormatConfigs(target: string): string[] {
-  return FORMATTERS
-    .map((item) => item.config)
-    .filter((config) => existsSync(join(target, config)));
-}
-
-// opencode.json with the instructions of the base, a formatter per format config of the project and
-// one local MCP server per brick present; the other settings of the file are kept as they are.
-export function syncConfig(config: Json, bricks: string[], formatConfigs: string[] = []): Json {
+// opencode.json with the instructions of the base and one local MCP server per brick present; the
+// other settings of the file are kept as they are, but the formatters of earlier versions of the kit.
+export function syncConfig(config: Json, bricks: string[], runtime: Runtime = 'node'): Json {
   const instructions = Array.isArray(config['instructions']) ? config['instructions'].filter((item) => typeof item === 'string') : [];
-  const formatter = syncFormatter(record(config['formatter']), formatConfigs);
+  const formatter = cleanFormatter(record(config['formatter']));
   const mcp = record(config['mcp']);
-  const servers = syncServers(record(mcp['servers']), bricks);
-
-  return {
+  const synced: Json = {
     ...config,
     instructions: [
       ...INSTRUCTIONS,
@@ -433,9 +363,14 @@ export function syncConfig(config: Json, bricks: string[], formatConfigs: string
     formatter,
     mcp: {
       ...mcp,
-      servers,
+      servers: syncServers(record(mcp['servers']), bricks, runtime),
     },
   };
+
+  // No formatter left: no "formatter" key at all, the other keys in their order.
+  return Object.fromEntries(Object
+    .entries(synced)
+    .filter(([key]) => key !== 'formatter' || Object.keys(formatter).length > 0));
 }
 
 function write(target: string, file: UnpackedFile): void {
@@ -444,11 +379,9 @@ function write(target: string, file: UnpackedFile): void {
 }
 
 // Writes the packs into the project. The packs are already checked: nothing here can fail on them.
-export function installPacks(packs: Pack[], target: string): ImportResult {
+export function installPacks(packs: Pack[], target: string, runtime: Runtime = 'node'): ImportResult {
   const files = packs.flatMap((pack) => pack.files);
   const kept: string[] = [];
-  // A project that exists already has its own package.json: the example code of the kit stays out.
-  const existing = existsSync(join(target, 'package.json'));
   let written = 0;
 
   for (const brick of bricksOf(files)) {
@@ -461,7 +394,7 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
   const config = readJson(join(target, 'opencode.json'));
 
   for (const file of files.filter((item) => item.path !== 'opencode.json')) {
-    if ((ownedByTeam(file.path) && existsSync(join(target, file.path))) || (existing && file.path.startsWith(EXAMPLE))) {
+    if (ownedByTeam(file.path) && existsSync(join(target, file.path))) {
       kept.push(file.path);
       continue;
     }
@@ -471,7 +404,7 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
   const fresh = Object.keys(config).length === 0;
   const original = fresh ? configFile?.data.toString('utf8') : readFileSync(join(target, 'opencode.json'), 'utf8');
   const servers = presentBricks(target);
-  const synced = syncConfig(fresh && original !== undefined ? JSON.parse(original) as Json : config, servers, presentFormatConfigs(target));
+  const synced = syncConfig(fresh && original !== undefined ? JSON.parse(original) as Json : config, servers, runtime);
 
   // The file keeps its own layout when its content does not change.
   writeFileSync(join(target, 'opencode.json'), original !== undefined && JSON.stringify(JSON.parse(original)) === JSON.stringify(synced) ? original : `${JSON.stringify(synced, null, 2)}\n`);
@@ -483,7 +416,8 @@ export function installPacks(packs: Pack[], target: string): ImportResult {
   };
 }
 
-// The search index of each documentation brick is built on the machine: it never travels.
+// The search index of each documentation brick is built on the machine: it never travels. Node and
+// Python write the same index, so the import builds it with the runtime it runs on.
 function buildIndexes(target: string, bricks: string[]): void {
   for (const brick of bricks) {
     const script = join(target, BRICKS, brick, 'build-index.ts');
@@ -505,11 +439,29 @@ function option(name: string): string | undefined {
   return position > 0 ? process.argv[position + 1] : undefined;
 }
 
+function report(result: ImportResult, target: string, runtime: Runtime): void {
+  process.stdout.write(`Installed in ${target}: ${result.packs.join(', ')}. ${result.written} file(s) written, ${result.kept.length} left aside.\n`);
+  process.stdout.write(`MCP servers in opencode.json, run by ${runtime}: ${result.servers.join(', ') || 'none'}.\n`);
+  if (result.kept.length > 0) {
+    process.stdout.write('Left aside, because the project already has them: merge them by hand from the kit if needed.\n');
+  }
+  for (const path of result.kept) {
+    process.stdout.write(`left aside: ${path}\n`);
+  }
+  process.stdout.write('Then: open OpenCode in the project; /mcps lists the servers.\n');
+}
+
 function main(): void {
   const from = resolve(option('from') ?? dirname(fileURLToPath(import.meta.url)));
   const target = resolve(option('target') ?? '.');
+  const runtime = option('runtime') ?? 'node';
   let packs: Pack[];
 
+  if (!RUNTIMES.includes(runtime as Runtime)) {
+    process.stderr.write(`Nothing was written. --runtime must be node or python, not "${runtime}".\n`);
+    process.exitCode = 2;
+    return;
+  }
   try {
     packs = readPacks(from);
   } catch (error) {
@@ -517,17 +469,9 @@ function main(): void {
     process.exitCode = 1;
     return;
   }
-  const result = installPacks(packs, target);
+  const result = installPacks(packs, target, runtime as Runtime);
 
-  process.stdout.write(`Installed in ${target}: ${result.packs.join(', ')}. ${result.written} file(s) written, ${result.kept.length} left aside.\n`);
-  process.stdout.write(`MCP servers in opencode.json: ${result.servers.join(', ') || 'none'}.\n`);
-  if (result.kept.length > 0) {
-    process.stdout.write('Left aside, because the project already has them or its own code: merge them by hand from the kit if needed.\n');
-  }
-  for (const path of result.kept) {
-    process.stdout.write(`left aside: ${path}\n`);
-  }
-  process.stdout.write('Then: npm install, and npm run check.\n');
+  report(result, target, runtime as Runtime);
   buildIndexes(target, bricksOf(packs.flatMap((pack) => pack.files)));
 }
 
