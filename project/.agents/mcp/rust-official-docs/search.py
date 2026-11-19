@@ -240,7 +240,7 @@ class Outline(NamedTuple):
 
 # The extensions of the files the search reads, the documentation kept as its authors wrote it: the
 # last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
-DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|man|[1-9][a-z]{0,6})(?:\.in)?\Z')
+DOCUMENT_FILE = re.compile(r'\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|but|man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 MARKDOWN_FILE = re.compile(r'\.(?:md|mdx|markdown)(?:\.in)?\Z')
 MANUAL_PAGE = re.compile(r'\.(?:man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 _FRONT_TITLE = re.compile(f'{LINE_START}title:{S}*["\']?({DOT}*?)["\']?{S}*{LINE_END}')
@@ -614,6 +614,31 @@ def scdoc_cuts(lines: list[str]) -> Outline:
     return Outline(None if title is None else title.group(1), cuts)
 
 
+# A heading of a Halibut document: "\C{id} Chapter", "\A{id} Appendix", "\U Unnumbered chapter",
+# "\H{id} Section", "\S{id}" or "\S2{id}" to "\S9{id}" subsections.
+_BUT_TITLE = re.compile(rf'{S}*\\title{S}+({DOT}+)\Z')
+_BUT_HEADING = re.compile(rf'{S}*\\(?:C|A|U|H|S[0-9]?)(?:\{{[^}}]*\}})?{S}+({DOT}+)\Z')
+_BUT_FILE = re.compile(r'\.but(?:\.in)?\Z')
+
+
+def halibut_cuts(lines: list[str]) -> Outline:
+    # Halibut documents (NSIS): "\title", or else the first heading, gives the title; each other
+    # heading starts a section.
+    titled = next((found.group(1) for found in (_BUT_TITLE.match(line) for line in lines) if found is not None), None)
+    title = None if titled is None else js_trim(titled)
+    cuts: list[Cut] = []
+    for index, line in enumerate(lines):
+        found = _BUT_HEADING.match(line)
+        if found is None:
+            continue
+        heading = js_trim(found.group(1))
+        if title is None:
+            title = heading
+            continue
+        cuts.append(Cut(index, heading))
+    return Outline(title, cuts)
+
+
 def _text_cuts(path: str, lines: list[str]) -> Outline:
     underlined = underlined_cuts(lines)
     # A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
@@ -630,7 +655,7 @@ def _json_cuts(lines: list[str]) -> Outline:
 
 # Each format by the extension of its file, in the order search.ts tries them; Markdown otherwise.
 # Texinfo: .texi, and .txi for the chapters of a manual (Octave).
-_FORMATS = ((_UNDERLINED_FILE, _text_cuts), (MANUAL_PAGE, lambda path, lines: roff_cuts(lines)), (_WIKI_FILE, lambda path, lines: wiki_cuts(lines, path)), (_QDOC_FILE, lambda path, lines: qdoc_cuts(lines)), (_DOX_FILE, lambda path, lines: doxygen_cuts(lines)), (_SCD_FILE, lambda path, lines: scdoc_cuts(lines)), (re.compile(r'\.tex\Z'), lambda path, lines: latex_cuts(lines)), (_TEXINFO_FILE, lambda path, lines: texinfo_cuts(lines)), (_HTML_FILE, lambda path, lines: html_cuts(lines)), (re.compile(r'\.json\Z'), lambda path, lines: _json_cuts(lines)), (_XML_FILE, lambda path, lines: xml_cuts(lines)),)
+_FORMATS = ((_UNDERLINED_FILE, _text_cuts), (MANUAL_PAGE, lambda path, lines: roff_cuts(lines)), (_WIKI_FILE, lambda path, lines: wiki_cuts(lines, path)), (_QDOC_FILE, lambda path, lines: qdoc_cuts(lines)), (_DOX_FILE, lambda path, lines: doxygen_cuts(lines)), (_SCD_FILE, lambda path, lines: scdoc_cuts(lines)), (_BUT_FILE, lambda path, lines: halibut_cuts(lines)), (re.compile(r'\.tex\Z'), lambda path, lines: latex_cuts(lines)), (_TEXINFO_FILE, lambda path, lines: texinfo_cuts(lines)), (_HTML_FILE, lambda path, lines: html_cuts(lines)), (re.compile(r'\.json\Z'), lambda path, lines: _json_cuts(lines)), (_XML_FILE, lambda path, lines: xml_cuts(lines)),)
 
 
 def cuts_of(path: str, lines: list[str]) -> Outline:

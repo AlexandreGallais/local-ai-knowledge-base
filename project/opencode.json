@@ -29,6 +29,14 @@
         ],
         "codemode": false
       },
+      "desktop-official-docs": {
+        "type": "local",
+        "command": [
+          "node",
+          ".agents/mcp/desktop-official-docs/server.ts"
+        ],
+        "codemode": false
+      },
       "git-official-docs": {
         "type": "local",
         "command": [

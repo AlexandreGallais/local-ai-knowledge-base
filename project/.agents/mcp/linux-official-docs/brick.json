@@ -1,7 +1,7 @@
 {
   "name": "linux-official-docs",
-  "instructions": "The official documentation of Linux, kept locally: Fedora (Quick Docs, release notes, DNF5, RPM), the Linux man-pages (system calls, C library, file formats), systemd, util-linux, the kernel administration guide, GNOME (developer documentation, HIG, GTK 4, GLib, GJS), Wayland and its protocols, PipeWire, Flatpak, SELinux and the freedesktop.org specifications. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
-  "search": "Search the official documentation of Linux: Fedora, dnf, rpm, man-pages (system calls, libc, file formats), systemd units and commands, util-linux (mount, lsblk...), the kernel admin guide (sysctl, cgroups), GNOME, GTK, GLib, GJS, Wayland protocols, PipeWire, Flatpak, SELinux, XDG specifications. Returns 10 section ids at most.",
+  "instructions": "The official documentation of Linux, kept locally: Fedora (Quick Docs, release notes, DNF5, RPM), the Linux man-pages (system calls, C library, file formats), systemd, util-linux, the kernel administration guide, GNOME (developer documentation, GTK 4, GLib, GJS), Wayland and its protocols, PipeWire, Flatpak and the SELinux Notebook. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of Linux: Fedora, dnf, rpm, man-pages (system calls, libc, file formats), systemd units and commands, util-linux (mount, lsblk...), the kernel admin guide (sysctl, cgroups), GNOME, GTK, GLib, GJS, Wayland protocols, PipeWire, Flatpak, SELinux. Returns 10 section ids at most.",
   "queryExample": "\"systemd.service\" or \"wl_surface\"",
   "toolExample": "\"systemd\"",
   "idExample": "library/systemd/systemd.service.xml#options"

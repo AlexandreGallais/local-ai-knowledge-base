@@ -24,7 +24,7 @@ with open(os.path.join(HERE, 'brick.json'), encoding='utf-8') as settings_file:
     SETTINGS = json.load(settings_file)
 # A file of the documentation, in one of the formats the search reads.
 # Its path is the one of the source, spaces and backquotes included; inside() keeps it in the brick.
-DOCUMENT = re.compile(r'library/[^#\\]+\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|man|[1-9][a-z]{0,6})(?:\.in)?\Z')
+DOCUMENT = re.compile(r'library/[^#\\]+\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|but|man|[1-9][a-z]{0,6})(?:\.in)?\Z')
 _entries: dict[str, list[IndexEntry]] = {}
 _statistics: dict[tuple[str, str], Statistics] = {}
 

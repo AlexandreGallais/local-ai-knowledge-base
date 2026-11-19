@@ -1,0 +1,8 @@
+{
+  "name": "desktop-official-docs",
+  "instructions": "The official documentation of desktop applications, kept locally: Electron (guides, tutorials, every API), electron-builder (targets, Windows installers, signing, auto-update), the Electron tools (Packager, Rebuild, Fuses, ASAR), Tauri 2 (guides, configuration, plugins, distribution), the cross-compilation of Rust for Windows (cross, cargo-xwin), Wine and its tools, the NSIS and WiX installers, and MSIX packaging. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of desktop applications: Electron APIs (BrowserWindow, ipcMain, contextBridge...), electron-builder configuration and targets (nsis, msi, appx, AppImage), Electron Packager, Rebuild, Fuses, ASAR, Tauri 2 (tauri.conf.json, commands, plugins, bundling for Windows), cross and cargo-xwin, Wine (winegcc, widl, msiexec), NSIS script commands, WiX, MSIX. Returns 10 section ids at most.",
+  "queryExample": "\"BrowserWindow\" or \"tauri.conf.json\"",
+  "toolExample": "\"electron\"",
+  "idExample": "library/electron/api/browser-window.md#new-browserwindowoptions"
+}

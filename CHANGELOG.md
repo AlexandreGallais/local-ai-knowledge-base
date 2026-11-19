@@ -16,6 +16,15 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: desktop applications, up to Windows
+
+- `desktop-official-docs`: Electron 45.4 (guides, tutorials, every API), electron-builder 26.18,
+  Electron Packager 20.3, Rebuild 4.2, Fuses 2.1 and ASAR 4.3, Tauri 2 (guides, plugins, configuration,
+  distribution), cross 0.2.5 and cargo-xwin 0.23 (Rust for Windows), the manual pages of the tools of
+  Wine 11.0, the NSIS 3.13 Users Manual, WiX Toolset and MSIX.
+- The search reads Halibut documents (the NSIS manual).
+- Free licenses added to the check: the Microsoft Public and Reciprocal Licenses (MS-PL, MS-RL).
+
 ### Added: Linux, Fedora, GNOME and Wayland
 
 - `linux-official-docs`: Fedora Quick Docs and release notes, DNF5 5.4, RPM 6.1, the Linux man-pages

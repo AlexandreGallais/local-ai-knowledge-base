@@ -161,7 +161,7 @@ interface Cut {
 
 // The extensions of the files the search reads, the documentation kept as its authors wrote it: the
 // last ones are manual pages (roff), Qt documentation (qdoc) and MediaWiki pages (wikitext).
-export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|man|[1-9][a-z]{0,6})(?:\.in)?$/;
+export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|txi|ptx|xml|html?|json|qdoc|wiki|dox|scd|but|man|[1-9][a-z]{0,6})(?:\.in)?$/;
 const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
 const MANUAL_PAGE = /\.(?:man|[1-9][a-z]{0,6})(?:\.in)?$/;
 
@@ -593,48 +593,77 @@ function scdocCuts(lines: string[]): Outline {
   return outline(/^(\S+\(\d[a-z]*\))\s*$/.exec(lines[0] ?? '')?.[1], cuts);
 }
 
-function cutsOf(path: string, lines: string[]): Outline {
-  if (/\.(?:rst|txt|adoc)$/.test(path)) {
-    const underlined = underlinedCuts(lines);
+// A heading of a Halibut document: "\C{id} Chapter", "\A{id} Appendix", "\U Unnumbered chapter",
+// "\H{id} Section", "\S{id}" or "\S2{id}" to "\S9{id}" subsections.
+const HALIBUT_HEADING = /^\s*\\(?:C|A|U|H|S\d?)(?:\{[^}]*\})?\s+(.+)$/;
 
-    // A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
-    return path.endsWith('.txt') && underlined.title === undefined && underlined.cuts.length === 0 ? markdownCuts(lines) : underlined;
-  }
-  if (MANUAL_PAGE.test(path)) {
-    return roffCuts(lines);
-  }
-  if (/\.wiki(?:\.in)?$/.test(path)) {
-    return wikiCuts(lines, path);
-  }
-  if (/\.qdoc(?:\.in)?$/.test(path)) {
-    return qdocCuts(lines);
-  }
-  if (/\.dox(?:\.in)?$/.test(path)) {
-    return doxygenCuts(lines);
-  }
-  if (/\.scd(?:\.in)?$/.test(path)) {
-    return scdocCuts(lines);
-  }
-  if (path.endsWith('.tex')) {
-    return latexCuts(lines);
-  }
-  // Texinfo: .texi, and .txi for the chapters of a manual (Octave).
-  if (/\.(?:texi|txi)$/.test(path)) {
-    return texinfoCuts(lines);
-  }
-  if (/\.html?$/.test(path)) {
-    return htmlCuts(lines);
-  }
-  if (path.endsWith('.json')) {
-    // A JSON schema (the options of an Angular schematic): one section, titled by its "title".
-    return outline(
-      /"title"\s*:\s*"([^"]+)"/.exec(lines
-        .slice(0, 40)
-        .join('\n'))?.[1],
-      [],
-    );
-  }
-  return /\.(?:ptx|xml)$/.test(path) ? xmlCuts(lines) : markdownCuts(lines);
+// Halibut documents (NSIS): "\title", or else the first heading, gives the title; each other heading
+// starts a section.
+function halibutCuts(lines: string[]): Outline {
+  let title = lines
+    .map((line) => /^\s*\\title\s+(.+)$/.exec(line)?.[1])
+    .find((value) => value !== undefined)
+    ?.trim();
+  const cuts: Cut[] = [];
+
+  lines.forEach((line, index) => {
+    const heading = HALIBUT_HEADING
+      .exec(line)?.[1]
+      ?.trim();
+
+    if (heading === undefined) {
+      return;
+    }
+    if (title === undefined) {
+      title = heading;
+      return;
+    }
+    cuts.push({
+      line: index,
+      heading,
+    });
+  });
+  return outline(title, cuts);
+}
+
+function textCuts(path: string, lines: string[]): Outline {
+  const underlined = underlinedCuts(lines);
+
+  // A text file written in Markdown (a specification, a manual for pandoc) has no underlined heading.
+  return path.endsWith('.txt') && underlined.title === undefined && underlined.cuts.length === 0 ? markdownCuts(lines) : underlined;
+}
+
+// A JSON schema (the options of an Angular schematic): one section, titled by its "title".
+function jsonCuts(lines: string[]): Outline {
+  return outline(
+    /"title"\s*:\s*"([^"]+)"/.exec(lines
+      .slice(0, 40)
+      .join('\n'))?.[1],
+    [],
+  );
+}
+
+// Each format by the extension of its file, tried in this order; Markdown otherwise. search.py keeps
+// the same order. Texinfo: .texi, and .txi for the chapters of a manual (Octave).
+const FORMATS: [RegExp, (path: string, lines: string[]) => Outline][] = [
+  [/\.(?:rst|txt|adoc)$/, textCuts],
+  [MANUAL_PAGE, (_path, lines) => roffCuts(lines)],
+  [/\.wiki(?:\.in)?$/, (path, lines) => wikiCuts(lines, path)],
+  [/\.qdoc(?:\.in)?$/, (_path, lines) => qdocCuts(lines)],
+  [/\.dox(?:\.in)?$/, (_path, lines) => doxygenCuts(lines)],
+  [/\.scd(?:\.in)?$/, (_path, lines) => scdocCuts(lines)],
+  [/\.but(?:\.in)?$/, (_path, lines) => halibutCuts(lines)],
+  [/\.tex$/, (_path, lines) => latexCuts(lines)],
+  [/\.(?:texi|txi)$/, (_path, lines) => texinfoCuts(lines)],
+  [/\.html?$/, (_path, lines) => htmlCuts(lines)],
+  [/\.json$/, (_path, lines) => jsonCuts(lines)],
+  [/\.(?:ptx|xml)$/, (_path, lines) => xmlCuts(lines)],
+];
+
+function cutsOf(path: string, lines: string[]): Outline {
+  const cut = FORMATS.find(([pattern]) => pattern.test(path))?.[1];
+
+  return cut === undefined ? markdownCuts(lines) : cut(path, lines);
 }
 
 // The anchor of a heading in its file; one met twice gets "-2", "-3"...
