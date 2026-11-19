@@ -18,4 +18,4 @@ Licence checked on 2026-11-19. Full text: `../../../skills/_licenses/agent-skill
 
 ## Sources
 
-- https://github.com/addyosmani/agent-skills
+- <https://github.com/addyosmani/agent-skills>

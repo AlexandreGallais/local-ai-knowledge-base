@@ -29,6 +29,11 @@ const MAX_RESULTS = 5;
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DEFAULT_SKILLS = resolve(HERE, '..', '..');
 
+// The order of Python's sorted() on strings: by code point, so both scripts write the same index.
+function byCodePoint(left: string, right: string): number {
+  return Number(left > right) - Number(left < right);
+}
+
 function unquote(value: string): string {
   const trimmed = value.trim();
 
@@ -82,7 +87,7 @@ export function entries(skills: string): Entry[] {
         description: header.get('description') ?? '',
       };
     })
-    .sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
+    .sort((left, right) => byCodePoint(left.name, right.name));
 }
 
 function cell(text: string): string {
@@ -126,7 +131,7 @@ export function search(list: readonly Entry[], query: readonly string[]): Entry[
       };
     })
     .filter((item) => item.score > 0)
-    .sort((left, right) => right.score - left.score || (left.entry.name < right.entry.name ? -1 : 1))
+    .sort((left, right) => right.score - left.score || byCodePoint(left.entry.name, right.entry.name))
     .slice(0, MAX_RESULTS)
     .map((item) => item.entry);
 }

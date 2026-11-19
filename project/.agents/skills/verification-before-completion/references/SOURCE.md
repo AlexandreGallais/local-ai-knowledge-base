@@ -23,4 +23,4 @@ Licence checked in the repository `LICENSE` file on 2026-11-19. Full text: `../.
 
 ## Sources
 
-- https://github.com/obra/superpowers
+- <https://github.com/obra/superpowers>

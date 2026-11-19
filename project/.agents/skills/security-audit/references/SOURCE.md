@@ -20,4 +20,4 @@ The Trail of Bits skills named by the catalogue were not needed beyond this sour
 
 ## Sources
 
-- https://github.com/cloudflare/security-audit-skill
+- <https://github.com/cloudflare/security-audit-skill>

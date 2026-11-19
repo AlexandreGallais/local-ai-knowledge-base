@@ -20,5 +20,5 @@ Licences checked on 2026-11-19. Full texts: `../../../skills/_licenses/superpowe
 
 ## Sources
 
-- https://github.com/obra/superpowers
-- https://github.com/openai/skills
+- <https://github.com/obra/superpowers>
+- <https://github.com/openai/skills>

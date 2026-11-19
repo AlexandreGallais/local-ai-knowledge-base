@@ -19,5 +19,5 @@ Licences checked on 2026-11-19. Full texts: `../../_licenses/superpowers-MIT.txt
 
 ## Sources
 
-- https://github.com/obra/superpowers
-- https://github.com/addyosmani/agent-skills
+- <https://github.com/obra/superpowers>
+- <https://github.com/addyosmani/agent-skills>

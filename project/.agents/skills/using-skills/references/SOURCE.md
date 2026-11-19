@@ -25,5 +25,5 @@ Licences checked in each repository's `LICENSE` file on 2026-11-19. Full texts: 
 
 ## Sources
 
-- https://github.com/obra/superpowers
-- https://github.com/addyosmani/agent-skills
+- <https://github.com/obra/superpowers>
+- <https://github.com/addyosmani/agent-skills>

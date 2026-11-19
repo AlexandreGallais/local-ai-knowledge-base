@@ -18,4 +18,4 @@ Licences checked on 2026-11-19. Full texts: `../../_licenses/openai-skills-Apach
 
 ## Sources
 
-- https://github.com/openai/skills
+- <https://github.com/openai/skills>

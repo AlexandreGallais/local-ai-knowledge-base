@@ -18,4 +18,4 @@ Licence checked on 2026-11-19. Full text: `../../_licenses/mattpocock-skills-MIT
 
 ## Sources
 
-- https://github.com/mattpocock/skills
+- <https://github.com/mattpocock/skills>

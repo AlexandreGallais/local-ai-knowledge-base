@@ -199,6 +199,55 @@ function filesIn(folder: string): string[] {
   return existsSync(folder) ? readdirSync(folder) : [];
 }
 
+function splitText(text: string): string[] {
+  return text
+    .replaceAll('\r\n', '\n')
+    .trimEnd()
+    .split('\n');
+}
+
+function missingSections(wanted: readonly string[], present: Set<string>): string[] {
+  return wanted
+    .filter((section) => !present.has(section))
+    .map((section) => `missing ## ${section} section`);
+}
+
+// An adapted skill (mode R, R+B...) keeps the origin and licence of its upstream.
+function sourceFindings(folder: string, mode: string): string[] {
+  return mode.startsWith('R') && !existsSync(join(folder, 'references', 'SOURCE.md')) ? ['mode R needs references/SOURCE.md'] : [];
+}
+
+// The body of a finished skill: core rule, size, procedure checks, leftovers, cited references.
+function bodyFindings(folder: string, text: string, header: Header): string[] {
+  const lines = splitText(text);
+  const body = lines.slice(header.bodyStart);
+  const coreWindow = body
+    .filter((line) => line.trim() !== '')
+    .slice(0, CORE_RULE_WINDOW);
+  const guardrail = (header.fields.get('metadata.nature') ?? '') === 'guardrail';
+
+  return [
+    ...missingSections(REQUIRED_SECTIONS, new Set(sectionsOf(body).map((line) => line.section))),
+    ...coreWindow.some((line) => line.startsWith('**Core rule:**')) ? [] : [`the "**Core rule:**" line must be in the first ${CORE_RULE_WINDOW} lines of the body`],
+    ...lines.length > MAX_LINES ? [`${lines.length} lines; ${MAX_LINES} at most`] : [],
+    ...guardrail && lines.length > MAX_GUARDRAIL_LINES ? [`${lines.length} lines; a guardrail has ${MAX_GUARDRAIL_LINES} at most`] : [],
+    ...procedureFindings(body),
+    ...text.includes('<!-- FILL') ? ['FILL marker left: a finished skill has none'] : [],
+    ...(/\bTODO\b/).test(prose(body)) ? ['TODO left in the prose of a finished skill'] : [],
+  ];
+}
+
+function folderFindings(folder: string, text: string): string[] {
+  return [
+    ...filesIn(folder)
+      .filter((file) => file === 'BRIEF.md' || file === 'SEED.md')
+      .map((file) => `${file} left in a finished skill`),
+    ...filesIn(join(folder, 'references'))
+      .filter((file) => file !== 'SOURCE.md' && !text.includes(`references/${file}`))
+      .map((file) => `references/${file} is never cited in SKILL.md`),
+  ];
+}
+
 // A finished skill, in .agents/skills/<name>/.
 export function checkFinished(folder: string): string[] {
   const path = join(folder, 'SKILL.md');
@@ -207,43 +256,17 @@ export function checkFinished(folder: string): string[] {
     return ['missing SKILL.md'];
   }
   const text = readFileSync(path, 'utf8');
-  const lines = text
-    .replaceAll('\r\n', '\n')
-    .trimEnd()
-    .split('\n');
-  const header = readHeader(lines);
+  const header = readHeader(splitText(text));
 
   if (header === undefined) {
     return ['missing YAML header between --- lines'];
   }
-  const body = lines.slice(header.bodyStart);
-  const sections = new Set(sectionsOf(body).map((line) => line.section));
-  const nature = header.fields.get('metadata.nature') ?? '';
-  const mode = header.fields.get('metadata.mode') ?? '';
-  const coreWindow = body
-    .filter((line) => line.trim() !== '')
-    .slice(0, CORE_RULE_WINDOW);
-  const references = filesIn(join(folder, 'references')).filter((file) => file !== 'SOURCE.md');
-
   return [
     ...headerFindings(basename(folder), header),
-    ...REQUIRED_SECTIONS
-      .filter((section) => !sections.has(section))
-      .map((section) => `missing ## ${section} section`),
-    ...coreWindow.some((line) => line.startsWith('**Core rule:**')) ? [] : [`the "**Core rule:**" line must be in the first ${CORE_RULE_WINDOW} lines of the body`],
-    ...lines.length > MAX_LINES ? [`${lines.length} lines; ${MAX_LINES} at most`] : [],
-    ...nature === 'guardrail' && lines.length > MAX_GUARDRAIL_LINES ? [`${lines.length} lines; a guardrail has ${MAX_GUARDRAIL_LINES} at most`] : [],
-    ...procedureFindings(body),
-    ...text.includes('<!-- FILL') ? ['FILL marker left: a finished skill has none'] : [],
-    ...(/\bTODO\b/).test(prose(body)) ? ['TODO left in the prose of a finished skill'] : [],
-    ...filesIn(folder)
-      .filter((file) => file === 'BRIEF.md' || file === 'SEED.md')
-      .map((file) => `${file} left in a finished skill`),
-    ...mode.startsWith('R') && !existsSync(join(folder, 'references', 'SOURCE.md')) ? ['mode R needs references/SOURCE.md'] : [],
-    ...references
-      .filter((file) => !text.includes(`references/${file}`))
-      .map((file) => `references/${file} is never cited in SKILL.md`),
-    ...languageFindings(text, lines),
+    ...bodyFindings(folder, text, header),
+    ...sourceFindings(folder, header.fields.get('metadata.mode') ?? ''),
+    ...folderFindings(folder, text),
+    ...languageFindings(text, splitText(text)),
   ];
 }
 
@@ -268,33 +291,27 @@ export function checkDraft(folder: string): string[] {
   }
   const kind = kinds[0] ?? '';
   const text = readFileSync(join(folder, kind), 'utf8');
-  const lines = text
-    .replaceAll('\r\n', '\n')
-    .trimEnd()
-    .split('\n');
-  const headings = headingsOf(text);
 
-  if (kind === 'BRIEF.md') {
-    return [
-      ...lines[0]?.startsWith('# BRIEF: ') === true ? [] : ['a brief starts with "# BRIEF: <name>"'],
-      ...BRIEF_SECTIONS
-        .filter((section) => !headings.has(section))
-        .map((section) => `missing ## ${section} section`),
-      ...text.includes(`name: ${basename(folder)}`) ? [] : ['the final frontmatter must give the name of the folder'],
-      ...languageFindings(text, lines),
-    ];
-  }
-  if (kind === 'SEED.md') {
-    return [
-      ...lines[0]?.startsWith('# SEED: ') === true ? [] : ['a seed starts with "# SEED: <name>"'],
-      ...SEED_SECTIONS
-        .filter((section) => !headings.has(section))
-        .map((section) => `missing ## ${section} section`),
-      ...text.includes(`name: ${basename(folder)}`) ? [] : ['the final frontmatter must give the name of the folder'],
-      ...languageFindings(text, lines),
-    ];
-  }
+  return kind === 'SKILL.md' ? skeletonFindings(folder, text) : briefOrSeedFindings(folder, text, kind === 'BRIEF.md' ? 'BRIEF' : 'SEED');
+}
+
+// A brief (mode C) or a seed (mode D): its title line, its sections and the final frontmatter.
+function briefOrSeedFindings(folder: string, text: string, word: 'BRIEF' | 'SEED'): string[] {
+  const lines = splitText(text);
+
+  return [
+    ...lines[0]?.startsWith(`# ${word}: `) === true ? [] : [`a ${word.toLowerCase()} starts with "# ${word}: <name>"`],
+    ...missingSections(word === 'BRIEF' ? BRIEF_SECTIONS : SEED_SECTIONS, headingsOf(text)),
+    ...text.includes(`name: ${basename(folder)}`) ? [] : ['the final frontmatter must give the name of the folder'],
+    ...languageFindings(text, lines),
+  ];
+}
+
+// A skeleton (mode B): the final header, well-formed FILL markers and the local completion checklist.
+function skeletonFindings(folder: string, text: string): string[] {
+  const lines = splitText(text);
   const header = readHeader(lines);
+  const headings = headingsOf(text);
   const markers = lines.filter((line) => line.includes('<!-- FILL'));
 
   return [
@@ -304,10 +321,8 @@ export function checkDraft(folder: string): string[] {
       .filter((line) => !FILL.test(line))
       .map((line) => `malformed FILL marker: ${line.trim()}`),
     ...headings.has('Local completion checklist') ? [] : ['missing ## Local completion checklist section'],
-    ...REQUIRED_SECTIONS
-      .filter((section) => !headings.has(section))
-      .map((section) => `missing ## ${section} section`),
-    ...header !== undefined && (header.fields.get('metadata.mode') ?? '').startsWith('R') && !existsSync(join(folder, 'references', 'SOURCE.md')) ? ['mode R needs references/SOURCE.md'] : [],
+    ...missingSections(REQUIRED_SECTIONS, headings),
+    ...sourceFindings(folder, header?.fields.get('metadata.mode') ?? ''),
     ...languageFindings(text, lines),
   ];
 }

@@ -20,6 +20,6 @@ Licences checked on 2026-11-19. Full texts: `../../_licenses/agent-skills-MIT.tx
 
 ## Sources
 
-- https://github.com/addyosmani/agent-skills
-- https://github.com/openai/skills
-- https://owasp.org/www-project-top-ten/
+- <https://github.com/addyosmani/agent-skills>
+- <https://github.com/openai/skills>
+- <https://owasp.org/www-project-top-ten/>

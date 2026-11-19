@@ -20,6 +20,11 @@ The kit, in [`project/`](project/), holds three entries, copied to the root of a
 | `opencode.json` | What OpenCode loads: the rules, and one local MCP server per brick. |
 | `.agents/` | The common rules, the skills, and the documentation bricks in `.agents/mcp/`. |
 
+The skills follow the skill catalogue of the team: 142 finished skills in `.agents/skills/` (with
+`CORE_RULES.md`, copied into `AGENTS.md`, and the generated `SKILLS_INDEX.md`), and 119 drafts in
+`.agents/skills-drafts/` that are finished on the target machine. [`.agents/README.md`](project/.agents/README.md)
+explains how to use, check, finish and add them.
+
 Each folder of `.agents/mcp/` is a brick: one documentation server with everything it needs. Removing
 the folder removes the server, its documentation and its rules, without breaking the other bricks.
 

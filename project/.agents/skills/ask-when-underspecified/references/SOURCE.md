@@ -20,6 +20,6 @@ The skill named by the catalogue was not found in either repository at these com
 
 ## Sources
 
-- https://github.com/trailofbits/skills
-- https://github.com/trailofbits/skills-curated
-- https://github.com/addyosmani/agent-skills
+- <https://github.com/trailofbits/skills>
+- <https://github.com/trailofbits/skills-curated>
+- <https://github.com/addyosmani/agent-skills>

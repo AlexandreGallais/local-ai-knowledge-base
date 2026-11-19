@@ -19,5 +19,5 @@ Licence checked on 2026-11-19. Full text: `../../_licenses/anthropics-skills-Apa
 
 ## Sources
 
-- https://github.com/anthropics/skills
-- https://modelcontextprotocol.io
+- <https://github.com/anthropics/skills>
+- <https://modelcontextprotocol.io>

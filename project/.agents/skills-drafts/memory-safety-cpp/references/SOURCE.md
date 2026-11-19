@@ -20,4 +20,4 @@ The finished skill adapts a CC-BY-SA-4.0 work: it must carry license CC-BY-SA-4.
 
 ## Sources
 
-- https://github.com/trailofbits/skills
+- <https://github.com/trailofbits/skills>

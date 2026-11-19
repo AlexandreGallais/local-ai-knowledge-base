@@ -28,7 +28,7 @@ A reference that tells the agent what the simulation-official-docs server holds,
 
 ## Where to look (files, commands, people)
 
-- .agents/mcp/simulation-official-docs/README.md and library/sources.json
+- the README.md and library/sources.json of the simulation-official-docs brick, in the folder .agents/mcp
 - live calls of simulation-official-docs_search_docs and simulation-official-docs_read_doc
 - python3 -c 'import fmpy, scipy, simpy' and the versions of each tool
 - the human: the team's simulation tasks and conventions

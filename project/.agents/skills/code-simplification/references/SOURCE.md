@@ -18,4 +18,4 @@ Licence checked on 2026-11-19. Full text: `../../_licenses/agent-skills-MIT.txt`
 
 ## Sources
 
-- https://github.com/addyosmani/agent-skills
+- <https://github.com/addyosmani/agent-skills>

@@ -20,4 +20,4 @@ Licence checked on 2026-11-19. Full text: `../../../skills/_licenses/openai-skil
 
 ## Sources
 
-- https://github.com/openai/skills
+- <https://github.com/openai/skills>

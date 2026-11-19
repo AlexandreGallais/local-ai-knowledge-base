@@ -88,7 +88,7 @@ def read_header(lines):
         if match is None:
             continue
         nested = match.group(1) != ""
-        key = parent + "." + match.group(2) if nested else match.group(2)
+        key = f"{parent}.{match.group(2)}" if nested else match.group(2)
         value = match.group(3) or ""
         fields[key] = unquote(value)
         if not nested:
@@ -127,6 +127,14 @@ def prose(lines):
     return "\n".join(re.sub(r"`[^`]*`", " ", line["text"]) for line in sections_of(lines) if not line["in_code"])
 
 
+def split(text):
+    return text.replace("\r\n", "\n").rstrip().split("\n")
+
+
+def missing_sections(wanted, present):
+    return [f"missing ## {section} section" for section in wanted if section not in present]
+
+
 def language_findings(text, lines):
     findings = []
     if len(FRENCH.findall(prose(lines))) >= 5:
@@ -136,36 +144,39 @@ def language_findings(text, lines):
     return findings
 
 
-def header_findings(folder_name, header):
-    fields = header["fields"]
-    name = fields.get("name", "")
-    description = fields.get("description", "")
-    nature = fields.get("metadata.nature", "")
-    load = fields.get("metadata.load", "")
-    mode = fields.get("metadata.mode", "")
-    manual = "Manual: run only when the user explicitly asks for /" + name + "."
+def name_findings(folder_name, name, description, load):
+    manual = f"Manual: run only when the user explicitly asks for /{name}."
     findings = []
     if name != folder_name:
-        findings.append('name "' + name + '" differs from the folder "' + folder_name + '"')
+        findings.append(f'name "{name}" differs from the folder "{folder_name}"')
     if not (NAME.match(name) and len(name) <= MAX_NAME):
-        findings.append("name must use lowercase letters, digits and single hyphens, %d characters at most" % MAX_NAME)
+        findings.append(f"name must use lowercase letters, digits and single hyphens, {MAX_NAME} characters at most")
     if description == "":
         findings.append("missing description")
     if len(description) > MAX_DESCRIPTION:
-        findings.append("description has %d characters; %d at most" % (len(description), MAX_DESCRIPTION))
+        findings.append(f"description has {len(description)} characters; {MAX_DESCRIPTION} at most")
     if load == "manual" and not description.startswith(manual):
-        findings.append("a manual skill's description starts with \"" + manual + "\"")
+        findings.append(f'a manual skill\'s description starts with "{manual}"')
     if load != "manual" and "Use when" not in description:
         findings.append('description must say "Use when ..." with its triggers')
+    return findings
+
+
+def metadata_findings(fields):
+    findings = []
     if fields.get("metadata.id", "") == "":
         findings.append("missing metadata.id (the catalogue ID)")
-    if nature not in NATURES:
-        findings.append('metadata.nature "' + nature + '" is not one of ' + ", ".join(NATURES))
-    if load not in LOADS:
-        findings.append('metadata.load "' + load + '" is not one of ' + ", ".join(LOADS))
-    if mode not in MODES:
-        findings.append('metadata.mode "' + mode + '" is not one of ' + ", ".join(MODES))
+    for key, allowed in (("nature", NATURES), ("load", LOADS), ("mode", MODES)):
+        value = fields.get(f"metadata.{key}", "")
+        if value not in allowed:
+            findings.append(f'metadata.{key} "{value}" is not one of {", ".join(allowed)}')
     return findings
+
+
+def header_findings(folder_name, header):
+    fields = header["fields"]
+    load = fields.get("metadata.load", "")
+    return name_findings(folder_name, fields.get("name", ""), fields.get("description", ""), load) + metadata_findings(fields)
 
 
 def procedure_findings(lines):
@@ -173,7 +184,7 @@ def procedure_findings(lines):
     steps = len([line for line in procedure if re.match(r"^\d+\.\s", line["text"])])
     checks = len([line for line in procedure if re.match(r"^\s+- Check:", line["text"])])
     if steps > checks:
-        return ['%d steps in ## Procedure but %d "- Check:" lines; every step needs its check' % (steps, checks)]
+        return [f'{steps} steps in ## Procedure but {checks} "- Check:" lines; every step needs its check']
     return []
 
 
@@ -181,8 +192,38 @@ def files_in(folder):
     return sorted(os.listdir(folder)) if os.path.isdir(folder) else []
 
 
-def split(text):
-    return text.replace("\r\n", "\n").rstrip().split("\n")
+def source_findings(folder, mode):
+    if mode.startswith("R") and not os.path.exists(os.path.join(folder, "references", "SOURCE.md")):
+        return ["mode R needs references/SOURCE.md"]
+    return []
+
+
+def body_findings(text, header):
+    """The body of a finished skill: core rule, size, procedure checks, leftovers."""
+    lines = split(text)
+    body = lines[header["body_start"] :]
+    core_window = [line for line in body if line.strip() != ""][:CORE_RULE_WINDOW]
+    guardrail = header["fields"].get("metadata.nature", "") == "guardrail"
+    findings = missing_sections(REQUIRED_SECTIONS, {line["section"] for line in sections_of(body)})
+    if not any(line.startswith("**Core rule:**") for line in core_window):
+        findings.append(f'the "**Core rule:**" line must be in the first {CORE_RULE_WINDOW} lines of the body')
+    if len(lines) > MAX_LINES:
+        findings.append(f"{len(lines)} lines; {MAX_LINES} at most")
+    if guardrail and len(lines) > MAX_GUARDRAIL_LINES:
+        findings.append(f"{len(lines)} lines; a guardrail has {MAX_GUARDRAIL_LINES} at most")
+    findings += procedure_findings(body)
+    if "<!-- FILL" in text:
+        findings.append("FILL marker left: a finished skill has none")
+    if re.search(r"\bTODO\b", prose(body)):
+        findings.append("TODO left in the prose of a finished skill")
+    return findings
+
+
+def folder_findings(folder, text):
+    findings = [f"{name} left in a finished skill" for name in files_in(folder) if name in ("BRIEF.md", "SEED.md")]
+    references = files_in(os.path.join(folder, "references"))
+    findings += [f"references/{name} is never cited in SKILL.md" for name in references if name != "SOURCE.md" and f"references/{name}" not in text]
+    return findings
 
 
 def check_finished(folder):
@@ -192,39 +233,46 @@ def check_finished(folder):
         return ["missing SKILL.md"]
     with open(path, encoding="utf-8") as handle:
         text = handle.read()
-    lines = split(text)
-    header = read_header(lines)
+    header = read_header(split(text))
     if header is None:
         return ["missing YAML header between --- lines"]
-    body = lines[header["body_start"] :]
-    sections = {line["section"] for line in sections_of(body)}
-    nature = header["fields"].get("metadata.nature", "")
-    mode = header["fields"].get("metadata.mode", "")
-    core_window = [line for line in body if line.strip() != ""][:CORE_RULE_WINDOW]
-    references = [name for name in files_in(os.path.join(folder, "references")) if name != "SOURCE.md"]
-    findings = header_findings(os.path.basename(os.path.normpath(folder)), header)
-    findings += ["missing ## " + section + " section" for section in REQUIRED_SECTIONS if section not in sections]
-    if not any(line.startswith("**Core rule:**") for line in core_window):
-        findings.append('the "**Core rule:**" line must be in the first %d lines of the body' % CORE_RULE_WINDOW)
-    if len(lines) > MAX_LINES:
-        findings.append("%d lines; %d at most" % (len(lines), MAX_LINES))
-    if nature == "guardrail" and len(lines) > MAX_GUARDRAIL_LINES:
-        findings.append("%d lines; a guardrail has %d at most" % (len(lines), MAX_GUARDRAIL_LINES))
-    findings += procedure_findings(body)
-    if "<!-- FILL" in text:
-        findings.append("FILL marker left: a finished skill has none")
-    if re.search(r"\bTODO\b", prose(body)):
-        findings.append("TODO left in the prose of a finished skill")
-    findings += [name + " left in a finished skill" for name in files_in(folder) if name in ("BRIEF.md", "SEED.md")]
-    if mode.startswith("R") and not os.path.exists(os.path.join(folder, "references", "SOURCE.md")):
-        findings.append("mode R needs references/SOURCE.md")
-    findings += ["references/" + name + " is never cited in SKILL.md" for name in references if "references/" + name not in text]
-    findings += language_findings(text, lines)
-    return findings
+    return (header_findings(os.path.basename(os.path.normpath(folder)), header) + body_findings(text, header) + source_findings(folder, header["fields"].get("metadata.mode", "")) + folder_findings(folder, text) + language_findings(text, split(text)))
 
 
 def headings_of(text):
     return {line[3:].strip() for line in text.split("\n") if line.startswith("## ")}
+
+
+def brief_or_seed_findings(folder, text, word):
+    """A brief (mode C) or a seed (mode D): its title line, its sections and the final frontmatter."""
+    lines = split(text)
+    findings = []
+    if not lines[0].startswith(f"# {word}: "):
+        findings.append(f'a {word.lower()} starts with "# {word}: <name>"')
+    findings += missing_sections(BRIEF_SECTIONS if word == "BRIEF" else SEED_SECTIONS, headings_of(text))
+    if f"name: {os.path.basename(os.path.normpath(folder))}" not in text:
+        findings.append("the final frontmatter must give the name of the folder")
+    return findings + language_findings(text, lines)
+
+
+def skeleton_findings(folder, text):
+    """A skeleton (mode B): the final header, well-formed FILL markers and the local completion checklist."""
+    lines = split(text)
+    header = read_header(lines)
+    headings = headings_of(text)
+    markers = [line for line in lines if "<!-- FILL" in line]
+    if header is None:
+        findings = ["missing YAML header between --- lines"]
+    else:
+        findings = header_findings(os.path.basename(os.path.normpath(folder)), header)
+    if not markers:
+        findings.append("a skeleton holds at least one FILL marker")
+    findings += [f"malformed FILL marker: {line.strip()}" for line in markers if not FILL.search(line)]
+    if "Local completion checklist" not in headings:
+        findings.append("missing ## Local completion checklist section")
+    findings += missing_sections(REQUIRED_SECTIONS, headings)
+    findings += source_findings(folder, header["fields"].get("metadata.mode", "") if header else "")
+    return findings + language_findings(text, lines)
 
 
 def check_draft(folder):
@@ -232,38 +280,12 @@ def check_draft(folder):
     files = files_in(folder)
     kinds = [name for name in ("SKILL.md", "BRIEF.md", "SEED.md") if name in files]
     if len(kinds) != 1:
-        return ["a draft holds exactly one of SKILL.md, BRIEF.md or SEED.md; found %d" % len(kinds)]
-    kind = kinds[0]
-    with open(os.path.join(folder, kind), encoding="utf-8") as handle:
+        return [f"a draft holds exactly one of SKILL.md, BRIEF.md or SEED.md; found {len(kinds)}"]
+    with open(os.path.join(folder, kinds[0]), encoding="utf-8") as handle:
         text = handle.read()
-    lines = split(text)
-    headings = headings_of(text)
-    name = os.path.basename(os.path.normpath(folder))
-    findings = []
-    if kind in ("BRIEF.md", "SEED.md"):
-        word = "BRIEF" if kind == "BRIEF.md" else "SEED"
-        wanted = BRIEF_SECTIONS if kind == "BRIEF.md" else SEED_SECTIONS
-        if not lines[0].startswith("# " + word + ": "):
-            findings.append("a " + word.lower() + " starts with \"# " + word + ": <name>\"")
-        findings += ["missing ## " + section + " section" for section in wanted if section not in headings]
-        if "name: " + name not in text:
-            findings.append("the final frontmatter must give the name of the folder")
-        return findings + language_findings(text, lines)
-    header = read_header(lines)
-    markers = [line for line in lines if "<!-- FILL" in line]
-    if header is None:
-        findings.append("missing YAML header between --- lines")
-    else:
-        findings += header_findings(name, header)
-    if not markers:
-        findings.append("a skeleton holds at least one FILL marker")
-    findings += ["malformed FILL marker: " + line.strip() for line in markers if not FILL.search(line)]
-    if "Local completion checklist" not in headings:
-        findings.append("missing ## Local completion checklist section")
-    findings += ["missing ## " + section + " section" for section in REQUIRED_SECTIONS if section not in headings]
-    if header is not None and header["fields"].get("metadata.mode", "").startswith("R") and not os.path.exists(os.path.join(folder, "references", "SOURCE.md")):
-        findings.append("mode R needs references/SOURCE.md")
-    return findings + language_findings(text, lines)
+    if kinds[0] == "SKILL.md":
+        return skeleton_findings(folder, text)
+    return brief_or_seed_findings(folder, text, "BRIEF" if kinds[0] == "BRIEF.md" else "SEED")
 
 
 def check_folder(folder):
@@ -279,9 +301,9 @@ def main():
     count = 0
     for folder in folders:
         for problem in check_folder(folder):
-            print(folder + ": " + problem)
+            print(f"{folder}: {problem}")
             count += 1
-    print("%d findings." % count)
+    print(f"{count} findings.")
     return 0 if count == 0 else 1
 
 

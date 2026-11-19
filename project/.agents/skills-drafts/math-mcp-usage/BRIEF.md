@@ -28,7 +28,7 @@ A reference that makes the agent look up formulas in math-docs and compute numbe
 
 ## Where to look (files, commands, people)
 
-- .agents/mcp/math-docs/README.md and library/sources.json
+- the README.md and library/sources.json of the math-docs brick, in the folder .agents/mcp
 - command -v python3 octave bc and the installed Python packages
 - live calls of math-docs_search_docs
 

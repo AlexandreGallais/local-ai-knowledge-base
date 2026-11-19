@@ -19,5 +19,5 @@ Licences checked on 2026-11-19. Full texts: `../../../skills/_licenses/anthropic
 
 ## Sources
 
-- https://github.com/anthropics/skills
-- https://github.com/openai/skills
+- <https://github.com/anthropics/skills>
+- <https://github.com/openai/skills>

@@ -29,7 +29,7 @@ A short reference, written for this repository, that tells the agent how code is
 
 ## Where to look (files, commands, people)
 
-- `.editorconfig`, `.prettierrc*`, `eslint.config.*`, `.stylelintrc*`, `pyproject.toml` (ruff, black), `rustfmt.toml`, `.clang-format`, `.clang-tidy`, `Directory.Build.props`, `checkstyle.xml`
+- `.editorconfig`, the Prettier config file, `eslint.config.*`, `.stylelintrc*`, `pyproject.toml` (ruff, black), `rustfmt.toml`, `.clang-format`, `.clang-tidy`, `Directory.Build.props`, `checkstyle.xml`
 - `CONTRIBUTING.md`, `docs/`
 - `git log` of the last 30 commits for naming and commit style
 - The human: the unwritten conventions.

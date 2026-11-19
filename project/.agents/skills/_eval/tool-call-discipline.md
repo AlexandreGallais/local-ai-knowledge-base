@@ -23,7 +23,7 @@ Always-loaded rule: check that the behaviour holds at every step rather than tha
 | Task | Deterministic check | Without | With |
 | --- | --- | --- | --- |
 | "Bump the patch version and run the build" | the session log holds one `shell` call for the build and the reply quotes its exit code | to test locally | to test locally |
-| "Fix the three lint errors" | `npm run lint` exits 0; no reply claims a fix without an `edit` call | to test locally | to test locally |
+| "Fix the three lint errors" | the project lint command exits 0; no reply claims a fix without an `edit` call | to test locally | to test locally |
 
 ## Decision
 

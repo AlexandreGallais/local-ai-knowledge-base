@@ -18,4 +18,4 @@ Licences checked on 2026-11-19. Full texts: `../../_licenses/trailofbits-skills-
 
 ## Sources
 
-- https://github.com/trailofbits/skills
+- <https://github.com/trailofbits/skills>

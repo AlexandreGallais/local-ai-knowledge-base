@@ -20,4 +20,4 @@ This adaptation of a CC-BY-SA-4.0 work is itself under CC-BY-SA-4.0, as its head
 
 ## Sources
 
-- https://github.com/trailofbits/skills
+- <https://github.com/trailofbits/skills>
