@@ -16,6 +16,15 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The skills `apply-strict-lint`, `architecture-review`, `choose-version`, `code-review`,
   `document-function`, `explain-code`, `start-angular-project` and `start-typescript-library`.
 
+### Added: the free tools that do the work of MATLAB, Simulink and Simscape
+
+- `simulation-official-docs`: the Modelica Standard Library 4.1, its documentation taken from the
+  `Documentation(info="...")` annotations of each class; the OpenModelica 1.27 User's Guide; the help
+  of Scilab and Xcos 2027.0, with the conversion of each MATLAB function (m2sci); FMPy 0.3;
+  python-control 0.10; the SciPy 1.18 user guide; SimPy 4.1.
+- The search reads the DocBook help of Scilab (`<refname>`, `<refsection>`).
+- The library check ignores the files a file manager writes (`.DS_Store`).
+
 ### Added: dev containers with Podman, the display and the sound of the host, Git LFS and glab
 
 - `containers-official-docs`: the configuration files of Podman (`containers.conf`,

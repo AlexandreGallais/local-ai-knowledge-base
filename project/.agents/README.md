@@ -52,7 +52,7 @@ in Node and in Python, its documentation in `library/`, its licenses, its `rules
 | `desktop-official-docs` | Desktop applications, up to Windows: Electron, electron-builder, Electron Packager, Rebuild, Fuses and ASAR, Tauri 2, cross and cargo-xwin, Wine, NSIS, WiX, MSIX. |
 | `markdown-official-docs` | Markdown and diagrams: Mermaid, CommonMark, GFM, Pandoc, markdownlint, KaTeX, Vega-Lite, Graphviz, D2. |
 | `gitlab-official-docs` | GitLab CI/CD: the folder `doc/ci` of the GitLab documentation, GitLab Runner, the Dev Containers CLI, glab. |
-| `simulation-official-docs` | Simulation: the Modelica language, the FMI and SSP standards, the GNU Octave manual and functions. |
+| `simulation-official-docs` | Simulation: the Modelica language and Standard Library, OpenModelica, the FMI and SSP standards, FMPy, Octave, Scilab and Xcos, python-control, SciPy, SimPy. |
 | `math-docs` | Free mathematics textbooks, in LaTeX, PreTeXt and XML: linear algebra, discrete mathematics, combinatorics. |
 
 Each file of the documentation is the official file, unchanged, in its own format. Keep only the

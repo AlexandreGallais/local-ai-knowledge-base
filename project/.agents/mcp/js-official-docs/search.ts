@@ -352,7 +352,7 @@ function memberHeading(line: string): string | undefined {
 
 // The <title> of a division of PreTeXt or DocBook that starts at a line, as text.
 function divisionHeading(lines: string[], index: number): string | undefined {
-  if (!/<(?:chapter|section|subsection|appendix|refsect[1-3]|sect[1-3])\b/.test(lines[index] ?? '')) {
+  if (!/<(?:chapter|section|subsection|appendix|refsect[1-3]|refsection|refsynopsisdiv|sect[1-3])\b/.test(lines[index] ?? '')) {
     return undefined;
   }
   return /<title>(.*?)<\/title>/
@@ -365,12 +365,14 @@ function divisionHeading(lines: string[], index: number): string | undefined {
 }
 
 // The title of a DocBook manual page (systemd...): "<refentrytitle>name</refentrytitle>" and its
-// "<manvolnum>", as "name(5)".
+// "<manvolnum>", as "name(5)"; or else its first "<refname>" (the help of Scilab).
 function refentryTitle(head: string): string | undefined {
   const match = /<refentrytitle>([^<]+)<\/refentrytitle>(?:\s*<manvolnum>([^<]+)<\/manvolnum>)?/.exec(head);
 
   if (match === null) {
-    return undefined;
+    const named = /<refname>([^<]+)<\/refname>/.exec(head)?.[1];
+
+    return named === undefined ? undefined : decodeXml(named);
   }
   return match[2] === undefined ? decodeXml(match[1] ?? '') : `${decodeXml(match[1] ?? '')}(${match[2]})`;
 }

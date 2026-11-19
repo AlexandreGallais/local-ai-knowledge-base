@@ -1,11 +1,23 @@
 # Brick `simulation-official-docs`
 
-The official documentation of simulation standards and tools: the Modelica language specification, the FMI 3.0 standard (the exchange of models between tools, which Simulink imports and exports as FMU), the SSP 2.0 standard (a system of several FMU), the GNU Octave manual and the help of each Octave function (a language close to MATLAB, to read `.m` code).
+The official documentation of simulation standards and tools, and of the free tools that do the work
+of MATLAB, Simulink and Simscape:
 
-Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
-LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
-comments of the source code is taken from those comments, unchanged. The MCP server searches the
-documentation and returns one section at a time.
+- the Modelica language specification and the Modelica Standard Library 4.1 (Fluid, Thermal,
+  Electrical, Mechanics, Blocks, StateGraph, Media, Magnetic, Math...), the OpenModelica User's Guide;
+- the FMI 3.0 standard (the exchange of models between tools, which Simulink imports and exports as
+  FMU), the SSP 2.0 standard (a system of several FMU), FMPy (simulating an FMU from Python);
+- the GNU Octave manual and the help of each Octave function (a language close to MATLAB);
+- the help of Scilab and Xcos (close to MATLAB and Simulink), with the conversion of each MATLAB
+  function to Scilab;
+- python-control (the control systems toolbox), the SciPy user guide (ODE solvers, signal
+  processing, optimization) and SimPy (discrete-event simulation).
+
+Each file is the official file, unchanged, in its own format (LaTeX, AsciiDoc, Texinfo, DocBook XML,
+reStructuredText, Markdown), at a noted version. The documentation of the Modelica Standard Library
+lives in the `Documentation(info="...")` annotations of its code: it is taken from them, unchanged,
+after the declaration of each class; the help of the Octave functions likewise from their comments.
+The MCP server searches the documentation and returns one section at a time.
 
 ## What it holds
 
@@ -36,14 +48,21 @@ python3 .agents/mcp/simulation-official-docs/build_index.py   # the same, withou
 
 - MATLAB, Simulink, Simscape and Stateflow: their documentation is not free; read it in the help of MATLAB on the workstation.
 - Dymola, Simcenter Amesim, SCADE, LabVIEW: not free.
-- The Modelica Standard Library, OpenModelica, Scilab: not asked for.
+- Stateflow has no free equivalent with its own documentation; `Modelica.StateGraph` comes closest.
 - The C headers and XML schemas of FMI and SSP: code, which the standards describe.
+- The API reference of SciPy and python-control: it lives in their docstrings; their user guides are
+  there.
 
 ## Licenses
 
-The Modelica specification and the FMI and SSP standards are under CC BY-SA 4.0. The Octave manual is under the GNU permission notice of its file `octave.texi` (copy, change and translate it, under the same notice), kept in `licenses/octave-manual/NOTICE`; the help of the Octave functions is under the GNU GPL version 3 or later. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
-holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
-the base.
+The Modelica specification and the FMI and SSP standards are under CC BY-SA 4.0; the Modelica
+Standard Library under BSD 3-Clause; the OpenModelica User's Guide under CC BY 4.0. The Octave manual
+is under the GNU permission notice of its file `octave.texi` (copy, change and translate it, under the
+same notice), kept in `licenses/octave-manual/NOTICE`; the help of the Octave functions is under the
+GNU GPL version 3 or later. The help of Scilab is under the GNU GPL version 2; FMPy under BSD 2-Clause;
+python-control and SciPy under BSD 3-Clause; SimPy under MIT. `THIRD_PARTY_NOTICES.md` gives each
+source with its attribution, and `licenses/` holds the text of each license. The code of this brick
+(its `.ts` and `.py` files) is under the MIT License of the base.
 
 ## Remove it
 

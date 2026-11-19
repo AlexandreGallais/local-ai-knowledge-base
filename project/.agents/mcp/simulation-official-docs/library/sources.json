@@ -8,16 +8,10 @@
       "version": "3.7",
       "license": "CC-BY-SA-4.0",
       "attribution": "Modelica Association",
-      "paths": [
-        "chapters/"
-      ],
-      "docs": [
-        "chapters"
-      ],
+      "paths": ["chapters/"],
+      "docs": ["chapters"],
       "files": "\\.tex$",
-      "exclude": [
-        "chapters/titlepage.tex"
-      ]
+      "exclude": ["chapters/titlepage.tex"]
     },
     {
       "tool": "fmi",
@@ -27,12 +21,8 @@
       "version": "3.0.2",
       "license": "CC-BY-SA-4.0",
       "attribution": "Modelica Association Project \"FMI\"",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "files": "\\.adoc$"
     },
     {
@@ -43,12 +33,8 @@
       "version": "2.0.1",
       "license": "CC-BY-SA-4.0",
       "attribution": "Modelica Association Project \"SSP\"",
-      "paths": [
-        "docs/"
-      ],
-      "docs": [
-        "docs"
-      ],
+      "paths": ["docs/"],
+      "docs": ["docs"],
       "files": "\\.adoc$"
     },
     {
@@ -59,12 +45,8 @@
       "version": "11.3",
       "license": "LicenseRef-GNU-permission-notice",
       "attribution": "The Octave Project Developers",
-      "paths": [
-        "doc/interpreter/"
-      ],
-      "docs": [
-        "doc/interpreter"
-      ],
+      "paths": ["doc/interpreter/"],
+      "docs": ["doc/interpreter"],
       "files": "\\.(?:txi|texi)$",
       "licenseNotice": "doc/interpreter/octave.texi"
     },
@@ -76,12 +58,8 @@
       "version": "11.3",
       "license": "GPL-3.0-or-later",
       "attribution": "The Octave Project Developers",
-      "paths": [
-        "scripts/"
-      ],
-      "docs": [
-        "scripts"
-      ],
+      "paths": ["scripts/"],
+      "docs": ["scripts"],
       "extract": "octave-texinfo",
       "exclude": [
         "scripts/**/private",
@@ -89,6 +67,113 @@
         "scripts/deprecated",
         "scripts/legacy"
       ]
+    },
+    {
+      "tool": "scilab-help",
+      "title": "Scilab and Xcos: the help of every function and block (linear systems, control, signal processing, ODE solvers, optimization, Xcos palettes, FMU import), and the conversion of each MATLAB function to Scilab (m2sci)",
+      "repository": "https://gitlab.com/scilab/scilab.git",
+      "ref": "2027.0.0",
+      "version": "2027.0",
+      "license": "GPL-2.0-only",
+      "attribution": "Dassault Systèmes, ESI Group, Scilab Enterprises, INRIA and the Scilab contributors",
+      "paths": ["scilab/modules/*/help/en_US/"],
+      "docs": ["scilab/modules"],
+      "files": "/help/en_US/.*\\.xml$",
+      "licenseTexts": { "COPYING": "https://gitlab.com/scilab/scilab/-/raw/2027.0.0/scilab/COPYING" }
+    },
+    {
+      "tool": "modelica-standard-library",
+      "title": "The Modelica Standard Library 4.1: the documentation of each package, model, block and connector (Fluid, Thermal, Electrical, Mechanics, Blocks, StateGraph, Media, Magnetic, Math, Units...), taken from its Documentation annotations, and the Modelica language reference by keyword",
+      "repository": "https://github.com/modelica/ModelicaStandardLibrary.git",
+      "ref": "v4.1.0",
+      "version": "4.1",
+      "license": "BSD-3-Clause",
+      "attribution": "Modelica Association and contributors",
+      "paths": [
+        "Modelica/",
+        "ModelicaReference/",
+        "LICENSE"
+      ],
+      "docs": [
+        "Modelica",
+        "ModelicaReference"
+      ],
+      "extract": "modelica-documentation",
+      "exclude": ["Modelica/Resources"]
+    },
+    {
+      "tool": "openmodelica",
+      "title": "OpenModelica User's Guide: OMEdit, OMShell, scripting (OMC API), simulation flags and solvers, FMI import and export, debugging, optimization, Python and Julia interfaces",
+      "repository": "https://github.com/OpenModelica/OpenModelica.git",
+      "ref": "v1.27.2",
+      "version": "1.27",
+      "license": "CC-BY-4.0",
+      "attribution": "Open Source Modelica Consortium",
+      "paths": ["doc/UsersGuide/source/"],
+      "docs": ["doc/UsersGuide/source"],
+      "licenseTexts": { "LICENSE-CC-BY-4.0.txt": "https://creativecommons.org/licenses/by/4.0/legalcode.txt" }
+    },
+    {
+      "tool": "fmpy",
+      "title": "FMPy: simulating, validating and inspecting FMUs from Python (command line, GUI, web app, Python API)",
+      "repository": "https://github.com/CATIA-Systems/FMPy.git",
+      "ref": "v0.3.32",
+      "version": "0.3.32",
+      "license": "BSD-2-Clause",
+      "attribution": "Dassault Systèmes",
+      "paths": [
+        "docs/",
+        "README.md",
+        "LICENSE.txt"
+      ],
+      "docs": ["."],
+      "files": "^(?:README\\.md|docs/[^/]+\\.md)$",
+      "exclude": [".git"]
+    },
+    {
+      "tool": "python-control",
+      "title": "python-control: the Control Systems Library for Python (transfer functions, state space, time and frequency responses, lsim, step, bode, root locus, LQR, Kalman, MATLAB compatibility module)",
+      "repository": "https://github.com/python-control/python-control.git",
+      "ref": "0.10.2",
+      "version": "0.10",
+      "license": "BSD-3-Clause",
+      "attribution": "California Institute of Technology, Delft University of Technology and the python-control developers",
+      "paths": [
+        "doc/",
+        "LICENSE"
+      ],
+      "docs": ["doc"],
+      "files": "\\.rst$"
+    },
+    {
+      "tool": "scipy",
+      "title": "SciPy user guide: integration and ODE solvers (solve_ivp, odeint), signal processing (filters, LTI systems), optimization, interpolation, linear algebra, FFT, statistics, spatial algorithms",
+      "repository": "https://github.com/scipy/scipy.git",
+      "ref": "v1.18.1",
+      "version": "1.18",
+      "license": "BSD-3-Clause",
+      "attribution": "Enthought, Inc. and the SciPy Developers",
+      "paths": [
+        "doc/source/tutorial/",
+        "LICENSE.txt"
+      ],
+      "docs": ["doc/source/tutorial"],
+      "files": "\\.(?:rst|md)$"
+    },
+    {
+      "tool": "simpy",
+      "title": "SimPy: discrete-event simulation in Python (processes, events, resources, the environment, real-time simulation), its guides, examples and API reference",
+      "repository": "https://gitlab.com/team-simpy/simpy.git",
+      "ref": "4.1.2",
+      "version": "4.1",
+      "license": "MIT",
+      "attribution": "Ontje Lünsdorf, Stefan Scherfke and the SimPy contributors",
+      "paths": [
+        "docs/",
+        "LICENSE.rst"
+      ],
+      "docs": ["docs"],
+      "files": "\\.rst$"
     }
   ]
 }

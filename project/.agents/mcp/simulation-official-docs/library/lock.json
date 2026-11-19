@@ -28,5 +28,47 @@
     "files": 889,
     "bytes": 1265575,
     "built": "2026-11-18"
+  },
+  "openmodelica": {
+    "commit": "4f2b2b1d9475214ff7fdcf234133226e426c3fb9",
+    "files": 38,
+    "bytes": 447789,
+    "built": "2026-11-19"
+  },
+  "fmpy": {
+    "commit": "e42e288f448830c5f146ae334b38e91d17ff19fa",
+    "files": 6,
+    "bytes": 11858,
+    "built": "2026-11-19"
+  },
+  "python-control": {
+    "commit": "abeb0e46a3d56c98b4534f73202a5a7ef5a0af87",
+    "files": 54,
+    "bytes": 294562,
+    "built": "2026-11-19"
+  },
+  "scipy": {
+    "commit": "e4e854eaa8f18d807cd3496028e257e36caa93cc",
+    "files": 181,
+    "bytes": 1056117,
+    "built": "2026-11-19"
+  },
+  "simpy": {
+    "commit": "f43816490c6f76f336ad6e457d3cab9f386894af",
+    "files": 42,
+    "bytes": 142026,
+    "built": "2026-11-19"
+  },
+  "modelica-standard-library": {
+    "commit": "8ae3d35c24e519cb2996cab20f3b13daf2b0c50a",
+    "files": 2380,
+    "bytes": 4882983,
+    "built": "2026-11-19"
+  },
+  "scilab-help": {
+    "commit": "4581e163068552693aec60c9cf8fb2100eb7b357",
+    "files": 2488,
+    "bytes": 16090444,
+    "built": "2026-11-19"
   }
 }

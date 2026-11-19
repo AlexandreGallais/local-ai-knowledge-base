@@ -398,7 +398,7 @@ def member_heading(line: str) -> str | None:
     return name if kind is None else intellisense_heading(kind.group(1), kind.group(2))
 
 
-_DIVISION = re.compile(r'<(?:chapter|section|subsection|appendix|refsect[1-3]|sect[1-3])\b', re.ASCII)
+_DIVISION = re.compile(r'<(?:chapter|section|subsection|appendix|refsect[1-3]|refsection|refsynopsisdiv|sect[1-3])\b', re.ASCII)
 _TITLE_TAG = re.compile(f'<title>({DOT}*?)</title>')
 _TAG = re.compile(r'<[^>]+>')
 _SPACES = re.compile(f'{S}+')
@@ -419,14 +419,16 @@ _MEMBER_TAG = re.compile(r'<member', re.IGNORECASE)
 _PROTOCOL = re.compile(rf'<protocol{S}+name="([^"]+)"')
 _INTERFACE = re.compile(rf'<interface{S}+name="([^"]+)"')
 _REFENTRY = re.compile(rf'<refentrytitle>([^<]+)</refentrytitle>(?:{S}*<manvolnum>([^<]+)</manvolnum>)?')
+_REFNAME = re.compile(r'<refname>([^<]+)</refname>')
 
 
 def refentry_title(head: str) -> str | None:
     # The title of a DocBook manual page (systemd...): "<refentrytitle>name</refentrytitle>" and its
-    # "<manvolnum>", as "name(5)".
+    # "<manvolnum>", as "name(5)"; or else its first "<refname>" (the help of Scilab).
     found = _REFENTRY.search(head)
     if found is None:
-        return None
+        named = _REFNAME.search(head)
+        return None if named is None else decode_xml(named.group(1))
     name = decode_xml(found.group(1))
     return name if found.group(2) is None else f'{name}({found.group(2)})'
 

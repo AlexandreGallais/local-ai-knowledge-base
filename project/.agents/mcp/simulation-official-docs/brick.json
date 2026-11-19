@@ -1,8 +1,8 @@
 {
   "name": "simulation-official-docs",
-  "instructions": "The official documentation of simulation standards and tools, kept locally: the Modelica language specification, the FMI and SSP standards, and the GNU Octave manual with the help of each Octave function (a language close to MATLAB). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
-  "search": "Search the official documentation of simulation: the Modelica language (classes, connectors, equations), the FMI standard (FMU, co-simulation, fmi3DoStep), the SSP standard, and GNU Octave (manual and functions, as ode45). Returns 10 section ids at most.",
-  "queryExample": "\"fmi3DoStep\" or \"connector\" or \"ode45\"",
-  "toolExample": "\"fmi\"",
+  "instructions": "The official documentation of simulation standards and tools, kept locally: the Modelica language specification and the Modelica Standard Library (Fluid, Thermal, Electrical, Mechanics, Blocks, StateGraph, Media...), the OpenModelica User's Guide, the FMI and SSP standards, FMPy, GNU Octave (a language close to MATLAB), Scilab and Xcos (close to MATLAB and Simulink, with the conversion of each MATLAB function), python-control, the SciPy user guide and SimPy. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of simulation: the Modelica language and the classes of the Modelica Standard Library (as Modelica.Fluid.Pipes.StaticPipe), OpenModelica, the FMI standard (fmi3DoStep), SSP, FMPy, GNU Octave functions (ode45), Scilab functions and Xcos blocks, the MATLAB to Scilab conversion (m2sci), python-control (lsim, bode), SciPy (solve_ivp, signal), SimPy. Returns 10 section ids at most.",
+  "queryExample": "\"fmi3DoStep\" or \"Modelica.Fluid.Pipes\" or \"solve_ivp\"",
+  "toolExample": "\"fmi\", \"modelica-standard-library\" or \"scilab-help\"",
   "idExample": "library/fmi/4_2_co-simulation_api.adoc#state-step-mode"
 }
