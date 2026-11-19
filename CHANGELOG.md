@@ -24,6 +24,10 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - Free licenses added to the check: the GNU FDL 1.3 with no invariant sections, LGPL 3.0 only.
 - `java-official-docs`: JavaFX 27 and Mockito 5.24, from their Javadoc; JUnit 6.1; Spring Framework
   7.0; Spring Boot 4.1; Hibernate ORM 7.4; Log4j 2.26; picocli 4.7; Quarkus 3.40.
+- `python-official-docs`: NumPy 2.5 (user guide, and the API of its Python functions from their
+  docstrings), pandas 3.1, Matplotlib 3.11, pytest 9.2, Pydantic 2.14, FastAPI 0.165.
+- Free license added to the check: the license of Matplotlib (the PSF License Agreement with its
+  names).
 
 ### Added: engineering physics for the simulation of ships and submarines
 

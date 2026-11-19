@@ -1,6 +1,6 @@
 # Brick `python-official-docs`
 
-The official documentation of Python (the language reference, the standard library, the tutorial, the how-to guides, the FAQ, what is new) and the Inkscape extensions (the `inkex` API, taken from its docstrings, and their guides).
+The official documentation of Python (the language reference, the standard library, the tutorial, the how-to guides, the FAQ, what is new); of its main libraries: NumPy (the user guide, and the API of its Python functions taken from their docstrings), pandas (the user guide), Matplotlib (the user guide and API pages), pytest, Pydantic and FastAPI; and of the Inkscape extensions (the `inkex` API, taken from its docstrings, and their guides).
 
 Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
 LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
@@ -38,7 +38,7 @@ python3 .agents/mcp/python-official-docs/build_index.py   # the same, without No
 
 ## Licenses
 
-Python is under the PSF License 2.0, its examples under 0BSD; the Inkscape extensions under the GNU GPL version 2 or later. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+Python is under the PSF License 2.0, its examples under 0BSD; NumPy and pandas under BSD 3-Clause; Matplotlib under its own license, the PSF License Agreement with its names; pytest, Pydantic and FastAPI under MIT; the Inkscape extensions under the GNU GPL version 2 or later. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
 holds the text of each license. The code of this brick (its `.ts` and `.py` files) is under the MIT License of
 the base.
 

@@ -33,15 +33,9 @@
       "version": "1.4.1",
       "license": "GPL-2.0-or-later",
       "attribution": "The Inkscape extension developers",
-      "paths": [
-        "inkex/"
-      ],
-      "docs": [
-        "inkex"
-      ],
-      "exclude": [
-        "inkex/deprecated-simple"
-      ],
+      "paths": ["inkex/"],
+      "docs": ["inkex"],
+      "exclude": ["inkex/deprecated-simple"],
       "extract": "python-docstrings"
     },
     {
@@ -52,14 +46,133 @@
       "version": "1.4.1",
       "license": "GPL-2.0-or-later",
       "attribution": "The Inkscape extension developers",
-      "paths": [
-        "docs/"
-      ],
+      "paths": ["docs/"],
       "docs": [
         "docs/authors",
         "docs/tutorial",
         "docs/dev"
       ]
+    },
+    {
+      "tool": "numpy",
+      "title": "NumPy: the user guide, the fundamentals (arrays, indexing, broadcasting, dtypes), the reference pages and the NumPy for MATLAB users guide",
+      "repository": "https://github.com/numpy/numpy.git",
+      "ref": "v2.5.5",
+      "version": "2.5",
+      "license": "BSD-3-Clause",
+      "attribution": "The NumPy Developers",
+      "paths": [
+        "doc/source/",
+        "LICENSE.txt"
+      ],
+      "docs": ["doc/source"],
+      "files": "\\.rst$",
+      "exclude": ["doc/source/dev"]
+    },
+    {
+      "tool": "numpy-api",
+      "title": "NumPy: the API of its Python functions (linspace, arange, meshgrid, interp, linalg, fft, random, polynomial...), from their docstrings",
+      "repository": "https://github.com/numpy/numpy.git",
+      "ref": "v2.5.5",
+      "version": "2.5",
+      "license": "BSD-3-Clause",
+      "attribution": "The NumPy Developers",
+      "paths": [
+        "numpy/",
+        "LICENSE.txt"
+      ],
+      "docs": ["numpy"],
+      "extract": "python-docstrings",
+      "exclude": [
+        "numpy/**/tests",
+        "numpy/_build_utils",
+        "numpy/f2py",
+        "numpy/distutils",
+        "numpy/typing/tests"
+      ]
+    },
+    {
+      "tool": "pandas",
+      "title": "pandas: the user guide (DataFrame, indexing, group by, merge, reshaping, time series, I/O to CSV, Excel, SQL, Parquet) and the getting started guides",
+      "repository": "https://github.com/pandas-dev/pandas.git",
+      "ref": "v3.1.1",
+      "version": "3.1",
+      "license": "BSD-3-Clause",
+      "attribution": "AQR Capital Management, LLC, Lambda Foundry, Inc. and the PyData Development Team",
+      "paths": [
+        "doc/source/",
+        "LICENSE"
+      ],
+      "docs": ["doc/source"],
+      "files": "\\.rst$",
+      "exclude": [
+        "doc/source/development",
+        "doc/source/whatsnew"
+      ]
+    },
+    {
+      "tool": "matplotlib",
+      "title": "Matplotlib: the user guide (figures, axes, artists, plot types, colors, text, animations, backends) and the API pages",
+      "repository": "https://github.com/matplotlib/matplotlib.git",
+      "ref": "v3.11.2",
+      "version": "3.11",
+      "license": "LicenseRef-Matplotlib",
+      "attribution": "The Matplotlib Development Team",
+      "paths": ["doc/"],
+      "docs": ["doc"],
+      "files": "\\.rst$",
+      "exclude": [
+        "doc/devel",
+        "doc/release",
+        "doc/project"
+      ],
+      "licenseTexts": { "LICENSE": "https://raw.githubusercontent.com/matplotlib/matplotlib/v3.11.2/LICENSE/LICENSE" }
+    },
+    {
+      "tool": "pytest",
+      "title": "pytest: writing and running tests, fixtures, parametrize, markers, plugins, configuration and the reference of every API and option",
+      "repository": "https://github.com/pytest-dev/pytest.git",
+      "ref": "9.2.0",
+      "version": "9.2",
+      "license": "MIT",
+      "attribution": "Holger Krekel and the pytest contributors",
+      "paths": [
+        "doc/en/",
+        "LICENSE"
+      ],
+      "docs": ["doc/en"],
+      "files": "\\.rst$",
+      "exclude": ["doc/en/announce"]
+    },
+    {
+      "tool": "pydantic",
+      "title": "Pydantic 2: data validation with type hints (models, fields, validators, serialization, settings, JSON schema)",
+      "repository": "https://github.com/pydantic/pydantic.git",
+      "ref": "v2.14.3",
+      "version": "2.14",
+      "license": "MIT",
+      "attribution": "Pydantic Services Inc. and the Pydantic contributors",
+      "paths": [
+        "docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs"],
+      "files": "\\.md$"
+    },
+    {
+      "tool": "fastapi",
+      "title": "FastAPI: web APIs with Python type hints (path and query parameters, request bodies, dependencies, security, WebSockets, background tasks, testing, deployment)",
+      "repository": "https://github.com/fastapi/fastapi.git",
+      "ref": "0.165.0",
+      "version": "0.165",
+      "license": "MIT",
+      "attribution": "Sebastián Ramírez and the FastAPI contributors",
+      "paths": [
+        "docs/en/docs/",
+        "LICENSE"
+      ],
+      "docs": ["docs/en/docs"],
+      "files": "\\.md$"
     }
   ]
 }

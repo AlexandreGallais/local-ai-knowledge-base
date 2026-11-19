@@ -16,5 +16,47 @@
     "files": 18,
     "bytes": 134673,
     "built": "2026-11-14"
+  },
+  "numpy": {
+    "commit": "afcbc6d21a88a7b59c5bfe115198e24ed51b3dae",
+    "files": 331,
+    "bytes": 2546317,
+    "built": "2026-11-19"
+  },
+  "numpy-api": {
+    "commit": "afcbc6d21a88a7b59c5bfe115198e24ed51b3dae",
+    "files": 119,
+    "bytes": 1531663,
+    "built": "2026-11-19"
+  },
+  "pandas": {
+    "commit": "3dcc6fbbbebc5e85dd3e83fe49b382ca7735cae1",
+    "files": 92,
+    "bytes": 1327693,
+    "built": "2026-11-19"
+  },
+  "matplotlib": {
+    "commit": "d3ca9172e392048ec242b90e8423e88d1a3000b2",
+    "files": 226,
+    "bytes": 743001,
+    "built": "2026-11-19"
+  },
+  "pytest": {
+    "commit": "ae1d0ff57b8bd4252da9ade7353523ac0ac73281",
+    "files": 71,
+    "bytes": 2743812,
+    "built": "2026-11-19"
+  },
+  "pydantic": {
+    "commit": "ea492e04654ab7f7a1f9287ea912419452ead4dd",
+    "files": 91,
+    "bytes": 727950,
+    "built": "2026-11-19"
+  },
+  "fastapi": {
+    "commit": "05e6df7e906c3decba377c37548019973f40bf15",
+    "files": 159,
+    "bytes": 1536725,
+    "built": "2026-11-19"
   }
 }
