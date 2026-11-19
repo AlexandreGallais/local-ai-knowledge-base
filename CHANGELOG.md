@@ -5,10 +5,26 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added: one shared configuration, chosen in one line
+
+- `.agents/opencode/`: the configuration of `opencode.json` in four files, for OpenCode 2.x
+  (`mcp.servers`, `codemode: false`) or 1.x (`mcp.<name>`, `enabled: true`), with the servers run by
+  Node or by Python. The variable `OPENCODE_CONFIG` of a dev container names one: OpenCode loads it
+  below the `opencode.json` of the project, which stays the project's own.
+- `import.ts` and `import.py` rewrite the four files after the bricks present, as `opencode.json`.
+- `.agents/README.md` explains the base mounted once into every dev container: the line of
+  `devcontainer.json`, the order in which OpenCode merges its files, the lines of the `.gitignore` of the
+  project.
+
+### Changed: three part sizes
+
+- The export comes in parts of 2, 3 and 4 MB, the sizes tried at the paste: 2 MB passes, 5 MB does not.
+  The sizes 500 kB, 1, 5 and 10 MB are gone. `export.ts` and `export.py` make these three by default.
+
 ### Added: the export in Python
 
 - `export.py` (Python 3, its standard library only): cuts a project where the base is installed into
-  parts compressed with gzip, in the five sizes, which `import.py` reads in every version of Python.
+  parts compressed with gzip, in the export sizes, which `import.py` reads in every version of Python.
   It travels in each size folder of the export, beside the two import scripts.
 - The export of this repository stays in brotli, the smallest, read by `import.ts`.
 

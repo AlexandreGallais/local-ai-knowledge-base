@@ -83,6 +83,17 @@ export const RUNTIMES: Runtime[] = [
   'python',
 ];
 
+// The shared OpenCode configs of .agents/opencode/, one per runtime and per major version of OpenCode:
+// the variable OPENCODE_CONFIG names one, and OpenCode loads it below the opencode.json of the project.
+// OpenCode 2 lists the servers under mcp.servers; OpenCode 1 lists them directly under mcp.
+export type Major = 1 | 2;
+
+export const MAJORS: Major[] = [
+  1,
+  2,
+];
+
+export const SHARED_CONFIGS = '.agents/opencode';
 // The formatters that earlier versions of the kit declared: removed from opencode.json, as the kit no
 // longer brings the configs they run.
 const OLD_FORMATTERS = [
@@ -314,6 +325,41 @@ export function serverCommand(brick: string, runtime: Runtime): string[] {
   ];
 }
 
+export function sharedConfigName(runtime: Runtime, major: Major): string {
+  return `opencode.${runtime}.v${String(major)}.json`;
+}
+
+// A shared config: the instructions of the base and one local server per brick present, nothing else.
+export function sharedConfig(bricks: string[], runtime: Runtime, major: Major): Json {
+  const servers = Object.fromEntries(bricks.map((brick) => [
+    brick,
+    major === 2 ? {
+      type: 'local',
+      command: serverCommand(brick, runtime),
+      codemode: false,
+    } : {
+      type: 'local',
+      command: serverCommand(brick, runtime),
+      enabled: true,
+    },
+  ]));
+
+  return {
+    instructions: [...INSTRUCTIONS],
+    mcp: major === 2 ? { servers } : servers,
+  };
+}
+
+// The four shared configs, rewritten after the bricks present, as opencode.json is.
+function writeSharedConfigs(target: string, bricks: string[]): void {
+  mkdirSync(join(target, SHARED_CONFIGS), { recursive: true });
+  for (const runtime of RUNTIMES) {
+    for (const major of MAJORS) {
+      writeFileSync(join(target, SHARED_CONFIGS, sharedConfigName(runtime, major)), `${JSON.stringify(sharedConfig(bricks, runtime, major), null, 2)}\n`);
+    }
+  }
+}
+
 // The servers of the config without those of a brick that is gone, then one per brick present.
 function syncServers(current: Json, bricks: string[], runtime: Runtime): Json {
   const kept = Object
@@ -408,6 +454,7 @@ export function installPacks(packs: Pack[], target: string, runtime: Runtime = '
 
   // The file keeps its own layout when its content does not change.
   writeFileSync(join(target, 'opencode.json'), original !== undefined && JSON.stringify(JSON.parse(original)) === JSON.stringify(synced) ? original : `${JSON.stringify(synced, null, 2)}\n`);
+  writeSharedConfigs(target, servers);
   return {
     packs: packs.map((pack) => pack.name),
     written: written + 1,
@@ -442,6 +489,7 @@ function option(name: string): string | undefined {
 function report(result: ImportResult, target: string, runtime: Runtime): void {
   process.stdout.write(`Installed in ${target}: ${result.packs.join(', ')}. ${result.written} file(s) written, ${result.kept.length} left aside.\n`);
   process.stdout.write(`MCP servers in opencode.json, run by ${runtime}: ${result.servers.join(', ') || 'none'}.\n`);
+  process.stdout.write(`Shared configs for OPENCODE_CONFIG: ${SHARED_CONFIGS}/opencode.<node|python>.v<1|2>.json.\n`);
   if (result.kept.length > 0) {
     process.stdout.write('Left aside, because the project already has them: merge them by hand from the kit if needed.\n');
   }

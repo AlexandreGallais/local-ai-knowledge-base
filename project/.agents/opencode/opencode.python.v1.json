@@ -1,0 +1,136 @@
+{
+  "instructions": [
+    ".agents/rules.md",
+    ".agents/mcp/*/rules.md"
+  ],
+  "mcp": {
+    "containers-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/containers-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "cpp-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/cpp-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "csharp-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/csharp-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "desktop-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/desktop-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "git-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/git-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "gitlab-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/gitlab-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "java-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/java-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "js-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/js-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "linux-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/linux-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "markdown-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/markdown-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "math-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/math-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "physics-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/physics-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "python-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/python-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "rust-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/rust-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "shell-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/shell-official-docs/server.py"
+      ],
+      "enabled": true
+    },
+    "simulation-official-docs": {
+      "type": "local",
+      "command": [
+        "python3",
+        ".agents/mcp/simulation-official-docs/server.py"
+      ],
+      "enabled": true
+    }
+  }
+}

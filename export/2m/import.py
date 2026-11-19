@@ -46,6 +46,14 @@ RUNTIMES = [
     "node",
     "python",
 ]
+# The shared OpenCode configs of .agents/opencode/, one per runtime and per major version of OpenCode:
+# the variable OPENCODE_CONFIG names one, and OpenCode loads it below the opencode.json of the project.
+# OpenCode 2 lists the servers under mcp.servers; OpenCode 1 lists them directly under mcp.
+MAJORS = [
+    1,
+    2,
+]
+SHARED_CONFIGS = ".agents/opencode"
 # The formatters that earlier versions of the kit declared: removed from opencode.json, as the kit no
 # longer brings the configs they run.
 OLD_FORMATTERS = [
@@ -244,6 +252,42 @@ def server_command(brick: str, runtime: str) -> list[str]:
     ]
 
 
+def shared_config_name(runtime: str, major: int) -> str:
+    return f"opencode.{runtime}.v{major}.json"
+
+
+def shared_config(bricks: list[str], runtime: str, major: int) -> dict[str, Any]:
+    """A shared config: the instructions of the base and one local server per brick present, nothing else."""
+    servers: dict[str, Any] = {}
+    for brick in bricks:
+        if major == 2:
+            servers[brick] = {
+                "type": "local",
+                "command": server_command(brick, runtime),
+                "codemode": False,
+            }
+        else:
+            servers[brick] = {
+                "type": "local",
+                "command": server_command(brick, runtime),
+                "enabled": True,
+            }
+    return {
+        "instructions": list(INSTRUCTIONS),
+        "mcp": {"servers": servers} if major == 2 else servers,
+    }
+
+
+def write_shared_configs(target: str, bricks: list[str]) -> None:
+    """The four shared configs, rewritten after the bricks present, as opencode.json is."""
+    folder = os.path.join(target, SHARED_CONFIGS)
+    os.makedirs(folder, exist_ok=True)
+    for runtime in RUNTIMES:
+        for major in MAJORS:
+            with open(os.path.join(folder, shared_config_name(runtime, major)), "w", encoding="utf-8", newline="") as handle:
+                handle.write(json.dumps(shared_config(bricks, runtime, major), ensure_ascii=False, indent=2) + "\n")
+
+
 def js_string(value: Any) -> str:
     """String(value) as JavaScript writes it, for the brick a command names."""
     if value is None:
@@ -358,6 +402,7 @@ def write_config(target: str, config: dict[str, Any], config_file: dict[str, Any
             handle.write(original)
         else:
             handle.write(json.dumps(synced, ensure_ascii=False, indent=2) + "\n")
+    write_shared_configs(target, servers)
     return servers
 
 
@@ -397,6 +442,7 @@ def report(result: dict[str, Any], target: str, runtime: str) -> None:
     print(f"Installed in {target}: {', '.join(result['packs'])}. "
         f"{result['written']} file(s) written, {len(result['kept'])} left aside.")
     print(f"MCP servers in opencode.json, run by {runtime}: {', '.join(result['servers']) or 'none'}.")
+    print(f"Shared configs for OPENCODE_CONFIG: {SHARED_CONFIGS}/opencode.<node|python>.v<1|2>.json.")
     if len(result["kept"]) > 0:
         print("Left aside, because the project already has them: merge them by hand from the kit if needed.")
     for path in result["kept"]:

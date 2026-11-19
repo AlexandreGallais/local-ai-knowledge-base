@@ -54,6 +54,81 @@ Each documentation server exists twice, the same code in two languages, with the
 The import writes the Node command; `--runtime python` writes the Python one. To switch by hand,
 change the command of each server in `mcp.servers` of `opencode.json`. Both read the same index.
 
+## One shared folder for every dev container
+
+The base can live once on the machine, in one folder mounted into every dev container, instead of being
+copied into each project. The project then keeps its own `opencode.json`, and the configuration of the
+base comes from a shared file that the variable `OPENCODE_CONFIG` names.
+
+### The four shared configs
+
+`.agents/opencode/` holds the same configuration as `opencode.json` (the rules, one local server per
+brick), in four files. Pick the one that matches OpenCode and the runtime of the machine:
+
+| File | OpenCode | Servers run by |
+| --- | --- | --- |
+| `opencode.node.v2.json` | 2.x (tried with 2.3.0) | Node |
+| `opencode.python.v2.json` | 2.x | Python |
+| `opencode.node.v1.json` | 1.x | Node |
+| `opencode.python.v1.json` | 1.x | Python |
+
+OpenCode 2 lists the servers under `mcp.servers` and needs `codemode: false` to show their tools
+directly; OpenCode 1 lists them under `mcp`, with `enabled: true`. `opencode --version` gives the
+version. The import rewrites the four files after the bricks present, as it does `opencode.json`.
+
+### Where OpenCode puts it
+
+OpenCode merges its configuration files; for a setting in two files, the later one wins. The order,
+from the first to the last:
+
+1. the global config of the user, `~/.config/opencode/opencode.json`;
+2. the file named by `OPENCODE_CONFIG`: the shared config of the base;
+3. the `opencode.json` of the project: it wins over the shared config;
+4. in OpenCode 2, the folder of the system, `/etc/opencode`, which wins over the project: keep the
+   base out of it.
+
+So the `opencode.json` of the project holds only what is its own (a model, a server of its own), or
+does not exist. Write the rules of the project in `AGENTS.md`, not in the `instructions` of its
+`opencode.json`: OpenCode 2 adds the lists of instructions together, but the documentation of
+OpenCode 1 does not say whether it adds or replaces them.
+
+### In the dev container
+
+The one line that chooses the config, in `devcontainer.json`, beside the mounts of the shared folder:
+
+```jsonc
+{
+  "mounts": [
+    // ... the mounts of the shared folder into .agents/: mcp, skills, skills-drafts, rules.md...
+    "source=${localEnv:HOME}/agents-base/opencode,target=${containerWorkspaceFolder}/.agents/opencode,type=bind"
+  ],
+  "remoteEnv": {
+    "OPENCODE_CONFIG": "${containerWorkspaceFolder}/.agents/opencode/opencode.node.v2.json"
+  }
+}
+```
+
+The shared folder must appear at `.agents/` of the project: the paths of the configs start there. Change
+`node.v2` to `python.v2`, `node.v1` or `python.v1` to switch. OpenCode 2 can keep a background server
+running: after changing the line, rebuild the container or start OpenCode again from a new terminal.
+
+### What the project keeps out of Git
+
+What is mounted belongs to the shared folder, not to the project. In the `.gitignore` of the project
+(not in `.agents/.gitignore`, which is mounted too):
+
+```gitignore
+# The base, mounted from the shared folder.
+.agents/mcp/
+.agents/skills/
+.agents/skills-drafts/
+.agents/opencode/
+.agents/rules.md
+.agents/README.md
+.agents/package.json
+.agents/.gitignore
+```
+
 ## Usage
 
 Nothing to start by hand: OpenCode starts the servers itself. Check that it sees them with `/mcps` in
@@ -103,3 +178,4 @@ folder and its line in `opencode.json`.
 - `package.json`: tells Node to read the TypeScript of the servers as ES modules, whatever the project
   says. Python does not need it.
 - `.gitignore`: keeps `work/` (the journal of the calls to the servers) and `cache/` out of Git.
+- `opencode/`: the four shared configs, for a base mounted from one folder (see above).

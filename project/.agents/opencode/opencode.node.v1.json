@@ -1,0 +1,136 @@
+{
+  "instructions": [
+    ".agents/rules.md",
+    ".agents/mcp/*/rules.md"
+  ],
+  "mcp": {
+    "containers-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/containers-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "cpp-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/cpp-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "csharp-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/csharp-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "desktop-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/desktop-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "git-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/git-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "gitlab-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/gitlab-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "java-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/java-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "js-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/js-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "linux-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/linux-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "markdown-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/markdown-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "math-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/math-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "physics-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/physics-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "python-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/python-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "rust-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/rust-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "shell-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/shell-official-docs/server.ts"
+      ],
+      "enabled": true
+    },
+    "simulation-official-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        ".agents/mcp/simulation-official-docs/server.ts"
+      ],
+      "enabled": true
+    }
+  }
+}

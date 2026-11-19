@@ -1,7 +1,7 @@
 # Knowledge base for a local AI
 
 The official documentation of the tools a team uses, kept locally and served by MCP servers, with a
-few rules and skills, so that a small local language model inside OpenCode CLI 2.2.7 looks things up
+few rules and skills, so that a small local language model inside OpenCode CLI 2.x looks things up
 instead of guessing them, without any access to the web.
 
 ## Status
@@ -19,6 +19,12 @@ The kit, in [`project/`](project/), holds three entries, copied to the root of a
 | `AGENTS.md` | The rules of the project, owned by the team. |
 | `opencode.json` | What OpenCode loads: the rules, and one local MCP server per brick. |
 | `.agents/` | The common rules, the skills, and the documentation bricks in `.agents/mcp/`. |
+
+To mount the base once into every dev container instead, `.agents/opencode/` holds the same
+configuration in four files, for OpenCode 2.x or 1.x, with the servers run by Node or by Python. One
+line of `devcontainer.json`, `OPENCODE_CONFIG`, names the one to load; the `opencode.json` of the
+project stays its own and wins over it. [`.agents/README.md`](project/.agents/README.md#one-shared-folder-for-every-dev-container)
+gives the line, the order in which OpenCode merges the files, and what the project keeps out of Git.
 
 The skills follow the skill catalogue of the team: 142 finished skills in `.agents/skills/` (with
 `CORE_RULES.md`, copied into `AGENTS.md`, and the generated `SKILLS_INDEX.md`), and 119 drafts in
@@ -65,8 +71,8 @@ itself, after your approval, and says "done" after the build and the tests of th
 
 ## From the export to the first conversation
 
-The export is in `export/`, in five part sizes, one folder each: `500k`, `1m`, `2m`, `5m`, `10m`. They
-hold the same content. Each folder has one pack `kit` (`kit-001.txt`...), one pack per documentation
+The export is in `export/`, in three part sizes, one folder each: `2m`, `3m`, `4m`. They hold the same
+content. Parts of 2 MB pass the paste on the workstation, parts of 5 MB do not. Each folder has one pack `kit` (`kit-001.txt`...), one pack per documentation
 brick (`js-official-docs-001.txt`...) and the two import scripts, `import.ts` (Node 22.18 or later) and
 `import.py` (Python 3, its standard library only): the same import, whichever the machine has. Python
 reads parts compressed with gzip in every version, with zstd from 3.14, and not with brotli: for parts
@@ -78,13 +84,13 @@ Each size folder also holds `export.py`, to make parts for a machine with Python
 ### 1. Find the largest size that pastes
 
 1. On the workstation, create an empty folder, for example `~/paste-test`.
-2. Create `kit-001.txt` there, open `export/10m/kit-001.txt` here, copy all of it, paste it into the
+2. Create `kit-001.txt` there, open `export/4m/kit-001.txt` here, copy all of it, paste it into the
    new file, save. Paste `import.ts` (or `import.py`) the same way.
 3. Run `node ~/paste-test/import.ts --target ~/paste-test-project` (or `python3 ~/paste-test/import.py
    --target ~/paste-test-project`) and read the first line:
    - "Installed in": the paste worked; keep this size.
    - "the content was damaged by the paste" or "the end of the part is missing": the paste cut or
-     changed the text; try the next size down: 5m, then 2m, 1m, 500k.
+     changed the text; try the next size down: 3m, then 2m.
 
 ### 2. Paste what the project needs
 
@@ -105,8 +111,10 @@ there are removed.
 
 ### 3. Work
 
-Open OpenCode CLI 2.2.7 at the root of the project and describe what you want. Check that it sees the
-servers: `/mcps` lists each documentation brick pasted.
+Open OpenCode CLI at the root of the project and describe what you want. Check that it sees the
+servers: `/mcps` lists each documentation brick pasted. `opencode.json` is in the format of OpenCode
+2.x; for OpenCode 1.x, use `.agents/opencode/opencode.node.v1.json` (or `python.v1`) through
+`OPENCODE_CONFIG`, as [`.agents/README.md`](project/.agents/README.md#one-shared-folder-for-every-dev-container) shows.
 
 ### 4. Make parts for a machine with Python only
 
@@ -114,9 +122,9 @@ On a machine where the base is installed, `export.py` (Python 3, its standard li
 again into parts compressed with gzip, which `import.py` reads in every version of Python:
 
 1. Paste `export.py` beside the import script, then, from the root of the equipped project, run
-   `python3 <that folder>/export.py`. The parts go into `export-gzip/`, in the five sizes; each size
+   `python3 <that folder>/export.py`. The parts go into `export-gzip/`, in the three sizes; each size
    folder gets `import.py` and `import.ts` beside them.
-2. `--sizes 500k,1m` keeps only some sizes; `--packs kit,js-official-docs` only some packs; `--source`
+2. `--sizes 2m` keeps only some sizes; `--packs kit,js-official-docs` only some packs; `--source`
    and `--out` name another project or another folder.
 3. On the machine with Python only, paste one size folder and run `python3 import.py` there, as in
    step 2. The gzip parts are larger than the brotli ones: there are more of them to paste.
@@ -147,7 +155,7 @@ repository. The workstation never does it: it receives the new export.
 | `project/` | The project kit: `AGENTS.md`, `opencode.json` and `.agents/`, bricks included. |
 | `import.ts`, `import.py` | The import, in Node and in Python: the same work, the same messages. Both travel with the export. |
 | `export.py` | The export in Python, gzip: cuts an equipped project into parts again. Travels with the export. |
-| `export/` | The export of the last delivery, in five part sizes. |
+| `export/` | The export of the last delivery, in three part sizes: 2, 3 and 4 MB. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 
 The tools that build, check and export this repository are kept outside it.

@@ -6,9 +6,9 @@ Run it in a project where the base is installed (by import.ts or import.py). It 
 "kit" and one pack per documentation brick of .agents/mcp/. The parts are compressed with gzip, which
 every Python 3 reads, and encoded in base64: printable ASCII only, safe to paste.
 One file, the standard library of Python 3.9 or later only, no package:
-    python3 export.py [--source <project root>] [--out <folder>] [--sizes 500k,1m,2m,5m,10m]
+    python3 export.py [--source <project root>] [--out <folder>] [--sizes 2m,3m,4m]
                       [--packs kit,js-official-docs]
-Default: the current folder as the project, the parts in export-gzip/<size>/, the five sizes, every
+Default: the current folder as the project, the parts in export-gzip/<size>/, the three sizes, every
 pack. Each size folder also gets import.py and import.ts when they sit beside this file.
 
 Never exported: the work files and caches of .agents/, the search index of each brick (built again on
@@ -33,12 +33,11 @@ BASE64_LINE = 76
 OVERHEAD = 1024
 KIT = "kit"
 BRICKS = ".agents/mcp"
+# 2 MB parts pass the paste and 5 MB ones do not: 3 and 4 MB are tried between them.
 DEFAULT_SIZES = [
-    "500k",
-    "1m",
     "2m",
-    "5m",
-    "10m",
+    "3m",
+    "4m",
 ]
 # The entries of a project that belong to the base: everything else is the project's own code.
 ROOTS = [
